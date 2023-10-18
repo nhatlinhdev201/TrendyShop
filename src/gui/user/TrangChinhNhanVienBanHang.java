@@ -2,7 +2,6 @@ package gui.user;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Image;
@@ -40,7 +39,6 @@ public class TrangChinhNhanVienBanHang extends JFrame implements ActionListener{
 	private TrangBanHangJPanel trangBanHangJPanel;
 	private TrangThongKeNVBanHangJPanel trangThongKeNVBanHangJPanel;
 	private JPanel currentContent;
-	private JPanel newContent;
 
 	/**
 	 * Launch the application.
@@ -69,7 +67,7 @@ public class TrangChinhNhanVienBanHang extends JFrame implements ActionListener{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(SetBoundsJFrameMain.WINDOWX, SetBoundsJFrameMain.WINDOWY, SetBoundsJFrameMain.WINDOW_WIDTH,
 				SetBoundsJFrameMain.WINDOW_HEIGHT);
-		
+		setTitle("Trendy Shop - Nhân viên bán hàng");
 		//<================ Set size main screen =========================>
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(224, 255, 255));

@@ -71,6 +71,7 @@ public class TrangChinhNhanVienQuanLy extends JFrame implements ActionListener{
 		setBackground(new Color(255, 204, 153));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(SetBoundsJFrameMain.WINDOWX, SetBoundsJFrameMain.WINDOWY, SetBoundsJFrameMain.WINDOW_WIDTH, SetBoundsJFrameMain.WINDOW_HEIGHT);
+		setTitle("Trendy Shop - Nhân viên quản lý");
 		//<================ Set size main screen =========================>
 
 		contentPane = new JPanel();
