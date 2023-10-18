@@ -1,6 +1,8 @@
 package gui.user;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Image;
@@ -12,15 +14,17 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import constance.SetBoundsJFrameMain;
+import constance.SetBountJPanel;
 import gui.TrangChuPanel;
 import gui.TrangHuongDanJPanel;
 import gui.TrangQLKhachHangPanel;
 
-public class TrangChinhUser extends JFrame implements ActionListener{
+public class TrangChinhNhanVienBanHang extends JFrame implements ActionListener{
 
 	private JPanel contentPane;
 	private JButton btnMenuTrangChu;
@@ -28,15 +32,15 @@ public class TrangChinhUser extends JFrame implements ActionListener{
 	private JButton btnMenuCnQlyKhachHang;
 	private JButton btnMenuCnQlyThongKe;
 	private JButton btnMenuCnQlyTroGiup;
-	private JButton btnSetUserLogin;
 	private AbstractButton btnMenuCnXemThongTinTK;
 	private JButton btnMenuCnDangXuatTK;
 	private TrangChuPanel trangChuPanel;
 	private TrangHuongDanJPanel trangHuongDanJPanel;
 	private TrangQLKhachHangPanel trangQLKhachHangPanel;
 	private TrangBanHangJPanel trangBanHangJPanel;
-	private TrangThongKeUserJPanel trangThongKeUserJPanel;
-	private Object currentContent;
+	private TrangThongKeNVBanHangJPanel trangThongKeNVBanHangJPanel;
+	private JPanel currentContent;
+	private JPanel newContent;
 
 	/**
 	 * Launch the application.
@@ -45,8 +49,11 @@ public class TrangChinhUser extends JFrame implements ActionListener{
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					TrangChinhUser frame = new TrangChinhUser();
+					TrangChinhNhanVienBanHang frame = new TrangChinhNhanVienBanHang();
 					frame.setVisible(true);
+					frame.setIconImage(
+							new ImageIcon(getClass().getResource("/images/logoShop.png")).getImage());
+					frame.setLocationRelativeTo(null);;
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -57,12 +64,13 @@ public class TrangChinhUser extends JFrame implements ActionListener{
 	/**
 	 * Create the frame.
 	 */
-	public TrangChinhUser() {
+	public TrangChinhNhanVienBanHang() {
 		setBackground(new Color(255, 204, 153));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(SetBoundsJFrameMain.WINDOWX, SetBoundsJFrameMain.WINDOWY, SetBoundsJFrameMain.WINDOW_WIDTH,
 				SetBoundsJFrameMain.WINDOW_HEIGHT);
-
+		
+		//<================ Set size main screen =========================>
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(224, 255, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -136,7 +144,9 @@ public class TrangChinhUser extends JFrame implements ActionListener{
 		trangHuongDanJPanel = new TrangHuongDanJPanel();
 		trangQLKhachHangPanel = new TrangQLKhachHangPanel();
 		trangBanHangJPanel = new TrangBanHangJPanel();
-		trangThongKeUserJPanel = new TrangThongKeUserJPanel();
+		trangThongKeNVBanHangJPanel = new TrangThongKeNVBanHangJPanel();
+		
+		switchContent(trangChuPanel);
 		// <<=====================Add action listener============================>>
 		btnMenuTrangChu.addActionListener(this);
 		btnMenuCnQlyKhachHang.addActionListener(this);
@@ -148,11 +158,38 @@ public class TrangChinhUser extends JFrame implements ActionListener{
 		
 	}
 	
+	private void switchContent(JPanel newContent) {
+		newContent.setBounds(0, 52, SetBountJPanel.WIDTH, SetBountJPanel.HEIGHT);
+        if (currentContent != null) {
+            contentPane.remove(currentContent);
+            currentContent.requestFocusInWindow();
+        }
+        currentContent = newContent;
+        contentPane.add(currentContent, BorderLayout.CENTER);
+        revalidate();
+        repaint();
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		
+		Object o = e.getSource();
+		if(o.equals(btnMenuTrangChu)) {
+			switchContent(trangChuPanel);
+		}else if(o.equals(btnMenuCnQlyKhachHang)) {
+			switchContent(trangQLKhachHangPanel);
+		}else if(o.equals(btnMenuCnQlyTroGiup)) {
+			switchContent(trangHuongDanJPanel);
+		}else if(o.equals(btnMenuCnBanHang)) {
+			switchContent(trangBanHangJPanel);
+		}else if(o.equals(btnMenuCnQlyThongKe)) {
+			switchContent(trangThongKeNVBanHangJPanel);
+		}else if(o.equals(btnMenuCnXemThongTinTK)) {
+			JOptionPane.showMessageDialog(this, "Nhật Linh");
+		}else if(o.equals(btnMenuCnDangXuatTK)) {
+			JOptionPane.showMessageDialog(this, "Đăng xuất thành công");
+		}else {
+			System.out.println("Chua co chuc nang");
+		}
 	}
 
 }

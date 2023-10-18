@@ -18,19 +18,13 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
-import java.awt.Graphics;
 import java.awt.Image;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPopupMenu;
-import java.awt.Component;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import javax.swing.JMenuItem;
 
-public class TrangChinhAdmin extends JFrame implements ActionListener{
+public class TrangChinhNhanVienQuanLy extends JFrame implements ActionListener{
 
 	private JPanel contentPane;
 	private JButton btnMenuTrangChu;
@@ -46,7 +40,7 @@ public class TrangChinhAdmin extends JFrame implements ActionListener{
 	private TrangQLKhachHangPanel trangQLKhachHangPanel;
 	private TrangQLNhanVienJPanel trangQLNhanVienJPanel;
 	private TrangQuanLyHangHoaJPanel trangQuanLyHangHoaJPanel;
-	private TrangThongKeAdminJPanel trangThongKeAdminJPanel;
+	private TrangThongKeNVQuanLyJPanel trangThongKeNVQuanLyJPanel;
 	private JButton btnMenuCnDangXuatTK;
 	private JButton btnMenuCnXemThongTinTK;
 
@@ -57,7 +51,7 @@ public class TrangChinhAdmin extends JFrame implements ActionListener{
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					TrangChinhAdmin frame = new TrangChinhAdmin();
+					TrangChinhNhanVienQuanLy frame = new TrangChinhNhanVienQuanLy();
 					frame.setVisible(true);
 					frame.setIconImage(
 							new ImageIcon(getClass().getResource("/images/logoShop.png")).getImage());
@@ -72,7 +66,7 @@ public class TrangChinhAdmin extends JFrame implements ActionListener{
 	/**
 	 * Create the frame.
 	 */
-	public TrangChinhAdmin(){
+	public TrangChinhNhanVienQuanLy(){
 		
 		setBackground(new Color(255, 204, 153));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -166,7 +160,7 @@ public class TrangChinhAdmin extends JFrame implements ActionListener{
 		trangQLKhachHangPanel = new TrangQLKhachHangPanel();
 		trangQLNhanVienJPanel = new TrangQLNhanVienJPanel();
 		trangQuanLyHangHoaJPanel = new TrangQuanLyHangHoaJPanel();
-		trangThongKeAdminJPanel = new TrangThongKeAdminJPanel();
+		trangThongKeNVQuanLyJPanel = new TrangThongKeNVQuanLyJPanel();
 		
 		switchContent(trangChuPanel);
 		
@@ -205,7 +199,7 @@ public class TrangChinhAdmin extends JFrame implements ActionListener{
 		}else if(o.equals(btnMenuCnQlyNhanVien)) {
 			switchContent(trangQLNhanVienJPanel);
 		}else if(o.equals(btnMenuCnQlyThongKe)) {
-			switchContent(trangThongKeAdminJPanel);
+			switchContent(trangThongKeNVQuanLyJPanel);
 		}else if(o.equals(btnMenuCnQlyTroGiup)) {
 			switchContent(trangHuongDanJPanel);
 		}else if(o.equals(btnMenuCnXemThongTinTK)) {
