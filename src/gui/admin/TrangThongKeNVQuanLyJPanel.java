@@ -10,13 +10,13 @@ import javax.swing.JPanel;
 
 import constance.SetBountJPanel;
 
-public class TrangThongKeAdminJPanel extends JPanel implements ActionListener{
+public class TrangThongKeNVQuanLyJPanel extends JPanel implements ActionListener{
 	private JButton btnNewButton;
 
 	/**
 	 * Create the panel.
 	 */
-	public TrangThongKeAdminJPanel() {
+	public TrangThongKeNVQuanLyJPanel() {
 		this.setBounds(SetBountJPanel.X, SetBountJPanel.Y, SetBountJPanel.WIDTH, SetBountJPanel.HEIGHT);
 		setLayout(null);
 		
