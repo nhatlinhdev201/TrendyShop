@@ -5,12 +5,12 @@ import javax.swing.JPanel;
 
 import constance.SetBountJPanel;
 
-public class TrangThongKeUserJPanel extends JPanel {
+public class TrangThongKeNVBanHangJPanel extends JPanel {
 
 	/**
 	 * Create the panel.
 	 */
-	public TrangThongKeUserJPanel() {
+	public TrangThongKeNVBanHangJPanel() {
 		this.setBounds(SetBountJPanel.X, SetBountJPanel.Y, SetBountJPanel.WIDTH, SetBountJPanel.HEIGHT);
 		setLayout(null);
 		
