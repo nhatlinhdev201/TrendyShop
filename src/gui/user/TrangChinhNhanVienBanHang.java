@@ -77,22 +77,22 @@ public class TrangChinhNhanVienBanHang extends JFrame implements ActionListener{
 
 		JPanel mainMenu = new JPanel();
 		mainMenu.setBackground(new Color(245, 255, 250));
-		mainMenu.setBounds(0, 0, 1712, 50);
+		mainMenu.setBounds(0, 0, 1350, 27);
 		contentPane.add(mainMenu);
 		mainMenu.setLayout(null);
 
 		btnMenuTrangChu = new JButton("TRANG CHỦ");
 		btnMenuTrangChu.setBackground(new Color(255, 250, 250));
-		btnMenuTrangChu.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/images/icon-home.png")).getImage()
-				.getScaledInstance(35, 35, Image.SCALE_SMOOTH)));
-		btnMenuTrangChu.setFont(new Font("Tahoma", Font.BOLD, 12));
-		btnMenuTrangChu.setBounds(10, 0, 148, 50);
+		btnMenuTrangChu.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/images/icon-home.png"))
+				.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH)));
+		btnMenuTrangChu.setFont(new Font("Tahoma", Font.BOLD, 10));
+		btnMenuTrangChu.setBounds(10, 0, 124, 26);
 		mainMenu.add(btnMenuTrangChu);
 
 		btnMenuCnBanHang = new JButton("Bán Hàng");
 		btnMenuCnBanHang.setBackground(new Color(255, 250, 250));
 		btnMenuCnBanHang.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/images/icon-money.png")).getImage()
-						.getScaledInstance(35, 35, Image.SCALE_SMOOTH)));
+						.getScaledInstance(18, 20, Image.SCALE_SMOOTH)));
 		btnMenuCnBanHang.setFont(new Font("Tahoma", Font.BOLD, 12));
 		btnMenuCnBanHang.setBounds(168, 0, 148, 50);
 		mainMenu.add(btnMenuCnBanHang);
