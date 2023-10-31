@@ -67,7 +67,11 @@ public class TrangThongKeNVQuanLyJPanel extends JPanel implements ActionListener
 	private JTextField txtNamDuocThongKe;
 	private JPanel currentContent;
 	private Container contentPane;
+<<<<<<< HEAD
 	private JPanel cntkThongKeBanHangQuanLy;
+=======
+	private CNTKThongKeBanHangNVQuanLy cntkThongKeBanHangQuanLy;
+>>>>>>> nhatlinh
 
 	/**
 	 * Create the panel.
