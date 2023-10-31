@@ -138,19 +138,19 @@ public class TrangChinhNhanVienQuanLy extends JFrame implements ActionListener{
 		
 		JLabel lblUsernameLogin = new JLabel("Nhật Linh");
 		lblUsernameLogin.setFont(new Font("Tahoma", Font.PLAIN, 24));
-		lblUsernameLogin.setBounds(1400, 6, 178, 28);
+		lblUsernameLogin.setBounds(1254, 6, 148, 28);
 		mainMenu.add(lblUsernameLogin);
 		
 		btnMenuCnXemThongTinTK = new JButton("");
 		btnMenuCnXemThongTinTK.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/images/avt-nv1.jpg"))
 				.getImage().getScaledInstance(55, 50, Image.SCALE_SMOOTH)));
-		btnMenuCnXemThongTinTK.setBounds(1578, 0, 57, 50);
+		btnMenuCnXemThongTinTK.setBounds(1397, 0, 57, 50);
 		mainMenu.add(btnMenuCnXemThongTinTK);
 		
 		btnMenuCnDangXuatTK = new JButton("");
 		btnMenuCnDangXuatTK.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/images/icon-logout.png"))
 				.getImage().getScaledInstance(55, 50, Image.SCALE_SMOOTH)));
-		btnMenuCnDangXuatTK.setBounds(1645, 1, 57, 50);
+		btnMenuCnDangXuatTK.setBounds(1464, 1, 57, 50);
 		mainMenu.add(btnMenuCnDangXuatTK);
 		
 		//<========================================================================================>
