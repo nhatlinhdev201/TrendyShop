@@ -53,6 +53,8 @@ public class TrangChinhNVQuanLy extends JFrame implements ActionListener{
 				try {
 					TrangChinhNVQuanLy frame = new TrangChinhNVQuanLy();
 					frame.setVisible(true);
+					frame.setIconImage(
+							new ImageIcon(getClass().getResource("/images/logoShop.png")).getImage());
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
