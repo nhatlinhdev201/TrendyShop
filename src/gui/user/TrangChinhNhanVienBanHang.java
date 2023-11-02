@@ -36,7 +36,8 @@ public class TrangChinhNhanVienBanHang extends JFrame implements ActionListener{
 	private JButton btnMenuCnDangXuatTK;
 	private TrangChuPanel trangChuPanel;
 	private TrangHuongDanJPanel trangHuongDanJPanel;
-	private TrangQLKhachHangPanel trangQLKhachHangPanel;
+//	private TrangQLKhachHangPanel trangQLKhachHangPanel;
+	private TrangTimKiemHoaDon trangQLKhachHangPanel;
 	private TrangBanHangJPanel trangBanHangJPanel;
 	private TrangThongKeNVBanHangJPanel trangThongKeNVBanHangJPanel;
 	private JPanel currentContent;
@@ -142,9 +143,10 @@ public class TrangChinhNhanVienBanHang extends JFrame implements ActionListener{
 		// <========================================================================================>
 		trangChuPanel = new TrangChuPanel();
 		trangHuongDanJPanel = new TrangHuongDanJPanel();
-		trangQLKhachHangPanel = new TrangQLKhachHangPanel();
+//		trangQLKhachHangPanel = new TrangQLKhachHangPanel();
 		trangBanHangJPanel = new TrangBanHangJPanel();
 		trangThongKeNVBanHangJPanel = new TrangThongKeNVBanHangJPanel();
+		trangQLKhachHangPanel = new TrangTimKiemHoaDon();
 		
 		switchContent(trangChuPanel);
 		// <<=====================Add action listener============================>>
@@ -175,8 +177,10 @@ public class TrangChinhNhanVienBanHang extends JFrame implements ActionListener{
 		Object o = e.getSource();
 		if(o.equals(btnMenuTrangChu)) {
 			switchContent(trangChuPanel);
+//		}else if(o.equals(btnMenuCnQlyKhachHang)) {
+//			switchContent(trangQLKhachHangPanel);
 		}else if(o.equals(btnMenuCnQlyKhachHang)) {
-			switchContent(trangQLKhachHangPanel);
+				switchContent(trangQLKhachHangPanel);
 		}else if(o.equals(btnMenuCnQlyTroGiup)) {
 			switchContent(trangHuongDanJPanel);
 		}else if(o.equals(btnMenuCnBanHang)) {
