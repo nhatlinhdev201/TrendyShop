@@ -1,31 +1,23 @@
 package gui.admin;
 
-import java.awt.Color;
-import java.awt.Container;
-import java.awt.Font;
-import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JPanel;
-
-import constance.SetBountJPanel;
-import javax.swing.border.LineBorder;
-import javax.swing.JLabel;
 import javax.swing.JTabbedPane;
-import javax.swing.border.TitledBorder;
-import javax.swing.border.EtchedBorder;
-import javax.swing.JTextField;
-import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JCheckBox;
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
-import java.awt.BorderLayout;
+import javax.swing.JTextField;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
 
-public class TrangThongKeNVQuanLyJPanel extends JPanel implements ActionListener{
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Font;
+
+public class TK_ThongKeBanHangJPanel extends JPanel {
 	private JTextField txtThongKeTrenNgay;
 	private JTextField txtTenNhanVienTimKiemNgay;
 	private JTextField txtMaNhanVienTimKiem;
@@ -65,39 +57,28 @@ public class TrangThongKeNVQuanLyJPanel extends JPanel implements ActionListener
 	private JTextField txtTenNhanVienTimKiemNam;
 	private JTextField txtMaNhanVienTimKiemNam;
 	private JTextField txtNamDuocThongKe;
-	private JPanel currentContent;
-	private Container contentPane;
+
 	/**
 	 * Create the panel.
 	 */
-	public TrangThongKeNVQuanLyJPanel() {
-		this.setBounds(SetBountJPanel.X, SetBountJPanel.Y, SetBountJPanel.WIDTH, SetBountJPanel.HEIGHT);
+	public TK_ThongKeBanHangJPanel() {
+		this.setBounds(0, 0, 1350, 668);
 		setLayout(null);
 		
-		JPanel menuCN_CNThongKe = new JPanel();
-		menuCN_CNThongKe.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
-		menuCN_CNThongKe.setBounds(0, 0, 1350, 33);
-		add(menuCN_CNThongKe);
-		menuCN_CNThongKe.setLayout(null);
-		
-		JPanel panelCN_CNThongKe = new JPanel();
-		panelCN_CNThongKe.setBounds(0, 33, 1350, 668);
-		add(panelCN_CNThongKe);
-		panelCN_CNThongKe.setLayout(null);
-		
-//		//<=====================================>
-
-		
+		JPanel panelCN_CNThongKeBanHang = new JPanel();
+		panelCN_CNThongKeBanHang.setBounds(0, 0, 1350, 668);
+		add(panelCN_CNThongKeBanHang);;
+		panelCN_CNThongKeBanHang.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("THỐNG KÊ BÁN HÀNG");
 		lblNewLabel.setBounds(583, 0, 196, 25);
 		lblNewLabel.setForeground(new Color(255, 0, 0));
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 15));
-		panelCN_CNThongKe.add(lblNewLabel);
+		panelCN_CNThongKeBanHang.add(lblNewLabel);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBounds(0, 11, 1350, 661);
-		panelCN_CNThongKe.add(tabbedPane);
+		panelCN_CNThongKeBanHang.add(tabbedPane);
 		/*
 		 * Table
 		 * */
@@ -822,24 +803,7 @@ public class TrangThongKeNVQuanLyJPanel extends JPanel implements ActionListener
 		JButton btnChonNhanVienNam = new JButton("Chọn");
 		btnChonNhanVienNam.setBounds(138, 458, 89, 23);
 		panel_3_1_1.add(btnChonNhanVienNam);
+		
 	}
-	
-	private void switchContent(JPanel newContent) {
-		newContent.setBounds(0, 28, 1350, 701);
-        if (currentContent != null) {
-            contentPane.remove(currentContent);
-            currentContent.requestFocusInWindow();
-        }
-        currentContent = newContent;
-        contentPane.add(currentContent, BorderLayout.CENTER);
-        revalidate();
-        repaint();
-    }
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		Object o = e.getSource();
-		
-		
-	}
 }
