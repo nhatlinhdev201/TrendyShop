@@ -135,8 +135,13 @@ public class TrangChinhNVQuanLy extends JFrame implements ActionListener{
 		mainMenu.add(btnMenuCnQlyTroGiup);
 		
 		JLabel lblUsernameLogin = new JLabel("Nhật Linh");
+<<<<<<< HEAD:src/gui/admin/TrangChinhNVQuanLy.java
 		lblUsernameLogin.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		lblUsernameLogin.setBounds(1113, 5, 158, 21);
+=======
+		lblUsernameLogin.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		lblUsernameLogin.setBounds(1254, 6, 148, 28);
+>>>>>>> 4faec8dc93f6ddd33bdcd77419ed16b599a483b3:src/gui/admin/TrangChinhNhanVienQuanLy.java
 		mainMenu.add(lblUsernameLogin);
 		
 		btnMenuCnDangXuatTK = new JButton("");
@@ -147,10 +152,23 @@ public class TrangChinhNVQuanLy extends JFrame implements ActionListener{
 		
 		btnMenuCnXemThongTinTK = new JButton("");
 		btnMenuCnXemThongTinTK.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/images/avt-nv1.jpg"))
+<<<<<<< HEAD:src/gui/admin/TrangChinhNVQuanLy.java
                 .getImage().getScaledInstance(25, 20, Image.SCALE_SMOOTH)));
 		btnMenuCnXemThongTinTK.setBounds(1272, 0, 30, 26);
 		mainMenu.add(btnMenuCnXemThongTinTK);
 		
+=======
+				.getImage().getScaledInstance(55, 50, Image.SCALE_SMOOTH)));
+		btnMenuCnXemThongTinTK.setBounds(1397, 0, 57, 50);
+		mainMenu.add(btnMenuCnXemThongTinTK);
+		
+		btnMenuCnDangXuatTK = new JButton("");
+		btnMenuCnDangXuatTK.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/images/icon-logout.png"))
+				.getImage().getScaledInstance(55, 50, Image.SCALE_SMOOTH)));
+		btnMenuCnDangXuatTK.setBounds(1464, 1, 57, 50);
+		mainMenu.add(btnMenuCnDangXuatTK);
+		
+>>>>>>> 4faec8dc93f6ddd33bdcd77419ed16b599a483b3:src/gui/admin/TrangChinhNhanVienQuanLy.java
 		//<========================================================================================>
 		
 		trangChuPanel = new TrangChuPanel();
