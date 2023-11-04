@@ -25,7 +25,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import java.awt.BorderLayout;
 
-public class TrangThongKeNVQuanLyJPanel extends JPanel implements ActionListener{
+public class TrangThongKeNVQuanLy extends JPanel implements ActionListener{
 	private JTextField txtThongKeTrenNgay;
 	private JTextField txtTenNhanVienTimKiemNgay;
 	private JTextField txtMaNhanVienTimKiem;
@@ -65,20 +65,45 @@ public class TrangThongKeNVQuanLyJPanel extends JPanel implements ActionListener
 	private JTextField txtTenNhanVienTimKiemNam;
 	private JTextField txtMaNhanVienTimKiemNam;
 	private JTextField txtNamDuocThongKe;
-	private JPanel currentContent;
-	private Container contentPane;
+
 	/**
 	 * Create the panel.
 	 */
-	public TrangThongKeNVQuanLyJPanel() {
+	public TrangThongKeNVQuanLy() {
 		this.setBounds(SetBountJPanel.X, SetBountJPanel.Y, SetBountJPanel.WIDTH, SetBountJPanel.HEIGHT);
 		setLayout(null);
+		
 		
 		JPanel menuCN_CNThongKe = new JPanel();
 		menuCN_CNThongKe.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
 		menuCN_CNThongKe.setBounds(0, 0, 1350, 33);
 		add(menuCN_CNThongKe);
 		menuCN_CNThongKe.setLayout(null);
+		
+		JButton btnCNThongKeBanHang = new JButton("Thống kê bán hàng");
+		btnCNThongKeBanHang.setBackground(new Color(255, 218, 185));
+		btnCNThongKeBanHang.setBounds(10, 5, 181, 26);
+		btnCNThongKeBanHang.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/images/icon-home.png"))
+				.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH)));
+		btnCNThongKeBanHang.setFont(new Font("Tahoma", Font.BOLD, 10));
+		menuCN_CNThongKe.add(btnCNThongKeBanHang);
+		
+		JButton btnCNThongKeDoanhThu = new JButton("Thống kê doanh thu");
+		btnCNThongKeDoanhThu.setBackground(new Color(255, 218, 185));
+		btnCNThongKeDoanhThu.setBounds(201, 5, 186, 26);
+		btnCNThongKeDoanhThu.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/images/icon-home.png"))
+				.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH)));
+		btnCNThongKeDoanhThu.setFont(new Font("Tahoma", Font.BOLD, 10));
+		menuCN_CNThongKe.add(btnCNThongKeDoanhThu);
+		
+		JButton btnCNThongKeHoaDon = new JButton("Thống kê hóa đơn");
+		btnCNThongKeHoaDon.setBackground(new Color(255, 218, 185));
+		btnCNThongKeHoaDon.setBounds(410, 5, 181, 26);
+		btnCNThongKeHoaDon.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/images/icon-home.png"))
+				.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH)));
+		btnCNThongKeHoaDon.setFont(new Font("Tahoma", Font.BOLD, 10));
+		menuCN_CNThongKe.add(btnCNThongKeHoaDon);
+		
 		
 		JPanel panelCN_CNThongKe = new JPanel();
 		panelCN_CNThongKe.setBounds(0, 33, 1350, 668);
@@ -823,18 +848,6 @@ public class TrangThongKeNVQuanLyJPanel extends JPanel implements ActionListener
 		btnChonNhanVienNam.setBounds(138, 458, 89, 23);
 		panel_3_1_1.add(btnChonNhanVienNam);
 	}
-	
-	private void switchContent(JPanel newContent) {
-		newContent.setBounds(0, 28, 1350, 701);
-        if (currentContent != null) {
-            contentPane.remove(currentContent);
-            currentContent.requestFocusInWindow();
-        }
-        currentContent = newContent;
-        contentPane.add(currentContent, BorderLayout.CENTER);
-        revalidate();
-        repaint();
-    }
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
