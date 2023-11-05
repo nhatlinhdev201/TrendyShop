@@ -44,6 +44,7 @@ public class TrangChinhNVQuanLy extends JFrame implements ActionListener{
 	private JButton btnMenuCnXemThongTinTK;
 	private JButton btnMenuCnDangXuatTK;
 	private MenuTrangThongKeNVQuanLy menuTrangThongKeNVQuanLy;
+	private TrangThongKeNVQuanLy trangThongKeNVQuanLy;
 
 	/**
 	 * Launch the application.
@@ -159,7 +160,7 @@ public class TrangChinhNVQuanLy extends JFrame implements ActionListener{
 		trangQLNhanVienJPanel = new TrangQLNhanVienJPanel();
 		trangQuanLyHangHoaJPanel = new TrangQuanLyHangHoaJPanel();
 		trangThongKeNVQuanLyJPanel = new TrangThongKeNVQuanLyJPanel();
-		menuTrangThongKeNVQuanLy = new MenuTrangThongKeNVQuanLy();
+		trangThongKeNVQuanLy = new TrangThongKeNVQuanLy();
 		
 		switchContent(trangChuPanel);
 		
@@ -197,7 +198,7 @@ public class TrangChinhNVQuanLy extends JFrame implements ActionListener{
 		}else if(o.equals(btnMenuCnQlyNhanVien)) {
 			switchContent(trangQLNhanVienJPanel);
 		}else if(o.equals(btnMenuCnQlyThongKe)) {
-			switchContent(trangThongKeNVQuanLyJPanel);
+			switchContent(trangThongKeNVQuanLy);
 		}else if(o.equals(btnMenuCnQlyTroGiup)) {
 			switchContent(trangHuongDanJPanel);
 		}else if(o.equals(btnMenuCnXemThongTinTK)) {
