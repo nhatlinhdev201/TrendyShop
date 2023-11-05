@@ -16,6 +16,8 @@ import javax.swing.JLabel;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class TK_ThongKeBanHangJPanel extends JPanel {
 	private JTextField txtThongKeTrenNgay;
@@ -62,11 +64,11 @@ public class TK_ThongKeBanHangJPanel extends JPanel {
 	 * Create the panel.
 	 */
 	public TK_ThongKeBanHangJPanel() {
-		this.setBounds(0, 0, 1350, 668);
+		this.setBounds(0, 0, 1350, 640);
 		setLayout(null);
 		
 		JPanel panelCN_CNThongKeBanHang = new JPanel();
-		panelCN_CNThongKeBanHang.setBounds(0, 0, 1350, 668);
+		panelCN_CNThongKeBanHang.setBounds(0, 0, 1350, 638);
 		add(panelCN_CNThongKeBanHang);;
 		panelCN_CNThongKeBanHang.setLayout(null);
 		
@@ -90,7 +92,7 @@ public class TK_ThongKeBanHangJPanel extends JPanel {
 		
 		JPanel panelDuLieuThongKe = new JPanel();
 		panelDuLieuThongKe.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "D\u1EEF li\u1EC7u th\u1ED1ng k\u00EA", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panelDuLieuThongKe.setBounds(10, 11, 387, 611);
+		panelDuLieuThongKe.setBounds(10, 11, 387, 579);
 		panelTabThongKeTheoNgay.add(panelDuLieuThongKe);
 		panelDuLieuThongKe.setLayout(null);
 		
@@ -116,7 +118,7 @@ public class TK_ThongKeBanHangJPanel extends JPanel {
 		
 		JPanel panel_3 = new JPanel();
 		panel_3.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Ch\u1ECDn nh\u00E2n vi\u00EAn", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panel_3.setBounds(0, 129, 382, 492);
+		panel_3.setBounds(0, 129, 382, 456);
 		panelDuLieuThongKe.add(panel_3);
 		panel_3.setLayout(null);
 		
@@ -161,7 +163,7 @@ public class TK_ThongKeBanHangJPanel extends JPanel {
 		
 		JPanel panelBangNhanVienNgay = new JPanel();
 		panelBangNhanVienNgay.setBorder(new TitledBorder(null, "Danh sách nhân viên", TitledBorder.CENTER, TitledBorder.TOP, null, null));
-		panelBangNhanVienNgay.setBounds(10, 148, 362, 309);
+		panelBangNhanVienNgay.setBounds(10, 148, 362, 270);
 		panel_3.add(panelBangNhanVienNgay);
 		panelBangNhanVienNgay.setLayout(new BorderLayout(0, 0));
 		
@@ -169,12 +171,12 @@ public class TK_ThongKeBanHangJPanel extends JPanel {
 		panelBangNhanVienNgay.add(tblDsNhanVienNgay, BorderLayout.CENTER);
 		
 		JButton btnChonNhanVien = new JButton("Chọn");
-		btnChonNhanVien.setBounds(138, 458, 89, 23);
+		btnChonNhanVien.setBounds(137, 422, 89, 23);
 		panel_3.add(btnChonNhanVien);
 		
 		JPanel panelKetQuaThongKe = new JPanel();
 		panelKetQuaThongKe.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "K\u1EBFt qu\u1EA3 th\u1ED1ng k\u00EA", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panelKetQuaThongKe.setBounds(407, 11, 523, 611);
+		panelKetQuaThongKe.setBounds(407, 11, 523, 579);
 		panelTabThongKeTheoNgay.add(panelKetQuaThongKe);
 		panelKetQuaThongKe.setLayout(null);
 		
@@ -269,7 +271,7 @@ public class TK_ThongKeBanHangJPanel extends JPanel {
 		
 		JPanel panelTblTopMatHangNgay = new JPanel();
 		panelTblTopMatHangNgay.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Top 10 m\u1EB7t h\u00E0ng b\u00E1n ch\u1EA1y nh\u1EA5t", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panelTblTopMatHangNgay.setBounds(10, 281, 503, 303);
+		panelTblTopMatHangNgay.setBounds(10, 281, 503, 262);
 		panelKetQuaThongKe.add(panelTblTopMatHangNgay);
 		panelTblTopMatHangNgay.setLayout(new BorderLayout(0, 0));
 		
@@ -308,17 +310,17 @@ public class TK_ThongKeBanHangJPanel extends JPanel {
 		
 		JPanel panelBieuDoThongKeNgay = new JPanel();
 		panelBieuDoThongKeNgay.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Bi\u1EC3u \u0111\u1ED3 th\u1ED1ng k\u00EA", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panelBieuDoThongKeNgay.setBounds(940, 11, 395, 570);
+		panelBieuDoThongKeNgay.setBounds(940, 11, 395, 537);
 		panelTabThongKeTheoNgay.add(panelBieuDoThongKeNgay);
 		
 		JButton btnTaoBaoCaoTkBanHang = new JButton("Tạo báo cáo");
 		btnTaoBaoCaoTkBanHang.setFont(new Font("Tahoma", Font.BOLD, 10));
-		btnTaoBaoCaoTkBanHang.setBounds(1179, 592, 136, 30);
+		btnTaoBaoCaoTkBanHang.setBounds(1177, 559, 136, 30);
 		panelTabThongKeTheoNgay.add(btnTaoBaoCaoTkBanHang);
 		
 		JButton btnXuatDuLieuTkBanHang = new JButton("Xuất dữ liệu thống kê");
 		btnXuatDuLieuTkBanHang.setFont(new Font("Tahoma", Font.BOLD, 10));
-		btnXuatDuLieuTkBanHang.setBounds(960, 592, 174, 30);
+		btnXuatDuLieuTkBanHang.setBounds(950, 559, 174, 30);
 		panelTabThongKeTheoNgay.add(btnXuatDuLieuTkBanHang);
 		
 		JPanel panelTabThongKeTheoThang = new JPanel();
@@ -329,7 +331,7 @@ public class TK_ThongKeBanHangJPanel extends JPanel {
 		JPanel panelDuLieuThongKeThang = new JPanel();
 		panelDuLieuThongKeThang.setLayout(null);
 		panelDuLieuThongKeThang.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "D\u1EEF li\u1EC7u th\u1ED1ng k\u00EA", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panelDuLieuThongKeThang.setBounds(10, 11, 387, 611);
+		panelDuLieuThongKeThang.setBounds(10, 11, 387, 582);
 		panelTabThongKeTheoThang.add(panelDuLieuThongKeThang);
 		
 		JLabel lblThongKeNgay_1 = new JLabel("Thống  kê tháng :");
@@ -355,7 +357,7 @@ public class TK_ThongKeBanHangJPanel extends JPanel {
 		JPanel panel_3_1 = new JPanel();
 		panel_3_1.setLayout(null);
 		panel_3_1.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Ch\u1ECDn nh\u00E2n vi\u00EAn", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panel_3_1.setBounds(0, 129, 382, 492);
+		panel_3_1.setBounds(0, 129, 382, 455);
 		panelDuLieuThongKeThang.add(panel_3_1);
 		
 		JCheckBox cbTatCaNhanVienThang = new JCheckBox("Tất cả nhân viên");
@@ -399,12 +401,12 @@ public class TK_ThongKeBanHangJPanel extends JPanel {
 		
 		JPanel panelBangNhanVienTimKiemThang = new JPanel();
 		panelBangNhanVienTimKiemThang.setBorder(new TitledBorder(null, "Danh sách nhân viên", TitledBorder.CENTER, TitledBorder.TOP, null, null));
-		panelBangNhanVienTimKiemThang.setBounds(10, 148, 362, 309);
+		panelBangNhanVienTimKiemThang.setBounds(10, 148, 362, 271);
 		panel_3_1.add(panelBangNhanVienTimKiemThang);
 		panelBangNhanVienTimKiemThang.setLayout(new BorderLayout(0, 0));
 		
 		JButton btnChonNhanVienTKThang = new JButton("Chọn");
-		btnChonNhanVienTKThang.setBounds(138, 458, 89, 23);
+		btnChonNhanVienTKThang.setBounds(134, 421, 89, 23);
 		panel_3_1.add(btnChonNhanVienTKThang);
 		
 		JComboBox cbxThongKeThang = new JComboBox();
@@ -420,7 +422,7 @@ public class TK_ThongKeBanHangJPanel extends JPanel {
 		JPanel panelKetQuaThongKe_1 = new JPanel();
 		panelKetQuaThongKe_1.setLayout(null);
 		panelKetQuaThongKe_1.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "K\u1EBFt qu\u1EA3 th\u1ED1ng k\u00EA", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panelKetQuaThongKe_1.setBounds(407, 11, 523, 611);
+		panelKetQuaThongKe_1.setBounds(407, 11, 523, 582);
 		panelTabThongKeTheoThang.add(panelKetQuaThongKe_1);
 		
 		JLabel lblSlMhBanTrongNgay_1 = new JLabel("Số lượng mặt hàng đã bán :");
@@ -514,7 +516,7 @@ public class TK_ThongKeBanHangJPanel extends JPanel {
 		
 		JPanel panelTableTopMatHangThang = new JPanel();
 		panelTableTopMatHangThang.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Top 10 m\u1EB7t h\u00E0ng b\u00E1n ch\u1EA1y nh\u1EA5t", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panelTableTopMatHangThang.setBounds(10, 281, 503, 303);
+		panelTableTopMatHangThang.setBounds(10, 281, 503, 264);
 		panelKetQuaThongKe_1.add(panelTableTopMatHangThang);
 		panelTableTopMatHangThang.setLayout(new BorderLayout(0, 0));
 		
@@ -560,17 +562,17 @@ public class TK_ThongKeBanHangJPanel extends JPanel {
 		
 		JPanel panelBieuDoThongKeThang = new JPanel();
 		panelBieuDoThongKeThang.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Bi\u1EC3u \u0111\u1ED3 th\u1ED1ng k\u00EA", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panelBieuDoThongKeThang.setBounds(940, 11, 395, 570);
+		panelBieuDoThongKeThang.setBounds(940, -22, 395, 570);
 		panelTabThongKeTheoThang.add(panelBieuDoThongKeThang);
 		
 		JButton btnTaoBaoCaoTkBanHangThang = new JButton("Tạo báo cáo");
 		btnTaoBaoCaoTkBanHangThang.setFont(new Font("Tahoma", Font.BOLD, 10));
-		btnTaoBaoCaoTkBanHangThang.setBounds(1179, 592, 136, 30);
+		btnTaoBaoCaoTkBanHangThang.setBounds(1172, 559, 136, 30);
 		panelTabThongKeTheoThang.add(btnTaoBaoCaoTkBanHangThang);
 		
 		JButton btnXuatDuLieuTkBanHangThang = new JButton("Xuất dữ liệu thống kê");
 		btnXuatDuLieuTkBanHangThang.setFont(new Font("Tahoma", Font.BOLD, 10));
-		btnXuatDuLieuTkBanHangThang.setBounds(960, 592, 174, 30);
+		btnXuatDuLieuTkBanHangThang.setBounds(950, 559, 174, 30);
 		panelTabThongKeTheoThang.add(btnXuatDuLieuTkBanHangThang);
 		
 		JPanel panelTabThongKeTheoNam = new JPanel();
@@ -580,23 +582,27 @@ public class TK_ThongKeBanHangJPanel extends JPanel {
 		
 		JPanel panelBieuDoThongKeNam = new JPanel();
 		panelBieuDoThongKeNam.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Bi\u1EC3u \u0111\u1ED3 th\u1ED1ng k\u00EA", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panelBieuDoThongKeNam.setBounds(940, 11, 395, 570);
+		panelBieuDoThongKeNam.setBounds(940, 11, 395, 543);
 		panelTabThongKeTheoNam.add(panelBieuDoThongKeNam);
 		
 		JButton btnTaoBaoCaoTkBanHang_1_1 = new JButton("Tạo báo cáo");
+		btnTaoBaoCaoTkBanHang_1_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnTaoBaoCaoTkBanHang_1_1.setFont(new Font("Tahoma", Font.BOLD, 10));
-		btnTaoBaoCaoTkBanHang_1_1.setBounds(1179, 592, 136, 30);
+		btnTaoBaoCaoTkBanHang_1_1.setBounds(1170, 565, 136, 30);
 		panelTabThongKeTheoNam.add(btnTaoBaoCaoTkBanHang_1_1);
 		
 		JButton btnXuatDuLieuTkBanHang_1_1 = new JButton("Xuất dữ liệu thống kê");
 		btnXuatDuLieuTkBanHang_1_1.setFont(new Font("Tahoma", Font.BOLD, 10));
-		btnXuatDuLieuTkBanHang_1_1.setBounds(960, 592, 174, 30);
+		btnXuatDuLieuTkBanHang_1_1.setBounds(962, 565, 174, 30);
 		panelTabThongKeTheoNam.add(btnXuatDuLieuTkBanHang_1_1);
 		
 		JPanel panelKetQuaThongKe_1_1 = new JPanel();
 		panelKetQuaThongKe_1_1.setLayout(null);
 		panelKetQuaThongKe_1_1.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "K\u1EBFt qu\u1EA3 th\u1ED1ng k\u00EA", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panelKetQuaThongKe_1_1.setBounds(407, 11, 523, 611);
+		panelKetQuaThongKe_1_1.setBounds(407, 11, 523, 582);
 		panelTabThongKeTheoNam.add(panelKetQuaThongKe_1_1);
 		
 		JLabel lblSlMhBanTrongNgay_1_1 = new JLabel("Số lượng mặt hàng đã bán :");
@@ -690,7 +696,7 @@ public class TK_ThongKeBanHangJPanel extends JPanel {
 		
 		JPanel panelTableTopMatHangNam = new JPanel();
 		panelTableTopMatHangNam.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Top 10 m\u1EB7t h\u00E0ng b\u00E1n ch\u1EA1y nh\u1EA5t", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panelTableTopMatHangNam.setBounds(10, 281, 503, 303);
+		panelTableTopMatHangNam.setBounds(10, 281, 503, 269);
 		panelKetQuaThongKe_1_1.add(panelTableTopMatHangNam);
 		panelTableTopMatHangNam.setLayout(new BorderLayout(0, 0));
 		
@@ -727,7 +733,7 @@ public class TK_ThongKeBanHangJPanel extends JPanel {
 		JPanel panelDuLieuThongKe_1_1 = new JPanel();
 		panelDuLieuThongKe_1_1.setLayout(null);
 		panelDuLieuThongKe_1_1.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "D\u1EEF li\u1EC7u th\u1ED1ng k\u00EA", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panelDuLieuThongKe_1_1.setBounds(10, 11, 387, 611);
+		panelDuLieuThongKe_1_1.setBounds(10, 11, 387, 582);
 		panelTabThongKeTheoNam.add(panelDuLieuThongKe_1_1);
 		
 		JLabel lblThongKeNgay_1_1 = new JLabel("Nhập năm thống kê :");
@@ -752,7 +758,7 @@ public class TK_ThongKeBanHangJPanel extends JPanel {
 		JPanel panel_3_1_1 = new JPanel();
 		panel_3_1_1.setLayout(null);
 		panel_3_1_1.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Ch\u1ECDn nh\u00E2n vi\u00EAn", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panel_3_1_1.setBounds(0, 129, 382, 492);
+		panel_3_1_1.setBounds(0, 129, 382, 453);
 		panelDuLieuThongKe_1_1.add(panel_3_1_1);
 		
 		JCheckBox cbTatCaNhanVienNam = new JCheckBox("Tất cả nhân viên");
@@ -796,12 +802,12 @@ public class TK_ThongKeBanHangJPanel extends JPanel {
 		
 		JPanel panelBangNhanVienTimKiemNam = new JPanel();
 		panelBangNhanVienTimKiemNam.setBorder(new TitledBorder(null, "Danh sách nhân viên", TitledBorder.CENTER, TitledBorder.TOP, null, null));
-		panelBangNhanVienTimKiemNam.setBounds(10, 148, 362, 309);
+		panelBangNhanVienTimKiemNam.setBounds(10, 148, 362, 266);
 		panel_3_1_1.add(panelBangNhanVienTimKiemNam);
 		panelBangNhanVienTimKiemNam.setLayout(new BorderLayout(0, 0));
 		
 		JButton btnChonNhanVienNam = new JButton("Chọn");
-		btnChonNhanVienNam.setBounds(138, 458, 89, 23);
+		btnChonNhanVienNam.setBounds(142, 419, 89, 23);
 		panel_3_1_1.add(btnChonNhanVienNam);
 		
 	}
