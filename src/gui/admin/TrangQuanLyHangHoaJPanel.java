@@ -7,6 +7,7 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
@@ -180,14 +181,15 @@ public class TrangQuanLyHangHoaJPanel extends JPanel implements ActionListener, 
 		pnl_tieuchi.add(lbl_TieuChiSearch);
 
 		JLabel lbl_IconDropDown = new JLabel("");
-		lbl_IconDropDown.setIcon(new ImageIcon("D:\\Tran\\TrendyShop\\src\\images\\bottom_down_Black.png"));
+		lbl_IconDropDown.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/images/icon_down_chevron.png"))
+				.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH)));
 		lbl_IconDropDown.setBorder(new MatteBorder(0, 0, 0, 1, (Color) new Color(119, 136, 153)));
 		lbl_IconDropDown.setBounds(100, 1, 26, 24);
 		pnl_tieuchi.add(lbl_IconDropDown);
 
 		JLabel lbl_iconSearch = new JLabel("");
-		lbl_iconSearch.setIcon(new ImageIcon(
-				"C:\\Users\\Leon\\Downloads\\5349754_explore_find_magnifier_magnifying glass_search_icon.png"));
+		lbl_iconSearch.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/images/icon_search.png"))
+				.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH)));
 		lbl_iconSearch.setBounds(426, 2, 26, 26);
 		pnl_Search.add(lbl_iconSearch);
 
@@ -196,7 +198,8 @@ public class TrangQuanLyHangHoaJPanel extends JPanel implements ActionListener, 
 		btn_add.setFont(new Font("Tahoma", Font.BOLD, 12));
 		btn_add.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		btn_add.setBackground(SystemColor.info);
-		btn_add.setIcon(new ImageIcon("C:\\Users\\Leon\\Downloads\\299068_add_sign_icon.png"));
+		btn_add.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/images/icon_add_sign.png"))
+				.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH)));
 		btn_add.setFocusable(false);
 		btn_add.setBounds(826, 10, 100, 30);
 		pnl_Header.add(btn_add);
@@ -204,8 +207,8 @@ public class TrangQuanLyHangHoaJPanel extends JPanel implements ActionListener, 
 		btn_edit = new JButton("Sửa");
 		btn_edit.setIconTextGap(10);
 		btn_edit.setFont(new Font("Tahoma", Font.BOLD, 12));
-		btn_edit.setIcon(
-				new ImageIcon("C:\\Users\\Leon\\Downloads\\2530835_compose_create_edit_edit file_office_icon.png"));
+		btn_edit.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/images/icon_edit.png"))
+				.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH)));
 		btn_edit.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		btn_edit.setBackground(SystemColor.info);
 		btn_edit.setFocusable(false);
@@ -215,7 +218,8 @@ public class TrangQuanLyHangHoaJPanel extends JPanel implements ActionListener, 
 		btn_delete = new JButton("Xoá");
 		btn_delete.setIconTextGap(10);
 		btn_delete.setFont(new Font("Tahoma", Font.BOLD, 12));
-		btn_delete.setIcon(new ImageIcon("C:\\Users\\Leon\\Downloads\\8664938_trash_can_delete_remove_icon.png"));
+		btn_delete.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/images/icon_delete.png"))
+				.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH)));
 		btn_delete.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		btn_delete.setBackground(SystemColor.info);
 		btn_delete.setFocusable(false);
