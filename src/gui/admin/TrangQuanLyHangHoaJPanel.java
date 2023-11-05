@@ -15,13 +15,11 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.AbstractListModel;
@@ -49,7 +47,6 @@ import constance.SetBountJPanel;
 import dao.Dao_HangHoa;
 import entities.HangHoa;
 import rojerusan.RSTableMetro;
-import testFunction.ImageUploader;
 
 public class TrangQuanLyHangHoaJPanel extends JPanel implements ActionListener, MouseListener {
 	/**
@@ -67,7 +64,6 @@ public class TrangQuanLyHangHoaJPanel extends JPanel implements ActionListener, 
 	private JButton btn_delete;
 	private JPanel pnl_Search;
 	private List<String> listThuongHieu;
-	private List<String> listChatLieu;
 	private List<String> listXuatXu;
 
 	private DefaultListModel<String> listItemSearched;
@@ -75,11 +71,12 @@ public class TrangQuanLyHangHoaJPanel extends JPanel implements ActionListener, 
 	private JList<String> lst_ItemSearched;
 	private List<String> listTenHangHoa;
 	private List<HangHoa> ds;
-
+	private Dao_HangHoa dao_HangHoa;
 	/**
 	 * Create the panel.
 	 */
 	public TrangQuanLyHangHoaJPanel() {
+		dao_HangHoa = new Dao_HangHoa();
 		data();
 		setBackground(new Color(102, 205, 170));
 		this.setBounds(SetBountJPanel.X, SetBountJPanel.Y, SetBountJPanel.WIDTH, SetBountJPanel.HEIGHT);
@@ -155,8 +152,11 @@ public class TrangQuanLyHangHoaJPanel extends JPanel implements ActionListener, 
 		txt_Search.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
-				tbl_HangHoa.removeRowSelectionInterval(0, tbl_HangHoa.getModel().getRowCount() - 1);
-				renderSeatch();
+				if (txt_Search.getText().equals("")) {
+					loadData(ds);
+				}else {
+					renderSeatch();
+				}
 			}
 
 		});
@@ -265,7 +265,7 @@ public class TrangQuanLyHangHoaJPanel extends JPanel implements ActionListener, 
 			 */
 			private static final long serialVersionUID = 1L;
 			boolean[] columnEditables = new boolean[] { false, false, false, false, false, false, false, false, false,
-					false };
+					false,false };
 
 			public boolean isCellEditable(int row, int column) {
 				return columnEditables[column];
@@ -294,7 +294,7 @@ public class TrangQuanLyHangHoaJPanel extends JPanel implements ActionListener, 
 		dataDefault = new DefaultTableModel(new String[] { "M\u00E3 H\u00E0ng Ho\u00E1", "T\u00EAn",
 				"Th\u01B0\u01A1ng hi\u1EC7u", "Xu\u1EA5t x\u1EE9", "Ch\u1EA5t li\u1EC7u", "K\u00EDch c\u1EE1",
 				"M\u00E0u s\u1EAFc", "S\u1ED1 l\u01B0\u1EE3ng t\u1ED3n", "S\u1ED1 l\u01B0\u1EE3ng b\u00E1n",
-				"\u0110\u01A1n gi\u00E1(đ)" }, 0) {
+				"\u0110\u01A1n gi\u00E1(đ)" ,"Trạng Thái"}, 0) {
 			/**
 			 *
 			 */
@@ -345,20 +345,20 @@ public class TrangQuanLyHangHoaJPanel extends JPanel implements ActionListener, 
 
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
-				if (e.getValueIsAdjusting()) {
+				if (!e.getValueIsAdjusting() && lst_ItemSearched.getSelectedValue() !=null) {
 					if (lst_TieuChi.getSelectedIndex() == 1) {
 						String textSearch = lst_ItemSearched.getSelectedValue();
-						System.out.println(textSearch);
+						loadData(dao_HangHoa.getHangHoaByTenHangHoa(textSearch));
+						scr_ListItemSearched.setVisible(false);
 					} else if (lst_TieuChi.getSelectedIndex() == 2) {
 						String item = lst_ItemSearched.getSelectedValue();
-						System.out.println(item);
-						List<HangHoa> ds = new ArrayList<HangHoa>();
-						loadData(ds);
+						loadData(dao_HangHoa.getHangHoaByThuongHieu(item));
+						scr_ListItemSearched.setVisible(false);
 					} else if (lst_TieuChi.getSelectedIndex() == 3) {
 						String item = lst_ItemSearched.getSelectedValue();
-						System.out.println(item);
-						List<HangHoa> ds = new ArrayList<HangHoa>();
-						loadData(ds);
+						loadData(dao_HangHoa.getHangHoaByXuatXu(item));
+						scr_ListItemSearched.setVisible(false);
+
 					}
 				}
 
@@ -375,83 +375,19 @@ public class TrangQuanLyHangHoaJPanel extends JPanel implements ActionListener, 
 		loadData(ds);
 	}
 
-	public String createMaHangHoa(String ma) {
-		int id = Integer.parseInt(ma.substring(2));
-		if (id < 9) {
-			id++;
-			return "HH000" + id;
-		} else if (id < 99) {
-			id++;
-			return "HH00" + id;
-		} else if (id < 999) {
-			id++;
-			return "HH0" + id;
-		}
-		id++;
-		return "HH" + id;
-	}
-
 	public void data() {
-		listThuongHieu = new ArrayList<String>();
-		listThuongHieu.add("adidas");
-		listThuongHieu.add("nike");
-		listThuongHieu.add("jordan");
-		listThuongHieu.add("convert");
-		listThuongHieu.add("hunter");
-
-		listChatLieu = new ArrayList<String>();
-		listChatLieu.add("Cotton");
-		listChatLieu.add("Jean");
-		listChatLieu.add("Silk");
-		listChatLieu.add("Leather");
-		listChatLieu.add("Nylon");
-		listChatLieu.add("Spandex");
-		listChatLieu.add("Chiffon");
-		listChatLieu.add("Wool");
-
-		listXuatXu = new ArrayList<String>();
-		listXuatXu.add("Việt Nam");
-		listXuatXu.add("Mỹ");
-		listXuatXu.add("Thái lan");
-		listXuatXu.add("Nhật");
-		listXuatXu.add("Hàn");
-
-		ds = new ArrayList<HangHoa>();
-		ds.add(new HangHoa("HH001", "Áo thun nam", "Áo thun", "Adidas", "Việt Nam", "Cotton",
-				"Áo thun nam Adidas màu đen", "image1.jpg", "NCC001", "L", "Đen", 100, 0, 25.5, true));
-		ds.add(new HangHoa("HH002", "Quần jean nữ", "Quần jean", "Levi's", "Mỹ", "Jean", "Quần jean nữ Levi's màu xanh",
-				"image2.jpg", "NCC002", "M", "Xanh", 80, 10, 40.0, true));
-		ds.add(new HangHoa("HH003", "Áo thun nam", "Áo thun", "Adidas", "Việt Nam", "Cotton",
-				"Áo thun nam Adidas màu đen", "image1.jpg", "NCC001", "L", "Đen", 100, 0, 25.5, true));
-		ds.add(new HangHoa("HH004", "Quần jean nữ", "Quần jean", "Levi's", "Mỹ", "Jean", "Quần jean nữ Levi's màu xanh",
-				"image2.jpg", "NCC002", "M", "Xanh", 80, 10, 40.0, true));
-		ds.add(new HangHoa("HH005", "Áo thun nam", "Áo thun", "Adidas", "Việt Nam", "Cotton",
-				"Áo thun nam Adidas màu đen", "image1.jpg", "NCC001", "L", "Đen", 100, 0, 25.5, true));
-		ds.add(new HangHoa("HH006", "Quần jean nữ", "Quần jean", "Levi's", "Mỹ", "Jean", "Quần jean nữ Levi's màu xanh",
-				"image2.jpg", "NCC002", "M", "Xanh", 80, 10, 40.0, true));
-		ds.add(new HangHoa("HH007", "Áo thun nam", "Áo thun", "Adidas", "Việt Nam", "Cotton",
-				"Áo thun nam Adidas màu đen", "image1.jpg", "NCC001", "L", "Đen", 100, 0, 25.5, true));
-		ds.add(new HangHoa("HH008", "Quần jean nữ", "Quần jean", "Levi's", "Mỹ", "Jean", "Quần jean nữ Levi's màu xanh",
-				"image2.jpg", "NCC002", "M", "Xanh", 80, 10, 40.0, true));
-		ds.add(new HangHoa("HH009", "Áo thun nam", "Áo thun", "Adidas", "Việt Nam", "Cotton",
-				"Áo thun nam Adidas màu đen", "image1.jpg", "NCC001", "L", "Đen", 100, 0, 25.5, true));
-		ds.add(new HangHoa("HH010", "Quần jean nữ", "Quần jean", "Levi's", "Mỹ", "Jean", "Quần jean nữ Levi's màu xanh",
-				"image2.jpg", "NCC002", "M", "Xanh", 80, 10, 40.0, true));
-		listTenHangHoa = new ArrayList<String>();
-		for (HangHoa hangHoa : ds) {
-			listTenHangHoa.add(hangHoa.getTenHangHoa());
-		}
+		listThuongHieu = dao_HangHoa.getAllThuongHieu();
+		listXuatXu = dao_HangHoa.getAllXuatXu();
+		ds = dao_HangHoa.getAll();
+		listTenHangHoa = dao_HangHoa.getAllTenHangHoa();
 	}
 
 	private void loadData(List<HangHoa> dsHangHoa) {
-		Dao_HangHoa dao_HangHoa = new Dao_HangHoa();
-		for (HangHoa hangHoa : dao_HangHoa.getAll()) {
-			System.out.println(hangHoa);
-		}
+		dataDefault.setRowCount(0);
 		for (HangHoa hangHoa : dsHangHoa) {
 			Object[] row = { hangHoa.getMaHangHoa(), hangHoa.getTenHangHoa(), hangHoa.getThuongHieu(),
 					hangHoa.getXuatXu(), hangHoa.getChatLieu(), hangHoa.getKichCo(), hangHoa.getMauSac(),
-					hangHoa.getSoLuongTon(), hangHoa.getSoLuongDaBan(), hangHoa.getDonGiaNhap() };
+					hangHoa.getSoLuongTon(), hangHoa.getSoLuongDaBan(), hangHoa.getDonGiaNhap() ,hangHoa.isTrangThai()?"Còn bán":"Ngừng bán"};
 			dataDefault.addRow(row);
 		}
 	}
@@ -486,16 +422,18 @@ public class TrangQuanLyHangHoaJPanel extends JPanel implements ActionListener, 
 	}
 
 	public void renderSeatch() {
-		if (lst_TieuChi.getSelectedIndex() == 0) {
-			String textSearch = txt_Search.getText();
-			searchOnTable(textSearch, 0);
-		} else if (lst_TieuChi.getSelectedIndex() == 1) {
-			searchItem(listTenHangHoa, txt_Search.getText());
-		} else if (lst_TieuChi.getSelectedIndex() == 2) {
-			searchItem(listThuongHieu, txt_Search.getText());
-		} else if (lst_TieuChi.getSelectedIndex() == 3) {
-			searchItem(listXuatXu, txt_Search.getText());
-		}
+		
+			if (lst_TieuChi.getSelectedIndex() == 0) {
+				String textSearch = txt_Search.getText();
+				searchOnTable(textSearch, 0);
+			} else if (lst_TieuChi.getSelectedIndex() == 1) {
+				searchItem(listTenHangHoa, txt_Search.getText());
+			} else if (lst_TieuChi.getSelectedIndex() == 2) {
+				searchItem(listThuongHieu, txt_Search.getText());
+			} else if (lst_TieuChi.getSelectedIndex() == 3) {
+				searchItem(listXuatXu, txt_Search.getText());
+			}
+		
 	}
 
 	public void searchOnTable(String textSearch, int column) {
@@ -513,21 +451,32 @@ public class TrangQuanLyHangHoaJPanel extends JPanel implements ActionListener, 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(btn_add)) {
-			new ImageUploader().setVisible(true);
-
+			HangHoa hangHoa = new HangHoa();
+			Object[] r = { "Thoát" };
+			JOptionPane.showOptionDialog(this, new FormThongTinHangHoa(hangHoa, "add"),"",JOptionPane.DEFAULT_OPTION,JOptionPane.DEFAULT_OPTION,null,r,null);
+			ds = dao_HangHoa.getAll();
+			loadData(ds);
 		} else if (e.getSource().equals(btn_delete)) {
 			if (tbl_HangHoa.getSelectedRow() == -1) {
 				JOptionPane.showMessageDialog(this, "Vui lòng chọn sản phẩm muốn xoá.");
 			} else {
 				int row = tbl_HangHoa.getSelectedRow();
-				System.out.println("xoá sản phẩm:" + tbl_HangHoa.getValueAt(row, 0));
+				if (dao_HangHoa.deleteHangHoa(tbl_HangHoa.getValueAt(row, 0).toString())) {
+					JOptionPane.showMessageDialog(this, "Đã xoá thành công sản phẩm");
+					ds = dao_HangHoa.getAll();
+					loadData(ds);
+				}
 			}
 		} else if (e.getSource().equals(btn_edit)) {
 			if (tbl_HangHoa.getSelectedRow() == -1) {
 				JOptionPane.showMessageDialog(this, "Vui lòng chọn sản phẩm muốn chỉnh sửa.");
 			} else {
 				int row = tbl_HangHoa.getSelectedRow();
-				System.out.println("load data sản phẩm" + tbl_HangHoa.getValueAt(row, 0));
+				HangHoa hangHoa = dao_HangHoa.getHangHoaByMaHangHao(tbl_HangHoa.getValueAt(row, 0).toString());
+				Object[] r = { "Thoát" };
+				JOptionPane.showOptionDialog(this, new FormThongTinHangHoa(hangHoa, "edit"),"",JOptionPane.DEFAULT_OPTION,JOptionPane.DEFAULT_OPTION,null,r,null);
+				ds = dao_HangHoa.getAll();
+				loadData(ds);
 			}
 		}
 	}
@@ -541,7 +490,7 @@ public class TrangQuanLyHangHoaJPanel extends JPanel implements ActionListener, 
 		} else if (e.getSource().equals(pnl_tieuchi)) {
 			lst_TieuChi.setVisible(true);
 		} else if (e.getSource().equals(txt_Search)) {
-			renderSeatch();
+				renderSeatch();
 		}
 	}
 
