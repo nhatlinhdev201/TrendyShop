@@ -1,35 +1,30 @@
 package gui.admin;
 
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Iterator;
-import java.util.List;
 
-import javax.swing.SwingConstants;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
-import javax.swing.border.BevelBorder;
-import javax.swing.JTextField;
-import javax.swing.JSpinner;
-import javax.swing.SpinnerNumberModel;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JSpinner;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.SwingConstants;
+import javax.swing.border.BevelBorder;
 import javax.swing.border.LineBorder;
 
 import dao.Dao_HangHoa;
 import dao.Dao_NhaCungCap;
 import entities.HangHoa;
 import entities.NhaCungCap;
-
-import java.awt.Color;
-import java.awt.Dimension;
-import javax.swing.JRadioButton;
-import javax.swing.JCheckBox;
-import javax.swing.DefaultComboBoxModel;
 
 public class FormThongTinHangHoa extends JPanel implements ActionListener{
 	/**
@@ -321,14 +316,14 @@ public class FormThongTinHangHoa extends JPanel implements ActionListener{
 		if (e.getSource().equals(btn_ChonAnh)) {
 			
 		}else if (e.getSource().equals(btn_Save)) {
-			String ten = txt_Ten.getText();
-			String thuongHieu = txt_ThuongHieu.getText();
-			String xuatXu = txt_XuatXu.getText();
-			String mauSac = txt_MauSac.getText();
-			String chatLieu = txt_ChatLieu.getText();
-			String phanLoai = txt_PhanLoai.getText();
-			String kichCo = txt_KichCo.getText();
-			String moTa = txtMoTa.getText();
+			String ten = txt_Ten.getText().trim();
+			String thuongHieu = txt_ThuongHieu.getText().trim();
+			String xuatXu = txt_XuatXu.getText().trim();
+			String mauSac = txt_MauSac.getText().trim();
+			String chatLieu = txt_ChatLieu.getText().trim();
+			String phanLoai = txt_PhanLoai.getText().trim();
+			String kichCo = txt_KichCo.getText().trim();
+			String moTa = txtMoTa.getText().trim();
 			String nhaCungCap = ((NhaCungCap)cmb_NhaCungCap.getSelectedItem()).getMaNhaCungCap();
 			double giaNhap = (double)spn_GiaNhap.getValue();
 			int soLuongTon = (int) spn_SoLuongTon.getValue();

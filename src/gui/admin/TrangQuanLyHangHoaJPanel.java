@@ -182,7 +182,7 @@ public class TrangQuanLyHangHoaJPanel extends JPanel implements ActionListener, 
 
 		JLabel lbl_IconDropDown = new JLabel("");
 		lbl_IconDropDown.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/images/icon_down_chevron.png"))
-				.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH)));
+				.getImage().getScaledInstance(12, 12, Image.SCALE_SMOOTH)));
 		lbl_IconDropDown.setBorder(new MatteBorder(0, 0, 0, 1, (Color) new Color(119, 136, 153)));
 		lbl_IconDropDown.setBounds(100, 1, 26, 24);
 		pnl_tieuchi.add(lbl_IconDropDown);
@@ -442,7 +442,7 @@ public class TrangQuanLyHangHoaJPanel extends JPanel implements ActionListener, 
 
 	public void searchOnTable(String textSearch, int column) {
 		tbl_HangHoa.removeRowSelectionInterval(0, tbl_HangHoa.getRowCount()-1);
-		if (textSearch.length()==5) {
+		if (textSearch.length()==6) {
 			for (int i = 0; i < tbl_HangHoa.getRowCount(); i++) {
 				if (textSearch.toLowerCase().compareToIgnoreCase(tbl_HangHoa.getValueAt(i, column)+"")==0) {
 					tbl_HangHoa.setRowSelectionInterval(i, i);
@@ -457,7 +457,7 @@ public class TrangQuanLyHangHoaJPanel extends JPanel implements ActionListener, 
 		if (e.getSource().equals(btn_add)) {
 			HangHoa hangHoa = new HangHoa();
 			Object[] r = { "Thoát" };
-			JOptionPane.showOptionDialog(this, new FormThongTinHangHoa(hangHoa, "add"),"",JOptionPane.DEFAULT_OPTION,JOptionPane.DEFAULT_OPTION,null,r,null);
+			JOptionPane.showOptionDialog(this, new FormThongTinHangHoa(hangHoa, "add"),"Thêm sản phẩm mới.",JOptionPane.DEFAULT_OPTION,JOptionPane.DEFAULT_OPTION,null,r,null);
 			ds = dao_HangHoa.getAll();
 			loadData(ds);
 		} else if (e.getSource().equals(btn_delete)) {
@@ -478,7 +478,7 @@ public class TrangQuanLyHangHoaJPanel extends JPanel implements ActionListener, 
 				int row = tbl_HangHoa.getSelectedRow();
 				HangHoa hangHoa = dao_HangHoa.getHangHoaByMaHangHao(tbl_HangHoa.getValueAt(row, 0).toString());
 				Object[] r = { "Thoát" };
-				JOptionPane.showOptionDialog(this, new FormThongTinHangHoa(hangHoa, "edit"),"",JOptionPane.DEFAULT_OPTION,JOptionPane.DEFAULT_OPTION,null,r,null);
+				JOptionPane.showOptionDialog(this, new FormThongTinHangHoa(hangHoa, "edit"),"Chỉnh sửa thông tin sản phẩm "+hangHoa.getMaHangHoa(),JOptionPane.DEFAULT_OPTION,JOptionPane.DEFAULT_OPTION,null,r,null);
 				ds = dao_HangHoa.getAll();
 				loadData(ds);
 			}
