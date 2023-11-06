@@ -14,7 +14,7 @@ public class Dao_HangHoa {
 	public Connection connection;
 
 	public Dao_HangHoa() {
-		connection = ConnectDataBase.getInstance().connection;
+		connection = ConnectDataBase.getInstance().getConnection();
 	}
 
 	public List<HangHoa> getAll() {
@@ -26,16 +26,16 @@ public class Dao_HangHoa {
 			while (resultSet.next()) {
 				HangHoa hangHoa = new HangHoa();
 				hangHoa.setMaHangHoa(resultSet.getString("maHangHoa").trim());
-				hangHoa.setTenHangHoa(resultSet.getString("tenHangHoa"));
-				hangHoa.setPhanLoai(resultSet.getString("phanLoai"));
-				hangHoa.setThuongHieu(resultSet.getString("thuongHieu"));
-				hangHoa.setXuatXu(resultSet.getString("xuatXu"));
-				hangHoa.setChatLieu(resultSet.getString("chatLieu"));
-				hangHoa.setChiTietMoTa(resultSet.getString("chiTietMoTa"));
-				hangHoa.setHinhAnh(resultSet.getString("hinhAnh"));
+				hangHoa.setTenHangHoa(resultSet.getString("tenHangHoa").trim());
+				hangHoa.setPhanLoai(resultSet.getString("phanLoai").trim());
+				hangHoa.setThuongHieu(resultSet.getString("thuongHieu").trim());
+				hangHoa.setXuatXu(resultSet.getString("xuatXu").trim());
+				hangHoa.setChatLieu(resultSet.getString("chatLieu").trim());
+				hangHoa.setChiTietMoTa(resultSet.getString("chiTietMoTa").trim());
+				hangHoa.setHinhAnh(resultSet.getString("hinhAnh").trim());
 				hangHoa.setMaNhaCungCap(resultSet.getString("maNhaCungCap").trim());
-				hangHoa.setKichCo(resultSet.getString("kichCo"));
-				hangHoa.setMauSac(resultSet.getString("mauSac"));
+				hangHoa.setKichCo(resultSet.getString("kichCo").trim());
+				hangHoa.setMauSac(resultSet.getString("mauSac").trim());
 				hangHoa.setSoLuongTon(resultSet.getInt("soLuongTon"));
 				hangHoa.setSoLuongDaBan(resultSet.getInt("soLuongDaBan"));
 				hangHoa.setDonGiaNhap(resultSet.getDouble("donGiaNhap"));
@@ -110,16 +110,16 @@ public class Dao_HangHoa {
 			while (resultSet.next()) {
 				HangHoa hangHoa = new HangHoa();
 				hangHoa.setMaHangHoa(resultSet.getString("maHangHoa").trim());
-				hangHoa.setTenHangHoa(resultSet.getString("tenHangHoa"));
-				hangHoa.setPhanLoai(resultSet.getString("phanLoai"));
-				hangHoa.setThuongHieu(resultSet.getString("thuongHieu"));
-				hangHoa.setXuatXu(resultSet.getString("xuatXu"));
-				hangHoa.setChatLieu(resultSet.getString("chatLieu"));
-				hangHoa.setChiTietMoTa(resultSet.getString("chiTietMoTa"));
-				hangHoa.setHinhAnh(resultSet.getString("hinhAnh"));
+				hangHoa.setTenHangHoa(resultSet.getString("tenHangHoa").trim());
+				hangHoa.setPhanLoai(resultSet.getString("phanLoai").trim());
+				hangHoa.setThuongHieu(resultSet.getString("thuongHieu").trim());
+				hangHoa.setXuatXu(resultSet.getString("xuatXu").trim());
+				hangHoa.setChatLieu(resultSet.getString("chatLieu").trim());
+				hangHoa.setChiTietMoTa(resultSet.getString("chiTietMoTa").trim());
+				hangHoa.setHinhAnh(resultSet.getString("hinhAnh").trim());
 				hangHoa.setMaNhaCungCap(resultSet.getString("maNhaCungCap").trim());
-				hangHoa.setKichCo(resultSet.getString("kichCo"));
-				hangHoa.setMauSac(resultSet.getString("mauSac"));
+				hangHoa.setKichCo(resultSet.getString("kichCo").trim());
+				hangHoa.setMauSac(resultSet.getString("mauSac").trim());
 				hangHoa.setSoLuongTon(resultSet.getInt("soLuongTon"));
 				hangHoa.setSoLuongDaBan(resultSet.getInt("soLuongDaBan"));
 				hangHoa.setDonGiaNhap(resultSet.getDouble("donGiaNhap"));
@@ -143,16 +143,16 @@ public class Dao_HangHoa {
 			while (resultSet.next()) {
 				HangHoa hangHoa = new HangHoa();
 				hangHoa.setMaHangHoa(resultSet.getString("maHangHoa").trim());
-				hangHoa.setTenHangHoa(resultSet.getString("tenHangHoa"));
-				hangHoa.setPhanLoai(resultSet.getString("phanLoai"));
-				hangHoa.setThuongHieu(resultSet.getString("thuongHieu"));
-				hangHoa.setXuatXu(resultSet.getString("xuatXu"));
-				hangHoa.setChatLieu(resultSet.getString("chatLieu"));
-				hangHoa.setChiTietMoTa(resultSet.getString("chiTietMoTa"));
-				hangHoa.setHinhAnh(resultSet.getString("hinhAnh"));
+				hangHoa.setTenHangHoa(resultSet.getString("tenHangHoa").trim());
+				hangHoa.setPhanLoai(resultSet.getString("phanLoai").trim());
+				hangHoa.setThuongHieu(resultSet.getString("thuongHieu").trim());
+				hangHoa.setXuatXu(resultSet.getString("xuatXu").trim());
+				hangHoa.setChatLieu(resultSet.getString("chatLieu").trim());
+				hangHoa.setChiTietMoTa(resultSet.getString("chiTietMoTa").trim());
+				hangHoa.setHinhAnh(resultSet.getString("hinhAnh").trim());
 				hangHoa.setMaNhaCungCap(resultSet.getString("maNhaCungCap").trim());
-				hangHoa.setKichCo(resultSet.getString("kichCo"));
-				hangHoa.setMauSac(resultSet.getString("mauSac"));
+				hangHoa.setKichCo(resultSet.getString("kichCo").trim());
+				hangHoa.setMauSac(resultSet.getString("mauSac").trim());
 				hangHoa.setSoLuongTon(resultSet.getInt("soLuongTon"));
 				hangHoa.setSoLuongDaBan(resultSet.getInt("soLuongDaBan"));
 				hangHoa.setDonGiaNhap(resultSet.getDouble("donGiaNhap"));
@@ -176,16 +176,16 @@ public class Dao_HangHoa {
 			while (resultSet.next()) {
 				HangHoa hangHoa = new HangHoa();
 				hangHoa.setMaHangHoa(resultSet.getString("maHangHoa").trim());
-				hangHoa.setTenHangHoa(resultSet.getString("tenHangHoa"));
-				hangHoa.setPhanLoai(resultSet.getString("phanLoai"));
-				hangHoa.setThuongHieu(resultSet.getString("thuongHieu"));
-				hangHoa.setXuatXu(resultSet.getString("xuatXu"));
-				hangHoa.setChatLieu(resultSet.getString("chatLieu"));
-				hangHoa.setChiTietMoTa(resultSet.getString("chiTietMoTa"));
-				hangHoa.setHinhAnh(resultSet.getString("hinhAnh"));
+				hangHoa.setTenHangHoa(resultSet.getString("tenHangHoa").trim());
+				hangHoa.setPhanLoai(resultSet.getString("phanLoai").trim());
+				hangHoa.setThuongHieu(resultSet.getString("thuongHieu").trim());
+				hangHoa.setXuatXu(resultSet.getString("xuatXu").trim());
+				hangHoa.setChatLieu(resultSet.getString("chatLieu").trim());
+				hangHoa.setChiTietMoTa(resultSet.getString("chiTietMoTa").trim());
+				hangHoa.setHinhAnh(resultSet.getString("hinhAnh").trim());
 				hangHoa.setMaNhaCungCap(resultSet.getString("maNhaCungCap").trim());
-				hangHoa.setKichCo(resultSet.getString("kichCo"));
-				hangHoa.setMauSac(resultSet.getString("mauSac"));
+				hangHoa.setKichCo(resultSet.getString("kichCo").trim());
+				hangHoa.setMauSac(resultSet.getString("mauSac").trim());
 				hangHoa.setSoLuongTon(resultSet.getInt("soLuongTon"));
 				hangHoa.setSoLuongDaBan(resultSet.getInt("soLuongDaBan"));
 				hangHoa.setDonGiaNhap(resultSet.getDouble("donGiaNhap"));
@@ -208,16 +208,16 @@ public class Dao_HangHoa {
 			hangHoa = new HangHoa();
 			while (resultSet.next()) {
 				hangHoa.setMaHangHoa(resultSet.getString("maHangHoa").trim());
-				hangHoa.setTenHangHoa(resultSet.getString("tenHangHoa"));
-				hangHoa.setPhanLoai(resultSet.getString("phanLoai"));
-				hangHoa.setThuongHieu(resultSet.getString("thuongHieu"));
-				hangHoa.setXuatXu(resultSet.getString("xuatXu"));
-				hangHoa.setChatLieu(resultSet.getString("chatLieu"));
-				hangHoa.setChiTietMoTa(resultSet.getString("chiTietMoTa"));
-				hangHoa.setHinhAnh(resultSet.getString("hinhAnh"));
+				hangHoa.setTenHangHoa(resultSet.getString("tenHangHoa").trim());
+				hangHoa.setPhanLoai(resultSet.getString("phanLoai").trim());
+				hangHoa.setThuongHieu(resultSet.getString("thuongHieu").trim());
+				hangHoa.setXuatXu(resultSet.getString("xuatXu").trim());
+				hangHoa.setChatLieu(resultSet.getString("chatLieu").trim());
+				hangHoa.setChiTietMoTa(resultSet.getString("chiTietMoTa").trim());
+				hangHoa.setHinhAnh(resultSet.getString("hinhAnh").trim());
 				hangHoa.setMaNhaCungCap(resultSet.getString("maNhaCungCap").trim());
-				hangHoa.setKichCo(resultSet.getString("kichCo"));
-				hangHoa.setMauSac(resultSet.getString("mauSac"));
+				hangHoa.setKichCo(resultSet.getString("kichCo").trim());
+				hangHoa.setMauSac(resultSet.getString("mauSac").trim());
 				hangHoa.setSoLuongTon(resultSet.getInt("soLuongTon"));
 				hangHoa.setSoLuongDaBan(resultSet.getInt("soLuongDaBan"));
 				hangHoa.setDonGiaNhap(resultSet.getDouble("donGiaNhap"));
@@ -237,7 +237,7 @@ public class Dao_HangHoa {
 					.prepareStatement("select top(1) maHangHoa from hang_hoa order by maHangHoa desc");
 			ResultSet resultSet = statement.executeQuery();
 			resultSet.next();
-			maHangHoa = resultSet.getString("maHangHoa");
+			maHangHoa = resultSet.getString("maHangHoa").trim();
 
 		} catch (Exception e) {
 			e.printStackTrace();
