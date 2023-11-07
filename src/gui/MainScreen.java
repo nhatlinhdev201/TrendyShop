@@ -3,6 +3,7 @@ package gui;
 import java.awt.EventQueue;
 
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 
 import gui.admin.TrangChinhNVQuanLy;
 

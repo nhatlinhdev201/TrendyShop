@@ -43,7 +43,6 @@ public class TrangChinhNVQuanLy extends JFrame implements ActionListener{
 	private TrangThongKeNVQuanLyJPanel trangThongKeNVQuanLyJPanel;
 	private JButton btnMenuCnXemThongTinTK;
 	private JButton btnMenuCnDangXuatTK;
-	private MenuTrangThongKeNVQuanLy menuTrangThongKeNVQuanLy;
 	private TrangThongKeNVQuanLy trangThongKeNVQuanLy;
 
 	/**
