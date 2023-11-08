@@ -3,18 +3,24 @@ package gui.user;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+
+import entities.KhachHang;
+
 import java.awt.Font;
 import java.awt.Color;
 
 public class TrangThongTinKhachHang extends JFrame {
+	
+	
+//	private KhachHang kh = new KhachHang("0123456789","Đặng Thị Quyền Cơ", "dangthiquyenco@gmail.com", "12 Nguyễn Văn Bảo, phường 4, Gò Vấp", true);
 
 	/**
 	 * Create the panel.
 	 */
-	public TrangThongTinKhachHang() {
+	public TrangThongTinKhachHang(KhachHang kh) {
 		getContentPane().setFont(new Font("Monospaced", Font.PLAIN, 13));
 		
-		setSize(407, 213);
+		setSize(407, 236);
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(null);
 		
@@ -49,6 +55,7 @@ public class TrangThongTinKhachHang extends JFrame {
 		lbl_SDT.setBounds(208, 59, 145, 14);
 		getContentPane().add(lbl_SDT);
 		
+		
 		JLabel lbl_TenKhachHang = new JLabel("");
 		lbl_TenKhachHang.setFont(new Font("Monospaced", Font.PLAIN, 13));
 		lbl_TenKhachHang.setBounds(208, 84, 145, 14);
@@ -63,11 +70,14 @@ public class TrangThongTinKhachHang extends JFrame {
 		lbl_DiemTichLuy.setFont(new Font("Monospaced", Font.PLAIN, 13));
 		lbl_DiemTichLuy.setBounds(208, 134, 145, 14);
 		getContentPane().add(lbl_DiemTichLuy);
+		
+		
+		lbl_SDT.setText(kh.getSoDienThoai());
+		lbl_TenKhachHang.setText(kh.getHoTen());
+		lbl_DiemTichLuy.setText(String.valueOf(kh.getDiemTichLuy()));
+		if(kh.isTrangThai()) {
+			lbl_TrangThai.setText("Còn hoạt động");
+		}else lbl_TrangThai.setText("Không còn hoạt động");
 
-	}
-	public static void main(String[] args) {
-		TrangThongTinKhachHang tt = new TrangThongTinKhachHang();
-		tt.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		tt.setVisible(true);
 	}
 }
