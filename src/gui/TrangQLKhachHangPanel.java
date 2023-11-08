@@ -15,6 +15,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JTextField;
 import javax.swing.JRadioButton;
+import javax.swing.JButton;
 
 public class TrangQLKhachHangPanel extends JPanel {
 	private JTable table;
@@ -24,12 +25,13 @@ public class TrangQLKhachHangPanel extends JPanel {
 	private JTextField textField_3;
 	private JTextField textField_4;
 	private JTextField textField_6;
+	private JTextField textField_5;
 
 	/**
 	 * Create the panel.
 	 */
 	public TrangQLKhachHangPanel() {
-		setBackground(new Color(255, 255, 255));
+		setBackground(new Color(128, 255, 255));
 		this.setBounds(SetBountJPanel.X, SetBountJPanel.Y, SetBountJPanel.WIDTH, SetBountJPanel.HEIGHT);
 		setLayout(null);
 
@@ -38,7 +40,7 @@ public class TrangQLKhachHangPanel extends JPanel {
         Image img = originalIcon.getImage(); // Chuyển ImageIcon thành Image
 
         // Chỉnh kích thước ảnh
-        Image newImg = img.getScaledInstance(180, 180, Image.SCALE_SMOOTH);
+        Image newImg = img.getScaledInstance(230, 230, Image.SCALE_SMOOTH);
 
         // Tạo ImageIcon mới từ ảnh đã chỉnh kích thước
         ImageIcon resizedIcon = new ImageIcon(newImg);
@@ -59,7 +61,7 @@ public class TrangQLKhachHangPanel extends JPanel {
 		));
         
         JScrollPane scrollPane = new JScrollPane(table);
-        scrollPane.setBounds(473, 48, 867, 642);
+        scrollPane.setBounds(473, 65, 867, 625);
         add(scrollPane);
         
         JLabel lbl_makh = new JLabel("Mã khách hàng :");
@@ -140,14 +142,75 @@ public class TrangQLKhachHangPanel extends JPanel {
         add(rdbtnNgh);
         
         JLabel lblNewLabel = new JLabel("Thông tin khách hàng");
-        lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 27));
-        lblNewLabel.setBounds(79, 23, 310, 33);
+        lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 30));
+        lblNewLabel.setBounds(50, 35, 353, 33);
         add(lblNewLabel);
         
         JLabel lblNewLabel_1 = new JLabel("");
         lblNewLabel_1.setIcon(new ImageIcon(TrangQLKhachHangPanel.class.getResource("/images/man.png")));
-        lblNewLabel_1.setBounds(145, 96, 167, 149);
+        lblNewLabel_1.setBounds(156, 92, 207, 176);
         add(lblNewLabel_1);
+        
+        JButton btn_timKiem = new JButton("Tìm kiếm");
+        btn_timKiem.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        btn_timKiem.setBounds(473, 21, 123, 33);
+       
+        
+     // Tạo nút tìm kiếm
+        
+        // Đường dẫn của hình ảnh icon
+        String iconPath = "/images/searchphuc.png";
+		ImageIcon icon = new ImageIcon(this.getClass().getResource(iconPath)); // Sử dụng getResource để lấy đường dẫn từ resources của ứng dụng
+
+		Image scaledIcon = icon.getImage().getScaledInstance(27, 27, Image.SCALE_SMOOTH); // Thiết lập kích thước
+		ImageIcon resizedIcon1 = new ImageIcon(scaledIcon);
+
+		btn_timKiem.setIcon(resizedIcon1);
+		add(btn_timKiem);
+        
+        textField_5 = new JTextField();
+        textField_5.setBounds(595, 21, 280, 33);
+        add(textField_5);
+        textField_5.setColumns(10);
+        
+        JButton btn_them = new JButton("Thêm");
+        btn_them.setBackground(Color.GREEN);
+        btn_them.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        btn_them.setBounds(33, 619, 123, 33);
+        String iconPath_them = "/images/plus.png";
+		ImageIcon iconThem = new ImageIcon(this.getClass().getResource(iconPath_them)); // Sử dụng getResource để lấy đường dẫn từ resources của ứng dụng
+
+		Image scaledIconThem = iconThem.getImage().getScaledInstance(27, 27, Image.SCALE_SMOOTH); // Thiết lập kích thước
+		ImageIcon resizedIconThem = new ImageIcon(scaledIconThem);
+
+		btn_them.setIcon(resizedIconThem);
+        add(btn_them);
+        
+        JButton btn_xoa = new JButton("Xoá");
+        btn_xoa.setBackground(new Color(250, 128, 114));
+        btn_xoa.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        btn_xoa.setBounds(172, 619, 123, 33);
+        String iconPath_xoa = "/images/delete.png";
+		ImageIcon iconXoa = new ImageIcon(this.getClass().getResource(iconPath_xoa)); // Sử dụng getResource để lấy đường dẫn từ resources của ứng dụng
+
+		Image scaledIconXoa = iconXoa.getImage().getScaledInstance(27, 27, Image.SCALE_SMOOTH); // Thiết lập kích thước
+		ImageIcon resizedIconXoa = new ImageIcon(scaledIconXoa);
+
+		btn_xoa.setIcon(resizedIconXoa);
+        add(btn_xoa);
+        
+        JButton btn_capNhat = new JButton("Cập nhật");
+        btn_capNhat.setBackground(Color.ORANGE);
+        btn_capNhat.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        btn_capNhat.setBounds(315, 619, 123, 33);
+        String iconPath_capnhat = "/images/updated.png";
+		ImageIcon iconCapNhat = new ImageIcon(this.getClass().getResource(iconPath_capnhat)); // Sử dụng getResource để lấy đường dẫn từ resources của ứng dụng
+
+		Image scaledIconCapNhat = iconCapNhat.getImage().getScaledInstance(27, 27, Image.SCALE_SMOOTH); // Thiết lập kích thước
+		ImageIcon resizedIconCapNhat = new ImageIcon(scaledIconCapNhat);
+
+		btn_capNhat.setIcon(resizedIconCapNhat);
+        add(btn_capNhat);
         
         
 	}
