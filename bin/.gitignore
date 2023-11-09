@@ -1,7 +1,5 @@
-/Connection/
-/constance/
-/dao/
 /entities/
 /gui/
-/images/
 /testFunction/
+/connection/
+/dao/
