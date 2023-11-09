@@ -69,7 +69,7 @@ public class TrangDangNhap extends JFrame {
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(new Color(255, 255, 255));
-		panel_1.setBounds(30, 185, 270, 34);
+		panel_1.setBounds(19, 185, 270, 34);
 		panel.add(panel_1);
 		panel_1.setLayout(null);
 		
@@ -77,7 +77,7 @@ public class TrangDangNhap extends JFrame {
 		lblNewLabel_2.setBackground(new Color(255, 182, 193));
 		lblNewLabel_2.setBounds(0, 0, 83, 32);
 		panel_1.add(lblNewLabel_2);
-		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 13));
 		
 		txt_taiKhoan = new JTextField();
 		txt_taiKhoan.setForeground(new Color(0, 0, 0));
@@ -93,14 +93,14 @@ public class TrangDangNhap extends JFrame {
 		
 		JPanel panel_1_1 = new JPanel();
 		panel_1_1.setBackground(new Color(255, 255, 255));
-		panel_1_1.setBounds(30, 238, 270, 34);
+		panel_1_1.setBounds(19, 238, 270, 34);
 		panel.add(panel_1_1);
 		panel_1_1.setLayout(null);
 		
 		JLabel lblNewLabel_2_1 = new JLabel("Mật khẩu :");
-		lblNewLabel_2_1.setBounds(5, 5, 71, 19);
+		lblNewLabel_2_1.setBounds(5, 0, 71, 32);
 		panel_1_1.add(lblNewLabel_2_1);
-		lblNewLabel_2_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblNewLabel_2_1.setFont(new Font("Tahoma", Font.BOLD, 13));
 		
 		JLabel lblNewLabel_3_1 = new JLabel("");
 		lblNewLabel_3_1.setIcon(new ImageIcon(TrangDangNhap.class.getResource("/images/key.png")));

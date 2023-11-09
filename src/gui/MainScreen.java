@@ -6,6 +6,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 import gui.admin.TrangChinhNVQuanLy;
+import gui.user.TrangChinhNVBanHang;
 
 public class MainScreen {
 	public static void main(String[] args) {
@@ -14,15 +15,16 @@ public class MainScreen {
 			@Override
 			public void run() {
 				try {
+					TrangChinhNVBanHang trangChinhNVBanHang = new TrangChinhNVBanHang();
 					TrangChinhNVQuanLy screenMainAdmin = new TrangChinhNVQuanLy();
-					screenMainAdmin.setVisible(true);
-					screenMainAdmin.setIconImage(
+					trangChinhNVBanHang.setVisible(true);
+					trangChinhNVBanHang.setIconImage(
 							new ImageIcon(getClass().getResource("/images/logoShop.png")).getImage());
-					screenMainAdmin.setLocationRelativeTo(null);
+					trangChinhNVBanHang.setLocationRelativeTo(null);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
-		});
+		});    
 	}
 }
