@@ -2,23 +2,33 @@ package gui;
 
 import java.awt.EventQueue;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import connection.ConnectDataBase;
+
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 public class TrangDangNhap extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField txt_taiKhoan;
 	private JPasswordField passwordField;
-
+	public Connection connection;
 	/**
 	 * Launch the application.
 	 */
@@ -110,6 +120,80 @@ public class TrangDangNhap extends JFrame {
 		passwordField = new JPasswordField();
 		passwordField.setBounds(77, 0, 155, 32);
 		passwordField.setBorder(null);
-		panel_1_1.add(passwordField);;
+		panel_1_1.add(passwordField);
+		
+		JButton btn_dangNhap = new JButton("Đăng nhập");
+		btn_dangNhap.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String taiKhoan = txt_taiKhoan.getText();
+		        String matKhau = new String(passwordField.getPassword());
+//		        if()
+			}
+		});
+		btn_dangNhap.setBackground(new Color(124, 252, 0));
+		btn_dangNhap.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		btn_dangNhap.setBounds(96, 294, 119, 39);
+		
+		panel.add(btn_dangNhap);;
+	}
+	public static void kiemTraDangNhap(String taiKhoan, String matKhau) {
+        boolean dangNhapThanhCong = false;
+        
+        
+        
+
+        if (dangNhapThanhCong) {
+            // Nếu đăng nhập thành công, kiểm tra loại tài khoản và thực hiện các hành động tương ứng
+            if (taiKhoan.contains("QL")) {
+                JOptionPane.showMessageDialog(null, "Đăng nhập thành công! Chuyển đến trang quản lý.");
+                // Thực hiện các hành động cho trang quản lý
+                // Ví dụ: Mở JFrame trang quản lý
+                // MainFormQuanLy mainFormQuanLy = new MainFormQuanLy();
+                // mainFormQuanLy.setVisible(true);
+            } else if (taiKhoan.contains("NV")) {
+                JOptionPane.showMessageDialog(null, "Đăng nhập thành công! Chuyển đến trang nhân viên.");
+                // Thực hiện các hành động cho trang nhân viên
+                // Ví dụ: Mở JFrame trang nhân viên
+                // MainFormNhanVien mainFormNhanVien = new MainFormNhanVien();
+                // mainFormNhanVien.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(null, "Loại tài khoản không hợp lệ!");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Đăng nhập không thành công. Vui lòng kiểm tra tài khoản và mật khẩu.");
+        }
+    }
+	
+	public boolean KiemTraDuLieu() {
+		String tenUser = txt_taiKhoan.getText();
+		// ten dang nhap phai la chu hoac so va khong co ki tu dac biet co toi da tu
+		// 5-20 ki tu
+		boolean match = tenUser.matches("[a-zA-z0-9 ]{3,20}");
+		if (match != true) {
+			 JOptionPane.showMessageDialog(this, "Tài Khoản Không Hợp lệ");
+			return false;
+		} else
+			return true;
+	}
+	public void loadTaiKhoanQL(String maNhanVien, String matKhau) {
+	    try {
+	        connection = ConnectDataBase.getInstance().connection;
+	        PreparedStatement stmt = null;
+	        String sql = "SELECT * FROM dbo.NhanVien WHERE maNhanVien=? AND matKhau=?";
+
+	        stmt = connection.prepareStatement(sql);
+	        stmt.setString(1, maNhanVien);
+	        stmt.setString(2, matKhau);
+	        ResultSet rs = stmt.executeQuery();
+	        while (rs.next()) {
+	            String ten = rs.getString("ten").trim(); // Thay đổi chỉ số cột nếu cần thiết
+	            String mk = rs.getString("matKhau").trim();
+	            String loaiTk = rs.getString("phanQuyen").trim();
+//	            taiKhoan = new TaiKhoan(ten, mk, loaiTk);
+	        }
+	    } catch (Exception e) {
+	        // Xử lý ngoại lệ (exception handling) nên được thực hiện cụ thể hơn để có thể hiểu và xử lý lỗi một cách chính xác.
+	        e.printStackTrace();
+	    }
 	}
 }
