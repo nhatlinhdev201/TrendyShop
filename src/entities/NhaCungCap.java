@@ -13,6 +13,7 @@ public class NhaCungCap {
 		super();
 		this.maNhaCungCap = maNhaCungCap;
 	}
+	
 	public NhaCungCap(String maNhaCungCap, String tenNhaCungCap, String soDienThoai, String email, String diaChi) {
 		super();
 		this.maNhaCungCap = maNhaCungCap;

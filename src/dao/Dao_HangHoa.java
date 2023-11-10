@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import Connection.ConnectDataBase;
+import connection.ConnectDataBase;
 import entities.HangHoa;
 
 public class Dao_HangHoa {
@@ -78,13 +78,15 @@ public class Dao_HangHoa {
 		}
 		return dsThuongHieu;
 	}
-	public HangHoa getHangHoaTheoMa() {
+	public HangHoa getHangHoaByMaHangHao(String ma) {
 		HangHoa hangHoa = null;
 		try {
-			PreparedStatement statement = connection.prepareStatement("select * from hang_hoa hh where ");
+			PreparedStatement statement = connection
+					.prepareStatement("select * from HangHoa where maHangHoa = N'" + ma + "'");
 			ResultSet resultSet = statement.executeQuery();
+			hangHoa = new HangHoa();
 			while (resultSet.next()) {
-				hangHoa.setMaHangHoa(resultSet.getString("maHangHoa").trim());
+				hangHoa.setMaHangHoa(resultSet.getString("maHangHoa"));
 				hangHoa.setTenHangHoa(resultSet.getString("tenHangHoa"));
 				hangHoa.setPhanLoai(resultSet.getString("phanLoai"));
 				hangHoa.setThuongHieu(resultSet.getString("thuongHieu"));
@@ -92,20 +94,20 @@ public class Dao_HangHoa {
 				hangHoa.setChatLieu(resultSet.getString("chatLieu"));
 				hangHoa.setChiTietMoTa(resultSet.getString("chiTietMoTa"));
 				hangHoa.setHinhAnh(resultSet.getString("hinhAnh"));
-				hangHoa.setMaNhaCungCap(resultSet.getString("maNhaCungCap").trim());
+				hangHoa.setMaNhaCungCap(resultSet.getString("maNhaCungCap"));
 				hangHoa.setKichCo(resultSet.getString("kichCo"));
 				hangHoa.setMauSac(resultSet.getString("mauSac"));
 				hangHoa.setSoLuongTon(resultSet.getInt("soLuongTon"));
 				hangHoa.setSoLuongDaBan(resultSet.getInt("soLuongDaBan"));
 				hangHoa.setDonGiaNhap(resultSet.getDouble("donGiaNhap"));
 				hangHoa.setTrangThai(resultSet.getBoolean("trangThai"));
-				
 			}
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return hangHoa;
+
 	}
 	
 

@@ -5,11 +5,11 @@ import java.time.LocalDateTime;
 public class HoaDon {
 	private String maHoaDon;
 	private LocalDateTime thoiGiamTao;
-	private float thue;
 	private KhachHang khachHang;
 	private NhanVien nguoiLapHoaDon;
 	private VoucherGiamGia maVoucher;
-	private float tongThanhTien;
+	private double tongThanhTien;
+	private boolean trangThaiThanhToan;
 	public HoaDon() {
 		super();
 	}
@@ -17,27 +17,25 @@ public class HoaDon {
 		super();
 		this.maHoaDon = maHoaDon;
 	}
-	public HoaDon(String maHoaDon, LocalDateTime thoiGiamTao, float thue, KhachHang khachHang, NhanVien nguoiLapHoaDon,
+	
+	public HoaDon(String maHoaDon, LocalDateTime thoiGiamTao, KhachHang khachHang, NhanVien nguoiLapHoaDon,
 			VoucherGiamGia maVoucher) {
 		super();
 		this.maHoaDon = maHoaDon;
 		this.thoiGiamTao = thoiGiamTao;
-		this.thue = thue;
 		this.khachHang = khachHang;
 		this.nguoiLapHoaDon = nguoiLapHoaDon;
 		this.maVoucher = maVoucher;
+		this.trangThaiThanhToan=false;
+	}
+	public boolean isTrangThaiThanhToan() {
+		return trangThaiThanhToan;
 	}
 	public LocalDateTime getThoiGiamTao() {
 		return thoiGiamTao;
 	}
 	public void setThoiGiamTao(LocalDateTime thoiGiamTao) {
 		this.thoiGiamTao = thoiGiamTao;
-	}
-	public float getThue() {
-		return thue;
-	}
-	public void setThue(float thue) {
-		this.thue = thue;
 	}
 	public KhachHang getKhachHang() {
 		return khachHang;
@@ -57,10 +55,10 @@ public class HoaDon {
 	public void setMaVoucher(VoucherGiamGia maVoucher) {
 		this.maVoucher = maVoucher;
 	}
-	public float getTongThanhTien() {
+	public double getTongThanhTien() {
 		return tongThanhTien;
 	}
-	public void setTongThanhTien(float tongThanhTien) {
+	public void setTongThanhTien(double tongThanhTien) {
 		this.tongThanhTien = tongThanhTien;
 	}
 	public String getMaHoaDon() {
@@ -68,7 +66,7 @@ public class HoaDon {
 	}
 	@Override
 	public String toString() {
-		return "HoaDon [maHoaDon=" + maHoaDon + ", thoiGiamTao=" + thoiGiamTao + ", thue=" + thue + ", khachHang="
+		return "HoaDon [maHoaDon=" + maHoaDon + ", thoiGiamTao=" + thoiGiamTao + ", khachHang="
 				+ khachHang + ", nguoiLapHoaDon=" + nguoiLapHoaDon + ", maVoucher=" + maVoucher + ", tongThanhTien="
 				+ tongThanhTien + "]";
 	}

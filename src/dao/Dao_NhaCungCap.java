@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import Connection.ConnectDataBase;
+import connection.ConnectDataBase;
 import entities.NhaCungCap;
 
 public class Dao_NhaCungCap {

@@ -1,174 +1,178 @@
 package entities;
 
 public class HangHoa {
-	 private String maHangHoa;
-	    private String tenHangHoa;
-	    private String phanLoai;
-	    private String thuongHieu;
-	    private String xuatXu;
-	    private String chatLieu;
-	    private String chiTietMoTa;
-	    private String hinhAnh;
-	    private String maNhaCungCap;
-	    private String kichCo;
-	    private String mauSac;
-	    private int soLuongTon;
-	    private int soLuongDaBan;
-	    private double donGiaNhap;
-	    private boolean trangThai;
+	private String maHangHoa;
+	private String tenHangHoa;
+	private String phanLoai;
+	private String thuongHieu;
+	private String xuatXu;
+	private String chatLieu;
+	private String chiTietMoTa;
+	private String hinhAnh;
+	private String maNhaCungCap;
+	private String kichCo;
+	private String mauSac;
+	private int soLuongTon;
+	private int soLuongDaBan;
+	private double donGiaNhap;
+	private boolean trangThai;
 
-	    
-	    public HangHoa() {
-		}
+	public HangHoa() {
+	}
 
-		public HangHoa(String maHangHoa, String tenHangHoa, String phanLoai, String thuongHieu, String xuatXu,
-				String chatLieu, String chiTietMoTa, String hinhAnh, String maNhaCungCap, String kichCo, String mauSac,
-				int soLuongTon, int soLuongDaBan, double donGiaNhap, boolean trangThai) {
-			this.maHangHoa = maHangHoa;
-			this.tenHangHoa = tenHangHoa;
-			this.phanLoai = phanLoai;
-			this.thuongHieu = thuongHieu;
-			this.xuatXu = xuatXu;
-			this.chatLieu = chatLieu;
-			this.chiTietMoTa = chiTietMoTa;
-			this.hinhAnh = hinhAnh;
-			this.maNhaCungCap = maNhaCungCap;
-			this.kichCo = kichCo;
-			this.mauSac = mauSac;
-			this.soLuongTon = soLuongTon;
-			this.soLuongDaBan = soLuongDaBan;
-			this.donGiaNhap = donGiaNhap;
-			this.trangThai = trangThai;
-		}
+	public HangHoa(String maHangHoa, String tenHangHoa, String phanLoai, String thuongHieu, String xuatXu,
+			String chatLieu, String chiTietMoTa, String hinhAnh, String maNhaCungCap, String kichCo, String mauSac,
+			int soLuongTon, int soLuongDaBan, double donGiaNhap) {
+		super();
+		this.maHangHoa = maHangHoa;
+		this.tenHangHoa = tenHangHoa;
+		this.phanLoai = phanLoai;
+		this.thuongHieu = thuongHieu;
+		this.xuatXu = xuatXu;
+		this.chatLieu = chatLieu;
+		this.chiTietMoTa = chiTietMoTa;
+		this.hinhAnh = hinhAnh;
+		this.maNhaCungCap = maNhaCungCap;
+		this.kichCo = kichCo;
+		this.mauSac = mauSac;
+		this.soLuongTon = soLuongTon;
+		this.soLuongDaBan = soLuongDaBan;
+		this.donGiaNhap = donGiaNhap;
+		this.trangThai = true;
+	}
 
-		public String getMaHangHoa() {
-			return maHangHoa;
-		}
+	public boolean isTrangThai() {
+		return trangThai;
+	}
 
-		public void setMaHangHoa(String maHangHoa) {
-			this.maHangHoa = maHangHoa;
-		}
+	public void setTrangThai(boolean trangThai) {
+		this.trangThai = trangThai;
+	}
 
-		public String getTenHangHoa() {
-			return tenHangHoa;
-		}
+	public HangHoa(String maHangHoa) {
+		super();
+		this.maHangHoa = maHangHoa;
+	}
 
-		public void setTenHangHoa(String tenHangHoa) {
-			this.tenHangHoa = tenHangHoa;
-		}
+	public String getMaHangHoa() {
+		return maHangHoa;
+	}
 
-		public String getPhanLoai() {
-			return phanLoai;
-		}
+	public void setMaHangHoa(String maHangHoa) {
+		this.maHangHoa = maHangHoa;
+	}
 
-		public void setPhanLoai(String phanLoai) {
-			this.phanLoai = phanLoai;
-		}
+	public String getTenHangHoa() {
+		return tenHangHoa;
+	}
 
-		public String getThuongHieu() {
-			return thuongHieu;
-		}
+	public void setTenHangHoa(String tenHangHoa) {
+		this.tenHangHoa = tenHangHoa;
+	}
 
-		public void setThuongHieu(String thuongHieu) {
-			this.thuongHieu = thuongHieu;
-		}
+	public String getPhanLoai() {
+		return phanLoai;
+	}
 
-		public String getXuatXu() {
-			return xuatXu;
-		}
+	public void setPhanLoai(String phanLoai) {
+		this.phanLoai = phanLoai;
+	}
 
-		public void setXuatXu(String xuatXu) {
-			this.xuatXu = xuatXu;
-		}
+	public String getThuongHieu() {
+		return thuongHieu;
+	}
 
-		public String getChatLieu() {
-			return chatLieu;
-		}
+	public void setThuongHieu(String thuongHieu) {
+		this.thuongHieu = thuongHieu;
+	}
 
-		public void setChatLieu(String chatLieu) {
-			this.chatLieu = chatLieu;
-		}
+	public String getXuatXu() {
+		return xuatXu;
+	}
 
-		public String getChiTietMoTa() {
-			return chiTietMoTa;
-		}
+	public void setXuatXu(String xuatXu) {
+		this.xuatXu = xuatXu;
+	}
 
-		public void setChiTietMoTa(String chiTietMoTa) {
-			this.chiTietMoTa = chiTietMoTa;
-		}
+	public String getChatLieu() {
+		return chatLieu;
+	}
 
-		public String getHinhAnh() {
-			return hinhAnh;
-		}
+	public void setChatLieu(String chatLieu) {
+		this.chatLieu = chatLieu;
+	}
 
-		public void setHinhAnh(String hinhAnh) {
-			this.hinhAnh = hinhAnh;
-		}
+	public String getChiTietMoTa() {
+		return chiTietMoTa;
+	}
 
-		public String getMaNhaCungCap() {
-			return maNhaCungCap;
-		}
+	public void setChiTietMoTa(String chiTietMoTa) {
+		this.chiTietMoTa = chiTietMoTa;
+	}
 
-		public void setMaNhaCungCap(String maNhaCungCap) {
-			this.maNhaCungCap = maNhaCungCap;
-		}
+	public String getHinhAnh() {
+		return hinhAnh;
+	}
 
-		public String getKichCo() {
-			return kichCo;
-		}
+	public void setHinhAnh(String hinhAnh) {
+		this.hinhAnh = hinhAnh;
+	}
 
-		public void setKichCo(String kichCo) {
-			this.kichCo = kichCo;
-		}
+	public String getMaNhaCungCap() {
+		return maNhaCungCap;
+	}
 
-		public String getMauSac() {
-			return mauSac;
-		}
+	public void setMaNhaCungCap(String maNhaCungCap) {
+		this.maNhaCungCap = maNhaCungCap;
+	}
 
-		public void setMauSac(String mauSac) {
-			this.mauSac = mauSac;
-		}
+	public String getKichCo() {
+		return kichCo;
+	}
 
-		public int getSoLuongTon() {
-			return soLuongTon;
-		}
+	public void setKichCo(String kichCo) {
+		this.kichCo = kichCo;
+	}
 
-		public void setSoLuongTon(int soLuongTon) {
-			this.soLuongTon = soLuongTon;
-		}
+	public String getMauSac() {
+		return mauSac;
+	}
 
-		public int getSoLuongDaBan() {
-			return soLuongDaBan;
-		}
+	public void setMauSac(String mauSac) {
+		this.mauSac = mauSac;
+	}
 
-		public void setSoLuongDaBan(int soLuongDaBan) {
-			this.soLuongDaBan = soLuongDaBan;
-		}
+	public int getSoLuongTon() {
+		return soLuongTon;
+	}
 
-		public double getDonGiaNhap() {
-			return donGiaNhap;
-		}
+	public void setSoLuongTon(int soLuongTon) {
+		this.soLuongTon = soLuongTon;
+	}
 
-		public void setDonGiaNhap(double donGiaNhap) {
-			this.donGiaNhap = donGiaNhap;
-		}
+	public int getSoLuongDaBan() {
+		return soLuongDaBan;
+	}
 
-		public boolean isTrangThai() {
-			return trangThai;
-		}
+	public void setSoLuongDaBan(int soLuongDaBan) {
+		this.soLuongDaBan = soLuongDaBan;
+	}
 
-		public void setTrangThai(boolean trangThai) {
-			this.trangThai = trangThai;
-		}
+	public double getDonGiaNhap() {
+		return donGiaNhap;
+	}
 
-		@Override
-		public String toString() {
-			return "HangHoa [maHangHoa=" + maHangHoa + ", tenHangHoa=" + tenHangHoa + ", phanLoai=" + phanLoai
-					+ ", thuongHieu=" + thuongHieu + ", xuatXu=" + xuatXu + ", chatLieu=" + chatLieu + ", chiTietMoTa="
-					+ chiTietMoTa + ", hinhAnh=" + hinhAnh + ", maNhaCungCap=" + maNhaCungCap + ", kichCo=" + kichCo
-					+ ", mauSac=" + mauSac + ", soLuongTon=" + soLuongTon + ", soLuongDaBan=" + soLuongDaBan
-					+ ", donGiaNhap=" + donGiaNhap + ", trangThai=" + trangThai + "]";
-		}
+	public void setDonGiaNhap(double donGiaNhap) {
+		this.donGiaNhap = donGiaNhap;
+	}
 
-		
+	@Override
+	public String toString() {
+		return "HangHoa [maHangHoa=" + maHangHoa + ", tenHangHoa=" + tenHangHoa + ", phanLoai=" + phanLoai
+				+ ", thuongHieu=" + thuongHieu + ", xuatXu=" + xuatXu + ", chatLieu=" + chatLieu + ", chiTietMoTa="
+				+ chiTietMoTa + ", hinhAnh=" + hinhAnh + ", maNhaCungCap=" + maNhaCungCap + ", kichCo=" + kichCo
+				+ ", mauSac=" + mauSac + ", soLuongTon=" + soLuongTon + ", soLuongDaBan=" + soLuongDaBan
+				+ ", donGiaNhap=" + donGiaNhap + "]";
+	}
+
 }

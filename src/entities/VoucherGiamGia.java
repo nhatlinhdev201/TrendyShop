@@ -11,7 +11,6 @@ public class VoucherGiamGia {
 	private LocalDateTime ngayBatDau;
 	private LocalDateTime ngayKetThuc;
 	private boolean trangThai;
-	private NhanVien nguoiTaoVoucher;
 	private int soLuotSuDung;
 	public VoucherGiamGia() {
 		super();
@@ -21,8 +20,7 @@ public class VoucherGiamGia {
 		this.maVoucher = maVoucher;
 	}
 	public VoucherGiamGia(String maVoucher, String tenVoucher, String moTaChuongTrinh, float phanTramGiamTheoHoaDon,
-			float giaGiamKhongtheoHoaDon, LocalDateTime ngayBatDau, LocalDateTime ngayKetThuc, boolean trangThai,
-			NhanVien nguoiTaoVoucher, int soLuotSuDung) {
+			float giaGiamKhongtheoHoaDon, LocalDateTime ngayBatDau, LocalDateTime ngayKetThuc, boolean trangThai, int soLuotSuDung) {
 		super();
 		this.maVoucher = maVoucher;
 		this.tenVoucher = tenVoucher;
@@ -32,7 +30,6 @@ public class VoucherGiamGia {
 		this.ngayBatDau = ngayBatDau;
 		this.ngayKetThuc = ngayKetThuc;
 		this.trangThai = trangThai;
-		this.nguoiTaoVoucher = nguoiTaoVoucher;
 		this.soLuotSuDung = soLuotSuDung;
 	}
 	public String getTenVoucher() {
@@ -77,12 +74,6 @@ public class VoucherGiamGia {
 	public void setTrangThai(boolean trangThai) {
 		this.trangThai = trangThai;
 	}
-	public NhanVien getNguoiTaoVoucher() {
-		return nguoiTaoVoucher;
-	}
-	public void setNguoiTaoVoucher(NhanVien nguoiTaoVoucher) {
-		this.nguoiTaoVoucher = nguoiTaoVoucher;
-	}
 	public int getSoLuotSuDung() {
 		return soLuotSuDung;
 	}
@@ -97,7 +88,7 @@ public class VoucherGiamGia {
 		return "VoucherGiamGia [maVoucher=" + maVoucher + ", tenVoucher=" + tenVoucher + ", moTaChuongTrinh="
 				+ moTaChuongTrinh + ", phanTramGiamTheoHoaDon=" + phanTramGiamTheoHoaDon + ", giaGiamKhongtheoHoaDon="
 				+ giaGiamKhongtheoHoaDon + ", ngayBatDau=" + ngayBatDau + ", ngayKetThuc=" + ngayKetThuc
-				+ ", trangThai=" + trangThai + ", nguoiTaoVoucher=" + nguoiTaoVoucher + ", soLuotSuDung=" + soLuotSuDung
+				+ ", trangThai=" + trangThai + ", soLuotSuDung=" + soLuotSuDung
 				+ "]";
 	}
 	

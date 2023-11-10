@@ -1,8 +1,9 @@
 package entities;
 
 public class KhachHang {
+	private String maKhachHang;
 	private String soDienThoai;
-	private String hoTen;
+	private String tenKhachHang;
 	private String email;
 	private String diaChi;
 	private boolean trangThai;
@@ -18,21 +19,31 @@ public class KhachHang {
 
 	}
 
-	public String getHoTen() {
-		return hoTen;
-	}
-
-	public void setHoTen(String hoTen) {
-		this.hoTen = hoTen;
-	}
-
-	public KhachHang(String soDienThoai, String hoTen, String email, String diaChi, boolean trangThai) {
+	public KhachHang(String maKhachHang, String soDienThoai, String tenKhachHang, String email, String diaChi) {
+		super();
+		this.maKhachHang = maKhachHang;
 		this.soDienThoai = soDienThoai;
-		this.hoTen = hoTen;
+		this.tenKhachHang = tenKhachHang;
 		this.email = email;
 		this.diaChi = diaChi;
-		this.trangThai = trangThai;
+		this.trangThai = true;
 		this.diemTichLuy = 0;
+	}
+
+	public String getSoDienThoai() {
+		return soDienThoai;
+	}
+
+	public void setSoDienThoai(String soDienThoai) {
+		this.soDienThoai = soDienThoai;
+	}
+
+	public String getTenKhachHang() {
+		return tenKhachHang;
+	}
+
+	public void setTenKhachHang(String tenKhachHang) {
+		this.tenKhachHang = tenKhachHang;
 	}
 
 	public String getEmail() {
@@ -67,18 +78,17 @@ public class KhachHang {
 		this.diemTichLuy = diemTichLuy;
 	}
 
-	public String getSoDienThoai() {
-		return soDienThoai;
-	}
-
-	public float tinhDiemTichLuyTuHoaDon() {
-		return 0;
+	public String getMaKhachHang() {
+		return maKhachHang;
 	}
 
 	@Override
 	public String toString() {
-		return "KhachHang [soDienThoai=" + soDienThoai + ", hoTen=" + hoTen + ", email=" + email + ", diaChi=" + diaChi
-				+ ", trangThai=" + trangThai + ", diemTichLuy=" + diemTichLuy + "]";
+		return "KhachHang [maKhachHang=" + maKhachHang + ", soDienThoai=" + soDienThoai + ", tenKhachHang="
+				+ tenKhachHang + ", email=" + email + ", diaChi=" + diaChi + ", trangThai=" + trangThai
+				+ ", diemTichLuy=" + diemTichLuy + "]";
 	}
+	
+	
 
 }
