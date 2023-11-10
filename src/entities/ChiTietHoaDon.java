@@ -4,21 +4,19 @@ public class ChiTietHoaDon {
 	private HangHoa hangHoa;
 	private HoaDon hoaDon;
 	private int soLuong;
+	private float giaBan;
 	private float thanhTien;
-	public ChiTietHoaDon() {
-		super();
+	public HangHoa getHangHoa() {
+		return hangHoa;
 	}
-	public ChiTietHoaDon(HangHoa hangHoa, HoaDon hoaDon) {
-		super();
+	public void setHangHoa(HangHoa hangHoa) {
 		this.hangHoa = hangHoa;
-		this.hoaDon = hoaDon;
 	}
-	public ChiTietHoaDon(HangHoa hangHoa, HoaDon hoaDon, int soLuong) {
-		super();
-		this.hangHoa = hangHoa;
+	public HoaDon getHoaDon() {
+		return hoaDon;
+	}
+	public void setHoaDon(HoaDon hoaDon) {
 		this.hoaDon = hoaDon;
-		this.soLuong = soLuong;
-		this.thanhTien = 0;
 	}
 	public int getSoLuong() {
 		return soLuong;
@@ -26,23 +24,21 @@ public class ChiTietHoaDon {
 	public void setSoLuong(int soLuong) {
 		this.soLuong = soLuong;
 	}
+	public float getGiaBan() {
+		return giaBan;
+	}
+	public void setGiaBan(float giaBan) {
+		this.giaBan = giaBan;
+	}
 	public float getThanhTien() {
 		return thanhTien;
 	}
 	public void setThanhTien(float thanhTien) {
 		this.thanhTien = thanhTien;
 	}
-	public HangHoa getHangHoa() {
-		return hangHoa;
-	}
-	public HoaDon getHoaDon() {
-		return hoaDon;
-	}
 	@Override
 	public String toString() {
-		return "ChiTietHoaDon [hangHoa=" + hangHoa + ", hoaDon=" + hoaDon + ", soLuong=" + soLuong + ", thanhTien="
-				+ thanhTien + "]";
+		return "ChiTietHoaDon [hangHoa=" + hangHoa + ", hoaDon=" + hoaDon + ", soLuong=" + soLuong + ", giaBan="
+				+ giaBan + ", thanhTien=" + thanhTien + "]";
 	}
-	
-	
 }

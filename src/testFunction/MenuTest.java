@@ -3,6 +3,7 @@ package testFunction;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
+import daos.Dao_FindTables;
 import gui.TrangChuPanel;
 
 import java.awt.*;
@@ -61,6 +62,9 @@ public class MenuTest extends JFrame {
                 try {
                     MenuTest frame = new MenuTest();
                     frame.setVisible(true);
+                    
+                    Dao_FindTables dao_FindTables = new Dao_FindTables();
+                    System.out.println(dao_FindTables.TimKiemNhanVienTheoMa("NV0001"));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

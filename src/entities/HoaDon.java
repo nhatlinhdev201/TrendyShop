@@ -1,61 +1,40 @@
 package entities;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 public class HoaDon {
 	private String maHoaDon;
-	private LocalDateTime thoiGiamTao;
-	private float thue;
-	private KhachHang khachHang;
-	private NhanVien nguoiLapHoaDon;
-	private VoucherGiamGia maVoucher;
+	private Date thoiGiamTao;
 	private float tongThanhTien;
+	private VoucherGiamGia voucher;
+	private KhachHang khachHang;
+	private NhanVien NhanVien;
+	private Boolean trangThaiThanhToan;
 	public HoaDon() {
 		super();
 	}
-	public HoaDon(String maHoaDon) {
-		super();
-		this.maHoaDon = maHoaDon;
-	}
-	public HoaDon(String maHoaDon, LocalDateTime thoiGiamTao, float thue, KhachHang khachHang, NhanVien nguoiLapHoaDon,
-			VoucherGiamGia maVoucher) {
+	public HoaDon(String maHoaDon, Date thoiGiamTao, float tongThanhTien, VoucherGiamGia voucher, KhachHang khachHang,
+			entities.NhanVien nhanVien, Boolean trangThaiThanhToan) {
 		super();
 		this.maHoaDon = maHoaDon;
 		this.thoiGiamTao = thoiGiamTao;
-		this.thue = thue;
+		this.tongThanhTien = tongThanhTien;
+		this.voucher = voucher;
 		this.khachHang = khachHang;
-		this.nguoiLapHoaDon = nguoiLapHoaDon;
-		this.maVoucher = maVoucher;
+		NhanVien = nhanVien;
+		this.trangThaiThanhToan = trangThaiThanhToan;
 	}
-	public LocalDateTime getThoiGiamTao() {
+	public String getMaHoaDon() {
+		return maHoaDon;
+	}
+	public void setMaHoaDon(String maHoaDon) {
+		this.maHoaDon = maHoaDon;
+	}
+	public Date getThoiGiamTao() {
 		return thoiGiamTao;
 	}
-	public void setThoiGiamTao(LocalDateTime thoiGiamTao) {
+	public void setThoiGiamTao(Date thoiGiamTao) {
 		this.thoiGiamTao = thoiGiamTao;
-	}
-	public float getThue() {
-		return thue;
-	}
-	public void setThue(float thue) {
-		this.thue = thue;
-	}
-	public KhachHang getKhachHang() {
-		return khachHang;
-	}
-	public void setKhachHang(KhachHang khachHang) {
-		this.khachHang = khachHang;
-	}
-	public NhanVien getNguoiLapHoaDon() {
-		return nguoiLapHoaDon;
-	}
-	public void setNguoiLapHoaDon(NhanVien nguoiLapHoaDon) {
-		this.nguoiLapHoaDon = nguoiLapHoaDon;
-	}
-	public VoucherGiamGia getMaVoucher() {
-		return maVoucher;
-	}
-	public void setMaVoucher(VoucherGiamGia maVoucher) {
-		this.maVoucher = maVoucher;
 	}
 	public float getTongThanhTien() {
 		return tongThanhTien;
@@ -63,21 +42,35 @@ public class HoaDon {
 	public void setTongThanhTien(float tongThanhTien) {
 		this.tongThanhTien = tongThanhTien;
 	}
-	public String getMaHoaDon() {
-		return maHoaDon;
+	public VoucherGiamGia getVoucher() {
+		return voucher;
+	}
+	public void setVoucher(VoucherGiamGia voucher) {
+		this.voucher = voucher;
+	}
+	public KhachHang getKhachHang() {
+		return khachHang;
+	}
+	public void setKhachHang(KhachHang khachHang) {
+		this.khachHang = khachHang;
+	}
+	public NhanVien getNhanVien() {
+		return NhanVien;
+	}
+	public void setNhanVien(NhanVien nhanVien) {
+		NhanVien = nhanVien;
+	}
+	public Boolean getTrangThaiThanhToan() {
+		return trangThaiThanhToan;
+	}
+	public void setTrangThaiThanhToan(Boolean trangThaiThanhToan) {
+		this.trangThaiThanhToan = trangThaiThanhToan;
 	}
 	@Override
 	public String toString() {
-		return "HoaDon [maHoaDon=" + maHoaDon + ", thoiGiamTao=" + thoiGiamTao + ", thue=" + thue + ", khachHang="
-				+ khachHang + ", nguoiLapHoaDon=" + nguoiLapHoaDon + ", maVoucher=" + maVoucher + ", tongThanhTien="
-				+ tongThanhTien + "]";
+		return "HoaDon [maHoaDon=" + maHoaDon + ", thoiGiamTao=" + thoiGiamTao + ", tongThanhTien=" + tongThanhTien
+				+ ", voucher=" + voucher + ", khachHang=" + khachHang + ", NhanVien=" + NhanVien
+				+ ", trangThaiThanhToan=" + trangThaiThanhToan + "]";
 	}
 	
-	public float kiemTraVoucherGiamGia(VoucherGiamGia voucher) {
-		return 0;
-		
-	}
-	public boolean kiemTraKhachHangThanhVien(KhachHang khachHang) {
-		return true;
-	}
 }

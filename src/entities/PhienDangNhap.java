@@ -1,20 +1,18 @@
 package entities;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 public class PhienDangNhap {
 	private String maPhienDangNhap;
-	private LocalDateTime thoiGianDangNhap;
-	private LocalDateTime thoiGianDangXuat;
+	private Date thoiGianDangNhap;
+	private Date thoiGianDangXuat;
 	private NhanVien nhanVienDangNhap;
 	public PhienDangNhap() {
 		super();
 	}
-	public PhienDangNhap(String maPhienDangNhap) {
-		super();
-		this.maPhienDangNhap = maPhienDangNhap;
-	}
-	public PhienDangNhap(String maPhienDangNhap, LocalDateTime thoiGianDangNhap, LocalDateTime thoiGianDangXuat,
+	
+	public PhienDangNhap(String maPhienDangNhap, Date thoiGianDangNhap, Date thoiGianDangXuat,
 			NhanVien nhanVienDangNhap) {
 		super();
 		this.maPhienDangNhap = maPhienDangNhap;
@@ -22,16 +20,27 @@ public class PhienDangNhap {
 		this.thoiGianDangXuat = thoiGianDangXuat;
 		this.nhanVienDangNhap = nhanVienDangNhap;
 	}
-	public LocalDateTime getThoiGianDangNhap() {
+
+	public PhienDangNhap(String maPhienDangNhap) {
+		super();
+		this.maPhienDangNhap = maPhienDangNhap;
+	}
+	public String getMaPhienDangNhap() {
+		return maPhienDangNhap;
+	}
+	public void setMaPhienDangNhap(String maPhienDangNhap) {
+		this.maPhienDangNhap = maPhienDangNhap;
+	}
+	public Date getThoiGianDangNhap() {
 		return thoiGianDangNhap;
 	}
-	public void setThoiGianDangNhap(LocalDateTime thoiGianDangNhap) {
+	public void setThoiGianDangNhap(Date thoiGianDangNhap) {
 		this.thoiGianDangNhap = thoiGianDangNhap;
 	}
-	public LocalDateTime getThoiGianDangXuat() {
+	public Date getThoiGianDangXuat() {
 		return thoiGianDangXuat;
 	}
-	public void setThoiGianDangXuat(LocalDateTime thoiGianDangXuat) {
+	public void setThoiGianDangXuat(Date thoiGianDangXuat) {
 		this.thoiGianDangXuat = thoiGianDangXuat;
 	}
 	public NhanVien getNhanVienDangNhap() {
@@ -40,14 +49,10 @@ public class PhienDangNhap {
 	public void setNhanVienDangNhap(NhanVien nhanVienDangNhap) {
 		this.nhanVienDangNhap = nhanVienDangNhap;
 	}
-	public String getMaPhienDangNhap() {
-		return maPhienDangNhap;
-	}
 	@Override
 	public String toString() {
-		return "PhienDangNhap [maPhienDangNhap=" + maPhienDangNhap + ", thoiGianDangNhap=" + thoiGianDangNhap
-				+ ", thoiGianDangXuat=" + thoiGianDangXuat + ", nhanVienDangNhap=" + nhanVienDangNhap + "]";
+		return "PhienDangNhap [maPhienDangNhap=" + maPhienDangNhap + ", nhanVienDangNhap=" + nhanVienDangNhap
+				+ ", thoiGianDangNhap=" + thoiGianDangNhap + ", thoiGianDangXuat=" + thoiGianDangXuat + "]";
 	}
-	
 	
 }

@@ -1,6 +1,7 @@
 package entities;
 
 public class KhachHang {
+	private String maKhachHang;
 	private String soDienThoai;
 	private String hoTen;
 	private String email;
@@ -25,14 +26,30 @@ public class KhachHang {
 	public void setHoTen(String hoTen) {
 		this.hoTen = hoTen;
 	}
+	
 
-	public KhachHang(String soDienThoai, String hoTen, String email, String diaChi, boolean trangThai) {
+	public String getMaKhachHang() {
+		return maKhachHang;
+	}
+
+	public void setMaKhachHang(String maKhachHang) {
+		this.maKhachHang = maKhachHang;
+	}
+
+	public void setSoDienThoai(String soDienThoai) {
+		this.soDienThoai = soDienThoai;
+	}
+
+	public KhachHang(String maKhachHang, String soDienThoai, String hoTen, String email, String diaChi,
+			boolean trangThai, float diemTichLuy) {
+		super();
+		this.maKhachHang = maKhachHang;
 		this.soDienThoai = soDienThoai;
 		this.hoTen = hoTen;
 		this.email = email;
 		this.diaChi = diaChi;
 		this.trangThai = trangThai;
-		this.diemTichLuy = 0;
+		this.diemTichLuy = diemTichLuy;
 	}
 
 	public String getEmail() {

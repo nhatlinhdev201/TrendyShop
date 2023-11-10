@@ -21,6 +21,10 @@ public class NhaCungCap {
 		this.email = email;
 		DiaChi = diaChi;
 	}
+	
+	public void setMaNhaCungCap(String maNhaCungCap) {
+		this.maNhaCungCap = maNhaCungCap;
+	}
 	public String getTenNhaCungCap() {
 		return tenNhaCungCap;
 	}

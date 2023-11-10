@@ -68,8 +68,8 @@ public class TrangBanHangJPanel extends JPanel implements ActionListener, Action
 //	ví dụ combobox 
 	private String[] kichThuoc;
 //	Ví dụ sđt
-	private KhachHang kh = new KhachHang("0123456789", "Đặng Thị Quyền Cơ", "dangthiquyenco@gmail.com",
-			"12 Nguyễn Văn Bảo, phường 4, Gò Vấp", true);
+	private KhachHang kh = new KhachHang("123", "0123456789", "Đặng Thị Quyền Cơ", "dangthiquyenco@gmail.com",
+			"12 Nguyễn Văn Bảo, phường 4, Gò Vấp", true, 3f);
 	private AbstractTableHoaDon model;
 	private JTable table;
 	private JSpinner spinner_SoLuong;
