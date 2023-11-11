@@ -37,6 +37,9 @@ public class NhanVien {
 		this.phanQuyen = phanQuyen;
 		this.anhDaiDien = anhDaiDien;
 	}
+	public void setMaNhanVien(String maNhanVien) {
+		this.maNhanVien = maNhanVien;
+	}
 	public NhanVien(String maNhanVien) {
 		super();
 		this.maNhanVien = maNhanVien;

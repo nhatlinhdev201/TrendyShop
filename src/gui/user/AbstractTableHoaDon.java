@@ -1,9 +1,11 @@
 package gui.user;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import javax.swing.table.AbstractTableModel;
 
+import entities.ChiTietHoaDon;
 import entities.HangHoa;
 
 public class AbstractTableHoaDon extends AbstractTableModel  {
@@ -11,11 +13,12 @@ public class AbstractTableHoaDon extends AbstractTableModel  {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private String[] columnNames = {"#", "Tên hàng hóa", "Đơn giá", "Số lượng","Thành tiền", "Xóa"};
-    private ArrayList<Object> data = new ArrayList<>();
+	private String[] columnNames = {"#", "Tên hàng hóa","Kích cỡ",  "Số lượng","Đơn giá","Thành tiền", "Xóa"};
+    private ArrayList<ChiTietHoaDon> data = new ArrayList<>();
+    private DecimalFormat decimalFormat = new DecimalFormat("#,##0");
 
-    public void addHangHoa(Object hangHoa) {
-        data.add(hangHoa);
+    public void addHangHoa(ChiTietHoaDon chiTiet) {
+        data.add(chiTiet);
         fireTableDataChanged();
     }
 
@@ -37,11 +40,12 @@ public class AbstractTableHoaDon extends AbstractTableModel  {
     @Override
     public Object getValueAt(int row, int col) {
         if (col == 0) return row+1;
-        if (col == 1) return ((HangHoa) data.get(row)).getTenHangHoa();
-        if (col == 2) return ((HangHoa) data.get(row)).getDonGiaNhap();
-        if (col == 3) return 1;
-        if(col == 4) return ((HangHoa) data.get(row)).getDonGiaNhap();
-        if (col == 5) return "";
+        if (col == 1) return ((ChiTietHoaDon) data.get(row)).getHangHoa().getTenHangHoa();
+        if (col == 2) return ((ChiTietHoaDon) data.get(row)).getHangHoa().getKichCo();
+        if (col == 3) return ((ChiTietHoaDon) data.get(row)).getSoLuong();
+        if(col == 4) return decimalFormat.format(((ChiTietHoaDon) data.get(row)).getGiaBan());
+        if(col == 5) return decimalFormat.format(((ChiTietHoaDon) data.get(row)).tinhTongThanhTien());
+        if (col == 6) return "";
         return null;
     }
 
@@ -52,6 +56,6 @@ public class AbstractTableHoaDon extends AbstractTableModel  {
 
     @Override
     public boolean isCellEditable(int row, int col) {
-        return col == 5;
+        return col == 6;
     }
 }
