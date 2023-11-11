@@ -1,13 +1,14 @@
 package entities;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class HoaDon {
 	private String maHoaDon;
-	private LocalDateTime thoiGiamTao;
+	private LocalDate thoiGianTao;
 	private KhachHang khachHang;
 	private NhanVien nguoiLapHoaDon;
-	private VoucherGiamGia maVoucher;
+	private VoucherGiamGia Voucher;
 	private double tongThanhTien;
 	private boolean trangThaiThanhToan;
 	public HoaDon() {
@@ -18,24 +19,32 @@ public class HoaDon {
 		this.maHoaDon = maHoaDon;
 	}
 	
-	public HoaDon(String maHoaDon, LocalDateTime thoiGiamTao, KhachHang khachHang, NhanVien nguoiLapHoaDon,
-			VoucherGiamGia maVoucher) {
+	public HoaDon(String maHoaDon, LocalDate thoiGiamTao, KhachHang khachHang, NhanVien nguoiLapHoaDon,
+			VoucherGiamGia Voucher) {
 		super();
 		this.maHoaDon = maHoaDon;
-		this.thoiGiamTao = thoiGiamTao;
+		this.thoiGianTao = thoiGiamTao;
 		this.khachHang = khachHang;
 		this.nguoiLapHoaDon = nguoiLapHoaDon;
-		this.maVoucher = maVoucher;
+		this.Voucher = Voucher;
 		this.trangThaiThanhToan=false;
 	}
-	public boolean isTrangThaiThanhToan() {
-		return trangThaiThanhToan;
+	public VoucherGiamGia getVoucher() {
+		return Voucher;
 	}
-	public LocalDateTime getThoiGiamTao() {
-		return thoiGiamTao;
+	
+	
+	public String getMaHoaDon() {
+		return maHoaDon;
 	}
-	public void setThoiGiamTao(LocalDateTime thoiGiamTao) {
-		this.thoiGiamTao = thoiGiamTao;
+	public void setMaHoaDon(String maHoaDon) {
+		this.maHoaDon = maHoaDon;
+	}
+	public LocalDate getThoiGianTao() {
+		return thoiGianTao;
+	}
+	public void setThoiGianTao(LocalDate thoiGianTao) {
+		this.thoiGianTao = thoiGianTao;
 	}
 	public KhachHang getKhachHang() {
 		return khachHang;
@@ -49,25 +58,24 @@ public class HoaDon {
 	public void setNguoiLapHoaDon(NhanVien nguoiLapHoaDon) {
 		this.nguoiLapHoaDon = nguoiLapHoaDon;
 	}
-	public VoucherGiamGia getMaVoucher() {
-		return maVoucher;
-	}
-	public void setMaVoucher(VoucherGiamGia maVoucher) {
-		this.maVoucher = maVoucher;
-	}
 	public double getTongThanhTien() {
 		return tongThanhTien;
 	}
 	public void setTongThanhTien(double tongThanhTien) {
 		this.tongThanhTien = tongThanhTien;
 	}
-	public String getMaHoaDon() {
-		return maHoaDon;
+	public boolean isTrangThaiThanhToan() {
+		return trangThaiThanhToan;
 	}
-	@Override
+	public void setTrangThaiThanhToan(boolean trangThaiThanhToan) {
+		this.trangThaiThanhToan = trangThaiThanhToan;
+	}
+	public void setVoucher(VoucherGiamGia voucher) {
+		Voucher = voucher;
+	}
 	public String toString() {
-		return "HoaDon [maHoaDon=" + maHoaDon + ", thoiGiamTao=" + thoiGiamTao + ", khachHang="
-				+ khachHang + ", nguoiLapHoaDon=" + nguoiLapHoaDon + ", maVoucher=" + maVoucher + ", tongThanhTien="
+		return "HoaDon [maHoaDon=" + maHoaDon + ", thoiGiamTao=" + thoiGianTao + ", khachHang="
+				+ khachHang + ", nguoiLapHoaDon=" + nguoiLapHoaDon + ", maVoucher=" + Voucher + ", tongThanhTien="
 				+ tongThanhTien + "]";
 	}
 	

@@ -1,4 +1,4 @@
-package dao;
+package daos;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -63,6 +63,7 @@ public class Dao_HangHoa {
 		}
 		return dsThuongHieu;
 	}
+	
 	public List<String> getAllXuatXu() {
 		List<String> dsThuongHieu = null;
 		try {
@@ -78,11 +79,12 @@ public class Dao_HangHoa {
 		}
 		return dsThuongHieu;
 	}
-	public HangHoa getHangHoaByMaHangHao(String ma) {
+	
+	public HangHoa getHangHoaByMaHangHoa(String ma) {
 		HangHoa hangHoa = null;
 		try {
 			PreparedStatement statement = connection
-					.prepareStatement("select * from HangHoa where maHangHoa = N'" + ma + "'");
+					.prepareStatement("select*from HangHoa where maHangHoa = '"+ma+"'");
 			ResultSet resultSet = statement.executeQuery();
 			hangHoa = new HangHoa();
 			while (resultSet.next()) {
@@ -108,6 +110,22 @@ public class Dao_HangHoa {
 		}
 		return hangHoa;
 
+	}
+	
+	public List<String> getKichThuocCuaMotSanPham(String ma) {
+		List<String> dsKichThuoc = null;
+		try {
+			PreparedStatement statement = connection.prepareStatement("select kichCo from HangHoa where maHangHoa LIKE '"+ma+"%'");
+			ResultSet resultSet = statement.executeQuery();
+			dsKichThuoc = new ArrayList<String>();
+			while (resultSet.next()) {
+				dsKichThuoc.add(resultSet.getString("kichCo"));
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dsKichThuoc;
 	}
 	
 

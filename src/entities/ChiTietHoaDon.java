@@ -46,6 +46,12 @@ public class ChiTietHoaDon {
 	public HoaDon getHoaDon() {
 		return hoaDon;
 	}
+	public void setHangHoa(HangHoa hangHoa) {
+		this.hangHoa = hangHoa;
+	}
+	public void setHoaDon(HoaDon hoaDon) {
+		this.hoaDon = hoaDon;
+	}
 	@Override
 	public String toString() {
 		return "ChiTietHoaDon [hangHoa=" + hangHoa + ", hoaDon=" + hoaDon + ", soLuong=" + soLuong + ", thanhTien="

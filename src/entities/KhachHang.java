@@ -13,9 +13,9 @@ public class KhachHang {
 		super();
 	}
 
-	public KhachHang(String soDienThoai) {
+	public KhachHang(String maKhachHang) {
 		super();
-		this.soDienThoai = soDienThoai;
+		this.maKhachHang = maKhachHang;
 
 	}
 
@@ -80,6 +80,10 @@ public class KhachHang {
 
 	public String getMaKhachHang() {
 		return maKhachHang;
+	}
+
+	public void setMaKhachHang(String maKhachHang) {
+		this.maKhachHang = maKhachHang;
 	}
 
 	@Override

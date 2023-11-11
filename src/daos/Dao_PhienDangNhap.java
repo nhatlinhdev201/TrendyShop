@@ -1,4 +1,4 @@
-package dao;
+package daos;
 
 public class Dao_PhienDangNhap {
 
