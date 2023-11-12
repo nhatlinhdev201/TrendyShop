@@ -23,6 +23,7 @@ import constance.SetBountJPanel;
 import gui.TrangChuPanel;
 //import gui.TrangHuongDanJPanel;
 import gui.TrangQLKhachHangPanel;
+import gui.TrangThongTinDangNhap;
 
 public class TrangChinhNVQuanLy extends JFrame implements ActionListener{
 
@@ -201,7 +202,7 @@ public class TrangChinhNVQuanLy extends JFrame implements ActionListener{
 		}else if(o.equals(btnMenuCnQlyTroGiup)) {
 //			switchContent(trangHuongDanJPanel);
 		}else if(o.equals(btnMenuCnXemThongTinTK)) {
-			JOptionPane.showMessageDialog(this, "Nhật Linh");
+			new TrangThongTinDangNhap().setVisible(true);;
 		}else if(o.equals(btnMenuCnDangXuatTK)) {
 			JOptionPane.showMessageDialog(this, "Đăng xuất thành công");
 		}else {

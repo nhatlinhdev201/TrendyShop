@@ -7,6 +7,7 @@ import javax.swing.JSpinner;
 
 import constance.SetBountJPanel;
 import daos.Dao_HangHoa;
+import daos.Dao_KhachHang;
 import daos.Dao_VoucherGiamGia;
 import entities.ChiTietHoaDon;
 import entities.HangHoa;
@@ -14,7 +15,6 @@ import entities.HoaDon;
 import entities.KhachHang;
 import entities.NhanVien;
 import entities.VoucherGiamGia;
-import services.TrangBanHang;
 
 import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
@@ -52,10 +52,12 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.JComboBox;
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.JTable;
 
-public class TrangBanHangJPanel extends JPanel implements ActionListener, Action {
+public class TrangBanHangJPanel extends JPanel implements ActionListener, Action, ListSelectionListener {
 	private LocalDate ngayLapHD = LocalDate.now();
 	private JTextField txt_MaHangHoa;
 	private JTextField txt_SDTKhachHang;
@@ -83,34 +85,32 @@ public class TrangBanHangJPanel extends JPanel implements ActionListener, Action
 	private SpinnerModel model_Spinner;
 	private DecimalFormat decimalFormat = new DecimalFormat("#,##0");
 
-//	ví dụ combobox 
-	private KhachHang kh = new KhachHang("KH001", "0123456789", "Đặng Thị Quyền Cơ", "dangthiquyenco@gmail.com",
-			"12 Nguyễn Văn Bảo, phường 4, Gò Vấp");
-	private NhanVien nv = new NhanVien("NV001");
-
-//	Ví dụ sđt
-
 	private AbstractTableHoaDon model;
 	private JTable table;
 	private JSpinner spinner_SoLuong;
 	private JButton btn_HuyHoaDon;
 	private JButton btn_ThanhToan;
 
+	private NhanVien nv;
+	private KhachHang kh;
 	private ArrayList<ChiTietHoaDon> listChiTietHD = new ArrayList<>();
 	private HoaDon hoaDon = new HoaDon();
 	private JCheckBox chckx_DiemTichLuy;
 	private Dao_HangHoa dao_HangHoa;
 	private Dao_VoucherGiamGia dao_VoucherGiamGia;
-	
+	private Dao_KhachHang dao_KhachHang;
 
 	/**
 	 * Create the panel.
 	 */
-	public TrangBanHangJPanel() {
+	public TrangBanHangJPanel(NhanVien nhanVienDangNhap) {
 
 		dao_HangHoa = new Dao_HangHoa();
 		dao_VoucherGiamGia = new Dao_VoucherGiamGia();
-		
+		dao_KhachHang = new Dao_KhachHang();
+
+		nv = nhanVienDangNhap;
+
 		taoHoaDon();
 
 		setBackground(new Color(158, 226, 173));
@@ -169,14 +169,12 @@ public class TrangBanHangJPanel extends JPanel implements ActionListener, Action
 		panel_ThongTinHoaDon.add(lbl_NgayLapHD);
 
 //		label nhân viên
-//		lấy nhân viên là nhân đăng nhập vào trong hệ thống
-//		do chưa có data nên tạm thời để mặc định là đặng thị quyền cơ
 		JLabel lbl_NhanVien = new JLabel("Nhân viên:");
 		lbl_NhanVien.setFont(new Font("Arial", Font.PLAIN, 18));
 		lbl_NhanVien.setBounds(20, 83, 109, 22);
 		panel_ThongTinHoaDon.add(lbl_NhanVien);
 
-		lbl_NVLapHD = new JLabel("Đặng Thị Quyền Cơ");
+		lbl_NVLapHD = new JLabel(nv.getHoTen());
 		lbl_NVLapHD.setForeground(new Color(226, 41, 69));
 		lbl_NVLapHD.setFont(new Font("Arial", Font.PLAIN, 16));
 		lbl_NVLapHD.setBounds(246, 84, 152, 23);
@@ -208,7 +206,7 @@ public class TrangBanHangJPanel extends JPanel implements ActionListener, Action
 		panel_NhapThongTinMatHang.add(lbl_KichThuoc);
 
 		modelCombobox = new DefaultComboBoxModel<>();
-        comboBox_KichThuoc = new JComboBox<>(modelCombobox);
+		comboBox_KichThuoc = new JComboBox<>(modelCombobox);
 		comboBox_KichThuoc.setBounds(236, 83, 243, 29);
 		panel_NhapThongTinMatHang.add(comboBox_KichThuoc);
 
@@ -447,7 +445,7 @@ public class TrangBanHangJPanel extends JPanel implements ActionListener, Action
 		btn_ThanhToan.setBounds(530, 587, 163, 50);
 		add(btn_ThanhToan);
 
-		trangTimKiemHoaDon = new TrangTimKiemHoaDon();
+		trangTimKiemHoaDon = new TrangTimKiemHoaDon(nv);
 
 		btn_TimHoaDon.addActionListener(this);
 		btn_ThongTinKhachHang.addActionListener(this);
@@ -458,6 +456,8 @@ public class TrangBanHangJPanel extends JPanel implements ActionListener, Action
 		btn_HuyHoaDon.addActionListener(this);
 		btn_ThanhToan.addActionListener(this);
 		txt_MaHangHoa.addActionListener(this);
+		table.getSelectionModel().addListSelectionListener(this);
+		txt_TienNhan.addActionListener(this);
 
 	}
 
@@ -489,7 +489,6 @@ public class TrangBanHangJPanel extends JPanel implements ActionListener, Action
 
 		} else if (o.equals(btn_Them)) {
 
-			loadKichCoSanPham(txt_MaHangHoa.getText().trim());
 			themHangHoa();
 
 		} else if (o.equals(btn_HuyHoaDon)) {
@@ -498,16 +497,32 @@ public class TrangBanHangJPanel extends JPanel implements ActionListener, Action
 					"Xác nhận", JOptionPane.YES_NO_OPTION);
 
 			if (choice == JOptionPane.YES_OPTION) {
-				switchContent(new TrangBanHangJPanel());
+				switchContent(new TrangBanHangJPanel(nv));
 			}
 
 		} else if (o.equals(btn_ThanhToan)) {
 //			tạo 1 hóa đơn mới
-			new TrangBanHang().xuatHoaDonRaiFile(lbl_TongTienTra.getText(), this);
+//			new TrangBanHang().xuatHoaDonRaiFile(lbl_TongTienTra.getText(), this);
 
+		} else if (o.equals(txt_TienNhan)) {
+			tinhTongCacThanhTien();
 		}
 	}
 
+	@Override
+	public void valueChanged(ListSelectionEvent e) {
+		// TODO Auto-generated method stub
+		int selected = table.getSelectedRow();
+		if (selected >= 0) {
+			ChiTietHoaDon chitiet = listChiTietHD.get(selected);
+			txt_MaHangHoa.setText(chitiet.getHangHoa().getMaHangHoa().trim());
+			spinner_SoLuong.setValue(chitiet.getSoLuong());
+			comboBox_KichThuoc.removeAllItems();
+			String kt = dao_HangHoa.getKichThuocCuaMotSanPham(txt_MaHangHoa.getText()).get(0);
+			comboBox_KichThuoc.addItem(kt);
+		}
+	}
+	
 	@Override
 	public Object getValue(String key) {
 		// TODO Auto-generated method stub
@@ -627,8 +642,8 @@ public class TrangBanHangJPanel extends JPanel implements ActionListener, Action
 						JOptionPane.YES_NO_OPTION);
 
 				if (choice == JOptionPane.YES_OPTION) {
+					listChiTietHD.remove(selectedRow);
 					model.removeHangHoa(selectedRow);
-
 				}
 
 			}
@@ -682,24 +697,32 @@ public class TrangBanHangJPanel extends JPanel implements ActionListener, Action
 		hoaDon.setTongThanhTien(tongTienTra);
 
 		lbl_TongTienTra.setText(decimalFormat.format(tongTienTra));
+
+		double tienThua = Double.parseDouble(txt_TienNhan.getText()) - tongTienTra;
+		lbl_TienThua.setText(decimalFormat.format(tienThua));
 	}
+
+	/**
+	 * tao 1 hoa đơn mới
+	 * 
+	 * @return HoaDon
+	 */
 
 	public HoaDon taoHoaDon() {
 		LocalDate ngayTao = LocalDate.now();
 		String maHD = "HD" + ngayTao.toString().replaceAll("-", "") + "0001"; // +dao.get
-																												
-		HoaDon hd = new HoaDon(maHD,ngayTao, null, nv, null);
-		System.out.println(hd);
 
+		HoaDon hd = new HoaDon(maHD, ngayTao, null, nv, null);
 		return hd;
 	}
 
 //	Chua tìm dao của sđt
 	public void timThongTinKhachHang(String sdt, boolean trangThaiTrangThongtin) {
+		kh = dao_KhachHang.getKhachHangTheoSDT(sdt);
 		if (sdt.trim().equals("")) {
 			JOptionPane.showMessageDialog(this, "Vui lòng nhật số điện thoại");
 			lbl_TenKhachHang.setText("");
-		} else if (sdt.trim().equals(kh.getSoDienThoai())) {
+		} else if (kh != null) {
 			TrangThongTinKhachHang tt = new TrangThongTinKhachHang(kh);
 			lbl_TenKhachHang.setText(kh.getTenKhachHang());
 			tt.setVisible(trangThaiTrangThongtin);
@@ -709,19 +732,29 @@ public class TrangBanHangJPanel extends JPanel implements ActionListener, Action
 		}
 	}
 
-	public void loadKichCoSanPham(String ma) {
+	public boolean loadKichCoSanPham(String ma) {
 		if (ma.equals("")) {
 			JOptionPane.showMessageDialog(this, "Vui lòng nhập mã sản phẩm!");
 			txt_MaHangHoa.selectAll();
 			txt_MaHangHoa.requestFocus();
+			return false;
 		} else {
-			List<String> listHH = dao_HangHoa.getKichThuocCuaMotSanPham(ma);
-			if (listHH.size() == 0 && dao_HangHoa.getHangHoaByMaHangHoa(ma).getMaHangHoa() == null) {
-				JOptionPane.showMessageDialog(this, "Không tồn tại mã hàng hóa: " +ma);
+			if (txt_MaHangHoa.getText().length() < 6) {
+				JOptionPane.showMessageDialog(this, "Không tồn tại mã hàng hóa: " + ma);
 				txt_MaHangHoa.selectAll();
 				txt_MaHangHoa.requestFocus();
+				return false;
+			}
+
+			List<String> listHH = dao_HangHoa.getKichThuocCuaMotSanPham(ma);
+			if (listHH.size() == 0 && dao_HangHoa.getHangHoaByMaHangHoa(ma).getMaHangHoa() == null) {
+				JOptionPane.showMessageDialog(this, "Không tồn tại mã hàng hóa: " + ma);
+				txt_MaHangHoa.selectAll();
+				txt_MaHangHoa.requestFocus();
+				return false;
 			} else {
-				if(comboBox_KichThuoc.getSelectedItem()!=null) return;
+				if (comboBox_KichThuoc.getSelectedItem() != null)
+					return true;
 				modelCombobox.removeAllElements();
 
 				for (String string : listHH) {
@@ -731,19 +764,27 @@ public class TrangBanHangJPanel extends JPanel implements ActionListener, Action
 				txt_MaHangHoa.transferFocus();
 			}
 		}
+		return true;
 
 	}
-	
+
 	public void themHangHoa() {
-		HangHoa hh = dao_HangHoa.getHangHoaByMaHangHoa(txt_MaHangHoa.getText().trim()+(String) comboBox_KichThuoc.getSelectedItem());
+		boolean ktMaHH = loadKichCoSanPham(txt_MaHangHoa.getText().trim());
+		if (!ktMaHH)
+			return;
+		HangHoa hh = dao_HangHoa
+				.getHangHoaByMaHangHoa(txt_MaHangHoa.getText().trim() + (String) comboBox_KichThuoc.getSelectedItem());
 //		Tạo ra arraylist chi tiết hóa đơn
 		ChiTietHoaDon ct = new ChiTietHoaDon(hh, hoaDon, (int) spinner_SoLuong.getValue(), hh.getDonGiaNhap());
 		listChiTietHD.add(ct);
 		txt_MaHangHoa.setText("");
+
 		model.addHangHoa(ct);
 		tinhTongCacThanhTien();
 		comboBox_KichThuoc.removeAllItems();
 		spinner_SoLuong.setValue(1);
 	}
-	
+
+	pu
+
 }

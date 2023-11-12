@@ -34,6 +34,7 @@ import entities.ChiTietHoaDon;
 import entities.HangHoa;
 import entities.HoaDon;
 import entities.KhachHang;
+import entities.NhanVien;
 import entities.VoucherGiamGia;
 
 import javax.swing.JLabel;
@@ -69,11 +70,12 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener {
 	private DecimalFormat decimalFormat = new DecimalFormat("#,##0");
 	private JDateChooser dateChooser_TuNgay;
 	private JDateChooser dateChooser_DenNgay;
+	private NhanVien nv_DangNhap;
 
 	/**
 	 * Create the panel.
 	 */
-	public TrangTimKiemHoaDon() {
+	public TrangTimKiemHoaDon(NhanVien nhanVienDangNhap) {
 		dao_HoaDon = new Dao_HoaDon();
 		dao_ChiTietHoaDon = new Dao_ChiTietHoaDon();
 		dao_NhanVien = new Dao_NhanVien();
@@ -81,6 +83,8 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener {
 		dao_Voucher = new Dao_VoucherGiamGia();
 		dao_HangHoa = new Dao_HangHoa();
 		Dao_NhaCungCap = new Dao_NhaCungCap();
+		
+		nv_DangNhap = nhanVienDangNhap;
 
 		/* Thiết lập jpanel cho trang bán hàng */
 		this.setBounds(SetBountJPanel.X, SetBountJPanel.Y, SetBountJPanel.WIDTH, SetBountJPanel.HEIGHT);
@@ -205,7 +209,6 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener {
 		txt_MaHoaDon.addActionListener(this);
 		txt_SDT.addActionListener(this);
 		txt_maNV.addActionListener(this);
-		
 
 	}
 
@@ -228,7 +231,7 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener {
 		// TODO Auto-generated method stub
 		Object o = e.getSource();
 		if (o.equals(btn_LapHoaDon)) {
-			switchContent(new TrangBanHangJPanel());
+			switchContent(new TrangBanHangJPanel(nv_DangNhap));
 		}else
 		if (o.equals(btn_Tim)) {
 			
