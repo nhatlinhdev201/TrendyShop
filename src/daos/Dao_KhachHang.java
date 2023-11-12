@@ -68,4 +68,28 @@ public class Dao_KhachHang {
 		return kh;
 	}
 	
+	public KhachHang getKhachHangTheoSDT(String sdt) {
+		KhachHang kh =null;
+		try {
+			PreparedStatement statement = connection.prepareStatement("select*from KhachHang where soDienThoai = '"+sdt+"'");
+			ResultSet resultSet = statement.executeQuery();
+			kh= new KhachHang();
+			while (resultSet.next()) {
+				
+				kh.setMaKhachHang(resultSet.getString("maKhachHang"));
+				kh.setSoDienThoai(resultSet.getString("soDienThoai"));
+				kh.setTenKhachHang(resultSet.getString("tenKhachHang"));
+				kh.setEmail(resultSet.getString("email"));
+				kh.setDiaChi(resultSet.getString("diaChi"));
+				kh.setTrangThai(resultSet.getBoolean("trangThai"));
+				kh.setDiemTichLuy(resultSet.getFloat("diemTichLuy"));
+
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return kh;
+	}
+	
 }
