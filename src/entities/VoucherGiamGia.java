@@ -35,12 +35,10 @@ public class VoucherGiamGia {
 		this.soLuotDung = soLuotSuDung;
 	}
 
-	public int getSoLuotDung() {
-		return soLuotDung;
-	}
+	
 
-	public void setSoLuotDung(int soLuotDung) {
-		this.soLuotDung = soLuotDung;
+	public String getMaVoucher() {
+		return maVoucher;
 	}
 
 	public void setMaVoucher(String maVoucher) {
@@ -95,16 +93,12 @@ public class VoucherGiamGia {
 		this.trangThai = trangThai;
 	}
 
-	public int getSoLuotSuDung() {
+	public int getSoLuotDung() {
 		return soLuotDung;
 	}
 
-	public void setSoLuotSuDung(int soLuotSuDung) {
-		this.soLuotDung = soLuotSuDung;
-	}
-
-	public String getMaVoucher() {
-		return maVoucher;
+	public void setSoLuotDung(int soLuotDung) {
+		this.soLuotDung = soLuotDung;
 	}
 
 	@Override

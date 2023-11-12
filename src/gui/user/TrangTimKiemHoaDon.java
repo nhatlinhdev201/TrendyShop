@@ -231,7 +231,7 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener {
 		// TODO Auto-generated method stub
 		Object o = e.getSource();
 		if (o.equals(btn_LapHoaDon)) {
-			switchContent(new TrangBanHangJPanel(nv_DangNhap));
+			switchContent(new TrangBanHangJPanel());
 		}else
 		if (o.equals(btn_Tim)) {
 			
@@ -380,7 +380,7 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener {
 
 			for (int i = 0; i < listChiTietHoaDon.size(); i++) {
 				
-				HangHoa hh = dao_HangHoa.getHangHoaByMaHangHoa(listChiTietHoaDon.get(i).getHangHoa().getMaHangHoa());
+				HangHoa hh = dao_HangHoa.getListHangHoaByMaHangHoa(listChiTietHoaDon.get(i).getHangHoa().getMaHangHoa());
 				
 				JPanel panel_4 = new JPanel();
 				panel_4.setBorder(new LineBorder(Color.LIGHT_GRAY, 1, true));
@@ -654,6 +654,7 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener {
 			
 			List<HoaDon> ds = new ArrayList<>();
 			for (HoaDon hoaDon : dsHD) {
+				if(kh.getMaKhachHang()==null)break;
 				if(kh.getMaKhachHang().equals(hoaDon.getKhachHang().getMaKhachHang())) {
 					ds.add(hoaDon);
 				}

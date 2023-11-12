@@ -48,7 +48,7 @@ public class TrangChinhNVBanHang extends JFrame implements ActionListener {
 	
 	private Dao_NhanVien dao_nhanVien;
 	
-	private NhanVien nv;
+	static NhanVien nv;
 
 
 		/**
@@ -158,7 +158,7 @@ public class TrangChinhNVBanHang extends JFrame implements ActionListener {
 		trangChuPanel = new TrangChuPanel();
 		trangHuongDanJPanel = new TrangHuongDanJPanel();
 		trangQLKhachHangPanel = new TrangQLKhachHangPanel();
-		trangBanHangJPanel = new TrangBanHangJPanel(nv);
+		trangBanHangJPanel = new TrangBanHangJPanel();
 		trangThongKeNVBanHangJPanel = new TrangThongKeNVBanHangJPanel();
 		
 		switchContent(trangChuPanel);

@@ -27,13 +27,13 @@ public class Dao_NhanVien {
 				nv.setMaNhanVien(resultSet.getString("maNhanVien").trim());
 				nv.setHoTen(resultSet.getString("hoTen").trim());
 				nv.setNgaySinh(resultSet.getDate("ngaySinh"));
-				nv.setSoCCCD(resultSet.getString("soCCCD"));
-				nv.setSoDienThoai(resultSet.getString("soDienThoai"));
-				nv.setEmail(resultSet.getString("email"));
-				nv.setDiaChi(resultSet.getString("diaChi"));
-				nv.setChucVu(resultSet.getString("chucVu"));
+				nv.setSoCCCD(resultSet.getString("soCCCD").trim());
+				nv.setSoDienThoai(resultSet.getString("soDienThoai").trim());
+				nv.setEmail(resultSet.getString("email").trim());
+				nv.setDiaChi(resultSet.getString("diaChi").trim());
+				nv.setChucVu(resultSet.getString("chucVu").trim());
 				nv.setTrangThai(resultSet.getBoolean("trangThai"));
-				nv.setMatKhau(resultSet.getString("matKhau"));
+				nv.setMatKhau(resultSet.getString("matKhau").trim());
 				nv.setPhanQuyen(resultSet.getBoolean("phanQuyen"));
 				nv.setAnhDaiDien(resultSet.getString("hinhAnh"));
 			}
