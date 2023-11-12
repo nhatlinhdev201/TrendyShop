@@ -716,7 +716,7 @@ public class TrangBanHangJPanel extends JPanel implements ActionListener, Action
 			txt_MaHangHoa.requestFocus();
 		} else {
 			List<String> listHH = dao_HangHoa.getKichThuocCuaMotSanPham(ma);
-			if (listHH.size() == 0 && dao_HangHoa.getHangHoaByMaHangHoa(ma).getMaHangHoa() == null) {
+			if (listHH.size() == 0 && dao_HangHoa.getHangHoaByMaHangHao(ma).getMaHangHoa() == null) {
 				JOptionPane.showMessageDialog(this, "Không tồn tại mã hàng hóa: " +ma);
 				txt_MaHangHoa.selectAll();
 				txt_MaHangHoa.requestFocus();
@@ -735,7 +735,7 @@ public class TrangBanHangJPanel extends JPanel implements ActionListener, Action
 	}
 	
 	public void themHangHoa() {
-		HangHoa hh = dao_HangHoa.getHangHoaByMaHangHoa(txt_MaHangHoa.getText().trim()+(String) comboBox_KichThuoc.getSelectedItem());
+		HangHoa hh = dao_HangHoa.getHangHoaByMaHangHao(txt_MaHangHoa.getText().trim()+(String) comboBox_KichThuoc.getSelectedItem());
 //		Tạo ra arraylist chi tiết hóa đơn
 		ChiTietHoaDon ct = new ChiTietHoaDon(hh, hoaDon, (int) spinner_SoLuong.getValue(), hh.getDonGiaNhap());
 		listChiTietHD.add(ct);
