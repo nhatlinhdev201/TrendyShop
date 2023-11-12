@@ -32,7 +32,7 @@ public class Dao_HangHoa {
 				hangHoa.setXuatXu(resultSet.getString("xuatXu").trim());
 				hangHoa.setChatLieu(resultSet.getString("chatLieu").trim());
 				hangHoa.setChiTietMoTa(resultSet.getString("chiTietMoTa"));
-				hangHoa.setHinhAnh(resultSet.getString("hinhAnh").trim());
+				hangHoa.setHinhAnh(resultSet.getString("hinhAnh"));
 				hangHoa.setMaNhaCungCap(resultSet.getString("maNhaCungCap").trim());
 				hangHoa.setKichCo(resultSet.getString("kichCo").trim());
 				hangHoa.setMauSac(resultSet.getString("mauSac").trim());
@@ -214,7 +214,7 @@ public class Dao_HangHoa {
 				hangHoa.setXuatXu(resultSet.getString("xuatXu").trim());
 				hangHoa.setChatLieu(resultSet.getString("chatLieu").trim());
 				hangHoa.setChiTietMoTa(resultSet.getString("chiTietMoTa").trim());
-				hangHoa.setHinhAnh(resultSet.getString("hinhAnh").trim());
+				hangHoa.setHinhAnh(resultSet.getString("hinhAnh"));
 				hangHoa.setMaNhaCungCap(resultSet.getString("maNhaCungCap").trim());
 				hangHoa.setKichCo(resultSet.getString("kichCo").trim());
 				hangHoa.setMauSac(resultSet.getString("mauSac").trim());
@@ -230,6 +230,7 @@ public class Dao_HangHoa {
 		return hangHoa;
 
 	}
+
 	public String getMaHangHoaNew() {
 		String maHangHoa = "";
 		try {
@@ -245,6 +246,7 @@ public class Dao_HangHoa {
 		return maHangHoa;
 
 	}
+
 	public boolean deleteHangHoa(String mahh) {
 		try {
 			PreparedStatement preparedStatement = connection
@@ -333,8 +335,51 @@ public class Dao_HangHoa {
 	}
 
 	public List<String> getKichThuocCuaMotSanPham(String ma) {
-		// TODO Auto-generated method stub
-		return null;
+		List<String> dsKichThuoc = null;
+		try {
+			PreparedStatement statement = connection.prepareStatement("select kichCo from HangHoa where maHangHoa LIKE '"+ma+"%'");
+			ResultSet resultSet = statement.executeQuery();
+			dsKichThuoc = new ArrayList<String>();
+			while (resultSet.next()) {
+				dsKichThuoc.add(resultSet.getString("kichCo"));
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dsKichThuoc;
+	}
+
+	public HangHoa getListHangHoaByMaHangHoa(String ma) {
+		HangHoa hangHoa = null;
+		try {
+			PreparedStatement statement = connection
+					.prepareStatement("select*from HangHoa where maHangHoa = '"+ma+"'");
+			ResultSet resultSet = statement.executeQuery();
+			hangHoa = new HangHoa();
+			while (resultSet.next()) {
+				hangHoa.setMaHangHoa(resultSet.getString("maHangHoa"));
+				hangHoa.setTenHangHoa(resultSet.getString("tenHangHoa"));
+				hangHoa.setPhanLoai(resultSet.getString("phanLoai"));
+				hangHoa.setThuongHieu(resultSet.getString("thuongHieu"));
+				hangHoa.setXuatXu(resultSet.getString("xuatXu"));
+				hangHoa.setChatLieu(resultSet.getString("chatLieu"));
+				hangHoa.setChiTietMoTa(resultSet.getString("chiTietMoTa"));
+				hangHoa.setHinhAnh(resultSet.getString("hinhAnh"));
+				hangHoa.setMaNhaCungCap(resultSet.getString("maNhaCungCap"));
+				hangHoa.setKichCo(resultSet.getString("kichCo"));
+				hangHoa.setMauSac(resultSet.getString("mauSac"));
+				hangHoa.setSoLuongTon(resultSet.getInt("soLuongTon"));
+				hangHoa.setSoLuongDaBan(resultSet.getInt("soLuongDaBan"));
+				hangHoa.setDonGiaNhap(resultSet.getDouble("donGiaNhap"));
+				hangHoa.setTrangThai(resultSet.getBoolean("trangThai"));
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return hangHoa;
+
 	}
 	
 }

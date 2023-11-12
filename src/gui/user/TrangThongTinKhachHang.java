@@ -58,7 +58,7 @@ public class TrangThongTinKhachHang extends JFrame {
 		
 		JLabel lbl_TenKhachHang = new JLabel("");
 		lbl_TenKhachHang.setFont(new Font("Monospaced", Font.PLAIN, 13));
-		lbl_TenKhachHang.setBounds(208, 84, 145, 14);
+		lbl_TenKhachHang.setBounds(208, 84, 160, 14);
 		getContentPane().add(lbl_TenKhachHang);
 		
 		JLabel lbl_TrangThai = new JLabel("");

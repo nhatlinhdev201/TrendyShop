@@ -2,12 +2,16 @@ package gui;
 
 import java.awt.EventQueue;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.JTextField;
@@ -111,5 +115,19 @@ public class TrangDangNhap extends JFrame {
 		passwordField.setBounds(77, 0, 155, 32);
 		passwordField.setBorder(null);
 		panel_1_1.add(passwordField);;
+		
+		JButton btn_dangNhap = new JButton("Đăng nhập");
+		btn_dangNhap.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String taiKhoan = txt_taiKhoan.getText();
+		        String matKhau = new String(passwordField.getPassword());
+//		        if()
+			}
+		});
+		btn_dangNhap.setBackground(new Color(124, 252, 0));
+		btn_dangNhap.setFont(new Font("Tahoma", Font.BOLD, 20));
+		btn_dangNhap.setBounds(81, 294, 161, 39);
+		
+		panel.add(btn_dangNhap);;
 	}
 }

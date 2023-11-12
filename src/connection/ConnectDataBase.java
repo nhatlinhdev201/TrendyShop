@@ -9,7 +9,7 @@ public class ConnectDataBase {
 	public static ConnectDataBase instance;
 	public ConnectDataBase() {
 		try {
-			connection = DriverManager.getConnection("jdbc:sqlserver://localhost:1433;databaseName=trendyshop","sa","123");
+			connection = DriverManager.getConnection("jdbc:sqlserver://localhost:1433;databaseName=trendyshop","sa","12345678");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
