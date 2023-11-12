@@ -4,15 +4,26 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import constance.SetBountJPanel;
+import daos.Dao_ThongKeDoanhThu;
+import entities.NhanVien;
+import modelsThongKe.BieuDoThongKePanel;
+import modelsThongKe.DuLieuBieuDoThongKeDoanhThu;
+import modelsThongKe.ModelThongKeDoanhThuNam;
+import modelsThongKe.ModelThongKeDoanhThuNgay;
+import modelsThongKe.ModelThongKeDoanhThuThang;
+import services.ThongKeDoanhThuServices;
+
 import java.awt.Font;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Container;
 
 import javax.swing.JTabbedPane;
 import javax.swing.border.TitledBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.JCheckBox;
 import javax.swing.JTextField;
+import javax.swing.ComboBoxModel;
 import javax.swing.JButton;
 import java.awt.BorderLayout;
 import com.toedter.calendar.JDateChooser;
@@ -24,11 +35,16 @@ import javax.swing.JComponent;
 
 import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.awt.event.ActionEvent;
 
-public class TrangThongKeNVBanHangJPanel extends JPanel implements ActionListener{
+public class TrangThongKeNVBanHangJPanel extends JPanel implements ActionListener {
 	private JTextField txtThongKeTrenTaiKhoanNgay;
 	private JTextField txtTenNhanVienThongKeNgay;
 	private JTextField txtNgayDuocThongKeNgay;
@@ -72,6 +88,35 @@ public class TrangThongKeNVBanHangJPanel extends JPanel implements ActionListene
 	private JButton btnXuatDuLieuNam;
 	private JButton btnTaoBaoCaoNam;
 	private JDateChooser jdcChonNgayThongKe;
+	private JTextField txtTongTienHangDaBanNgay;
+	private JTextField txtTongTienHangDaBanThang;
+	private JTextField txtTongTienHangDaBanNam;
+	private String[] nam = {"2020", "2021", "2022", "2023"};
+	private String[] thang = {"1", "2", "3","4","5","6","7","8","9","10","11","12"};
+	// <=======dữ liệu cho thong ke========>
+	private ModelThongKeDoanhThuNgay modelThongKeDoanhThuNgay = new ModelThongKeDoanhThuNgay();
+	ArrayList<ModelThongKeDoanhThuNgay> listModalThongKeNgay = new ArrayList<>();
+
+	private ModelThongKeDoanhThuThang modelThongKeDoanhThuThang = new ModelThongKeDoanhThuThang();
+	ArrayList<ModelThongKeDoanhThuThang> listModelThongKeThang = new ArrayList<>();
+
+	private ModelThongKeDoanhThuNam modelThongKeDoanhThuNam = new ModelThongKeDoanhThuNam();
+	ArrayList<ModelThongKeDoanhThuNam> listModelThongKeDoanhThuNam = new ArrayList<>();
+
+	// <========data default================>
+
+	private NhanVien taiKhoan = new NhanVien("NV0002", "Phạm Nhật Linh", null, null, null, null, null, null, true, null,
+			false, null);
+	LocalDate today = LocalDate.now();
+
+	// <============panel bieu do ===============>
+	private JPanel panelBieuDoThongKeTheoNgay;
+	// <==================>
+	private JComboBox<String> cbxChonNamCuaThangThongKe;
+	private JComboBox<String> cbxChonThangThongKe;
+	private JPanel panelBieuDoThongKeThang;
+	private JComboBox<String> cbxChonNamThongKe;
+	private JPanel panelBieuDoThongKeNam;
 
 	/**
 	 * Create the panel.
@@ -108,7 +153,7 @@ public class TrangThongKeNVBanHangJPanel extends JPanel implements ActionListene
 		panel.setBounds(35, 262, 451, 4);
 		panelKetQuaThongKe.add(panel);
 
-		JLabel  lblTKTrenTaiKhoan = new JLabel("Thống kê trên tài khoản : ");
+		JLabel lblTKTrenTaiKhoan = new JLabel("Thống kê trên tài khoản : ");
 		lblTKTrenTaiKhoan.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblTKTrenTaiKhoan.setBounds(67, 163, 166, 23);
 		panelKetQuaThongKe.add(lblTKTrenTaiKhoan);
@@ -147,7 +192,7 @@ public class TrangThongKeNVBanHangJPanel extends JPanel implements ActionListene
 				new TitledBorder(null, "D\u1EEF li\u1EC7u th\u1ED1ng k\u00EA \u0111\u01B0\u1EE3c trong ng\u00E0y :",
 
 						TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_1.setBounds(10, 273, 503, 272);
+		panel_1.setBounds(10, 273, 503, 323);
 		panelKetQuaThongKe.add(panel_1);
 
 		JLabel lblNewLabel_1 = new JLabel("Tổng doanh thu trong ngày  : ");
@@ -186,53 +231,53 @@ public class TrangThongKeNVBanHangJPanel extends JPanel implements ActionListene
 
 		JLabel lblNewLabel_1_2 = new JLabel("Tổng lãi trong ngày  : ");
 		lblNewLabel_1_2.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel_1_2.setBounds(29, 167, 206, 18);
+		lblNewLabel_1_2.setBounds(29, 283, 206, 18);
 		panel_1.add(lblNewLabel_1_2);
 
 		txtTongTienLaiTrongNgay = new JTextField();
 		txtTongTienLaiTrongNgay.setEditable(false);
 		txtTongTienLaiTrongNgay.setColumns(10);
-		txtTongTienLaiTrongNgay.setBounds(233, 165, 180, 20);
+		txtTongTienLaiTrongNgay.setBounds(233, 281, 180, 20);
 		panel_1.add(txtTongTienLaiTrongNgay);
 
 		JLabel lblNewLabel_2_2 = new JLabel("VND");
 		lblNewLabel_2_2.setForeground(Color.RED);
 		lblNewLabel_2_2.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel_2_2.setBounds(423, 168, 46, 14);
+		lblNewLabel_2_2.setBounds(423, 284, 46, 14);
 		panel_1.add(lblNewLabel_2_2);
 
 		JLabel lblNewLabel_1_3 = new JLabel("Tổng thuế   : ");
 		lblNewLabel_1_3.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel_1_3.setBounds(29, 193, 206, 20);
+		lblNewLabel_1_3.setBounds(29, 229, 206, 20);
 		panel_1.add(lblNewLabel_1_3);
 
 		txtTongThueNgay = new JTextField();
 		txtTongThueNgay.setEditable(false);
 		txtTongThueNgay.setColumns(10);
-		txtTongThueNgay.setBounds(233, 193, 180, 20);
+		txtTongThueNgay.setBounds(233, 229, 180, 20);
 		panel_1.add(txtTongThueNgay);
 
 		JLabel lblNewLabel_2_3 = new JLabel("VND");
 		lblNewLabel_2_3.setForeground(Color.RED);
 		lblNewLabel_2_3.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel_2_3.setBounds(423, 196, 46, 14);
+		lblNewLabel_2_3.setBounds(423, 232, 46, 14);
 		panel_1.add(lblNewLabel_2_3);
 
 		txtTongTienKhuyenMaiNgay = new JTextField();
 		txtTongTienKhuyenMaiNgay.setEditable(false);
 		txtTongTienKhuyenMaiNgay.setColumns(10);
-		txtTongTienKhuyenMaiNgay.setBounds(233, 224, 180, 20);
+		txtTongTienKhuyenMaiNgay.setBounds(233, 198, 180, 20);
 		panel_1.add(txtTongTienKhuyenMaiNgay);
 
 		JLabel lblNewLabel_1_3_1 = new JLabel("Tổng tiền khuyến mãi : ");
 		lblNewLabel_1_3_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel_1_3_1.setBounds(29, 224, 206, 20);
+		lblNewLabel_1_3_1.setBounds(29, 198, 206, 20);
 		panel_1.add(lblNewLabel_1_3_1);
 
 		JLabel lblNewLabel_2_3_1 = new JLabel("VND");
 		lblNewLabel_2_3_1.setForeground(Color.RED);
 		lblNewLabel_2_3_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel_2_3_1.setBounds(423, 227, 46, 14);
+		lblNewLabel_2_3_1.setBounds(423, 201, 46, 14);
 		panel_1.add(lblNewLabel_2_3_1);
 
 		JLabel lblNewLabel_1_4 = new JLabel("Tổng số hóa đơn được lập : ");
@@ -269,6 +314,23 @@ public class TrangThongKeNVBanHangJPanel extends JPanel implements ActionListene
 		txtTongSoLuongMatHangBanRaNgay.setBounds(233, 71, 77, 20);
 		panel_1.add(txtTongSoLuongMatHangBanRaNgay);
 
+		JLabel lblNewLabel_1_1_2 = new JLabel("Tổng tiền hàng đã bán :");
+		lblNewLabel_1_1_2.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblNewLabel_1_1_2.setBounds(29, 167, 206, 20);
+		panel_1.add(lblNewLabel_1_1_2);
+
+		txtTongTienHangDaBanNgay = new JTextField();
+		txtTongTienHangDaBanNgay.setEditable(false);
+		txtTongTienHangDaBanNgay.setColumns(10);
+		txtTongTienHangDaBanNgay.setBounds(233, 168, 180, 20);
+		panel_1.add(txtTongTienHangDaBanNgay);
+
+		JLabel lblNewLabel_2_1_2 = new JLabel("VND");
+		lblNewLabel_2_1_2.setForeground(Color.RED);
+		lblNewLabel_2_1_2.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblNewLabel_2_1_2.setBounds(423, 171, 46, 14);
+		panel_1.add(lblNewLabel_2_1_2);
+
 		JPanel panel_4 = new JPanel();
 		panel_4.setBorder(new LineBorder(Color.PINK));
 		panel_4.setBounds(35, 423, 451, 4);
@@ -303,7 +365,7 @@ public class TrangThongKeNVBanHangJPanel extends JPanel implements ActionListene
 		btnThongKeNgay = new JButton("Thống kê");
 		btnThongKeNgay.setBounds(161, 83, 89, 31);
 		panelKetQuaThongKe.add(btnThongKeNgay);
-		
+
 		btnLamMoiThongKeNgay = new JButton("Làm mới");
 		btnLamMoiThongKeNgay.setBounds(274, 83, 89, 31);
 		panelKetQuaThongKe.add(btnLamMoiThongKeNgay);
@@ -320,25 +382,34 @@ public class TrangThongKeNVBanHangJPanel extends JPanel implements ActionListene
 		panelBieuDoThongKeNgay.setBounds(560, 11, 775, 561);
 		panelTabThongKeTheoNgay.add(panelBieuDoThongKeNgay);
 
-		JPanel panelBieuDoThongKeTheoNgay = new JPanel();
+		panelBieuDoThongKeTheoNgay = new JPanel();
+		panelBieuDoThongKeTheoNgay.setBounds(10, 31, 755, 405);
 		panelBieuDoThongKeTheoNgay.setBackground(SystemColor.activeCaptionBorder);
-		panelBieuDoThongKeTheoNgay.setBounds(10, 31, 755, 346);
 		panelBieuDoThongKeNgay.add(panelBieuDoThongKeTheoNgay);
+		panelBieuDoThongKeTheoNgay.setLayout(new BorderLayout(0, 0));
+
+//		VeBieuDoThongKeDoanhThuNgay(panelBieuDoThongKeTheoNgay, today, taiKhoan);
 
 		JPanel panelChuThichBieuDoThongKeNgay = new JPanel();
-		panelChuThichBieuDoThongKeNgay.setBorder(
-				new TitledBorder(null, "Ch\u00FA th\u00EDch : ", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panelChuThichBieuDoThongKeNgay.setBorder(new TitledBorder(
+				new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)),
+				"Nh\u1EADn X\u00E9t : ", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		panelChuThichBieuDoThongKeNgay.setBackground(SystemColor.menu);
 		panelChuThichBieuDoThongKeNgay.setBounds(10, 447, 755, 103);
 		panelBieuDoThongKeNgay.add(panelChuThichBieuDoThongKeNgay);
+		panelChuThichBieuDoThongKeNgay.setLayout(null);
 
-		JTextPane txtTenBieuDo1 = new JTextPane();
-		txtTenBieuDo1.setText("Biểu đồ thể hiện doanh thu bán hàng của tất cả nhân viên trong 10 ngày qua");
-		txtTenBieuDo1.setForeground(Color.RED);
-		txtTenBieuDo1.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 12));
-		txtTenBieuDo1.setBackground(SystemColor.menu);
-		txtTenBieuDo1.setBounds(35, 382, 677, 36);
-		panelBieuDoThongKeNgay.add(txtTenBieuDo1);
+		JTextPane txtPaneNhanXetThongKeNgay = new JTextPane();
+		txtPaneNhanXetThongKeNgay.setEditable(false);
+		txtPaneNhanXetThongKeNgay.setText("");
+		txtPaneNhanXetThongKeNgay.setBounds(42, 25, 703, 52);
+		panelChuThichBieuDoThongKeNgay.add(txtPaneNhanXetThongKeNgay);
+
+		JLabel lblNewLabel_3 = new JLabel("=>");
+		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNewLabel_3.setForeground(Color.RED);
+		lblNewLabel_3.setBounds(10, 25, 32, 37);
+		panelChuThichBieuDoThongKeNgay.add(lblNewLabel_3);
 
 		btnTaoBaoCaoNgay = new JButton("Tạo báo cáo");
 		btnTaoBaoCaoNgay.setFont(new Font("Tahoma", Font.BOLD, 10));
@@ -407,7 +478,7 @@ public class TrangThongKeNVBanHangJPanel extends JPanel implements ActionListene
 				new TitledBorder(null, "D\u1EEF li\u1EC7u th\u1ED1ng k\u00EA \u0111\u01B0\u1EE3c trong ng\u00E0y :",
 
 						TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_1_1.setBounds(10, 273, 503, 272);
+		panel_1_1.setBounds(10, 273, 503, 322);
 		panelKetQuaThongKe_1.add(panel_1_1);
 
 		JLabel lblNewLabel_1_5 = new JLabel("Tổng doanh thu trong tháng  : ");
@@ -444,55 +515,55 @@ public class TrangThongKeNVBanHangJPanel extends JPanel implements ActionListene
 		lblNewLabel_2_1_1.setBounds(423, 140, 46, 14);
 		panel_1_1.add(lblNewLabel_2_1_1);
 
-		JLabel lblNewLabel_1_2_1 = new JLabel("Tổng lãi trong ngày  : ");
+		JLabel lblNewLabel_1_2_1 = new JLabel("Tổng lãi trong tháng  : ");
 		lblNewLabel_1_2_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel_1_2_1.setBounds(29, 167, 206, 18);
+		lblNewLabel_1_2_1.setBounds(29, 278, 206, 18);
 		panel_1_1.add(lblNewLabel_1_2_1);
 
 		txtTongTienLaiTrongThang = new JTextField();
 		txtTongTienLaiTrongThang.setEditable(false);
 		txtTongTienLaiTrongThang.setColumns(10);
-		txtTongTienLaiTrongThang.setBounds(233, 165, 180, 20);
+		txtTongTienLaiTrongThang.setBounds(233, 276, 180, 20);
 		panel_1_1.add(txtTongTienLaiTrongThang);
 
 		JLabel lblNewLabel_2_2_1 = new JLabel("VND");
 		lblNewLabel_2_2_1.setForeground(Color.RED);
 		lblNewLabel_2_2_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel_2_2_1.setBounds(423, 168, 46, 14);
+		lblNewLabel_2_2_1.setBounds(423, 279, 46, 14);
 		panel_1_1.add(lblNewLabel_2_2_1);
 
 		JLabel lblNewLabel_1_3_2 = new JLabel("Tổng thuế   : ");
 		lblNewLabel_1_3_2.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel_1_3_2.setBounds(29, 193, 206, 20);
+		lblNewLabel_1_3_2.setBounds(29, 199, 206, 20);
 		panel_1_1.add(lblNewLabel_1_3_2);
 
 		txtTongThueTrongThang = new JTextField();
 		txtTongThueTrongThang.setEditable(false);
 		txtTongThueTrongThang.setColumns(10);
-		txtTongThueTrongThang.setBounds(233, 193, 180, 20);
+		txtTongThueTrongThang.setBounds(233, 199, 180, 20);
 		panel_1_1.add(txtTongThueTrongThang);
 
 		JLabel lblNewLabel_2_3_2 = new JLabel("VND");
 		lblNewLabel_2_3_2.setForeground(Color.RED);
 		lblNewLabel_2_3_2.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel_2_3_2.setBounds(423, 196, 46, 14);
+		lblNewLabel_2_3_2.setBounds(423, 202, 46, 14);
 		panel_1_1.add(lblNewLabel_2_3_2);
 
 		txtTongTienKhuenMaiTrongThang = new JTextField();
 		txtTongTienKhuenMaiTrongThang.setEditable(false);
 		txtTongTienKhuenMaiTrongThang.setColumns(10);
-		txtTongTienKhuenMaiTrongThang.setBounds(233, 224, 180, 20);
+		txtTongTienKhuenMaiTrongThang.setBounds(233, 230, 180, 20);
 		panel_1_1.add(txtTongTienKhuenMaiTrongThang);
 
 		JLabel lblNewLabel_1_3_1_1 = new JLabel("Tổng tiền khuyến mãi : ");
 		lblNewLabel_1_3_1_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel_1_3_1_1.setBounds(29, 224, 206, 20);
+		lblNewLabel_1_3_1_1.setBounds(29, 230, 206, 20);
 		panel_1_1.add(lblNewLabel_1_3_1_1);
 
 		JLabel lblNewLabel_2_3_1_1 = new JLabel("VND");
 		lblNewLabel_2_3_1_1.setForeground(Color.RED);
 		lblNewLabel_2_3_1_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel_2_3_1_1.setBounds(423, 227, 46, 14);
+		lblNewLabel_2_3_1_1.setBounds(423, 233, 46, 14);
 		panel_1_1.add(lblNewLabel_2_3_1_1);
 
 		JLabel lblNewLabel_1_4_2 = new JLabel("Tổng số hóa đơn được lập : ");
@@ -529,6 +600,23 @@ public class TrangThongKeNVBanHangJPanel extends JPanel implements ActionListene
 		txtTongSoLuongMatHangBanRaTrongThang.setBounds(233, 71, 77, 20);
 		panel_1_1.add(txtTongSoLuongMatHangBanRaTrongThang);
 
+		txtTongTienHangDaBanThang = new JTextField();
+		txtTongTienHangDaBanThang.setEditable(false);
+		txtTongTienHangDaBanThang.setColumns(10);
+		txtTongTienHangDaBanThang.setBounds(233, 168, 180, 20);
+		panel_1_1.add(txtTongTienHangDaBanThang);
+
+		JLabel lblNewLabel_1_1_2_1 = new JLabel("Tổng tiền hàng đã bán :");
+		lblNewLabel_1_1_2_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblNewLabel_1_1_2_1.setBounds(29, 167, 206, 20);
+		panel_1_1.add(lblNewLabel_1_1_2_1);
+
+		JLabel lblNewLabel_2_1_2_1 = new JLabel("VND");
+		lblNewLabel_2_1_2_1.setForeground(Color.RED);
+		lblNewLabel_2_1_2_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblNewLabel_2_1_2_1.setBounds(423, 171, 46, 14);
+		panel_1_1.add(lblNewLabel_2_1_2_1);
+
 		JPanel panel_4_1 = new JPanel();
 		panel_4_1.setBorder(new LineBorder(Color.PINK));
 		panel_4_1.setBounds(35, 423, 451, 4);
@@ -551,7 +639,7 @@ public class TrangThongKeNVBanHangJPanel extends JPanel implements ActionListene
 		panelDuLieuThongKe_1.setBounds(10, 11, 503, 74);
 		panelKetQuaThongKe_1.add(panelDuLieuThongKe_1);
 
-		JComboBox cbxChonThangThongKe = new JComboBox();
+		cbxChonThangThongKe = new JComboBox(thang);
 		cbxChonThangThongKe.setBounds(230, 28, 39, 22);
 		panelDuLieuThongKe_1.add(cbxChonThangThongKe);
 
@@ -564,15 +652,15 @@ public class TrangThongKeNVBanHangJPanel extends JPanel implements ActionListene
 		lblNewLabel_5.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblNewLabel_5.setBounds(283, 29, 46, 19);
 		panelDuLieuThongKe_1.add(lblNewLabel_5);
-
-		JComboBox cbxChonNamCuaThangThongKe = new JComboBox();
+		
+		cbxChonNamCuaThangThongKe = new JComboBox(nam);
 		cbxChonNamCuaThangThongKe.setBounds(325, 28, 59, 22);
 		panelDuLieuThongKe_1.add(cbxChonNamCuaThangThongKe);
-		
+
 		btnLamMoiThongKeThang = new JButton("Làm mới");
 		btnLamMoiThongKeThang.setBounds(288, 96, 89, 31);
 		panelKetQuaThongKe_1.add(btnLamMoiThongKeThang);
-		
+
 		btnThongKeThang = new JButton("Thống kê");
 		btnThongKeThang.setBounds(175, 96, 89, 31);
 		panelKetQuaThongKe_1.add(btnThongKeThang);
@@ -589,25 +677,17 @@ public class TrangThongKeNVBanHangJPanel extends JPanel implements ActionListene
 		panelBieuDoThongKeNgay_1.setBounds(560, 11, 775, 561);
 		panelTabThongKeTheoThang.add(panelBieuDoThongKeNgay_1);
 
-		JPanel panelBieuDoThongKeThang = new JPanel();
+		panelBieuDoThongKeThang = new JPanel();
 		panelBieuDoThongKeThang.setBackground(SystemColor.activeCaptionBorder);
-		panelBieuDoThongKeThang.setBounds(10, 31, 755, 346);
+		panelBieuDoThongKeThang.setBounds(10, 31, 755, 420);
 		panelBieuDoThongKeNgay_1.add(panelBieuDoThongKeThang);
 
 		JPanel panelChuThichBieuDoThongKeThang = new JPanel();
 		panelChuThichBieuDoThongKeThang.setBorder(
 				new TitledBorder(null, "Ch\u00FA th\u00EDch : ", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panelChuThichBieuDoThongKeThang.setBackground(SystemColor.menu);
-		panelChuThichBieuDoThongKeThang.setBounds(10, 447, 755, 103);
+		panelChuThichBieuDoThongKeThang.setBounds(10, 462, 755, 88);
 		panelBieuDoThongKeNgay_1.add(panelChuThichBieuDoThongKeThang);
-
-		JTextPane txtpnBiuTh = new JTextPane();
-		txtpnBiuTh.setText("Biểu đồ thể hiện doanh thu bán hàng của nhân viên trong 5 tháng qua");
-		txtpnBiuTh.setForeground(Color.RED);
-		txtpnBiuTh.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 12));
-		txtpnBiuTh.setBackground(SystemColor.menu);
-		txtpnBiuTh.setBounds(35, 382, 677, 36);
-		panelBieuDoThongKeNgay_1.add(txtpnBiuTh);
 
 		btnXuatDuLieuThang = new JButton("Xuất dữ liệu thống kê");
 		btnXuatDuLieuThang.setFont(new Font("Tahoma", Font.BOLD, 10));
@@ -676,7 +756,7 @@ public class TrangThongKeNVBanHangJPanel extends JPanel implements ActionListene
 				new TitledBorder(null, "D\u1EEF li\u1EC7u th\u1ED1ng k\u00EA \u0111\u01B0\u1EE3c trong ng\u00E0y :",
 
 						TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_1_1_1.setBounds(10, 273, 503, 272);
+		panel_1_1_1.setBounds(10, 273, 503, 317);
 		panelKetQuaThongKe_1_1.add(panel_1_1_1);
 
 		JLabel lblNewLabel_1_5_1 = new JLabel("Tổng doanh thu trong năm  : ");
@@ -713,55 +793,55 @@ public class TrangThongKeNVBanHangJPanel extends JPanel implements ActionListene
 		lblNewLabel_2_1_1_1.setBounds(423, 140, 46, 14);
 		panel_1_1_1.add(lblNewLabel_2_1_1_1);
 
-		JLabel lblNewLabel_1_2_1_1 = new JLabel("Tổng lãi trong ngày  : ");
+		JLabel lblNewLabel_1_2_1_1 = new JLabel("Tổng lãi trong năm  : ");
 		lblNewLabel_1_2_1_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel_1_2_1_1.setBounds(29, 167, 206, 18);
+		lblNewLabel_1_2_1_1.setBounds(29, 277, 206, 18);
 		panel_1_1_1.add(lblNewLabel_1_2_1_1);
 
 		txtTongTienLaiNam = new JTextField();
 		txtTongTienLaiNam.setEditable(false);
 		txtTongTienLaiNam.setColumns(10);
-		txtTongTienLaiNam.setBounds(233, 165, 180, 20);
+		txtTongTienLaiNam.setBounds(233, 275, 180, 20);
 		panel_1_1_1.add(txtTongTienLaiNam);
 
 		JLabel lblNewLabel_2_2_1_1 = new JLabel("VND");
 		lblNewLabel_2_2_1_1.setForeground(Color.RED);
 		lblNewLabel_2_2_1_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel_2_2_1_1.setBounds(423, 168, 46, 14);
+		lblNewLabel_2_2_1_1.setBounds(423, 278, 46, 14);
 		panel_1_1_1.add(lblNewLabel_2_2_1_1);
 
 		JLabel lblNewLabel_1_3_2_1 = new JLabel("Tổng thuế   : ");
 		lblNewLabel_1_3_2_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel_1_3_2_1.setBounds(29, 193, 206, 20);
+		lblNewLabel_1_3_2_1.setBounds(29, 201, 206, 20);
 		panel_1_1_1.add(lblNewLabel_1_3_2_1);
 
 		txtTongThueNam = new JTextField();
 		txtTongThueNam.setEditable(false);
 		txtTongThueNam.setColumns(10);
-		txtTongThueNam.setBounds(233, 193, 180, 20);
+		txtTongThueNam.setBounds(233, 201, 180, 20);
 		panel_1_1_1.add(txtTongThueNam);
 
 		JLabel lblNewLabel_2_3_2_1 = new JLabel("VND");
 		lblNewLabel_2_3_2_1.setForeground(Color.RED);
 		lblNewLabel_2_3_2_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel_2_3_2_1.setBounds(423, 196, 46, 14);
+		lblNewLabel_2_3_2_1.setBounds(423, 204, 46, 14);
 		panel_1_1_1.add(lblNewLabel_2_3_2_1);
 
 		txtTongTienKhuyenMaiNam = new JTextField();
 		txtTongTienKhuyenMaiNam.setEditable(false);
 		txtTongTienKhuyenMaiNam.setColumns(10);
-		txtTongTienKhuyenMaiNam.setBounds(233, 224, 180, 20);
+		txtTongTienKhuyenMaiNam.setBounds(233, 232, 180, 20);
 		panel_1_1_1.add(txtTongTienKhuyenMaiNam);
 
 		JLabel lblNewLabel_1_3_1_1_1 = new JLabel("Tổng tiền khuyến mãi : ");
 		lblNewLabel_1_3_1_1_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel_1_3_1_1_1.setBounds(29, 224, 206, 20);
+		lblNewLabel_1_3_1_1_1.setBounds(29, 232, 206, 20);
 		panel_1_1_1.add(lblNewLabel_1_3_1_1_1);
 
 		JLabel lblNewLabel_2_3_1_1_1 = new JLabel("VND");
 		lblNewLabel_2_3_1_1_1.setForeground(Color.RED);
 		lblNewLabel_2_3_1_1_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel_2_3_1_1_1.setBounds(423, 227, 46, 14);
+		lblNewLabel_2_3_1_1_1.setBounds(423, 235, 46, 14);
 		panel_1_1_1.add(lblNewLabel_2_3_1_1_1);
 
 		JLabel lblNewLabel_1_4_2_1 = new JLabel("Tổng số hóa đơn được lập : ");
@@ -798,6 +878,23 @@ public class TrangThongKeNVBanHangJPanel extends JPanel implements ActionListene
 		txtTongSoLuongMatHangBanRaTrongNam.setBounds(233, 71, 77, 20);
 		panel_1_1_1.add(txtTongSoLuongMatHangBanRaTrongNam);
 
+		txtTongTienHangDaBanNam = new JTextField();
+		txtTongTienHangDaBanNam.setEditable(false);
+		txtTongTienHangDaBanNam.setColumns(10);
+		txtTongTienHangDaBanNam.setBounds(233, 168, 180, 20);
+		panel_1_1_1.add(txtTongTienHangDaBanNam);
+
+		JLabel lblNewLabel_1_1_2_2 = new JLabel("Tổng tiền hàng đã bán :");
+		lblNewLabel_1_1_2_2.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblNewLabel_1_1_2_2.setBounds(29, 167, 206, 20);
+		panel_1_1_1.add(lblNewLabel_1_1_2_2);
+
+		JLabel lblNewLabel_2_1_2_2 = new JLabel("VND");
+		lblNewLabel_2_1_2_2.setForeground(Color.RED);
+		lblNewLabel_2_1_2_2.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblNewLabel_2_1_2_2.setBounds(423, 171, 46, 14);
+		panel_1_1_1.add(lblNewLabel_2_1_2_2);
+
 		JPanel panel_4_1_1 = new JPanel();
 		panel_4_1_1.setBorder(new LineBorder(Color.PINK));
 		panel_4_1_1.setBounds(35, 423, 451, 4);
@@ -825,14 +922,14 @@ public class TrangThongKeNVBanHangJPanel extends JPanel implements ActionListene
 		lblThongKeNgay_1_1.setBounds(99, 27, 137, 23);
 		panelDuLieuThongKe_1_1.add(lblThongKeNgay_1_1);
 
-		JComboBox cbxChonNamThongKe = new JComboBox();
+		cbxChonNamThongKe = new JComboBox(nam);
 		cbxChonNamThongKe.setBounds(246, 28, 59, 22);
 		panelDuLieuThongKe_1_1.add(cbxChonNamThongKe);
-		
+
 		btnLamMoiThongKeNam = new JButton("Làm mới");
 		btnLamMoiThongKeNam.setBounds(263, 96, 89, 31);
 		panelKetQuaThongKe_1_1.add(btnLamMoiThongKeNam);
-		
+
 		btnThongKeNam = new JButton("Thống kê");
 		btnThongKeNam.setBounds(150, 96, 89, 31);
 		panelKetQuaThongKe_1_1.add(btnThongKeNam);
@@ -849,25 +946,17 @@ public class TrangThongKeNVBanHangJPanel extends JPanel implements ActionListene
 		panelBieuDoThongKeNgay_1_1.setBounds(560, 11, 775, 561);
 		panelTabThongKeTheoNam.add(panelBieuDoThongKeNgay_1_1);
 
-		JPanel panelBieuDoThongKeNam = new JPanel();
+		panelBieuDoThongKeNam = new JPanel();
 		panelBieuDoThongKeNam.setBackground(SystemColor.activeCaptionBorder);
-		panelBieuDoThongKeNam.setBounds(10, 31, 755, 346);
+		panelBieuDoThongKeNam.setBounds(10, 31, 755, 415);
 		panelBieuDoThongKeNgay_1_1.add(panelBieuDoThongKeNam);
 
 		JPanel panelChuThichBieuDoThongKeNam = new JPanel();
 		panelChuThichBieuDoThongKeNam.setBorder(
 				new TitledBorder(null, "Ch\u00FA th\u00EDch : ", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panelChuThichBieuDoThongKeNam.setBackground(SystemColor.menu);
-		panelChuThichBieuDoThongKeNam.setBounds(10, 447, 755, 103);
+		panelChuThichBieuDoThongKeNam.setBounds(10, 468, 755, 82);
 		panelBieuDoThongKeNgay_1_1.add(panelChuThichBieuDoThongKeNam);
-
-		JTextPane txtpnBiuTh_2 = new JTextPane();
-		txtpnBiuTh_2.setText("Biểu đồ thể hiện doanh thu bán hàng của nhân viên trong 5 năm qua");
-		txtpnBiuTh_2.setForeground(Color.RED);
-		txtpnBiuTh_2.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 12));
-		txtpnBiuTh_2.setBackground(SystemColor.menu);
-		txtpnBiuTh_2.setBounds(35, 382, 677, 36);
-		panelBieuDoThongKeNgay_1_1.add(txtpnBiuTh_2);
 
 		btnXuatDuLieuNam = new JButton("Xuất dữ liệu thống kê");
 		btnXuatDuLieuNam.setFont(new Font("Tahoma", Font.BOLD, 10));
@@ -878,8 +967,9 @@ public class TrangThongKeNVBanHangJPanel extends JPanel implements ActionListene
 		btnTaoBaoCaoNam.setFont(new Font("Tahoma", Font.BOLD, 10));
 		btnTaoBaoCaoNam.setBounds(1004, 583, 136, 30);
 		panelTabThongKeTheoNam.add(btnTaoBaoCaoNam);
-		
-		//<==============>
+
+		// <==============>
+		btnThongKeNgay.addActionListener(this);
 		btnLamMoiThongKeNgay.addActionListener(this);
 		btnTaoBaoCaoNgay.addActionListener(this);
 		btnXuatDuLieuNgay.addActionListener(this);
@@ -891,42 +981,300 @@ public class TrangThongKeNVBanHangJPanel extends JPanel implements ActionListene
 		btnThongKeNam.addActionListener(this);
 		btnXuatDuLieuNam.addActionListener(this);
 		btnTaoBaoCaoNam.addActionListener(this);
-		//<====================>
-		// Lấy ngày hiện tại từ Calendar
-		Calendar ngayHienTai = Calendar.getInstance();
+		// <====================>
+		lamMoiThongKeNgay(jdcChonNgayThongKe);
+		LoadDataThongKeNgay();
+		
+		lamMoiThongKeThang(cbxChonThangThongKe, cbxChonNamCuaThangThongKe);
+		LoadDataThongKeThang();
+		
+		lamMoiThongKeNam(cbxChonNamThongKe);
+		LoadDataThongKeNam();
+	}
 
-		// Đặt ngày hiện tại cho JDateChooser
-		jdcChonNgayThongKe.setDate(ngayHienTai.getTime());
-		//<==============>
-		//loadDataToFormNgay();
-		//System.out.println(formatCurrency(12345678.9f));
+	
+	// Định dạng số theo tiền Việt Nam (phân tách hàng nghìn bằng dấu ".")
+		public String ChuyenThanhTien(float money) {
+			long roundedMoney = Math.round(money);
+			DecimalFormat decimalFormat = new DecimalFormat("#,###");
+			String formattedMoney = decimalFormat.format(roundedMoney);
+			return formattedMoney;
+		}
+	//<=================Thong ke ngay================>
+	public void LoadDataThongKeNgay() {
+		LocalDate ngayChonThongKe = getDateSelected(jdcChonNgayThongKe);
+		LayDuLieuThongKeNgay(modelThongKeDoanhThuNgay, taiKhoan, ngayChonThongKe);
+		loadDuLieuThongKeNgay(modelThongKeDoanhThuNgay, ngayChonThongKe, taiKhoan);
+		VeBieuDoThongKeDoanhThuNgay(panelBieuDoThongKeTheoNgay, ngayChonThongKe, taiKhoan);
+	}
+
+	private static LocalDate dateToLocalDate(Date date) {
+		return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+	}
+
+	public void loadDuLieuThongKeNgay(ModelThongKeDoanhThuNgay modelThongKeDoanhThuNgay, LocalDate ngayChonThongKe,
+			NhanVien taiKhoan) {
+		modelThongKeDoanhThuNgay.setDate(ngayChonThongKe);
+		modelThongKeDoanhThuNgay.setMaNhanVien(taiKhoan.getMaNhanVien().trim());
+
+		txtThongKeTrenTaiKhoanNgay.setText(taiKhoan.getMaNhanVien().trim());
+		txtTenNhanVienThongKeNgay.setText(taiKhoan.getHoTen().trim());
+		txtNgayDuocThongKeNgay.setText(ngayChonThongKe.toString());
+
+		txtTenNhanVienThongKeNgay.setText(taiKhoan.getHoTen().trim());
+		txtNgayDuocThongKeNgay.setText(ngayChonThongKe.toString());
+		txtTongSoHoaDonDuocLapNgay.setText(String.valueOf(modelThongKeDoanhThuNgay.getTongHdDuocLap()));
+		txtTongSoLuongMatHangBanRaNgay.setText(String.valueOf(modelThongKeDoanhThuNgay.getTongMhBanRa()));
+		txtTongDoanhThuNgay.setText(ChuyenThanhTien(modelThongKeDoanhThuNgay.getTongDoanhThu()));
+		txtTongTienHangNhapNgay.setText(ChuyenThanhTien(modelThongKeDoanhThuNgay.getTongTienNhapHang()));
+		txtTongTienHangDaBanNgay.setText(ChuyenThanhTien(modelThongKeDoanhThuNgay.getTongTienHangDaBan()));
+		txtTongTienKhuyenMaiNgay.setText(ChuyenThanhTien(modelThongKeDoanhThuNgay.getTongTienKhuyenMai()));
+		txtTongThueNgay.setText(ChuyenThanhTien(modelThongKeDoanhThuNgay.getTongThue()));
+		txtTongTienLaiTrongNgay.setText(ChuyenThanhTien(modelThongKeDoanhThuNgay.getTongLai()));
+
+	}
+
+	private void LayDuLieuThongKeNgay(ModelThongKeDoanhThuNgay model, NhanVien taiKhoan, LocalDate today) {
+		int tongHdDuocLap;
+		int tongMhBanRa;
+		float tongDoanhThu;
+		float tongTienNhapHang;
+		float tongTienHangDaBan;
+		float tongTienKhuyenMai;
+		float tongThue;
+		float tongLai;
+		model.setDate(today);
+		model.setMaNhanVien(taiKhoan.getMaNhanVien().trim());
+		Dao_ThongKeDoanhThu dao_ThongKeDoanhThu = new Dao_ThongKeDoanhThu();
+
+		tongHdDuocLap = dao_ThongKeDoanhThu.TongHoaDonDocNhanVienLapTrongNgay(model.getDate(), model.getMaNhanVien());
+		tongMhBanRa = dao_ThongKeDoanhThu.TongSoLuongMatHangNhanVienBanRaTrongNgay(model.getDate(),
+				model.getMaNhanVien());
+		tongDoanhThu = dao_ThongKeDoanhThu.TongDoanhThuTrongNgayCuaNhanVien(model.getDate(), model.getMaNhanVien());
+		tongTienNhapHang = dao_ThongKeDoanhThu.TongVonNhapHangTrongNgayNhanVienBan(model.getDate(),
+				model.getMaNhanVien());
+		tongTienHangDaBan = tongTienNhapHang + tongTienNhapHang * 0.7f;
+		tongTienKhuyenMai = dao_ThongKeDoanhThu.TongTienGiamGiaTrongNgayTheoNhanVien(model.getDate(),
+				model.getMaNhanVien());
+		tongThue = tongDoanhThu * 0.1f;
+		tongLai = tongDoanhThu - tongTienNhapHang - tongTienKhuyenMai - tongThue;
+		model.setTongHdDuocLap(tongHdDuocLap);
+		model.setTongMhBanRa(tongMhBanRa);
+		model.setTongDoanhThu(tongDoanhThu);
+		model.setTongTienNhapHang(tongTienNhapHang);
+		model.setTongTienHangDaBan(tongTienHangDaBan);
+		model.setTongTienKhuyenMai(tongTienKhuyenMai);
+		model.setTongThue(tongThue);
+		model.setTongLai(tongLai);
+	}
+
+	public void VeBieuDoThongKeDoanhThuNgay(JPanel panelContain, LocalDate date, NhanVien nhanVien) {
+		Dao_ThongKeDoanhThu dao_ThongKeDoanhThu = new Dao_ThongKeDoanhThu();
+		LocalDate today = LocalDate.now();
+		DuLieuBieuDoThongKeDoanhThu doanhThuNgayHienTai = new DuLieuBieuDoThongKeDoanhThu("Hôm nay ",
+				dao_ThongKeDoanhThu.TongDoanhThuTrongNgayCuaNhanVien(today, nhanVien.getMaNhanVien().trim()));
+
+		//ArrayList<DuLieuBieuDoThongKeDoanhThu> data = dao_ThongKeDoanhThu.Top5NgayDoanhThuCaoNhatTrongThang(10, 2022);
+		ArrayList<DuLieuBieuDoThongKeDoanhThu> data = dao_ThongKeDoanhThu.duLieuBieuDo_Top5NgayDoanhThuCaoNhatTrongThang(date.getMonthValue(), date.getYear(), nhanVien.getMaNhanVien().trim());
+		data.add(0, doanhThuNgayHienTai);
+		panelContain.removeAll();
+//		for(DuLieuBieuDoThongKeDoanhThu dl : data) {
+//			System.out.println(dl.toString());
+//		}
+		BieuDoThongKePanel bieuDoThongKePanel = new BieuDoThongKePanel(data, "Doanh thu hôm nay và 5 ngày có doanh thu cao nhất tháng");
+		panelContain.setLayout(new BorderLayout());
+		panelContain.add(bieuDoThongKePanel, BorderLayout.CENTER);
+		panelContain.revalidate(); // Cần revalidate để cập nhật giao diện
+		panelContain.repaint(); // Cần repaint để vẽ lại giao diện
+	}
+
+	private LocalDate getDateSelected(JDateChooser chooser) {
+		Date date = chooser.getDate();
+		return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+	}
+
+	private void lamMoiThongKeNgay(JDateChooser chooser) {
+		Calendar ngayHienTai = Calendar.getInstance();
+		chooser.setDate(ngayHienTai.getTime());
 	}
 	
-	 // Định dạng số theo tiền Việt Nam (phân tách hàng nghìn bằng dấu ".")
-	public String formatCurrency(float money) {
-        long roundedMoney = Math.round(money);
-        DecimalFormat decimalFormat = new DecimalFormat("#,###");
-        String formattedMoney = decimalFormat.format(roundedMoney);
-        return formattedMoney;
-    }
-	
-	public void loadDataToFormNgay(String tk, String nv, int soHd, int soMh, float dt, float tienNhapHang, float tonglai, float tongThue, float tongKhuyenmai ) {
-		Date ngayDuocChonUtil = jdcChonNgayThongKe.getDate();
-		// Chuyển đổi java.util.Date sang java.sql.Date
-		java.sql.Date ngayDuocChonSQL = new java.sql.Date(ngayDuocChonUtil.getTime());
-		System.out.println(ngayDuocChonSQL);
-		txtThongKeTrenTaiKhoanNgay.setText(tk.trim());
-		txtTenNhanVienThongKeNgay.setText(nv.trim());
-		txtNgayDuocThongKeNgay.setText(ngayDuocChonSQL.toString());
-		txtTongSoHoaDonDuocLapNgay.setText(String.valueOf(soHd));
-		txtTongSoLuongMatHangBanRaNgay.setText(String.valueOf(soMh));
-		txtTongDoanhThuNgay.setText(String.valueOf(tongKhuyenmai));
+	//<===========thong ke thang ===========================>
+	public void LoadDataThongKeThang() {
+		int thangDuocChon = Integer.parseInt((String)cbxChonThangThongKe.getSelectedItem());
+		int namCuaThang = Integer.parseInt((String)cbxChonNamCuaThangThongKe.getSelectedItem());
+		LayDuLieuThongKeThang(modelThongKeDoanhThuThang, taiKhoan, thangDuocChon, namCuaThang);
+		loadDuLieuThongKeThang(modelThongKeDoanhThuThang, thangDuocChon, namCuaThang, taiKhoan);
+		VeBieuDoThongKeDoanhThuThang(panelBieuDoThongKeThang, thangDuocChon, namCuaThang, taiKhoan);
+	}
+	private void lamMoiThongKeThang(JComboBox<String> cbxThang, JComboBox<String> cbxNam) {
+		LocalDate now = LocalDate.now();
+		String[] nam = {"2020", "2021", "2022", "2023","2024"};
+		String[] thang = {"01", "02", "03","04","05","06","07","08","09","10","11","12"};
+		int thangHt = now.getMonthValue();
+		int namHt = now.getYear();
+		for(String s : thang) {
+			if(Integer.parseInt(s)== thangHt) {
+				cbxThang.setSelectedItem(s);;
+			}
+		}
+		for(String s : nam) {
+			if(Integer.parseInt(s)== namHt) {
+				cbxNam.setSelectedItem(s);;
+			}
+		}
+	}
+	private void LayDuLieuThongKeThang(ModelThongKeDoanhThuThang model, NhanVien taiKhoan, int thang, int namCuaThang) {
+		int tongHdDuocLap;
+		int tongMhBanRa;
+		float tongDoanhThu;
+		float tongTienNhapHang;
+		float tongTienHangDaBan;
+		float tongTienKhuyenMai;
+		float tongThue;
+		float tongLai;
+		model.setThangThongKe(thang);
+		model.setNamCuaThangThongKe(namCuaThang);
+		model.setMaNhanVien(taiKhoan.getMaNhanVien().trim());
+		Dao_ThongKeDoanhThu dao_ThongKeDoanhThu = new Dao_ThongKeDoanhThu();
 
+		tongHdDuocLap = dao_ThongKeDoanhThu.TongHoaDonDuocNhanVienLapTrongThang(model.getThangThongKe(), model.getNamCuaThangThongKe(), model.getMaNhanVien());
+		tongMhBanRa = dao_ThongKeDoanhThu.TongSoLuongMatHangNhanVienBanRaTrongThang(model.getThangThongKe(), model.getNamCuaThangThongKe(), model.getMaNhanVien());
+		tongDoanhThu = dao_ThongKeDoanhThu.TongDoanhThuTrongThangCuaNhanVien(model.getThangThongKe(), model.getNamCuaThangThongKe(), model.getMaNhanVien());
+		tongTienNhapHang = dao_ThongKeDoanhThu.TongVonNhapHangTrongThangNhanVienBan(model.getThangThongKe(), model.getNamCuaThangThongKe(), model.getMaNhanVien());
+		tongTienHangDaBan = tongTienNhapHang + tongTienNhapHang * 0.7f;
+		tongTienKhuyenMai = dao_ThongKeDoanhThu.TongTienGiamGiaTrongThangTheoNhanVien(model.getThangThongKe(), model.getNamCuaThangThongKe(), model.getMaNhanVien());
+		tongThue = tongDoanhThu * 0.1f;
+		tongLai = tongDoanhThu - tongTienNhapHang - tongTienKhuyenMai - tongThue;
+		model.setTongHdDuocLap(tongHdDuocLap);
+		model.setTongMhBanRa(tongMhBanRa);
+		model.setTongDoanhThu(tongDoanhThu);
+		model.setTongTienNhapHang(tongTienNhapHang);
+		model.setTongTienHangDaBan(tongTienHangDaBan);
+		model.setTongTienKhuyenMai(tongTienKhuyenMai);
+		model.setTongThue(tongThue);
+		model.setTongLai(tongLai);
+	}
+	public void loadDuLieuThongKeThang(ModelThongKeDoanhThuThang model,int thang, int namCuaThang,
+			NhanVien taiKhoan) {
+		
+		model.setThangThongKe(thang);
+		model.setNamCuaThangThongKe(namCuaThang);
+		model.setMaNhanVien(taiKhoan.getMaNhanVien().trim());
+
+		txtTaiKhoanDuocThongKeThang.setText(taiKhoan.getMaNhanVien().trim());
+		txtTenNhanVienDuocThongKeThang.setText(taiKhoan.getHoTen().trim());
+		txtThangDuocThongKe.setText("Tháng "+thang+" năm "+namCuaThang);
+		txtTongSoHoaDonDuocLapTrongThang.setText(String.valueOf(model.getTongHdDuocLap()));
+		txtTongSoLuongMatHangBanRaTrongThang.setText(String.valueOf(model.getTongMhBanRa()));
+		txtTongDoanhThuTrongThnag.setText(ChuyenThanhTien(model.getTongDoanhThu()));
+		txtTongTienNhapHangTrongThang.setText(ChuyenThanhTien(model.getTongTienNhapHang()));
+		txtTongTienHangDaBanThang.setText(ChuyenThanhTien(model.getTongTienHangDaBan()));
+		txtTongTienKhuenMaiTrongThang.setText(ChuyenThanhTien(model.getTongTienKhuyenMai()));
+		txtTongThueTrongThang.setText(ChuyenThanhTien(model.getTongThue()));
+		txtTongTienLaiTrongThang.setText(ChuyenThanhTien(model.getTongLai()));
+	}
+	public void VeBieuDoThongKeDoanhThuThang(JPanel panelContain, int thang, int namCuaThang, NhanVien nhanVien) {
+		Dao_ThongKeDoanhThu dao_ThongKeDoanhThu = new Dao_ThongKeDoanhThu();
+		ArrayList<DuLieuBieuDoThongKeDoanhThu> data = dao_ThongKeDoanhThu.duLieuBieuDo_DoanhThuCacNgaTrongThang(thang, namCuaThang, nhanVien.getMaNhanVien().trim());
+		panelContain.removeAll();
+		BieuDoThongKePanel bieuDoThongKePanel = new BieuDoThongKePanel(data, "Doanh thu các ngày trong tháng " + thang + " năm "+namCuaThang);
+		panelContain.setLayout(new BorderLayout());
+		panelContain.add(bieuDoThongKePanel, BorderLayout.CENTER);
+		panelContain.revalidate(); // Cần revalidate để cập nhật giao diện
+		panelContain.repaint(); // Cần repaint để vẽ lại giao diện
+	}
+	
+	//<=========Thong ke nam==========>
+	public void LoadDataThongKeNam() {
+		int namDuocChon = Integer.parseInt((String)cbxChonNamThongKe.getSelectedItem());
+		LayDuLieuThongKeNam(modelThongKeDoanhThuNam, taiKhoan, namDuocChon);
+		loadDuLieuThongKeNam(modelThongKeDoanhThuNam, namDuocChon,taiKhoan);
+		VeBieuDoThongKeDoanhThuNam(panelBieuDoThongKeNam, namDuocChon, taiKhoan);
+	}
+	private void lamMoiThongKeNam(JComboBox<String> cbxNamThongke) {
+		LocalDate now = LocalDate.now();
+		String[] nam = {"2020", "2021", "2022", "2023","2024"};
+		int thangHt = now.getMonthValue();
+		int namHt = now.getYear();
+		
+		for(String s : nam) {
+			if(Integer.parseInt(s)== namHt) {
+				cbxNamThongke.setSelectedItem(s);;
+			}
+		}
+	}
+	private void LayDuLieuThongKeNam(ModelThongKeDoanhThuNam model, NhanVien taiKhoan, int namThongKe) {
+		int tongHdDuocLap;
+		int tongMhBanRa;
+		float tongDoanhThu;
+		float tongTienNhapHang;
+		float tongTienHangDaBan;
+		float tongTienKhuyenMai;
+		float tongThue;
+		float tongLai;
+		model.setNamThongKe(namThongKe);
+		model.setMaNhanVien(taiKhoan.getMaNhanVien().trim());
+		Dao_ThongKeDoanhThu dao_ThongKeDoanhThu = new Dao_ThongKeDoanhThu();
+
+		tongHdDuocLap = dao_ThongKeDoanhThu.TongHoaDonDuocNhanVienLapTrongNam(namThongKe, taiKhoan.getMaNhanVien().trim());
+		tongMhBanRa = dao_ThongKeDoanhThu.TongSoLuongMatHangNhanVienBanRaTrongNam(namThongKe, taiKhoan.getMaNhanVien().trim());
+		tongDoanhThu = dao_ThongKeDoanhThu.TongDoanhThuTrongNamCuaNhanVien(namThongKe, taiKhoan.getMaNhanVien().trim());
+		tongTienNhapHang = dao_ThongKeDoanhThu.TongVonNhapHangTrongNamNhanVienBan(namThongKe, taiKhoan.getMaNhanVien().trim());
+		tongTienHangDaBan = tongTienNhapHang + tongTienNhapHang * 0.7f;
+		tongTienKhuyenMai = dao_ThongKeDoanhThu.TongTienGiamGiaTrongNamTheoNhanVien(namThongKe, taiKhoan.getMaNhanVien().trim());
+		tongThue = tongDoanhThu * 0.1f;
+		tongLai = tongDoanhThu - tongTienNhapHang - tongTienKhuyenMai - tongThue;
+		model.setTongHdDuocLap(tongHdDuocLap);
+		model.setTongMhBanRa(tongMhBanRa);
+		model.setTongDoanhThu(tongDoanhThu);
+		model.setTongTienNhapHang(tongTienNhapHang);
+		model.setTongTienHangDaBan(tongTienHangDaBan);
+		model.setTongTienKhuyenMai(tongTienKhuyenMai);
+		model.setTongThue(tongThue);
+		model.setTongLai(tongLai);
+	}
+	public void loadDuLieuThongKeNam(ModelThongKeDoanhThuNam model,int namThongKe,
+			NhanVien taiKhoan) {
+		
+		model.setNamThongKe(namThongKe);
+		model.setMaNhanVien(taiKhoan.getMaNhanVien().trim());
+
+		txtTaiKhoanDuocThongKe.setText(taiKhoan.getMaNhanVien().trim());
+		txtTenNhanVienDuocThongKe.setText(taiKhoan.getHoTen().trim());
+		txtNamDuocThongKe.setText(String.valueOf(namThongKe));
+		txtTongSoHoaDonDuocLapNam.setText(String.valueOf(model.getTongHdDuocLap()));
+		txtTongSoLuongMatHangBanRaTrongNam.setText(String.valueOf(model.getTongMhBanRa()));
+		txtTongDoanhThuNam.setText(ChuyenThanhTien(model.getTongDoanhThu()));
+		txtTongTienNhapHangNam.setText(ChuyenThanhTien(model.getTongTienNhapHang()));
+		txtTongTienHangDaBanNam.setText(ChuyenThanhTien(model.getTongTienHangDaBan()));
+		txtTongTienKhuyenMaiNam.setText(ChuyenThanhTien(model.getTongTienKhuyenMai()));
+		txtTongThueNam.setText(ChuyenThanhTien(model.getTongThue()));
+		txtTongTienLaiNam.setText(ChuyenThanhTien(model.getTongLai()));
+	}
+	public void VeBieuDoThongKeDoanhThuNam(JPanel panelContain, int namThongKe, NhanVien nhanVien) {
+		Dao_ThongKeDoanhThu dao_ThongKeDoanhThu = new Dao_ThongKeDoanhThu();
+		ArrayList<DuLieuBieuDoThongKeDoanhThu> data = dao_ThongKeDoanhThu.duLieuBieuDo_DoanhThuCacThangTrongNam(namThongKe, nhanVien.getMaNhanVien().trim());
+		panelContain.removeAll();
+		BieuDoThongKePanel bieuDoThongKePanel = new BieuDoThongKePanel(data, "Doanh thu các tháng trong năm "+namThongKe);
+		panelContain.setLayout(new BorderLayout());
+		panelContain.add(bieuDoThongKePanel, BorderLayout.CENTER);
+		panelContain.revalidate(); // Cần revalidate để cập nhật giao diện
+		panelContain.repaint(); // Cần repaint để vẽ lại giao diện
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		
+		Object o = e.getSource();
+		if (o.equals(btnThongKeNgay)) {
+			LoadDataThongKeNgay();
+		} else if (o.equals(btnLamMoiThongKeNgay)) {
+			lamMoiThongKeNgay(jdcChonNgayThongKe);
+			LoadDataThongKeNgay();
+		} else if(o.equals(btnThongKeThang)) {
+			LoadDataThongKeThang();
+		} else if(o.equals(btnLamMoiThongKeThang)) {
+			lamMoiThongKeThang(cbxChonThangThongKe, cbxChonNamCuaThangThongKe);
+			LoadDataThongKeThang();
+		}
 	}
 }

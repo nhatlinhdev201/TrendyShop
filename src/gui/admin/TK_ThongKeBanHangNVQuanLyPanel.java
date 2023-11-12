@@ -22,9 +22,6 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import com.toedter.calendar.JDateChooser;
-
-import entities.AccountLogin;
-
 import javax.swing.JTextPane;
 import java.awt.SystemColor;
 import javax.swing.JRadioButton;
@@ -42,16 +39,16 @@ public class TK_ThongKeBanHangNVQuanLyPanel extends JPanel implements ActionList
 	private JPanel panelTbale;
 	private JButton btnThongKeNgay;
 
-	private void loadDataToTable(ArrayList<AccountLogin> dsIn, DefaultTableModel model) {
-		model.setRowCount(0);
-		for (AccountLogin nv : dsIn) {
-			addOneRowToTable(nv, model);
-		}
-	}
-
-	private void addOneRowToTable(AccountLogin nv, DefaultTableModel model) {
-		model.addRow(new Object[] { "a", "b", "c", "d" });
-	}
+//	private void loadDataToTable(ArrayList<AccountLogin> dsIn, DefaultTableModel model) {
+//		model.setRowCount(0);
+//		for (AccountLogin nv : dsIn) {
+//			addOneRowToTable(nv, model);
+//		}
+//	}
+//
+//	private void addOneRowToTable(AccountLogin nv, DefaultTableModel model) {
+//		model.addRow(new Object[] { "a", "b", "c", "d" });
+//	}
 
 	/**
 	 * Create the panel.
@@ -422,9 +419,9 @@ public class TK_ThongKeBanHangNVQuanLyPanel extends JPanel implements ActionList
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
-		if (o.equals(btnThongKeNgay)) {
-			AccountLogin a = new AccountLogin();
-			addOneRowToTable(a, modelTblThongKeBanHangNgay);
-		}
+//		if (o.equals(btnThongKeNgay)) {
+//			AccountLogin a = new AccountLogin();
+//			addOneRowToTable(a, modelTblThongKeBanHangNgay);
+//		}
 	}
 }

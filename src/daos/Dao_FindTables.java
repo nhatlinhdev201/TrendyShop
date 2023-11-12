@@ -1,13 +1,14 @@
 package daos;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 import connection.ConnectDataBase;
+import entities.HoaDon;
 import entities.KhachHang;
 import entities.NhanVien;
 import entities.VoucherGiamGia;
@@ -61,9 +62,9 @@ public class Dao_FindTables {
                 String tenKhachHang = resultSet.getString(3);
         		String email = resultSet.getString(4);
         		String diaChi = resultSet.getString(5);
-        		Boolean trangThai = resultSet.getBoolean(6);
+        		boolean trangThai = resultSet.getBoolean(6);
         		float diemTichLuy = resultSet.getFloat(7);
-                KhachHang kh = new KhachHang(maKhachHang, soDienThoai, tenKhachHang, email, diaChi, false, diemTichLuy);
+        		khachHang = new KhachHang(maKhachHang, soDienThoai, tenKhachHang, email, diaChi, trangThai, diemTichLuy);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -83,10 +84,10 @@ public class Dao_FindTables {
             	String ma = resultSet.getString(1);
         		String tenVoucher = resultSet.getString(2);
         		String moTaChuongTrinh = resultSet.getString(3);
-        		Float phanTramGiamTheoHoaDon = resultSet.getFloat(4);
-        		java.util.Date ngayBatDau = resultSet.getDate(5);
-        		java.util.Date ngayKetThuc = resultSet.getDate(6);
-        		Boolean trangThai = resultSet.getBoolean(7);
+        		float phanTramGiamTheoHoaDon = resultSet.getFloat(4);
+        		Date ngayBatDau = resultSet.getDate(5);
+        		Date ngayKetThuc = resultSet.getDate(6);
+        		boolean trangThai = resultSet.getBoolean(7);
         		int soLuotSuDung = resultSet.getInt(8);
                 voucherGiamGia = new VoucherGiamGia(ma, tenVoucher, moTaChuongTrinh, phanTramGiamTheoHoaDon , ngayBatDau, ngayKetThuc, trangThai, soLuotSuDung);
             }
@@ -95,5 +96,31 @@ public class Dao_FindTables {
         }
 
         return voucherGiamGia;
+	}
+	public HoaDon timKiemHoaDonTheoMa(String ma) {
+		HoaDon hoaDon = null;
+        String query = "SELECT * FROM HoaDon WHERE maHoaDon = ?";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, ma);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+            	String maHoaDon = resultSet.getString(1);
+        		Date thoiGianTao = resultSet.getDate(2);
+        		float tongThanhTien = resultSet.getFloat(3);
+        		String maVoucher = resultSet.getString(4);
+        		VoucherGiamGia voucherGiamGia = timKiemVoucherTheoMa(maVoucher);
+        		String maKh = resultSet.getString(5);
+        		KhachHang kh = timKiemKhachHangTheoMa(maKh);
+        		String maNv = resultSet.getString(6);
+        		NhanVien nv = TimKiemNhanVienTheoMa(maNv.trim());
+        		boolean trangThaiThanhToan = resultSet.getBoolean(7);
+        		hoaDon = new HoaDon(maHoaDon, thoiGianTao, tongThanhTien, voucherGiamGia, kh, nv, trangThaiThanhToan);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return hoaDon;
 	}
 }
