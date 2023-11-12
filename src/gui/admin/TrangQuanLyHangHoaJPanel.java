@@ -45,7 +45,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import constance.SetBountJPanel;
-import dao.Dao_HangHoa;
+import daos.Dao_HangHoa;
 import entities.HangHoa;
 import rojerusan.RSTableMetro;
 

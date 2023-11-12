@@ -27,8 +27,8 @@ import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.LineBorder;
 
-import dao.Dao_HangHoa;
-import dao.Dao_NhaCungCap;
+import daos.Dao_HangHoa;
+import daos.Dao_NhaCungCap;
 import entities.HangHoa;
 import entities.NhaCungCap;
 
