@@ -13,5 +13,16 @@
 	<classpathentry exported="true" kind="lib" path="lib/sqljdbc42.jar"/>
 	<classpathentry exported="true" kind="lib" path="jfreechart-1.0.19.jar"/>
 	<classpathentry exported="true" kind="lib" path="jcommon-1.0.23.jar"/>
+	<classpathentry exported="true" kind="lib" path="poi-5.2.3.jar"/>
+	<classpathentry exported="true" kind="lib" path="poi-ooxml-full-5.2.3.jar"/>
+	<classpathentry exported="true" kind="lib" path="poi-ooxml-5.2.3.jar"/>
+	<classpathentry exported="true" kind="lib" path="poi-javadoc-5.2.3.jar"/>
+	<classpathentry exported="true" kind="lib" path="commons-io-2.11.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="commons-collections4-4.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="xmlbeans-5.1.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="log4j-api-2.18.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="slf4j-api-1.7.36.jar"/>
+	<classpathentry exported="true" kind="lib" path="commons-compress-1.21.jar"/>
+	<classpathentry exported="true" kind="lib" path="commons-logging-1.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
