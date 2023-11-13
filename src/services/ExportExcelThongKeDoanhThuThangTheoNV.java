@@ -1,8 +1,8 @@
-package testFunction;
+package services;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import entities.NhanVien;
-import modelsThongKe.ModelThongKeDoanhThuNgay;
+import modelsThongKe.ModelThongKeDoanhThuThang;
 import services.ThongKeDoanhThuServices;
 
 import java.io.File;
@@ -13,11 +13,18 @@ import java.util.ArrayList;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-public class ExcelExporter {
+public class ExportExcelThongKeDoanhThuThangTheoNV {
+	
+	private ArrayList<ModelThongKeDoanhThuThang> dataList;
+	
 
-    public static void exportToExcel(ArrayList<ModelThongKeDoanhThuNgay> dataList, String filePath) {
+    public ExportExcelThongKeDoanhThuThangTheoNV(ArrayList<ModelThongKeDoanhThuThang> dataList) {
+		this.setDataList(dataList);
+		export(dataList);
+	}
+	public static void exportToExcel(ArrayList<ModelThongKeDoanhThuThang> dataList, String filePath) {
         Workbook workbook = new XSSFWorkbook();
-        Sheet sheet = workbook.createSheet("DoanhThuNgay");
+        Sheet sheet = workbook.createSheet("DoanhThuThang");
 
         // Tạo header
         Row headerRow = sheet.createRow(0);
@@ -38,10 +45,10 @@ public class ExcelExporter {
 
         // Đổ dữ liệu từ danh sách vào sheet
         int rowNum = 1;
-        for (ModelThongKeDoanhThuNgay data : dataList) {
+        for (ModelThongKeDoanhThuThang data : dataList) {
             Row row = sheet.createRow(rowNum++);
             
-            row.createCell(0).setCellValue(data.getDate().toString());
+            row.createCell(0).setCellValue(data.getThangThongKe()+"/"+data.getNamCuaThangThongKe());
             row.createCell(1).setCellValue(data.getTongHdDuocLap());
             row.createCell(2).setCellValue(data.getTongMhBanRa());
             row.createCell(3).setCellValue(lamTron(data.getTongDoanhThu()));
@@ -72,7 +79,7 @@ public class ExcelExporter {
         double scaleFactor = Math.pow(10, 1);
         return Math.ceil(value * scaleFactor) / scaleFactor;
     }
-    public static void export(ArrayList<ModelThongKeDoanhThuNgay> data) {
+    public static void export(ArrayList<ModelThongKeDoanhThuThang> data) {
         JFileChooser fileChooser = new JFileChooser();
         // Thiết lập bộ lọc để chỉ hiển thị các tệp Excel
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Excel Files", "xls", "xlsx");
@@ -91,14 +98,10 @@ public class ExcelExporter {
             System.out.println("Export canceled.");
         }
     }
-
-    public static void main(String[] args) {
-        // Giả sử bạn có một danh sách dữ liệu
-    	// Gọi phương thức xuất Excel với đường dẫn đã chọn
-        ThongKeDoanhThuServices doanhThuServices = new ThongKeDoanhThuServices();
-    	NhanVien nv = new NhanVien("NV0002", "Phạm Nhật Linh", null, null, null, null, null, null, true,
-				null, false, null);
-        ArrayList<ModelThongKeDoanhThuNgay> dataList = doanhThuServices.thongKeCacNgayTrongThang(10, 2023, nv);
-    	export(dataList);
-    }
+	public ArrayList<ModelThongKeDoanhThuThang> getDataList() {
+		return dataList;
+	}
+	public void setDataList(ArrayList<ModelThongKeDoanhThuThang> dataList) {
+		this.dataList = dataList;
+	}
 }

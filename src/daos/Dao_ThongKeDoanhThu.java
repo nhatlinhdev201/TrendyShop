@@ -623,7 +623,7 @@ public class Dao_ThongKeDoanhThu {
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				while (resultSet.next()) {
-					String thang = resultSet.getString("thang");
+					String thang = "Tháng "+resultSet.getString("thang")+"/"+namThongKe;
 					float tongDoanhThu = resultSet.getFloat("tongDoanhThu");
 
 					DuLieuBieuDoThongKeDoanhThu duLieu = new DuLieuBieuDoThongKeDoanhThu(thang, tongDoanhThu);

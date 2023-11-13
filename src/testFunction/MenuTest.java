@@ -110,11 +110,15 @@ public class MenuTest extends JFrame {
 //                    for(DuLieuBieuDoThongKeDoanhThu dl : arr) {
 //                    	System.out.println(dl.toString());
 //                    }
+//					ThongKeDoanhThuServices doanhThuServices = new ThongKeDoanhThuServices();
+//					ArrayList<ModelThongKeDoanhThuNgay> list = doanhThuServices.thongKeCacNgayTrongThang(10, 2023, nv);
+//					for (ModelThongKeDoanhThuNgay dl : list) {
+//						System.out.println(dl.toString());
+//					}
+					//export 
 					ThongKeDoanhThuServices doanhThuServices = new ThongKeDoanhThuServices();
-					ArrayList<ModelThongKeDoanhThuNgay> list = doanhThuServices.thongKeCacNgayTrongThang(10, 2023, nv);
-					for (ModelThongKeDoanhThuNgay dl : list) {
-						System.out.println(dl.toString());
-					}
+			        ArrayList<ModelThongKeDoanhThuNgay> dataList = doanhThuServices.thongKeCacNgayTrongThang(10, 2023, nv);
+					ExportExcelThongKeDoanhThuNgayTheoNV e = new ExportExcelThongKeDoanhThuNgayTheoNV(dataList);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

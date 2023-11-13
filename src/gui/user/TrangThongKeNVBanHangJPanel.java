@@ -1,6 +1,7 @@
 package gui.user;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import constance.SetBountJPanel;
@@ -91,7 +92,7 @@ public class TrangThongKeNVBanHangJPanel extends JPanel implements ActionListene
 	private JTextField txtTongTienHangDaBanNgay;
 	private JTextField txtTongTienHangDaBanThang;
 	private JTextField txtTongTienHangDaBanNam;
-	private String[] nam = {"2020", "2021", "2022", "2023"};
+	private String[] nam = {"2019","2020", "2021", "2022", "2023"};
 	private String[] thang = {"1", "2", "3","4","5","6","7","8","9","10","11","12"};
 	// <=======dữ liệu cho thong ke========>
 	private ModelThongKeDoanhThuNgay modelThongKeDoanhThuNgay = new ModelThongKeDoanhThuNgay();
@@ -1108,7 +1109,7 @@ public class TrangThongKeNVBanHangJPanel extends JPanel implements ActionListene
 	}
 	private void lamMoiThongKeThang(JComboBox<String> cbxThang, JComboBox<String> cbxNam) {
 		LocalDate now = LocalDate.now();
-		String[] nam = {"2020", "2021", "2022", "2023","2024"};
+		String[] nam = {"2019","2020", "2021", "2022", "2023","2024"};
 		String[] thang = {"01", "02", "03","04","05","06","07","08","09","10","11","12"};
 		int thangHt = now.getMonthValue();
 		int namHt = now.getYear();
@@ -1193,7 +1194,7 @@ public class TrangThongKeNVBanHangJPanel extends JPanel implements ActionListene
 	}
 	private void lamMoiThongKeNam(JComboBox<String> cbxNamThongke) {
 		LocalDate now = LocalDate.now();
-		String[] nam = {"2020", "2021", "2022", "2023","2024"};
+		String[] nam = {"2019","2020", "2021", "2022", "2023","2024"};
 		int thangHt = now.getMonthValue();
 		int namHt = now.getYear();
 		
@@ -1275,6 +1276,37 @@ public class TrangThongKeNVBanHangJPanel extends JPanel implements ActionListene
 		} else if(o.equals(btnLamMoiThongKeThang)) {
 			lamMoiThongKeThang(cbxChonThangThongKe, cbxChonNamCuaThangThongKe);
 			LoadDataThongKeThang();
+		}else if(o.equals(btnXuatDuLieuNgay)) {
+			ThongKeDoanhThuServices thongKeDoanhThuServices = new ThongKeDoanhThuServices();
+			boolean flag = thongKeDoanhThuServices.xuatDuLieuThongKeDoanhThuNgayTheoNvExcel(modelThongKeDoanhThuNgay);
+			if(flag)
+				JOptionPane.showMessageDialog(this, "Xuất dữ liệu thành công ");
+			else 
+				JOptionPane.showMessageDialog(this, "Đã hủy quá trình xuất dữ liệu ");
+		} else if(o.equals(btnXuatDuLieuThang)) {
+			ThongKeDoanhThuServices thongKeDoanhThuServices = new ThongKeDoanhThuServices();
+			int thang = Integer.parseInt((String)cbxChonThangThongKe.getSelectedItem());
+			int nam = Integer.parseInt((String)cbxChonNamCuaThangThongKe.getSelectedItem());
+			ArrayList<ModelThongKeDoanhThuNgay> data = thongKeDoanhThuServices.thongKeCacNgayTrongThang(thang, nam, taiKhoan);
+			boolean flag = thongKeDoanhThuServices.xuatDuLieuThongKeDoanhThuThangTheoNvExcel(data);
+			if(flag)
+				JOptionPane.showMessageDialog(this, "Xuất dữ liệu thành công ");
+			else 
+				JOptionPane.showMessageDialog(this, "Đã hủy quá trình xuất dữ liệu ");
+		} else if(o.equals(btnXuatDuLieuNam)) {
+			ThongKeDoanhThuServices thongKeDoanhThuServices = new ThongKeDoanhThuServices();
+			int nam = Integer.parseInt((String)cbxChonNamCuaThangThongKe.getSelectedItem());
+			ArrayList<ModelThongKeDoanhThuThang> data = thongKeDoanhThuServices.thongKeDoanhThuCacThangTrongNam(nam, taiKhoan);
+			boolean flag = thongKeDoanhThuServices.xuatDuLieuThongKeDoanhThuNamTheoNvExcel(data);
+			if(flag)
+				JOptionPane.showMessageDialog(this, "Xuất dữ liệu thành công ");
+			else 
+				JOptionPane.showMessageDialog(this, "Đã hủy quá trình xuất dữ liệu ");
+		}else if(o.equals(btnThongKeNam)) {
+			LoadDataThongKeNam();
+		} else if(o.equals(btnLamMoiThongKeNam)) {
+			lamMoiThongKeNam(cbxChonNamThongKe);
+			LoadDataThongKeNam();
 		}
 	}
 }

@@ -75,7 +75,7 @@ public class BieuDoThongKePanel extends JPanel {
     }
 
     public static void main(String[] args) {
-        JFrame frame = new JFrame("Biểu đồ thống kê");
+        JFrame frame = new JFrame("Biểu đồ thống kê doanh thu");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         JPanel panelBieuDoThongKeTheoNgay = new JPanel();
