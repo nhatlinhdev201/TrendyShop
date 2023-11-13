@@ -267,7 +267,7 @@ public class TrangQLKhachHangPanel extends JPanel implements ActionListener,Mous
         JButton btn_them = new JButton("Thêm");
         btn_them.setBackground(Color.GREEN);
         btn_them.setFont(new Font("Tahoma", Font.PLAIN, 14));
-        btn_them.setBounds(33, 619, 123, 33);
+        btn_them.setBounds(92, 619, 123, 33);
         String iconPath_them = "/images/plus.png";
 		ImageIcon iconThem = new ImageIcon(this.getClass().getResource(iconPath_them)); // Sử dụng getResource để lấy đường dẫn từ resources của ứng dụng
 
@@ -276,24 +276,16 @@ public class TrangQLKhachHangPanel extends JPanel implements ActionListener,Mous
 
 		btn_them.setIcon(resizedIconThem);
         add(btn_them);
-        
-        JButton btn_xoa = new JButton("Xoá");
-        btn_xoa.setBackground(new Color(250, 128, 114));
-        btn_xoa.setFont(new Font("Tahoma", Font.PLAIN, 14));
-        btn_xoa.setBounds(172, 619, 123, 33);
         String iconPath_xoa = "/images/delete.png";
 		ImageIcon iconXoa = new ImageIcon(this.getClass().getResource(iconPath_xoa)); // Sử dụng getResource để lấy đường dẫn từ resources của ứng dụng
 
 		Image scaledIconXoa = iconXoa.getImage().getScaledInstance(27, 27, Image.SCALE_SMOOTH); // Thiết lập kích thước
 		ImageIcon resizedIconXoa = new ImageIcon(scaledIconXoa);
-
-		btn_xoa.setIcon(resizedIconXoa);
-        add(btn_xoa);
         
         JButton btn_capNhat = new JButton("Cập nhật");
         btn_capNhat.setBackground(Color.ORANGE);
         btn_capNhat.setFont(new Font("Tahoma", Font.PLAIN, 14));
-        btn_capNhat.setBounds(315, 619, 123, 33);
+        btn_capNhat.setBounds(249, 619, 123, 33);
         String iconPath_capnhat = "/images/updated.png";
 		ImageIcon iconCapNhat = new ImageIcon(this.getClass().getResource(iconPath_capnhat)); // Sử dụng getResource để lấy đường dẫn từ resources của ứng dụng
 
