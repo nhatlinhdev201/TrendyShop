@@ -188,7 +188,7 @@ public class TrangChinhNVBanHang extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
 		if (o.equals(btnMenuTrangChu)) {
-			switchContent(trangChuPanel);
+			switchContent(new TrangChuPanel());
 		}else if(o.equals(btnMenuCnQlyKhachHang)) {
 			switchContent(trangQLKhachHangPanel);
 		}else if(o.equals(btnMenuCnQlyKhachHang)) {

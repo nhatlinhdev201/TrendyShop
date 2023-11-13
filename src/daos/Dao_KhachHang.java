@@ -1,8 +1,10 @@
 package daos;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +22,7 @@ public class Dao_KhachHang {
 	public Dao_KhachHang() {
 		connection = ConnectDataBase.getInstance().connection;
 	}
-	
+
 	public List<KhachHang> getAll() {
 		List<KhachHang> dsKhachHang = null;
 		try {
@@ -45,13 +47,14 @@ public class Dao_KhachHang {
 		}
 		return dsKhachHang;
 	}
-	
+
 	public KhachHang getKhachHangTheoMa(String maKhachHang) {
-		KhachHang kh =null;
+		KhachHang kh = null;
 		try {
-			PreparedStatement statement = connection.prepareStatement("select*from KhachHang where maKhachHang = '"+maKhachHang+"'");
+			PreparedStatement statement = connection
+					.prepareStatement("select*from KhachHang where maKhachHang = '" + maKhachHang + "'");
 			ResultSet resultSet = statement.executeQuery();
-			kh= new KhachHang();
+			kh = new KhachHang();
 			while (resultSet.next()) {
 				kh.setMaKhachHang(resultSet.getString("maKhachHang").trim());
 				kh.setSoDienThoai(resultSet.getString("soDienThoai").trim());
@@ -67,13 +70,14 @@ public class Dao_KhachHang {
 		}
 		return kh;
 	}
-	
+
 	public KhachHang getKhachHangTheoSDT(String sdt) {
-		KhachHang kh =null;
+		KhachHang kh = null;
 		try {
-			PreparedStatement statement = connection.prepareStatement("select*from KhachHang where soDienThoai = '"+sdt+"'");
+			PreparedStatement statement = connection
+					.prepareStatement("select*from KhachHang where soDienThoai = '" + sdt + "'");
 			ResultSet resultSet = statement.executeQuery();
-			kh= new KhachHang();
+			kh = new KhachHang();
 			while (resultSet.next()) {
 				kh.setMaKhachHang(resultSet.getString("maKhachHang").trim());
 				kh.setSoDienThoai(resultSet.getString("soDienThoai").trim());
@@ -90,7 +94,60 @@ public class Dao_KhachHang {
 		}
 		return kh;
 	}
-	
+
+	public boolean updateKhachHang(KhachHang khachHang) {
+		try {
+
+			String updateQuery = "UPDATE KhachHang " + "SET soDienThoai = ?, tenKhachHang = ?, email = ?, diaChi = ?, "
+					+ "trangThai = ?, diemTichLuy = ? " + "WHERE maKhachHang = ?";
+
+			PreparedStatement preparedStatement = connection.prepareStatement(updateQuery);
+			preparedStatement.setString(1, khachHang.getSoDienThoai());
+			preparedStatement.setString(2, khachHang.getTenKhachHang());
+			preparedStatement.setString(3, khachHang.getEmail());
+			preparedStatement.setString(4, khachHang.getDiaChi());
+			preparedStatement.setBoolean(5, khachHang.isTrangThai());
+			preparedStatement.setFloat(6, khachHang.getDiemTichLuy());
+			preparedStatement.setString(7, khachHang.getMaKhachHang());
+
+			int n = preparedStatement.executeUpdate();
+			if (n > 0) {
+				return true;
+			}
+			preparedStatement.close();
+			connection.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	public List<KhachHang> getAllKhachHangCho() {
+		List<KhachHang> dsKhachHang = null;
+		try {
+			PreparedStatement statement = connection
+					.prepareStatement("select*from KhachHang where maKhachHang like 'KC%'");
+			ResultSet resultSet = statement.executeQuery();
+			dsKhachHang = new ArrayList<KhachHang>();
+			while (resultSet.next()) {
+				KhachHang kh = new KhachHang();
+				kh.setMaKhachHang(resultSet.getString("maKhachHang").trim());
+				kh.setSoDienThoai(resultSet.getString("soDienThoai").trim());
+				kh.setTenKhachHang(resultSet.getString("tenKhachHang").trim());
+				kh.setEmail(resultSet.getString("email").trim());
+				kh.setDiaChi(resultSet.getString("diaChi").trim());
+				kh.setTrangThai(resultSet.getBoolean("trangThai"));
+				kh.setDiemTichLuy(resultSet.getFloat("diemTichLuy"));
+
+				dsKhachHang.add(kh);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dsKhachHang;
+	}
+
 	public boolean themKhachHang(KhachHang kh) {
 		int n = 0;
 		try {
@@ -109,5 +166,49 @@ public class Dao_KhachHang {
 		}
 		return n > 0;
 	}
-	
+
+	/**
+	 * Quyền Cơ: lấy số thứ tự mã khách hàng chờ lớn nhất
+	 * 
+	 * @param ngay
+	 * @return
+	 */
+	public int getKhachHangChoGanNhat() {
+		int maKH = 0;
+		try {
+			PreparedStatement statement = connection.prepareStatement(
+					"select top 1*from KhachHang where maKhachHang like 'KC%' order by maKhachHang desc");
+			ResultSet resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				maKH = Integer.parseInt(resultSet.getString("maKhachHang").trim().substring(2));
+
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return maKH;
+	}
+
+	/**
+	 * Quyền Cơ:
+	 * Xóa khách hàng chờ khỏi danh sách 
+	 * @param mahd
+	 * @return
+	 */
+	public boolean deleteKhachHang(String maKH) {
+		try {
+			PreparedStatement preparedStatement = connection
+					.prepareStatement("delete from KhachHang where maKhachHang ='" + maKH + "'");
+			int n = preparedStatement.executeUpdate();
+			if (n > 0) {
+				return true;
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
 }

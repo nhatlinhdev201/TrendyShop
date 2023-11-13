@@ -96,5 +96,25 @@ public class Dao_ChiTietHoaDon {
 		return false;
 	}
 	
-	
+	/**
+	 * Quyền Cơ:
+	 * Xóa chi tiết hóa đơn 
+	 * @param mahd
+	 * @return
+	 */
+	public boolean deleteChiTietHoaDon(String mahd) {
+		try {
+			PreparedStatement preparedStatement = connection
+					.prepareStatement("delete from ChiTietHoaDon where maHoaDon ='"+mahd+"'");
+			int n = preparedStatement.executeUpdate();
+			if (n > 0) {
+				return true;
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
 }

@@ -31,7 +31,7 @@ public class Dao_HoaDon {
 
 			preparedStatement.setString(1, hoaDon.getMaHoaDon());
 			preparedStatement.setDate(2, Date.valueOf(hoaDon.getThoiGianTao()));
-			preparedStatement.setDouble(3, hoaDon.getTongThanhTien());
+			preparedStatement.setLong(3,(long)  hoaDon.getTongThanhTien());
 			preparedStatement.setString(4, hoaDon.getVoucher().getMaVoucher());
 			preparedStatement.setString(5, hoaDon.getKhachHang().getMaKhachHang());
 			preparedStatement.setString(6, hoaDon.getNguoiLapHoaDon().getMaNhanVien());
@@ -153,8 +153,8 @@ public class Dao_HoaDon {
 	}
 
 	/**
+	 * Quyền Cơ
 	 * Lay ra ma hoa don duoc lap gan nhat trong ngay
-	 * 
 	 * @param ngay
 	 * @return Mã hóa đơn
 	 */
@@ -175,4 +175,55 @@ public class Dao_HoaDon {
 		return maHoaDon;
 	}
 
+	/**
+	 * Quyền Cơ:
+	 * Lấy danh sách những hóa đơn chưa được thanh toán (đưa vào hàng chờ)
+	 * @return
+	 */
+	public List<HoaDon> getHoaDonChuaThanhToan() {
+		List<HoaDon> dsHoaDon = null;
+		try {
+			PreparedStatement statement = connection
+					.prepareStatement("select*from HoaDon where trangThaiThanhToan = 0");
+			ResultSet resultSet = statement.executeQuery();
+			dsHoaDon = new ArrayList<HoaDon>();
+			while (resultSet.next()) {
+				HoaDon hoaDon = new HoaDon();
+				hoaDon.setMaHoaDon(resultSet.getString("maHoaDon").trim());
+				hoaDon.setThoiGianTao(resultSet.getDate("thoiGianTao").toLocalDate());
+				hoaDon.setTongThanhTien(resultSet.getDouble("tongThanhTien"));
+				hoaDon.setVoucher(new VoucherGiamGia(resultSet.getString("maVoucher")));
+				hoaDon.setKhachHang(new KhachHang(resultSet.getString("maKhachHang")));
+				hoaDon.setNguoiLapHoaDon(new NhanVien(resultSet.getString("maNhanVien")));
+				hoaDon.setTrangThaiThanhToan(resultSet.getBoolean("trangThaiThanhToan"));
+
+				dsHoaDon.add(hoaDon);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dsHoaDon;
+	}
+	
+	/**
+	 * Quyền Cơ:
+	 * Xóa hóa đơn là hàng chờ ra hỏi database
+	 * @param mahd
+	 * @return
+	 */
+	public boolean deleteHoaDon(String mahd) {
+		try {
+			PreparedStatement preparedStatement = connection
+					.prepareStatement("delete from HoaDon where maHoaDon ='"+mahd+"'");
+			int n = preparedStatement.executeUpdate();
+			if (n > 0) {
+				return true;
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
 }
