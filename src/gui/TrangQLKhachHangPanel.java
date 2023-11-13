@@ -237,9 +237,14 @@ public class TrangQLKhachHangPanel extends JPanel implements ActionListener,Mous
         add(lblNewLabel);
         
         JLabel lblNewLabel_1 = new JLabel("");
-        lblNewLabel_1.setIcon(new ImageIcon(TrangQLKhachHangPanel.class.getResource("/images/man.png")));
-        lblNewLabel_1.setBounds(157, 96, 207, 176);
+        lblNewLabel_1.setBounds(105, 65, 258, 236); // Set the size of the JLabel to 250x250
         add(lblNewLabel_1);
+
+        ImageIcon originalIcon1 = new ImageIcon(TrangQLKhachHangPanel.class.getResource("/images/man.png"));
+        Image originalImage = originalIcon1.getImage();
+        Image resizedImage = originalImage.getScaledInstance(230, 230, Image.SCALE_SMOOTH);
+        ImageIcon resizedIcon1 = new ImageIcon(resizedImage);
+        lblNewLabel_1.setIcon(resizedIcon1);
         
         btn_timKiem = new JButton("Tìm kiếm");
         btn_timKiem.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -254,9 +259,9 @@ public class TrangQLKhachHangPanel extends JPanel implements ActionListener,Mous
 		ImageIcon icon = new ImageIcon(this.getClass().getResource(iconPath)); // Sử dụng getResource để lấy đường dẫn từ resources của ứng dụng
 
 		Image scaledIcon = icon.getImage().getScaledInstance(27, 27, Image.SCALE_SMOOTH); // Thiết lập kích thước
-		ImageIcon resizedIcon1 = new ImageIcon(scaledIcon);
+		ImageIcon resizedIcon11 = new ImageIcon(scaledIcon);
 
-		btn_timKiem.setIcon(resizedIcon1);
+		btn_timKiem.setIcon(resizedIcon11);
 		add(btn_timKiem);
         
         txt_timKiem = new JTextField();
@@ -313,7 +318,7 @@ public class TrangQLKhachHangPanel extends JPanel implements ActionListener,Mous
 	                    khachHang.getSoDienThoai(),
 	                    khachHang.getEmail(),
 	                    khachHang.getDiaChi(),
-	                    khachHang.isTrangThai() ? "Nghỉ" : "Hoạt động",  // Chuyển boolean thành chuỗi
+	                    khachHang.isTrangThai() ? "Hoạt động" : "Nghỉ",  // Chuyển boolean thành chuỗi
 	                    khachHang.getDiemTichLuy()
 	                };
 
