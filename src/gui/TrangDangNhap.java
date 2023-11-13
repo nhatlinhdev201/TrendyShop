@@ -9,6 +9,9 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import connection.ConnectDataBase;
+import entities.NhanVien;
+import gui.admin.TrangChinhNVQuanLy;
+import gui.user.TrangChinhNVBanHang;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -29,6 +32,11 @@ public class TrangDangNhap extends JFrame {
 	private JTextField txt_taiKhoan;
 	private JPasswordField passwordField;
 	public Connection connection;
+	public static NhanVien taiKhoan;
+	private String tenTaiKhoanAdmin = "ADMIN";
+	private String matKhauAdmin = "ADMIN";
+	public static boolean TrangThaiDangNhapNhanVien = false;
+	public static boolean TrangThaiDangNhapQuanLy = false;
 	/**
 	 * Launch the application.
 	 */
@@ -124,45 +132,70 @@ public class TrangDangNhap extends JFrame {
 		
 		JButton btn_dangNhap = new JButton("Đăng nhập");
 		btn_dangNhap.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String taiKhoan = txt_taiKhoan.getText();
+		    public void actionPerformed(ActionEvent e) {
+		        String taiKhoan = txt_taiKhoan.getText();
 		        String matKhau = new String(passwordField.getPassword());
-//		        if()
-			}
+		        loadTaiKhoan(taiKhoan,matKhau);
+		        kiemTraDangNhap(taiKhoan, matKhau);
+		    }
 		});
 		btn_dangNhap.setBackground(new Color(124, 252, 0));
-		btn_dangNhap.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		btn_dangNhap.setBounds(96, 294, 119, 39);
-		
+		btn_dangNhap.setFont(new Font("Tahoma", Font.BOLD, 20));
+		btn_dangNhap.setBounds(81, 294, 161, 39);
+		setLocationRelativeTo(null);
 		panel.add(btn_dangNhap);;
 	}
-	public static void kiemTraDangNhap(String taiKhoan, String matKhau) {
-        boolean dangNhapThanhCong = false;
-        
-        
-        
+//	public static void kiemTraDangNhap(String taiKhoan, String matKhau) {
+//        boolean dangNhapThanhCong = false;
+//        
+//        
+//        
+//
+//        if (dangNhapThanhCong) {
+//            // Nếu đăng nhập thành công, kiểm tra loại tài khoản và thực hiện các hành động tương ứng
+//            if (taiKhoan.contains("QL")) {
+//                JOptionPane.showMessageDialog(null, "Đăng nhập thành công! Chuyển đến trang quản lý.");
+//                // Thực hiện các hành động cho trang quản lý
+//                // Ví dụ: Mở JFrame trang quản lý
+//                // MainFormQuanLy mainFormQuanLy = new MainFormQuanLy();
+//                // mainFormQuanLy.setVisible(true);
+//            } else if (taiKhoan.contains("NV")) {
+//                JOptionPane.showMessageDialog(null, "Đăng nhập thành công! Chuyển đến trang nhân viên.");
+//                // Thực hiện các hành động cho trang nhân viên
+//                // Ví dụ: Mở JFrame trang nhân viên
+//                // MainFormNhanVien mainFormNhanVien = new MainFormNhanVien();
+//                // mainFormNhanVien.setVisible(true);
+//            } else {
+//                JOptionPane.showMessageDialog(null, "Loại tài khoản không hợp lệ!");
+//            }
+//        } else {
+//            JOptionPane.showMessageDialog(null, "Đăng nhập không thành công. Vui lòng kiểm tra tài khoản và mật khẩu.");
+//        }
+//    }
+	public boolean kiemTraDangNhap(String tenDangNhap, String matKhau) {
+		 if (taiKhoan.getMaNhanVien().equalsIgnoreCase(tenDangNhap)
+				&& taiKhoan.getMatKhau().equalsIgnoreCase(matKhau)
+				&& tenDangNhap.contains("NV")) {
+//			TrangThaiDangNhapNhanVien = true;
+			TrangChinhNVBanHang trangChinhNVBanHang = new TrangChinhNVBanHang();
+			this.dispose();	
+			trangChinhNVBanHang.setVisible(true);
+			
+			return true;
+		} else if (taiKhoan.getMaNhanVien().equalsIgnoreCase(tenDangNhap)
+				&& taiKhoan.getMatKhau().equalsIgnoreCase(matKhau)
+				&& tenDangNhap.contains("QL")) {
+//			TrangThaiDangNhapQuanLy = true;
+			this.dispose();	
+			TrangChinhNVQuanLy trangChinhNVQuanLy2 = new TrangChinhNVQuanLy();
+			trangChinhNVQuanLy2.setVisible(true);
 
-        if (dangNhapThanhCong) {
-            // Nếu đăng nhập thành công, kiểm tra loại tài khoản và thực hiện các hành động tương ứng
-            if (taiKhoan.contains("QL")) {
-                JOptionPane.showMessageDialog(null, "Đăng nhập thành công! Chuyển đến trang quản lý.");
-                // Thực hiện các hành động cho trang quản lý
-                // Ví dụ: Mở JFrame trang quản lý
-                // MainFormQuanLy mainFormQuanLy = new MainFormQuanLy();
-                // mainFormQuanLy.setVisible(true);
-            } else if (taiKhoan.contains("NV")) {
-                JOptionPane.showMessageDialog(null, "Đăng nhập thành công! Chuyển đến trang nhân viên.");
-                // Thực hiện các hành động cho trang nhân viên
-                // Ví dụ: Mở JFrame trang nhân viên
-                // MainFormNhanVien mainFormNhanVien = new MainFormNhanVien();
-                // mainFormNhanVien.setVisible(true);
-            } else {
-                JOptionPane.showMessageDialog(null, "Loại tài khoản không hợp lệ!");
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Đăng nhập không thành công. Vui lòng kiểm tra tài khoản và mật khẩu.");
-        }
-    }
+			return true;
+		}
+
+		return false;
+	}
+
 	
 	public boolean KiemTraDuLieu() {
 		String tenUser = txt_taiKhoan.getText();
@@ -175,7 +208,7 @@ public class TrangDangNhap extends JFrame {
 		} else
 			return true;
 	}
-	public void loadTaiKhoanQL(String maNhanVien, String matKhau) {
+	public void loadTaiKhoan(String maNhanVien, String matKhau) {
 	    try {
 	        connection = ConnectDataBase.getInstance().connection;
 	        PreparedStatement stmt = null;
@@ -186,14 +219,55 @@ public class TrangDangNhap extends JFrame {
 	        stmt.setString(2, matKhau);
 	        ResultSet rs = stmt.executeQuery();
 	        while (rs.next()) {
-	            String ten = rs.getString("ten").trim(); // Thay đổi chỉ số cột nếu cần thiết
+	            String ten = rs.getString("maNhanVien").trim(); // Thay đổi chỉ số cột nếu cần thiết
 	            String mk = rs.getString("matKhau").trim();
-	            String loaiTk = rs.getString("phanQuyen").trim();
-//	            taiKhoan = new TaiKhoan(ten, mk, loaiTk);
+	            boolean loaiTk = rs.getBoolean("phanQuyen");
+	            taiKhoan = new NhanVien(maNhanVien, matKhau, loaiTk);
 	        }
 	    } catch (Exception e) {
 	        // Xử lý ngoại lệ (exception handling) nên được thực hiện cụ thể hơn để có thể hiểu và xử lý lỗi một cách chính xác.
 	        e.printStackTrace();
 	    }
 	}
+//	public void logIn() {
+//		try {
+//			if (KiemTraDuLieu()) {
+//				String taiKhoan = txt_taiKhoan.getText();
+//		        String matKhau = new String(passwordField.getPassword());
+//		        loadTaiKhoanQL(taiKhoan, matKhau);
+//				if (kiemTraDangNhap(taiKhoan, matKhau) && TrangThaiDangNhapNhanVien == true
+//						&& TrangThaiDangNhapQuanLy == true) {
+//					usernameToGetNhanVien = txtUser.getText();
+//					System.out.println("1 " + usernameToGetNhanVien);
+//					FrmManHinhChinh frmManHinhChinh = new FrmManHinhChinh();
+//					frmManHinhChinh.setVisible(true);
+//					this.setVisible(false);
+//				} else if (kiemTraDangNhap(tenDN, matKhau) && TrangThaiDangNhapNhanVien == true) {
+//					usernameToGetNhanVien = txtUser.getText();
+//					System.out.println("2 " + usernameToGetNhanVien);
+//					FrmManHinhChinh frmManHinhChinh = new FrmManHinhChinh();
+//					frmManHinhChinh.mntmQuanLyThuoc.setEnabled(false);
+//					frmManHinhChinh.mnNhanVien.setEnabled(false);
+//					frmManHinhChinh.mnThongKe.setEnabled(false);
+//					frmManHinhChinh.setVisible(true);
+//					this.setVisible(false);
+//				} else if (kiemTraDangNhap(tenDN, matKhau) && TrangThaiDangNhapQuanLy == true) {
+//					usernameToGetNhanVien = txtUser.getText();
+//					System.out.println("3 " + usernameToGetNhanVien);
+//					FrmManHinhChinh frmManHinhChinh = new FrmManHinhChinh();
+//					frmManHinhChinh.mnLapHoaDon.setEnabled(false);
+//					frmManHinhChinh.setVisible(true);
+//
+//					this.setVisible(false);
+//				}
+//
+//				else
+//					JOptionPane.showMessageDialog(this, "Tên Đăng Nhập, Hoặc Mật Khẩu Sai.");
+//			}
+//		} catch (Exception e2) {
+//			// TODO: handle exception
+//			// e2.printStackTrace();
+//			JOptionPane.showMessageDialog(this, "Tên Đăng Nhập, Hoặc Mật Khẩu Sai.");
+//		}
+//	}
 }

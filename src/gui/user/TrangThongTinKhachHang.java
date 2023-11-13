@@ -73,7 +73,7 @@ public class TrangThongTinKhachHang extends JFrame {
 		
 		
 		lbl_SDT.setText(kh.getSoDienThoai());
-		lbl_TenKhachHang.setText(kh.getHoTen());
+		lbl_TenKhachHang.setText(kh.getTenKhachHang());
 		lbl_DiemTichLuy.setText(String.valueOf(kh.getDiemTichLuy()));
 		if(kh.isTrangThai()) {
 			lbl_TrangThai.setText("Còn hoạt động");

@@ -21,7 +21,7 @@ import javax.swing.border.EmptyBorder;
 import constance.SetBoundsJFrameMain;
 import constance.SetBountJPanel;
 import gui.TrangChuPanel;
-import gui.TrangHuongDanJPanel;
+//import gui.TrangHuongDanJPanel;
 import gui.TrangQLKhachHangPanel;
 
 public class TrangChinhNVQuanLy extends JFrame implements ActionListener{
@@ -36,7 +36,7 @@ public class TrangChinhNVQuanLy extends JFrame implements ActionListener{
 	private JPanel currentContent;
 	
 	private TrangChuPanel trangChuPanel;
-	private TrangHuongDanJPanel trangHuongDanJPanel ;
+//	private TrangHuongDanJPanel trangHuongDanJPanel ;
 	private TrangQLKhachHangPanel trangQLKhachHangPanel;
 	private TrangQLNhanVienJPanel trangQLNhanVienJPanel;
 	private TrangQuanLyHangHoaJPanel trangQuanLyHangHoaJPanel;
@@ -154,7 +154,7 @@ public class TrangChinhNVQuanLy extends JFrame implements ActionListener{
 		//<========================================================================================>
 		
 		trangChuPanel = new TrangChuPanel();
-		trangHuongDanJPanel = new TrangHuongDanJPanel();
+//		trangHuongDanJPanel = new TrangHuongDanJPanel();
 		trangQLKhachHangPanel = new TrangQLKhachHangPanel();
 		trangQLNhanVienJPanel = new TrangQLNhanVienJPanel();
 		trangQuanLyHangHoaJPanel = new TrangQuanLyHangHoaJPanel();
@@ -199,7 +199,7 @@ public class TrangChinhNVQuanLy extends JFrame implements ActionListener{
 		}else if(o.equals(btnMenuCnQlyThongKe)) {
 			switchContent(trangThongKeNVQuanLy);
 		}else if(o.equals(btnMenuCnQlyTroGiup)) {
-			switchContent(trangHuongDanJPanel);
+//			switchContent(trangHuongDanJPanel);
 		}else if(o.equals(btnMenuCnXemThongTinTK)) {
 			JOptionPane.showMessageDialog(this, "Nhật Linh");
 		}else if(o.equals(btnMenuCnDangXuatTK)) {
