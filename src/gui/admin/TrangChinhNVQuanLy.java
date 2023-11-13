@@ -190,7 +190,7 @@ public class TrangChinhNVQuanLy extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
 		if(o.equals(btnMenuTrangChu)) {
-			switchContent(trangChuPanel);
+			switchContent(new TrangChuPanel());
 		} else if(o.equals(btnMenuCnQlyHangHoa)) {
 			switchContent(trangQuanLyHangHoaJPanel);
 		}else if(o.equals(btnMenuCnQlyKhachHang)) {

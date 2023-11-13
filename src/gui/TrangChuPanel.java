@@ -3,6 +3,9 @@ package gui;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import constance.SetBountJPanel;
+import gui.admin.TrangQLNhanVienJPanel;
+import gui.admin.TrangQuanLyHangHoaJPanel;
+import gui.admin.TrangThongKeNVQuanLy;
 import gui.user.TrangBanHangJPanel;
 
 import javax.swing.ImageIcon;
@@ -114,12 +117,35 @@ public class TrangChuPanel extends JPanel implements ActionListener{
 		btn_ThongKe.addActionListener(this);
 	}
 
+	public void switchContent(JPanel newContent) {
+//		newContent.setBounds(0, 28, 1350, 701);
+		this.removeAll();
+		if (currentContent != null) {
+			this.remove(currentContent);
+			currentContent.requestFocusInWindow();
+		}
+		currentContent = newContent;
+
+		this.add(currentContent, BorderLayout.CENTER);
+		revalidate();
+		repaint();
+	}
+	
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		Object o = e.getSource();
 		if(o.equals(btn_QuanLyBanHang)) {
+			switchContent(new TrangBanHangJPanel());
+		}else if(o.equals(btn_QuanLyHangHoa)) {
+			switchContent(new TrangQuanLyHangHoaJPanel());
+		}else if(o.equals(btn_QuanLyKhachHang)) {
+			switchContent(new TrangQLKhachHangPanel());
+		}else if(o.equals(btn_QuanLyNhanVien)) {
+			switchContent(new TrangQLNhanVienJPanel());
+		}else if(o.equals(btn_ThongKe)) {
+			switchContent(new TrangThongKeNVQuanLy());
 		}
 	}
 	

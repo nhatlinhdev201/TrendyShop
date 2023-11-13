@@ -98,9 +98,9 @@ public class TrangBanHangJPanel extends JPanel implements ActionListener, Action
 	private NhanVien nv;
 	private KhachHang kh = null;
 	private VoucherGiamGia vc = null;
-	private ArrayList<ChiTietHoaDon> listChiTietHD = new ArrayList<>();
+	static ArrayList<ChiTietHoaDon> listChiTietHD = new ArrayList<>();
 	private List<VoucherGiamGia> listVoucherGiamGia;
-	private HoaDon hoaDon;
+	static HoaDon hoaDon;
 	private JCheckBox chckx_DiemTichLuy;
 
 	private Dao_HangHoa dao_HangHoa;
@@ -752,7 +752,6 @@ public class TrangBanHangJPanel extends JPanel implements ActionListener, Action
 	 * 
 	 * @return HoaDon
 	 */
-
 	public void taoHoaDon() {
 		LocalDate ngayTao = LocalDate.now();
 
@@ -765,6 +764,8 @@ public class TrangBanHangJPanel extends JPanel implements ActionListener, Action
 //	Chua tìm dao của sđt
 	public void timThongTinKhachHang(String sdt, boolean trangThaiTrangThongtin) {
 		if (sdt.trim().equals("")) {
+			kh = null;
+			hoaDon.setKhachHang(kh);
 			JOptionPane.showMessageDialog(this, "Vui lòng nhật số điện thoại");
 			lbl_TenKhachHang.setText("");
 			return;
@@ -937,6 +938,7 @@ public class TrangBanHangJPanel extends JPanel implements ActionListener, Action
 						diemTichLuy -= tongTienTra / 2;
 					}else diemTichLuy = 0;
 				}
+				diemTichLuy+=(long) hoaDon.getTongThanhTien()*0.001;
 				kh.setDiemTichLuy((float) diemTichLuy);
 				dao_KhachHang.updateKhachHang(kh);
 			}

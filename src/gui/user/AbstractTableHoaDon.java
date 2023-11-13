@@ -92,6 +92,10 @@ class AbstractTableHangCho extends AbstractTableModel  {
         data.remove(row);
         fireTableDataChanged();
     }
+    public void removeAllHangCho() {
+        data.removeAll(data);
+        fireTableDataChanged();
+    }
 
     @Override
     public int getRowCount() {

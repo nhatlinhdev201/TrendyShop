@@ -275,7 +275,7 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener {
 			
 			
 			if(!listHoaDon.get(j).isTrangThaiThanhToan()) break;
-			KhachHang kh = dao_KhachHang.getKhachHangTheoMa(listHoaDon.get(j).getKhachHang().getMaKhachHang().trim());
+			KhachHang kh = dao_KhachHang.getKhachHangTheoMa(listHoaDon.get(j).getKhachHang().getMaKhachHang());
 			VoucherGiamGia voucher = dao_Voucher.getTheoMaVouCher(listHoaDon.get(j).getVoucher().getMaVoucher());
 			
 
@@ -340,10 +340,10 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener {
 			lbl_KhachHang.setBounds(420, 49, 170, 20);
 			panel_3.add(lbl_KhachHang);
 
-			JLabel lbl_MaGiamGia = new JLabel(voucher.getTenVoucher());
-			lbl_MaGiamGia.setFont(new Font("Monospaced", Font.PLAIN, 13));
-			lbl_MaGiamGia.setBounds(440, 80, 500, 20);
-			panel_3.add(lbl_MaGiamGia);
+//			JLabel lbl_MaGiamGia = new JLabel(voucher.getTenVoucher());
+//			lbl_MaGiamGia.setFont(new Font("Monospaced", Font.PLAIN, 13));
+//			lbl_MaGiamGia.setBounds(440, 80, 500, 20);
+//			panel_3.add(lbl_MaGiamGia);
 
 			JLabel lbl_SDT = new JLabel(kh.getSoDienThoai());
 			lbl_SDT.setFont(new Font("Monospaced", Font.PLAIN, 13));
