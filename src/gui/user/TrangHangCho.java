@@ -5,13 +5,31 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
+import java.awt.Image;
+
 import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
+
+import daos.Dao_HoaDon;
+import daos.Dao_KhachHang;
+import entities.KhachHang;
+
 import javax.swing.JTextField;
+import javax.swing.DefaultCellEditor;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
+
 import java.awt.event.ActionListener;
+import java.util.List;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
+import java.awt.Component;
+
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 
 public class TrangHangCho extends JFrame implements ActionListener{
 	private JTextField textField;
@@ -19,11 +37,23 @@ public class TrangHangCho extends JFrame implements ActionListener{
 	private JButton btn_ThanhToan;
 	private JButton btn_ThemHangCho;
 	private JButton btn_TimHangCho;
+	
+	private AbstractTableHangCho model;
+	private JTable table;
+	private Dao_HoaDon dao_HoaDon;
+	private Dao_KhachHang dao_KhachHang;
+	private List<KhachHang> list_KhachHangCho;
 
 	/**
 	 * Create the panel.
 	 */
 	public TrangHangCho() {
+		
+		dao_HoaDon = new Dao_HoaDon();
+		dao_KhachHang = new Dao_KhachHang();
+		
+		list_KhachHangCho = dao_KhachHang.getAllKhachHangCho();
+		
 		setSize(500, 400);
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(null);
@@ -76,12 +106,23 @@ public class TrangHangCho extends JFrame implements ActionListener{
 		panel.setBounds(10, 140, 464, 221);
 		getContentPane().add(panel);
 		
-		JLabel lblNewLabel_2 = new JLabel("Abstract Table");
-		panel.add(lblNewLabel_2);
 		
+		model = new AbstractTableHangCho();
+		table = new JTable(model);
+		table.setRowHeight(40);
+		table.setFont(new Font("Monospaced", Font.PLAIN, 17));
+		table.getColumnModel().getColumn(0).setPreferredWidth(10);
+		table.getColumnModel().getColumn(1).setPreferredWidth(270);
+		table.getColumnModel().getColumn(2).setPreferredWidth(30);
+		table.setShowGrid(false);
+
+		table.getColumnModel().getColumn(2).setCellRenderer(new ButtonRenderer());
+		table.getColumnModel().getColumn(2).setCellEditor(new ButtonEditor());
+		panel.add(new JScrollPane(table));
 		
-		
-		
+		for (KhachHang khachHang : list_KhachHangCho) {
+			model.addHangCho(khachHang);
+		}
 		
 		
 //		
@@ -92,6 +133,95 @@ public class TrangHangCho extends JFrame implements ActionListener{
 		
 	}
 
+	private class ButtonRenderer extends DefaultTableCellRenderer {
+		private JButton button;
+
+		public ButtonRenderer() {
+
+			button = new JButton();
+			button.setOpaque(true);
+			// Thêm biểu tượng vào nút
+			Icon deleteIcon = new ImageIcon(
+					new ImageIcon("img\\remove.png").getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT));
+			button.setIcon(deleteIcon);
+			button.setBackground(new Color(255, 255, 255));
+		}
+
+		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
+				int row, int column) {
+			if (isSelected) {
+				button.setForeground(table.getSelectionForeground());
+
+			} else {
+				button.setForeground(table.getForeground());
+			}
+			button.setText(value == null ? "" : value.toString());
+			return button;
+		}
+	}
+
+	private class ButtonEditor extends DefaultCellEditor {
+		private JButton button;
+		private String label;
+		private boolean isPushed;
+		private int selectedRow;
+
+		public ButtonEditor() {
+			super(new JCheckBox());
+			button = new JButton();
+			button.setOpaque(true);
+
+			// Thêm biểu tượng vào nút
+			Icon deleteIcon = new ImageIcon(
+					new ImageIcon("img\\remove.png").getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT));
+			button.setIcon(deleteIcon);
+			button.setBackground(new Color(255, 255, 255));
+			button.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					fireEditingStopped();
+				}
+			});
+		}
+
+		public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row,
+				int column) {
+			selectedRow = row;
+			if (isSelected) {
+				button.setForeground(table.getSelectionForeground());
+			} else {
+				button.setForeground(table.getForeground());
+			}
+			label = (value == null) ? "" : value.toString();
+			button.setText(label);
+			isPushed = true;
+			return button;
+		}
+
+		public Object getCellEditorValue() {
+			if (isPushed) {
+				// Xử lý sự kiện khi nút được nhấn
+				int choice = JOptionPane.showConfirmDialog(null, "Bạn có chắc muốn xóa !!", "Xác nhận",
+						JOptionPane.YES_NO_OPTION);
+
+				if (choice == JOptionPane.YES_OPTION) {
+					model.removeHangCho(selectedRow);
+				}
+
+			}
+			isPushed = false;
+			return label;
+		}
+
+		public boolean stopCellEditing() {
+			isPushed = false;
+			return super.stopCellEditing();
+		}
+
+		protected void fireEditingStopped() {
+			super.fireEditingStopped();
+		}
+	}
 	
 	
 	@Override
@@ -115,5 +245,13 @@ public class TrangHangCho extends JFrame implements ActionListener{
 				
 			}
 		}
+	}
+	
+	public void timHangCho() {
+		
+	}
+	
+	public static void main(String[] args) {
+		new TrangHangCho().setVisible(true);
 	}
 }

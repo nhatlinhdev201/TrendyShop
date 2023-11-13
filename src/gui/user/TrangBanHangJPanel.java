@@ -904,17 +904,41 @@ public class TrangBanHangJPanel extends JPanel implements ActionListener, Action
 			for (ChiTietHoaDon chiTietHoaDon : listChiTietHD) {
 				chiTietHoaDon.setThanhTien(chiTietHoaDon.tinhTongThanhTien());
 				HangHoa hh = dao_HangHoa.getHangHoaByMaHangHao(chiTietHoaDon.getHangHoa().getMaHangHoa());
-				hh.setSoLuongTon(hh.getSoLuongTon()-chiTietHoaDon.getSoLuong());
+				hh.setSoLuongTon(hh.getSoLuongTon() - chiTietHoaDon.getSoLuong());
 				dao_ChiTietHoaDon.insertChiTietHoadon(chiTietHoaDon);
 				dao_HangHoa.updateHangHoa(hh);
 			}
-			
+
 			if (!vc.getMaVoucher().equals("VC0000")) {
 				vc.setSoLuotDung(vc.getSoLuotDung() + 1);
 				dao_VoucherGiamGia.updateVoucher(vc);
 			}
 			if (!kh.getMaKhachHang().equals("KH0000")) {
 //				Trừ và thêm điểm thành viên
+				double diemTichLuy = 0;
+				double tongTienHang =0;
+				double tongTienThue = 0;
+				double tongTienGiamGia = 0;
+				// tổng tiền hàng
+				for (ChiTietHoaDon chiTietHoaDon : listChiTietHD) {
+					tongTienHang += chiTietHoaDon.tinhTongThanhTien();
+				}
+				// tổng tiền thuế
+				tongTienThue = tongTienHang * 0.1;
+				lbl_TongTienHang.setText(decimalFormat.format(tongTienHang));
+				lbl_Thue.setText(decimalFormat.format(tongTienThue));
+				// tổng tiền mã giảm giá
+				tongTienGiamGia = vc.getPhanTramGiamTheoHoaDon();
+				if (chckx_DiemTichLuy.isSelected()) {
+
+					diemTichLuy = kh.getDiemTichLuy();
+					double tongTienTra = tongTienHang + tongTienThue - tongTienGiamGia;
+					if (diemTichLuy > (tongTienTra / 2)) {
+						diemTichLuy -= tongTienTra / 2;
+					}else diemTichLuy = 0;
+				}
+				kh.setDiemTichLuy((float) diemTichLuy);
+				dao_KhachHang.updateKhachHang(kh);
 			}
 			if (themHoaDon) {
 				JOptionPane.showMessageDialog(this, "Thanh toán thành công và tiến hành in hóa đơn");

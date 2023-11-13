@@ -31,7 +31,7 @@ public class Dao_HoaDon {
 
 			preparedStatement.setString(1, hoaDon.getMaHoaDon());
 			preparedStatement.setDate(2, Date.valueOf(hoaDon.getThoiGianTao()));
-			preparedStatement.setDouble(3, hoaDon.getTongThanhTien());
+			preparedStatement.setLong(3,(long)  hoaDon.getTongThanhTien());
 			preparedStatement.setString(4, hoaDon.getVoucher().getMaVoucher());
 			preparedStatement.setString(5, hoaDon.getKhachHang().getMaKhachHang());
 			preparedStatement.setString(6, hoaDon.getNguoiLapHoaDon().getMaNhanVien());
