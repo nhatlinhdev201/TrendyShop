@@ -14,6 +14,8 @@ import entities.VoucherGiamGia;
 
 public class Dao_KhachHang {
 	public Connection connection;
+	PreparedStatement preStm;
+	ResultSet rs;
 
 	public Dao_KhachHang() {
 		connection = ConnectDataBase.getInstance().connection;
@@ -87,6 +89,25 @@ public class Dao_KhachHang {
 			e.printStackTrace();
 		}
 		return kh;
+	}
+	
+	public boolean themKhachHang(KhachHang kh) {
+		int n = 0;
+		try {
+			connection = ConnectDataBase.getInstance().connection;
+			String sql = "insert into KhachHang values(?,?,?,?,?,?,?)";
+			preStm = connection.prepareStatement(sql);
+			preStm.setString(1, kh.getMaKhachHang());
+			preStm.setString(2, kh.getSoDienThoai());
+			preStm.setString(3, kh.getTenKhachHang());
+			preStm.setString(4, kh.getEmail());
+			preStm.setString(5, kh.getDiaChi());
+			preStm.setBoolean(6, kh.isTrangThai());
+			preStm.setFloat(7, kh.getDiemTichLuy());
+			n = preStm.executeUpdate();
+		} catch (Exception e) {
+		}
+		return n > 0;
 	}
 	
 }
