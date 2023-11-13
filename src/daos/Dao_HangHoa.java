@@ -16,6 +16,11 @@ public class Dao_HangHoa {
 	public Dao_HangHoa() {
 		connection = ConnectDataBase.getInstance().getConnection();
 	}
+	
+	/**
+	 * lấy toàn bộ danh sách hàng hóa
+	 * @return listHangHoa
+	 */
 
 	public List<HangHoa> getAll() {
 		List<HangHoa> dsHangHoa = null;
@@ -32,7 +37,7 @@ public class Dao_HangHoa {
 				hangHoa.setXuatXu(resultSet.getString("xuatXu").trim());
 				hangHoa.setChatLieu(resultSet.getString("chatLieu").trim());
 				hangHoa.setChiTietMoTa(resultSet.getString("chiTietMoTa"));
-				hangHoa.setHinhAnh(resultSet.getString("hinhAnh").trim());
+				hangHoa.setHinhAnh(resultSet.getString("hinhAnh"));
 				hangHoa.setMaNhaCungCap(resultSet.getString("maNhaCungCap").trim());
 				hangHoa.setKichCo(resultSet.getString("kichCo").trim());
 				hangHoa.setMauSac(resultSet.getString("mauSac").trim());
@@ -49,6 +54,10 @@ public class Dao_HangHoa {
 		return dsHangHoa;
 	}
 
+	/**
+	 * Get tên các thương hiệu có trong db
+	 * @return
+	 */
 	public List<String> getAllThuongHieu() {
 		List<String> dsThuongHieu = null;
 		try {
@@ -66,6 +75,10 @@ public class Dao_HangHoa {
 		return dsThuongHieu;
 	}
 
+	/**
+	 * get tên các hàng hóa có trong db
+	 * @return
+	 */
 	public List<String> getAllTenHangHoa() {
 		List<String> dsThuongHieu = null;
 		try {
@@ -83,6 +96,10 @@ public class Dao_HangHoa {
 		return dsThuongHieu;
 	}
 
+	/**
+	 * get tên xuất xứ có trong db
+	 * @return
+	 */
 	public List<String> getAllXuatXu() {
 		List<String> dsThuongHieu = null;
 		try {
@@ -100,6 +117,11 @@ public class Dao_HangHoa {
 		return dsThuongHieu;
 	}
 
+	/**
+	 * Lấy các hàng hóa theo xuất xứ
+	 * @param xuatXu
+	 * @return
+	 */
 	public List<HangHoa> getHangHoaByXuatXu(String xuatXu) {
 		List<HangHoa> dsHangHoa = null;
 		try {
@@ -133,6 +155,11 @@ public class Dao_HangHoa {
 		return dsHangHoa;
 	}
 
+	/**
+	 * get danh sách các hàng hóa theo thương hiệu
+	 * @param thuongHieu
+	 * @return
+	 */
 	public List<HangHoa> getHangHoaByThuongHieu(String thuongHieu) {
 		List<HangHoa> dsHangHoa = null;
 		try {
@@ -166,6 +193,11 @@ public class Dao_HangHoa {
 		return dsHangHoa;
 	}
 
+	/**
+	 * get danh sách các hàng hóa theo tên hàng hóa
+	 * @param ten
+	 * @return
+	 */
 	public List<HangHoa> getHangHoaByTenHangHoa(String ten) {
 		List<HangHoa> dsHangHoa = null;
 		try {
@@ -199,6 +231,11 @@ public class Dao_HangHoa {
 		return dsHangHoa;
 	}
 
+	/**
+	 * Lấy thông tin mã hàng hóa nhập vào
+	 * @param ma
+	 * @return hanghoa
+	 */
 	public HangHoa getHangHoaByMaHangHao(String ma) {
 		HangHoa hangHoa = null;
 		try {
@@ -213,7 +250,7 @@ public class Dao_HangHoa {
 				hangHoa.setThuongHieu(resultSet.getString("thuongHieu").trim());
 				hangHoa.setXuatXu(resultSet.getString("xuatXu").trim());
 				hangHoa.setChatLieu(resultSet.getString("chatLieu").trim());
-				hangHoa.setChiTietMoTa(resultSet.getString("chiTietMoTa").trim());
+				hangHoa.setChiTietMoTa(resultSet.getString("chiTietMoTa"));
 				hangHoa.setHinhAnh(resultSet.getString("hinhAnh").trim());
 				hangHoa.setMaNhaCungCap(resultSet.getString("maNhaCungCap").trim());
 				hangHoa.setKichCo(resultSet.getString("kichCo").trim());
@@ -230,14 +267,25 @@ public class Dao_HangHoa {
 		return hangHoa;
 
 	}
-	public String getMaHangHoaNew() {
-		String maHangHoa = "";
+	
+	/**
+	 * Tìm hàng hóa có mã lớn nhất
+	 * @return
+	 */
+	public int getMaHangHoaNew() {
+		int maHangHoa=0;
 		try {
 			PreparedStatement statement = connection
 					.prepareStatement("select top(1) maHangHoa from HangHoa order by maHangHoa desc");
 			ResultSet resultSet = statement.executeQuery();
-			resultSet.next();
-			maHangHoa = resultSet.getString("maHangHoa").trim();
+			if (resultSet.next()) {
+	            String maHangHoaString = resultSet.getString("maHangHoa");
+	            if (maHangHoaString != null && maHangHoaString.length() >= 9) {
+	                // Lấy phần số từ vị trí 2 đến 5 và chuyển đổi thành số nguyên
+	                maHangHoa = Integer.parseInt(maHangHoaString.substring(2, 6));
+	            }
+	        }
+			
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -245,6 +293,13 @@ public class Dao_HangHoa {
 		return maHangHoa;
 
 	}
+	
+	
+	/**
+	 * Xóa hàng hóa (chuyển trạng thái từ true về false
+	 * @param mahh
+	 * @return
+	 */
 	public boolean deleteHangHoa(String mahh) {
 		try {
 			PreparedStatement preparedStatement = connection
@@ -260,6 +315,11 @@ public class Dao_HangHoa {
 		return false;
 	}
 
+	/**
+	 * Thêm hàng hóa vào database
+	 * @param hangHoa
+	 * @return
+	 */
 	public boolean insertHangHoa(HangHoa hangHoa) {
 		try {
 
@@ -295,6 +355,11 @@ public class Dao_HangHoa {
 		return false;
 	}
 
+	/**
+	 * Cập nhật thông tin của hàng hóa
+	 * @param hangHoa
+	 * @return
+	 */
 	public boolean updateHangHoa(HangHoa hangHoa) {
 		try {
 

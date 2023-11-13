@@ -33,6 +33,7 @@ public class TrangChinhNVQuanLy extends JFrame implements ActionListener{
 	private JButton btnMenuCnQlyKhachHang;
 	private JButton btnMenuCnQlyThongKe;
 	private JButton btnMenuCnQlyTroGiup;
+	private JButton btnMenuCnQlyVoucher;
 	private JPanel currentContent;
 	
 	private TrangChuPanel trangChuPanel;
@@ -43,6 +44,7 @@ public class TrangChinhNVQuanLy extends JFrame implements ActionListener{
 	private TrangThongKeNVQuanLyJPanel trangThongKeNVQuanLyJPanel;
 	private JButton btnMenuCnXemThongTinTK;
 	private JButton btnMenuCnDangXuatTK;
+	private TrangQuanLyVoucher trangQuanLyVoucher;
 	private TrangThongKeNVQuanLy trangThongKeNVQuanLy;
 
 	/**
@@ -110,20 +112,20 @@ public class TrangChinhNVQuanLy extends JFrame implements ActionListener{
 		btnMenuCnQlyNhanVien.setBounds(144, 0, 124, 26);
 		mainMenu.add(btnMenuCnQlyNhanVien);
 
-		btnMenuCnQlyKhachHang = new JButton("KHÁCH HÀNG");
-		btnMenuCnQlyKhachHang.setBackground(new Color(255, 250, 250));
-		btnMenuCnQlyKhachHang.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/images/icon-customer.png"))
+		btnMenuCnQlyVoucher = new JButton("Voucher");
+		btnMenuCnQlyVoucher.setBackground(new Color(255, 250, 250));
+		btnMenuCnQlyVoucher.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/images/icon-customer.png"))
 				.getImage().getScaledInstance(19, 20, Image.SCALE_SMOOTH)));
-		btnMenuCnQlyKhachHang.setFont(new Font("Tahoma", Font.BOLD, 10));
-		btnMenuCnQlyKhachHang.setBounds(412, 0, 143, 26);
-		mainMenu.add(btnMenuCnQlyKhachHang);
-
+		btnMenuCnQlyVoucher.setFont(new Font("Tahoma", Font.BOLD, 10));
+		btnMenuCnQlyVoucher.setBounds(565, 0, 143, 26);
+		mainMenu.add(btnMenuCnQlyVoucher);
+		
 		btnMenuCnQlyThongKe = new JButton("THỐNG KÊ");
 		btnMenuCnQlyThongKe.setBackground(new Color(255, 250, 250));
 		btnMenuCnQlyThongKe.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/images/icon-chart.png"))
 				.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH)));
 		btnMenuCnQlyThongKe.setFont(new Font("Tahoma", Font.BOLD, 10));
-		btnMenuCnQlyThongKe.setBounds(565, 0, 111, 26);
+		btnMenuCnQlyThongKe.setBounds(732, 0, 111, 26);
 		mainMenu.add(btnMenuCnQlyThongKe);
 
 		btnMenuCnQlyTroGiup = new JButton("HƯỚNG DẪN");
@@ -131,7 +133,7 @@ public class TrangChinhNVQuanLy extends JFrame implements ActionListener{
 		btnMenuCnQlyTroGiup.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/images/icon-help.png"))
                 .getImage().getScaledInstance(25, 20, Image.SCALE_SMOOTH)));
 		btnMenuCnQlyTroGiup.setFont(new Font("Tahoma", Font.BOLD, 10));
-		btnMenuCnQlyTroGiup.setBounds(686, 0, 133, 26);
+		btnMenuCnQlyTroGiup.setBounds(853, 0, 133, 26);
 		mainMenu.add(btnMenuCnQlyTroGiup);
 		
 		JLabel lblUsernameLogin = new JLabel("Nhật Linh");
@@ -151,6 +153,15 @@ public class TrangChinhNVQuanLy extends JFrame implements ActionListener{
 		btnMenuCnXemThongTinTK.setBounds(1272, 0, 30, 26);
 		mainMenu.add(btnMenuCnXemThongTinTK);
 		
+				btnMenuCnQlyKhachHang = new JButton("KHÁCH HÀNG");
+				btnMenuCnQlyKhachHang.setBounds(412, 0, 143, 26);
+				mainMenu.add(btnMenuCnQlyKhachHang);
+				btnMenuCnQlyKhachHang.setBackground(new Color(255, 250, 250));
+				btnMenuCnQlyKhachHang.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/images/icon-customer.png"))
+						.getImage().getScaledInstance(19, 20, Image.SCALE_SMOOTH)));
+				btnMenuCnQlyKhachHang.setFont(new Font("Tahoma", Font.BOLD, 10));
+				btnMenuCnQlyKhachHang.addActionListener(this);
+		
 		//<========================================================================================>
 		
 		trangChuPanel = new TrangChuPanel();
@@ -160,18 +171,18 @@ public class TrangChinhNVQuanLy extends JFrame implements ActionListener{
 		trangQuanLyHangHoaJPanel = new TrangQuanLyHangHoaJPanel();
 		trangThongKeNVQuanLyJPanel = new TrangThongKeNVQuanLyJPanel();
 		trangThongKeNVQuanLy = new TrangThongKeNVQuanLy();
-		
+		trangQuanLyVoucher = new TrangQuanLyVoucher();
 		switchContent(trangChuPanel);
 		
 		//<<=====================Add action listener============================>>
 		btnMenuTrangChu.addActionListener(this);
 		btnMenuCnQlyNhanVien.addActionListener(this);
 		btnMenuCnQlyHangHoa.addActionListener(this);
-		btnMenuCnQlyKhachHang.addActionListener(this);
 		btnMenuCnQlyThongKe.addActionListener(this);
 		btnMenuCnQlyTroGiup.addActionListener(this);
 		btnMenuCnXemThongTinTK.addActionListener(this);
 		btnMenuCnDangXuatTK.addActionListener(this);
+		btnMenuCnQlyVoucher.addActionListener(this);
 	}
 	private void switchContent(JPanel newContent) {
 		newContent.setBounds(0, 28, 1350, 701);
@@ -198,7 +209,10 @@ public class TrangChinhNVQuanLy extends JFrame implements ActionListener{
 			switchContent(trangQLNhanVienJPanel);
 		}else if(o.equals(btnMenuCnQlyThongKe)) {
 			switchContent(trangThongKeNVQuanLy);
-		}else if(o.equals(btnMenuCnQlyTroGiup)) {
+		}else if (o.equals(btnMenuCnQlyVoucher)) {
+			switchContent(trangQuanLyVoucher);
+		}
+		else if(o.equals(btnMenuCnQlyTroGiup)) {
 //			switchContent(trangHuongDanJPanel);
 		}else if(o.equals(btnMenuCnXemThongTinTK)) {
 			JOptionPane.showMessageDialog(this, "Nhật Linh");

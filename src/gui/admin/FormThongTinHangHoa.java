@@ -254,7 +254,7 @@ public class FormThongTinHangHoa extends JPanel implements ActionListener {
 		btn_Save.setBackground(new Color(250, 250, 210));
 		btn_Save.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btn_Save.setFocusable(false);
-		btn_Save.setBounds(634, 391, 120, 25);
+		btn_Save.setBounds(634, 391, 150, 25);
 		add(btn_Save);
 
 		btn_ChonAnh.addActionListener(this);
@@ -266,6 +266,10 @@ public class FormThongTinHangHoa extends JPanel implements ActionListener {
 		}
 	}
 
+	/**
+	 * Lấy dữ liệu và chỉnh sửa thông tin hàng hóa
+	 * @param hh
+	 */
 	public void setText(HangHoa hh) {
 		txt_Ten.setText(hh.getTenHangHoa());
 		txt_ThuongHieu.setText(hh.getThuongHieu());
@@ -294,6 +298,9 @@ public class FormThongTinHangHoa extends JPanel implements ActionListener {
 
 	}
 
+	/**
+	 * Đặt lại các giá trị trong các texfiled
+	 */
 	public void reText() {
 		txt_Ten.setText("");
 		txt_ThuongHieu.setText("");
@@ -309,22 +316,30 @@ public class FormThongTinHangHoa extends JPanel implements ActionListener {
 		spn_SoLuongBan.setValue(0);
 	}
 
+	/**
+	 * trả về chuỗi mã hàng hoa
+	 * @param ma
+	 * @return
+	 */
 	public String createMaHangHoa(String ma) {
 		System.out.println(ma);
+		
 		int id = Integer.parseInt(ma.substring(2));
 		if (id < 9) {
 			id++;
-			return "HH000" + id;
+			return "HH000" + id ;
 		} else if (id < 99) {
 			id++;
-			return "HH00" + id;
+			return "HH00" + id ;
 		} else if (id < 999) {
 			id++;
-			return "HH0" + id;
+			return "HH0" + id ;
 		}
 		id++;
-		return "HH" + id;
+		return "HH" + id ;
 	}
+	
+	
 
 	public void importImage() {
 		JFileChooser f = new JFileChooser();
@@ -333,7 +348,7 @@ public class FormThongTinHangHoa extends JPanel implements ActionListener {
 		if (f.getSelectedFile() != null) {
 			String fileName = fl.getAbsolutePath();
 			// kiểm tra thư mục image có tồn tại không nêu không thì tạo
-			File directory = new File("image_product\\");
+			File directory = new File("img\\");
 			if (!directory.exists()) {
 				directory.mkdirs();
 			}
@@ -345,71 +360,98 @@ public class FormThongTinHangHoa extends JPanel implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource().equals(btn_ChonAnh)) {
-			importImage();
-		} else if (e.getSource().equals(btn_Save)) {
-			String ten = txt_Ten.getText().trim();
-			String thuongHieu = txt_ThuongHieu.getText().trim();
-			String xuatXu = txt_XuatXu.getText().trim();
-			String mauSac = txt_MauSac.getText().trim();
-			String chatLieu = txt_ChatLieu.getText().trim();
-			String phanLoai = txt_PhanLoai.getText().trim();
-			String kichCo = txt_KichCo.getText().trim();
-			String moTa = txtMoTa.getText().trim();
-			String nhaCungCap = ((NhaCungCap) cmb_NhaCungCap.getSelectedItem()).getMaNhaCungCap();
-			double giaNhap = (double) spn_GiaNhap.getValue();
-			int soLuongTon = (int) spn_SoLuongTon.getValue();
-			int soLuongBan = (int) spn_SoLuongBan.getValue();
-			HangHoa hh = new HangHoa(hangHoa.getMaHangHoa(), ten, phanLoai, thuongHieu, xuatXu, chatLieu, moTa,
-					hangHoa.getHinhAnh(), nhaCungCap, kichCo, mauSac, soLuongTon, soLuongBan, giaNhap, true);
-			if (btn_Save.getText().equals("Lưu Thay Đổi")) {
-				hh.setTrangThai(ckb_banlai.isSelected());
-				// nếu có chọn hình ảnh mới thì thực hiện copy hình ảnh thay thế ảnh củ
-				// =================================
-				if (sr != null) {
-					try {
-						File anh = new File(hh.getHinhAnh());
-						System.out.println(anh.getAbsolutePath());
-						System.out.println(sr.getAbsolutePath());
-						Files.copy(sr.toPath(),anh.toPath(),StandardCopyOption.REPLACE_EXISTING);
-					} catch (IOException e1) {
-						e1.printStackTrace();
-					}
-				}
-				// =================================
-				if (dao_HangHoa.updateHangHoa(hh)) {
-					JOptionPane.showMessageDialog(this,
-							"Đã cập nhật thông tin sản phẩm " + hangHoa.getMaHangHoa() + " thành công.");
-					reText();
-				} else {
-					JOptionPane.showMessageDialog(this,
-							"Cập nhật thông tin sản phẩm " + hangHoa.getMaHangHoa() + " Thất Bại.");
-				}
-			} else {
-				// nếu mà có chọn hình ảnh thì sr sẻ khác null 
-				if (sr != null) {
-					String ma = dao_HangHoa.getMaHangHoaNew();
-					hangHoa.setMaHangHoa(createMaHangHoa(ma));
-					String tienToFile = sr.getAbsolutePath().substring(sr.getAbsolutePath().lastIndexOf("."));
-					a = new File("image_product\\" + hangHoa.getMaHangHoa() + tienToFile);
-					// thực hiện copy hình ảnh vào thư mục image_product
-					try {
-						Files.copy(sr.toPath(), a.toPath());
-					} catch (IOException e1) {
-						e1.printStackTrace();
-					}
-					if (dao_HangHoa.insertHangHoa(hh)) {
-						JOptionPane.showMessageDialog(this,
-								"Đã thêm thông tin sản phẩm " + hangHoa.getMaHangHoa() + " thành công.");
-						reText();
-					} else {
-						JOptionPane.showMessageDialog(this,
-								"Thêm thông tin sản phẩm " + hangHoa.getMaHangHoa() + " Thất Bại.");
-					}
-				}
-			}
+	    if (e.getSource().equals(btn_ChonAnh)) {
+	        importImage();
+	    } else if (e.getSource().equals(btn_Save)) {
+	      
+	            // Kiểm tra các trường dữ liệu nếu là null hoặc trống
+	            String ten = txt_Ten.getText().trim();
+	            String thuongHieu = txt_ThuongHieu.getText().trim();
+	            String xuatXu = txt_XuatXu.getText().trim();
+	            String mauSac = txt_MauSac.getText().trim();
+	            String chatLieu = txt_ChatLieu.getText().trim();
+	            String phanLoai = txt_PhanLoai.getText().trim();
+	            String kichCo = txt_KichCo.getText().trim();
+	            String moTa = txtMoTa.getText().trim();
+	            String nhaCungCap = ((NhaCungCap) cmb_NhaCungCap.getSelectedItem()).getMaNhaCungCap();
+	            double giaNhap = (double) spn_GiaNhap.getValue();
+	            int soLuongTon = (int) spn_SoLuongTon.getValue();
+	            int soLuongBan = (int) spn_SoLuongBan.getValue();
 
-		}
+	            // Kiểm tra các trường dữ liệu
+	            if (ten.isEmpty() || thuongHieu.isEmpty() || xuatXu.isEmpty() || mauSac.isEmpty() || chatLieu.isEmpty()
+	                    || phanLoai.isEmpty() || kichCo.isEmpty() || moTa.isEmpty()) {
+	                JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin sản phẩm.");
+	            } else {
+	                HangHoa hh = new HangHoa(hangHoa.getMaHangHoa(), ten, phanLoai, thuongHieu, xuatXu, chatLieu, moTa,
+	                        hangHoa.getHinhAnh(), nhaCungCap, kichCo, mauSac, soLuongTon, soLuongBan, giaNhap, true);
+	                if (btn_Save.getText().equals("Lưu Thay Đổi")) {
+	                    hh.setTrangThai(ckb_banlai.isSelected());
+	                    // nếu có chọn hình ảnh mới thì thực hiện copy hình ảnh thay thế ảnh củ
+	                    // =================================
+	                    if (sr != null) {
+	                        try {
+	                            File anh = new File(hh.getHinhAnh());
+	                            System.out.println(anh.getAbsolutePath());
+	                            System.out.println(sr.getAbsolutePath());
+	                            Files.copy(sr.toPath(), anh.toPath(), StandardCopyOption.REPLACE_EXISTING);
+	                        } catch (IOException e1) {
+	                            e1.printStackTrace();
+	                        }
+	                    }
+	                    // =================================
+	                    if (dao_HangHoa.updateHangHoa(hh)) {
+	                        JOptionPane.showMessageDialog(this,
+	                                "Đã cập nhật thông tin sản phẩm " + hangHoa.getMaHangHoa() + " thành công.");
+	                        reText();
+	                    } else {
+	                        JOptionPane.showMessageDialog(this,
+	                                "Cập nhật thông tin sản phẩm " + hangHoa.getMaHangHoa() + " Thất Bại.");
+	                    }
+	                } else {
+	                    // nếu mà có chọn hình ảnh thì sr sẽ khác null
+	                	if (sr != null) {
+	                	    // Lấy mã hàng hóa mới
+	                		 Integer maHangHoaMoi = dao_HangHoa.getMaHangHoaNew(); // Integer để có thể kiểm tra null
+	                		 
+	                		 if (maHangHoaMoi != null && maHangHoaMoi > 0) {
+	                		        maHangHoaMoi++; // Tăng giá trị
+	                		    } else {
+	                		        maHangHoaMoi = 1; // Giá trị mặc định nếu không có giá trị hoặc giá trị không hợp lệ
+	                		    }
+	                		 
+	                	    // Tăng mã hàng hóa mới thêm 1 và kết hợp với kích cỡ
+	                	    String ma = "HH" + String.format("%04d", maHangHoaMoi + 1) + kichCo;
+	                	    
+//	                	    System.out.println(ma);
+	                	    if(ma!=null) {
+	                	    	hangHoa.setMaHangHoa(ma);
 
+		                	    String tienToFile = sr.getAbsolutePath().substring(sr.getAbsolutePath().lastIndexOf("."));
+		                	    a = new File("img\\" + hangHoa.getMaHangHoa() + tienToFile);
+
+		                	    // Thực hiện copy hình ảnh vào thư mục img
+		                	    try {
+		                	        Files.copy(sr.toPath(), a.toPath());
+		                	    } catch (IOException e1) {
+		                	        e1.printStackTrace();
+		                	    }
+
+		                	    if (dao_HangHoa.insertHangHoa(hh)) {
+		                	        JOptionPane.showMessageDialog(this, "Thêm sản phẩm " + hangHoa.getMaHangHoa() + " thành công.");
+		                	        reText();
+		                	    } else {
+		                	        JOptionPane.showMessageDialog(this, "Thêm thông tin sản phẩm " + hangHoa.getMaHangHoa() + " Thất Bại.");
+		                	    }
+	                	    }else {
+	                	        // Xử lý nếu ma là null
+	                	        JOptionPane.showMessageDialog(this, "Lỗi: Không thể tạo mã hàng hóa mới. Vui lòng thêm lại");
+	                	    }
+	                
+	                	}
+	                }
+	            
+	        }
+	    }
 	}
 }

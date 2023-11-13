@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 import connection.ConnectDataBase;
+import entities.HangHoa;
 import entities.VoucherGiamGia;
 
 public class Dao_VoucherGiamGia {
@@ -86,5 +87,57 @@ public class Dao_VoucherGiamGia {
 			e.printStackTrace();
 		}
 		return voucher;
+	}
+	
+	
+	public List<String> getAllPhanTramGiamGia() {
+		List<String> dsPhanTramGiamGia = null;
+		try {
+			PreparedStatement statement = connection
+					.prepareStatement("select vc.phanTramGiamTheoHoaDon from VoucherGiamGia vc group by vc.phanTramGiamTheoHoaDon");
+			ResultSet resultSet = statement.executeQuery();
+			dsPhanTramGiamGia = new ArrayList<String>();
+			while (resultSet.next()) {
+				dsPhanTramGiamGia.add(resultSet.getString("phanTramGiamTheoHoaDon"));
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dsPhanTramGiamGia;
+	}
+	
+	public List<String> getAllTrangThai() {
+		List<String> dsTrangThai = null;
+		try {
+			PreparedStatement statement = connection
+					.prepareStatement("select vc.trangThai from VoucherGiamGia vc group by vc.trangThai");
+			ResultSet resultSet = statement.executeQuery();
+			dsTrangThai = new ArrayList<String>();
+			while (resultSet.next()) {
+				dsTrangThai.add(resultSet.getString("trangThai"));
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dsTrangThai;
+	}
+	
+	public List<String> getAllTenVoucher() {
+		List<String> dsTenVoucher = null;
+		try {
+			PreparedStatement statement = connection
+					.prepareStatement("select vc.tenVoucher from VoucherGiamGia vc group by vc.tenVoucher");
+			ResultSet resultSet = statement.executeQuery();
+			dsTenVoucher = new ArrayList<String>();
+			while (resultSet.next()) {
+				dsTenVoucher.add(resultSet.getString("tenVoucher"));
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dsTenVoucher;
 	}
 }

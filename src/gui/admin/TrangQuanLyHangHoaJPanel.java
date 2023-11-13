@@ -79,7 +79,7 @@ public class TrangQuanLyHangHoaJPanel extends JPanel implements ActionListener, 
 	public TrangQuanLyHangHoaJPanel() {
 		dao_HangHoa = new Dao_HangHoa();
 		data();
-		setBackground(new Color(102, 205, 170));
+		setBackground(new Color(36, 170, 120));
 		this.setBounds(SetBountJPanel.X, SetBountJPanel.Y, SetBountJPanel.WIDTH, SetBountJPanel.HEIGHT);
 		setLayout(null);
 
@@ -119,9 +119,9 @@ public class TrangQuanLyHangHoaJPanel extends JPanel implements ActionListener, 
 		lst_ItemSearched.setBorder(new MatteBorder(0, 1, 1, 1, (Color) new Color(0, 0, 0)));
 
 		JPanel pnl_Header = new JPanel();
-		pnl_Header.setBackground(new Color(102, 205, 170));
+		pnl_Header.setBackground(new Color(140, 200, 200));
 		pnl_Header.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		pnl_Header.setBounds(0, 40, 1350, 50);
+		pnl_Header.setBounds(0, 38, 1350, 52);
 
 		add(pnl_Header);
 		pnl_Header.setLayout(null);
@@ -144,7 +144,7 @@ public class TrangQuanLyHangHoaJPanel extends JPanel implements ActionListener, 
 		};
 		pnl_Search.setOpaque(false);
 		pnl_Search.setBackground(Color.WHITE);
-		pnl_Search.setBounds(127, 10, 455, 30);
+		pnl_Search.setBounds(127, 10, 468, 30);
 		pnl_Header.add(pnl_Search);
 		pnl_Search.setLayout(null);
 
@@ -190,7 +190,7 @@ public class TrangQuanLyHangHoaJPanel extends JPanel implements ActionListener, 
 		JLabel lbl_iconSearch = new JLabel("");
 		lbl_iconSearch.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/images/icon_search.png"))
 				.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH)));
-		lbl_iconSearch.setBounds(426, 2, 26, 26);
+		lbl_iconSearch.setBounds(433, 2, 26, 26);
 		pnl_Search.add(lbl_iconSearch);
 
 		btn_add = new JButton("Thêm");
@@ -215,7 +215,7 @@ public class TrangQuanLyHangHoaJPanel extends JPanel implements ActionListener, 
 		btn_edit.setBounds(1026, 10, 100, 30);
 		pnl_Header.add(btn_edit);
 
-		btn_delete = new JButton("Xoá");
+		btn_delete = new JButton("Ngưng bán");
 		btn_delete.setIconTextGap(10);
 		btn_delete.setFont(new Font("Tahoma", Font.BOLD, 12));
 		btn_delete.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/images/icon_delete.png"))
@@ -223,41 +223,41 @@ public class TrangQuanLyHangHoaJPanel extends JPanel implements ActionListener, 
 		btn_delete.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		btn_delete.setBackground(SystemColor.info);
 		btn_delete.setFocusable(false);
-		btn_delete.setBounds(1226, 10, 100, 30);
+		btn_delete.setBounds(1206, 10, 120, 30);
 		pnl_Header.add(btn_delete);
 
 		JLabel lbl_timkiem = new JLabel("Tìm Kiếm Theo:");
 		lbl_timkiem.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lbl_timkiem.setBounds(10, 10, 107, 30);
+		lbl_timkiem.setBounds(10, 10, 120, 30);
 		pnl_Header.add(lbl_timkiem);
 
 		JPanel pnl_title = new JPanel();
-		pnl_title.setBackground(new Color(255, 218, 185));
+		pnl_title.setBackground(new Color(192, 192, 192));
 		pnl_title.setBounds(0, 0, 1350, 40);
 		add(pnl_title);
 
 		JLabel lbl_Title = new JLabel("QUẢN LÝ HÀNG HOÁ");
 		lbl_Title.setHorizontalAlignment(SwingConstants.CENTER);
-		lbl_Title.setForeground(Color.RED);
+		lbl_Title.setForeground(new Color(94, 94, 174));
 		lbl_Title.setPreferredSize(new Dimension(300, 30));
-		lbl_Title.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 22));
+		lbl_Title.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 25));
 		pnl_title.add(lbl_Title);
 
 		JPanel pnl_TableHangHoa = new JPanel();
-		pnl_TableHangHoa.setBackground(new Color(102, 205, 170));
-		pnl_TableHangHoa.setBorder(new TitledBorder(new LineBorder(new Color(0, 128, 128), 2),
-				"Danh S\u00E1ch H\u00E0ng Ho\u00E1", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		pnl_TableHangHoa.setBounds(0, 94, 1350, 605);
+		pnl_TableHangHoa.setForeground(new Color(128, 191, 191));
+		pnl_TableHangHoa.setBackground(new Color(128, 191, 191));
+		pnl_TableHangHoa.setBorder(new TitledBorder(new LineBorder(new Color(128, 191, 191), 2), "Danh S\u00E1ch H\u00E0ng Ho\u00E1", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		pnl_TableHangHoa.setBounds(0, 89, 1350, 610);
 		add(pnl_TableHangHoa);
 		pnl_TableHangHoa.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
 
 		JScrollPane scr_hanghoa = new JScrollPane();
 		scr_hanghoa.setPreferredSize(new Dimension(1335, 580));
 		scr_hanghoa.setBorder(null);
-		scr_hanghoa.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		scr_hanghoa.setForeground(new Color(0, 0, 0));
+		scr_hanghoa.setFont(new Font("Tahoma", Font.PLAIN, 25));
+		scr_hanghoa.setForeground(new Color(192, 192, 192));
 		scr_hanghoa.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
-		scr_hanghoa.setBackground(new Color(102, 205, 170));
+		scr_hanghoa.setBackground(new Color(107, 182, 182));
 		scr_hanghoa.setEnabled(false);
 
 		scr_hanghoa.setFocusable(false);
@@ -275,6 +275,7 @@ public class TrangQuanLyHangHoaJPanel extends JPanel implements ActionListener, 
 				return columnEditables[column];
 			}
 		};
+		tbl_HangHoa.setFuenteFilas(new Font("Tahoma", Font.PLAIN, 14));
 		tbl_HangHoa.setBorder(null);
 		tbl_HangHoa.setIntercellSpacing(new Dimension(0, 0));
 		tbl_HangHoa.setAlignmentY(Component.TOP_ALIGNMENT);
@@ -337,6 +338,7 @@ public class TrangQuanLyHangHoaJPanel extends JPanel implements ActionListener, 
 		btn_delete.addActionListener(this);
 		btn_edit.addActionListener(this);
 		lst_TieuChi.addListSelectionListener(new ListSelectionListener() {
+			
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
 				if (!e.getValueIsAdjusting()) {
@@ -347,6 +349,10 @@ public class TrangQuanLyHangHoaJPanel extends JPanel implements ActionListener, 
 		});
 		lst_ItemSearched.addListSelectionListener(new ListSelectionListener() {
 
+			/**
+			 * Chọn tiêu chí để hiển thị danh sách các tên trong tiêu chí đã chọn
+			 * @param e
+			 */
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
 				if (!e.getValueIsAdjusting() && lst_ItemSearched.getSelectedValue() !=null) {
@@ -379,6 +385,9 @@ public class TrangQuanLyHangHoaJPanel extends JPanel implements ActionListener, 
 		loadData(ds);
 	}
 
+	/**
+	 * get danh sách các tiêu chí
+	 */
 	public void data() {
 		listThuongHieu = dao_HangHoa.getAllThuongHieu();
 		listXuatXu = dao_HangHoa.getAllXuatXu();
@@ -386,6 +395,11 @@ public class TrangQuanLyHangHoaJPanel extends JPanel implements ActionListener, 
 		listTenHangHoa = dao_HangHoa.getAllTenHangHoa();
 	}
 
+	
+	/**
+	 * Load ds Hàng hóa 
+	 * @param dsHangHoa
+	 */
 	private void loadData(List<HangHoa> dsHangHoa) {
 		dataDefault.setRowCount(0);
 		for (HangHoa hangHoa : dsHangHoa) {
@@ -393,9 +407,16 @@ public class TrangQuanLyHangHoaJPanel extends JPanel implements ActionListener, 
 					hangHoa.getXuatXu(), hangHoa.getChatLieu(), hangHoa.getKichCo(), hangHoa.getMauSac(),
 					hangHoa.getSoLuongTon(), hangHoa.getSoLuongDaBan(), hangHoa.getDonGiaNhap() ,hangHoa.isTrangThai()?"Còn bán":"Ngừng bán"};
 			dataDefault.addRow(row);
+			
 		}
 	}
 
+	
+	/**
+	 * Tìm kiếm và hiển thị nhóm các mục tương ứng với kí tự nhập vào
+	 * @param list
+	 * @param textSearch
+	 */
 	public void searchItem(List<String> list, String textSearch) {
 		scr_ListItemSearched.setVisible(true);
 		listItemSearched.removeAllElements();
@@ -425,6 +446,9 @@ public class TrangQuanLyHangHoaJPanel extends JPanel implements ActionListener, 
 		}
 	}
 
+	/**
+	 * Thức hiện tìm kiếm các từ khóa nhập vào dựa trên các tiêu chí tìm kiếm
+	 */
 	public void renderSeatch() {
 		
 			if (lst_TieuChi.getSelectedIndex() == 0) {
@@ -440,12 +464,14 @@ public class TrangQuanLyHangHoaJPanel extends JPanel implements ActionListener, 
 		
 	}
 
+	
 	public void searchOnTable(String textSearch, int column) {
 		tbl_HangHoa.removeRowSelectionInterval(0, tbl_HangHoa.getRowCount()-1);
-		if (textSearch.length()==6) {
+		if (textSearch.length()<=9) {
 			for (int i = 0; i < tbl_HangHoa.getRowCount(); i++) {
 				if (textSearch.toLowerCase().compareToIgnoreCase(tbl_HangHoa.getValueAt(i, column)+"")==0) {
-					tbl_HangHoa.setRowSelectionInterval(i, i);
+//					tbl_HangHoa.setRowSelectionInterval(i, i);
+					tbl_HangHoa.changeSelection(i, i, false, false);
 					break;
 				}
 			}
@@ -461,16 +487,30 @@ public class TrangQuanLyHangHoaJPanel extends JPanel implements ActionListener, 
 			ds = dao_HangHoa.getAll();
 			loadData(ds);
 		} else if (e.getSource().equals(btn_delete)) {
-			if (tbl_HangHoa.getSelectedRow() == -1) {
-				JOptionPane.showMessageDialog(this, "Vui lòng chọn sản phẩm muốn xoá.");
-			} else {
-				int row = tbl_HangHoa.getSelectedRow();
-				if (dao_HangHoa.deleteHangHoa(tbl_HangHoa.getValueAt(row, 0).toString())) {
-					JOptionPane.showMessageDialog(this, "Đã xoá thành công sản phẩm");
-					ds = dao_HangHoa.getAll();
-					loadData(ds);
-				}
-			}
+		    if (tbl_HangHoa.getSelectedRow() == -1) {
+		        JOptionPane.showMessageDialog(this, "Vui lòng chọn sản phẩm mong muốn.");
+		    } else {
+		        int row = tbl_HangHoa.getSelectedRow();
+		        String maHangHoa = tbl_HangHoa.getValueAt(row, 0).toString();
+		        String trangThai = tbl_HangHoa.getValueAt(row, 10).toString();
+
+		        // Kiểm tra trạng thái thay đổi của sản phẩm
+		        if (trangThai == "Ngừng bán") {
+		            JOptionPane.showMessageDialog(this, "Sản phẩm hiện đã ngừng bán. Vui lòng chọn sản phẩm khác");
+		        } else {
+		            // Hiển thị hộp thoại xác nhận
+		            int option = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xóa không?", "Xác nhận xóa", JOptionPane.YES_NO_OPTION);
+
+		            // Xác nhận nếu người dùng chọn "Yes"
+		            if (option == JOptionPane.YES_OPTION) {
+		                if (dao_HangHoa.deleteHangHoa(maHangHoa)) {
+		                    JOptionPane.showMessageDialog(this, "Đã thay đổi cập nhật trạng thái");
+		                    ds = dao_HangHoa.getAll();
+		                    loadData(ds);
+		                }
+		            }
+		        }
+		    }
 		} else if (e.getSource().equals(btn_edit)) {
 			if (tbl_HangHoa.getSelectedRow() == -1) {
 				JOptionPane.showMessageDialog(this, "Vui lòng chọn sản phẩm muốn chỉnh sửa.");
