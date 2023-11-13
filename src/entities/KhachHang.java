@@ -26,8 +26,8 @@ public class KhachHang {
 		this.tenKhachHang = tenKhachHang;
 		this.email = email;
 		this.diaChi = diaChi;
-		this.trangThai = true;
-		this.diemTichLuy = 0;
+		this.trangThai = trangThai;
+		this.diemTichLuy = diemTichLuy;
 	}
 	public KhachHang(String maKhachHang, String soDienThoai, String tenKhachHang, String email, String diaChi,boolean trangThai,float diemTichLuy) {
 		super();
