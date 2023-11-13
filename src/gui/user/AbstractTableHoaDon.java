@@ -16,12 +16,18 @@ public class AbstractTableHoaDon extends AbstractTableModel  {
 	private String[] columnNames = {"#", "Tên hàng hóa","Kích cỡ",  "Số lượng","Đơn giá","Thành tiền", "Xóa"};
     private ArrayList<ChiTietHoaDon> data = new ArrayList<>();
     private DecimalFormat decimalFormat = new DecimalFormat("#,##0");
+    
 
     public void addHangHoa(ChiTietHoaDon chiTiet) {
         data.add(chiTiet);
         fireTableDataChanged();
     }
-
+    
+    public void setHangHoa(int row, ChiTietHoaDon chiTiet) {
+        data.set(row, chiTiet);
+        fireTableDataChanged();
+    }
+    
     public void removeHangHoa(int row) {
         data.remove(row);
         fireTableDataChanged();

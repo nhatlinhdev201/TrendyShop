@@ -11,6 +11,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -31,9 +34,11 @@ import entities.ChiTietHoaDon;
 import entities.HangHoa;
 import entities.HoaDon;
 import entities.KhachHang;
+import entities.NhanVien;
 import entities.VoucherGiamGia;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
@@ -47,8 +52,8 @@ import javax.swing.JScrollPane;
 
 public class TrangTimKiemHoaDon extends JPanel implements ActionListener {
 	private JTextField txt_MaHoaDon;
-	private JTextField textField;
-	private JTextField textField_1;
+	private JTextField txt_SDT;
+	private JTextField txt_maNV;
 	private JPanel currentContent;
 	private JButton btn_LapHoaDon;
 	private TrangBanHangJPanel trangBanHang;
@@ -63,11 +68,14 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener {
 	private Dao_NhaCungCap Dao_NhaCungCap;
 	
 	private DecimalFormat decimalFormat = new DecimalFormat("#,##0");
+	private JDateChooser dateChooser_TuNgay;
+	private JDateChooser dateChooser_DenNgay;
+	private NhanVien nv_DangNhap;
 
 	/**
 	 * Create the panel.
 	 */
-	public TrangTimKiemHoaDon() {
+	public TrangTimKiemHoaDon(NhanVien nhanVienDangNhap) {
 		dao_HoaDon = new Dao_HoaDon();
 		dao_ChiTietHoaDon = new Dao_ChiTietHoaDon();
 		dao_NhanVien = new Dao_NhanVien();
@@ -75,6 +83,8 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener {
 		dao_Voucher = new Dao_VoucherGiamGia();
 		dao_HangHoa = new Dao_HangHoa();
 		Dao_NhaCungCap = new Dao_NhaCungCap();
+		
+		nv_DangNhap = nhanVienDangNhap;
 
 		/* Thiết lập jpanel cho trang bán hàng */
 		this.setBounds(SetBountJPanel.X, SetBountJPanel.Y, SetBountJPanel.WIDTH, SetBountJPanel.HEIGHT);
@@ -138,11 +148,11 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener {
 		panel_1_1.setBounds(255, 57, 220, 45);
 		panel.add(panel_1_1);
 
-		textField = new JTextField();
-		textField.setForeground(Color.BLACK);
-		textField.setColumns(10);
-		textField.setBounds(10, 14, 200, 25);
-		panel_1_1.add(textField);
+		txt_SDT = new JTextField();
+		txt_SDT.setForeground(Color.BLACK);
+		txt_SDT.setColumns(10);
+		txt_SDT.setBounds(10, 14, 200, 25);
+		panel_1_1.add(txt_SDT);
 
 		JPanel panel_1_2 = new JPanel();
 		panel_1_2.setLayout(null);
@@ -150,11 +160,11 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener {
 		panel_1_2.setBounds(493, 57, 220, 45);
 		panel.add(panel_1_2);
 
-		textField_1 = new JTextField();
-		textField_1.setForeground(Color.BLACK);
-		textField_1.setColumns(10);
-		textField_1.setBounds(10, 14, 200, 25);
-		panel_1_2.add(textField_1);
+		txt_maNV = new JTextField();
+		txt_maNV.setForeground(Color.BLACK);
+		txt_maNV.setColumns(10);
+		txt_maNV.setBounds(10, 14, 200, 25);
+		panel_1_2.add(txt_maNV);
 
 		JPanel panel_1_3 = new JPanel();
 		panel_1_3.setLayout(null);
@@ -162,7 +172,7 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener {
 		panel_1_3.setBounds(735, 57, 220, 45);
 		panel.add(panel_1_3);
 
-		JDateChooser dateChooser_TuNgay = new JDateChooser();
+		dateChooser_TuNgay = new JDateChooser();
 		dateChooser_TuNgay.setDateFormatString("dd/MM/yyyy");
 		dateChooser_TuNgay.setBounds(10, 14, 200, 25);
 		panel_1_3.add(dateChooser_TuNgay);
@@ -173,7 +183,7 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener {
 		panel_1_4.setBounds(976, 56, 220, 45);
 		panel.add(panel_1_4);
 
-		JDateChooser dateChooser_DenNgay = new JDateChooser();
+		dateChooser_DenNgay = new JDateChooser();
 		dateChooser_DenNgay.setDateFormatString("dd/MM/yyyy");
 		dateChooser_DenNgay.setBounds(10, 14, 200, 25);
 		panel_1_4.add(dateChooser_DenNgay);
@@ -183,13 +193,7 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener {
 		btn_Tim.setBounds(1231, 58, 98, 38);
 		panel.add(btn_Tim);
 
-//		Panel hiển thị thông tin chi tiết của hóa đơn cần tìm
-		panel_2 = new JPanel();
-		panel_2.setBackground(new Color(255, 255, 255));
-		panel_2.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 1, true), "", TitledBorder.LEADING,
-				TitledBorder.TOP, null, null));
-		panel_2.setBounds(30, 122, 1287, 528);
-		panel.add(panel_2);
+		hienThiThongTinHoaDon(panel);
 
 		List<HoaDon> listAllHoaDon = dao_HoaDon.getAll();
 		DanhSachHoaDon(listAllHoaDon);
@@ -202,6 +206,9 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener {
 //		
 		btn_LapHoaDon.addActionListener(this);
 		btn_Tim.addActionListener(this);
+		txt_MaHoaDon.addActionListener(this);
+		txt_SDT.addActionListener(this);
+		txt_maNV.addActionListener(this);
 
 	}
 
@@ -225,13 +232,24 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener {
 		Object o = e.getSource();
 		if (o.equals(btn_LapHoaDon)) {
 			switchContent(new TrangBanHangJPanel());
-		}
+		}else
 		if (o.equals(btn_Tim)) {
+			
+	
 //			DanhSachHoaDon();
+			timKiemHoaDon();
+		}else if(o.equals(txt_MaHoaDon)) {
+			txt_MaHoaDon.transferFocus();
+		}else if(o.equals(txt_SDT)) {
+			txt_SDT.transferFocus();
+		}else if(o.equals(txt_maNV)){
+			txt_maNV.transferFocus();
 		}
 	}
 
 	public void DanhSachHoaDon(List<HoaDon> listHoaDon) {
+		setPanelChiTietHoaDon();
+		
 		JPanel p = new JPanel();
 		p.setLayout(new GridBagLayout());
 		p.setBackground(new Color(255, 255, 255));
@@ -362,7 +380,7 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener {
 
 			for (int i = 0; i < listChiTietHoaDon.size(); i++) {
 				
-				HangHoa hh = dao_HangHoa.getHangHoaByMaHangHoa(listChiTietHoaDon.get(i).getHangHoa().getMaHangHoa());
+				HangHoa hh = dao_HangHoa.getListHangHoaByMaHangHoa(listChiTietHoaDon.get(i).getHangHoa().getMaHangHoa());
 				
 				JPanel panel_4 = new JPanel();
 				panel_4.setBorder(new LineBorder(Color.LIGHT_GRAY, 1, true));
@@ -589,5 +607,118 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener {
 		panel_2.setLayout(new BorderLayout());
 		panel_2.add(new JScrollPane(p));
 	}
+	public JPanel hienThiThongTinHoaDon(JPanel panel) {
+//		Panel hiển thị thông tin chi tiết của hóa đơn cần tìm
+		panel_2 = new JPanel();
+		panel_2.setBackground(new Color(255, 255, 255));
+		panel_2.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 1, true), "", TitledBorder.LEADING,
+				TitledBorder.TOP, null, null));
+		panel_2.setBounds(30, 122, 1287, 528);
+		panel.add(panel_2);
+		return panel_2;
+	}
+	public void setPanelChiTietHoaDon() {
+		panel_2.removeAll();
+		panel_2.revalidate();
+		panel_2.repaint(); 
+		
+	}
+	
+	
+	public void timKiemHoaDon() {
+		String maHD = txt_MaHoaDon.getText().trim();
+		String soDienThoai = txt_SDT.getText().trim();
+		String ma_NV = txt_maNV.getText().trim();
+		Date tuNgay = dateChooser_TuNgay.getDate();
+		Date denNgay = dateChooser_DenNgay.getDate();
 
+		List<HoaDon> dsHD = null;
+		if(!maHD.trim().equals("")) {
+//			
+			List<HoaDon> dsHoaDon = dao_HoaDon.getHoaDonTheoMa(maHD);
+			if(dsHoaDon.size()==0) {
+				JOptionPane.showMessageDialog(this, "Không tìm thấy hóa đơn có mã: "+ maHD);
+			}
+			DanhSachHoaDon(dsHoaDon);
+			return;
+		}
+		
+		dsHD = dao_HoaDon.getAll();
+		if(ma_NV.equals("")&&soDienThoai.equals("")&&ma_NV.equals("")&&tuNgay==null&&denNgay==null) {
+			DanhSachHoaDon(dsHD);
+			return;
+		}
+		if(!soDienThoai.equals("")) {
+			KhachHang kh = dao_KhachHang.getKhachHangTheoSDT(soDienThoai);
+//			List<HoaDon> ds = dao_HoaDon.getHoaDonTheoMaKhachHang(kh.getMaKhachHang());
+			
+			List<HoaDon> ds = new ArrayList<>();
+			for (HoaDon hoaDon : dsHD) {
+				if(kh.getMaKhachHang()==null)break;
+				if(kh.getMaKhachHang().equals(hoaDon.getKhachHang().getMaKhachHang())) {
+					ds.add(hoaDon);
+				}
+			}
+			if(ds.size()==0) {
+				JOptionPane.showMessageDialog(this, "Không tìm thấy hóa đơn có số điện thoại khách hàng là: "+ soDienThoai);
+				setPanelChiTietHoaDon();
+				return;
+			}
+			dsHD = ds;
+		}
+		
+		if( !ma_NV.equals("")) {
+			List<HoaDon> ds = new ArrayList<>();
+			for (HoaDon hoaDon : dsHD) {
+				if(ma_NV.equals(hoaDon.getNguoiLapHoaDon().getMaNhanVien())) {
+					ds.add(hoaDon);
+				}
+			}
+			if(ds.size()==0) {
+				JOptionPane.showMessageDialog(this, "Không tìm thấy hóa đơn có mã nhân viên: "+ ma_NV);
+				setPanelChiTietHoaDon();
+				return;
+			}
+			dsHD = ds;
+		}
+		
+		if(tuNgay==null && denNgay!=null) {
+			JOptionPane.showMessageDialog(this,"Phải nhập ngày bắt đầu");
+			dateChooser_TuNgay.requestFocus();
+			return;
+		}else if(tuNgay!=null && denNgay==null) {
+			JOptionPane.showMessageDialog(this,"Phải nhập ngày kết thúc");
+			dateChooser_DenNgay.requestFocus();
+			return;
+		}else if(tuNgay!=null && denNgay!=null) {
+			if(tuNgay.compareTo(denNgay)>=0) {
+				JOptionPane.showMessageDialog(this, "Ngày kết thúc phải lớn hơn hoặc bằng ngày bắt đầu");
+				return;
+			}else if(tuNgay.compareTo(new Date())>=0) {
+				JOptionPane.showMessageDialog(this, "Ngày bắt đầu phải nhỏ hơn ngày hiện tại");
+				return;
+			}
+			List<HoaDon> ds = new ArrayList<>();
+			for (HoaDon hoaDon : dsHD) {
+				Date thoiGianTao = Date.from(hoaDon.getThoiGianTao().atStartOfDay(ZoneId.systemDefault()).toInstant());
+				if(tuNgay.compareTo(thoiGianTao)<=0 && denNgay.compareTo(thoiGianTao)>=0) {
+					ds.add(hoaDon);
+				}
+			}
+			if(ds.size()==0) {
+				JOptionPane.showMessageDialog(this, "Không tìm thấy hóa đơn từ dữ liệu trên ");
+				setPanelChiTietHoaDon();
+				return;
+			}
+			dsHD = ds;
+		}
+		
+		
+		System.out.println(tuNgay);
+		DanhSachHoaDon(dsHD);
+		
+	}
+	
+
+	
 }

@@ -18,24 +18,7 @@ public class KhachHangDAO {
 
 	public KhachHangDAO() {
 	}
-	public boolean themKhachHang(KhachHang kh) {
-		int n = 0;
-		try {
-			con = con = ConnectDataBase.getInstance().connection;
-			String sql = "insert into KhachHang values(?,?,?,?,?,?,?)";
-			preStm = con.prepareStatement(sql);
-			preStm.setString(1, kh.getMaKhachHang());
-			preStm.setString(2, kh.getSoDienThoai());
-			preStm.setString(3, kh.getTenKhachHang());
-			preStm.setString(4, kh.getEmail());
-			preStm.setString(5, kh.getDiaChi());
-			preStm.setBoolean(6, kh.isTrangThai());
-			preStm.setFloat(7, kh.getDiemTichLuy());
-			n = preStm.executeUpdate();
-		} catch (Exception e) {
-		}
-		return n > 0;
-	}
+	
 	public List<KhachHang> getAllKhachHang() throws Exception {
 		List<KhachHang> result = null;
 		KhachHang dto;

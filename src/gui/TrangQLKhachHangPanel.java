@@ -73,7 +73,7 @@ public class TrangQLKhachHangPanel extends JPanel implements ActionListener,Mous
 		// Set model cho JTable
 		tableModel = new DefaultTableModel(
 	            new Object[][] {},
-	            new String[] { "STT", "Mã khách hàng", "Tên khách hàng", "Số điện thoại", "Email", "Địa chỉ", "Trạng thái", "Điểm tích lũy" }
+	            new String[] {"Mã khách hàng", "Tên khách hàng", "Số điện thoại", "Email", "Địa chỉ", "Trạng thái", "Điểm tích lũy" }
 	        ) {
 	            // Override phương thức để set font cho dữ liệu trong bảng
 	            @Override
@@ -97,13 +97,13 @@ public class TrangQLKhachHangPanel extends JPanel implements ActionListener,Mous
 	                    // Check if a row is selected
 	                    if (selectedRow != -1) {
 	                        // Retrieve data from the selected row
-	                        String maKH = (String) table.getValueAt(selectedRow, 1);
-	                        String tenKhachHang = (String) table.getValueAt(selectedRow, 2);
-	                        String soDienThoai = (String) table.getValueAt(selectedRow, 3);
-	                        String email = (String) table.getValueAt(selectedRow, 4);
-	                        String diaChi = (String) (table.getValueAt(selectedRow, 5));
-	                        String trangThai = (String) table.getValueAt(selectedRow, 6);
-	                        String diemTichLuy =String.valueOf(table.getValueAt(selectedRow, 7));
+	                        String maKH = (String) table.getValueAt(selectedRow, 0);
+	                        String tenKhachHang = (String) table.getValueAt(selectedRow, 1);
+	                        String soDienThoai = (String) table.getValueAt(selectedRow, 2);
+	                        String email = (String) table.getValueAt(selectedRow, 3);
+	                        String diaChi = (String) (table.getValueAt(selectedRow, 4));
+	                        String trangThai = (String) table.getValueAt(selectedRow, 5);
+	                        String diemTichLuy =String.valueOf(table.getValueAt(selectedRow, 6));
 
 	                        // Display data in text fields
 	                        txt_makh.setText(maKH.trim());
@@ -315,7 +315,7 @@ public class TrangQLKhachHangPanel extends JPanel implements ActionListener,Mous
 	            for (KhachHang khachHang : list) {
 	                // Tạo một mảng dữ liệu để chứa thông tin của khách hàng
 	                Object[] rowData = {
-	                    i + 1,
+	                
 	                    khachHang.getMaKhachHang(),
 	                    khachHang.getTenKhachHang(),
 	                    khachHang.getSoDienThoai(),

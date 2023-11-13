@@ -20,11 +20,11 @@ public class Dao_NhaCungCap {
 		List<NhaCungCap> list = null;
 		try {
 			list = new ArrayList<NhaCungCap>();
-			PreparedStatement preparedStatement = connection.prepareStatement("select * from nha_cung_cap");
+			PreparedStatement preparedStatement = connection.prepareStatement("select * from NhaCungCap");
 			ResultSet resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {
 				NhaCungCap nhaCungCap = new NhaCungCap();
-//				nhaCungCap.setMaNhaCungCap(resultSet.getString("maNhaCungCap").trim());
+				nhaCungCap.setMaNhaCungCap(resultSet.getString("maNhaCungCap").trim());
 				nhaCungCap.setTenNhaCungCap(resultSet.getString("tenNhaCungCap"));
 				nhaCungCap.setSoDienThoai(resultSet.getString("soDienThoai"));
 				nhaCungCap.setEmail(resultSet.getString("email"));
