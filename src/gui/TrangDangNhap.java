@@ -138,7 +138,22 @@ public class TrangDangNhap extends JFrame {
 		        String taiKhoan = txt_taiKhoan.getText();
 		        String matKhau = new String(passwordField.getPassword());
 		        loadTaiKhoan(taiKhoan,matKhau);
-		        kiemTraDangNhap(taiKhoan, matKhau);
+		        if(taiKhoan.trim().equals("") && matKhau.trim().equals(""))
+		        {
+		        	JOptionPane.showMessageDialog(
+		                    null,
+		                    "Tài khoản mật khẩu không được để trống !",
+		                    "Thông báo",
+		                    JOptionPane.ERROR_MESSAGE,
+		                    new ImageIcon("images/warning.png"));
+		        }else {
+		        	try {
+		        		 kiemTraDangNhap(taiKhoan, matKhau);
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+		       
+		        }
 		    }
 		});
 		btn_dangNhap.setBackground(new Color(124, 252, 0));
@@ -175,6 +190,8 @@ public class TrangDangNhap extends JFrame {
 //        }
 //    }
 	public boolean kiemTraDangNhap(String tenDangNhap, String matKhau) {
+		if(taiKhoan != null)
+		{
 		 if (taiKhoan.getMaNhanVien().equalsIgnoreCase(tenDangNhap)
 				&& taiKhoan.getMatKhau().equalsIgnoreCase(matKhau)
 				&& tenDangNhap.contains("NV")) {
@@ -194,7 +211,14 @@ public class TrangDangNhap extends JFrame {
 
 			return true;
 		}
-
+	}else {
+		JOptionPane.showMessageDialog(
+                null,
+                "Tài khoản mật khẩu không đúng !",
+                "Thông báo",
+                JOptionPane.ERROR_MESSAGE,
+                new ImageIcon("images/warning.png"));
+	}
 		return false;
 	}
 
