@@ -117,7 +117,7 @@ public class MenuTest extends JFrame {
 //					}
 					//export 
 					ThongKeDoanhThuServices doanhThuServices = new ThongKeDoanhThuServices();
-			        ArrayList<ModelThongKeDoanhThuNgay> dataList = doanhThuServices.thongKeCacNgayTrongThang(10, 2023, nv);
+			        ArrayList<ModelThongKeDoanhThuNgay> dataList = doanhThuServices.thongKeCacNgayTrongThangTheoNv(10, 2023, nv);
 					ExportExcelThongKeDoanhThuNgayTheoNV e = new ExportExcelThongKeDoanhThuNgayTheoNV(dataList);
 				} catch (Exception e) {
 					e.printStackTrace();

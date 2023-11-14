@@ -41,6 +41,9 @@ public class NhanVien {
 		super();
 		this.maNhanVien = maNhanVien;
 	}
+	public void setMaNhanVien(String maNhanVien) {
+		this.maNhanVien = maNhanVien;
+	}
 	@Override
 	public String toString() {
 		return "NhanVien [maNhanVien=" + maNhanVien + ", hoTen=" + hoTen + ", ngaySinh=" + ngaySinh + ", soCCCD="

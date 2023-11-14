@@ -1009,10 +1009,6 @@ public class TrangThongKeNVBanHangJPanel extends JPanel implements ActionListene
 		VeBieuDoThongKeDoanhThuNgay(panelBieuDoThongKeTheoNgay, ngayChonThongKe, taiKhoan);
 	}
 
-	private static LocalDate dateToLocalDate(Date date) {
-		return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-	}
-
 	public void loadDuLieuThongKeNgay(ModelThongKeDoanhThuNgay modelThongKeDoanhThuNgay, LocalDate ngayChonThongKe,
 			NhanVien taiKhoan) {
 		modelThongKeDoanhThuNgay.setDate(ngayChonThongKe);
@@ -1076,7 +1072,7 @@ public class TrangThongKeNVBanHangJPanel extends JPanel implements ActionListene
 				dao_ThongKeDoanhThu.TongDoanhThuTrongNgayCuaNhanVien(today, nhanVien.getMaNhanVien().trim()));
 
 		//ArrayList<DuLieuBieuDoThongKeDoanhThu> data = dao_ThongKeDoanhThu.Top5NgayDoanhThuCaoNhatTrongThang(10, 2022);
-		ArrayList<DuLieuBieuDoThongKeDoanhThu> data = dao_ThongKeDoanhThu.duLieuBieuDo_Top5NgayDoanhThuCaoNhatTrongThang(date.getMonthValue(), date.getYear(), nhanVien.getMaNhanVien().trim());
+		ArrayList<DuLieuBieuDoThongKeDoanhThu> data = dao_ThongKeDoanhThu.duLieuBieuDo_Top5NgayDoanhThuCaoNhatTrongThangCuaNhanVien(date.getMonthValue(), date.getYear(), nhanVien.getMaNhanVien().trim());
 		data.add(0, doanhThuNgayHienTai);
 		panelContain.removeAll();
 //		for(DuLieuBieuDoThongKeDoanhThu dl : data) {
@@ -1176,7 +1172,7 @@ public class TrangThongKeNVBanHangJPanel extends JPanel implements ActionListene
 	}
 	public void VeBieuDoThongKeDoanhThuThang(JPanel panelContain, int thang, int namCuaThang, NhanVien nhanVien) {
 		Dao_ThongKeDoanhThu dao_ThongKeDoanhThu = new Dao_ThongKeDoanhThu();
-		ArrayList<DuLieuBieuDoThongKeDoanhThu> data = dao_ThongKeDoanhThu.duLieuBieuDo_DoanhThuCacNgaTrongThang(thang, namCuaThang, nhanVien.getMaNhanVien().trim());
+		ArrayList<DuLieuBieuDoThongKeDoanhThu> data = dao_ThongKeDoanhThu.duLieuBieuDo_DoanhThuCacNgaTrongThangTheoNhanVien(thang, namCuaThang, nhanVien.getMaNhanVien().trim());
 		panelContain.removeAll();
 		BieuDoThongKePanel bieuDoThongKePanel = new BieuDoThongKePanel(data, "Doanh thu các ngày trong tháng " + thang + " năm "+namCuaThang);
 		panelContain.setLayout(new BorderLayout());
@@ -1287,7 +1283,7 @@ public class TrangThongKeNVBanHangJPanel extends JPanel implements ActionListene
 			ThongKeDoanhThuServices thongKeDoanhThuServices = new ThongKeDoanhThuServices();
 			int thang = Integer.parseInt((String)cbxChonThangThongKe.getSelectedItem());
 			int nam = Integer.parseInt((String)cbxChonNamCuaThangThongKe.getSelectedItem());
-			ArrayList<ModelThongKeDoanhThuNgay> data = thongKeDoanhThuServices.thongKeCacNgayTrongThang(thang, nam, taiKhoan);
+			ArrayList<ModelThongKeDoanhThuNgay> data = thongKeDoanhThuServices.thongKeCacNgayTrongThangTheoNv(thang, nam, taiKhoan);
 			boolean flag = thongKeDoanhThuServices.xuatDuLieuThongKeDoanhThuThangTheoNvExcel(data);
 			if(flag)
 				JOptionPane.showMessageDialog(this, "Xuất dữ liệu thành công ");

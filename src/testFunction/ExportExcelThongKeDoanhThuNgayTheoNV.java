@@ -105,7 +105,7 @@ public class ExportExcelThongKeDoanhThuNgayTheoNV {
         ThongKeDoanhThuServices doanhThuServices = new ThongKeDoanhThuServices();
     	NhanVien nv = new NhanVien("NV0002", "Phạm Nhật Linh", null, null, null, null, null, null, true,
 				null, false, null);
-        ArrayList<ModelThongKeDoanhThuNgay> dataList = doanhThuServices.thongKeCacNgayTrongThang(10, 2023, nv);
+        ArrayList<ModelThongKeDoanhThuNgay> dataList = doanhThuServices.thongKeCacNgayTrongThangTheoNv(10, 2023, nv);
     	export(dataList);
     }
 	public ArrayList<ModelThongKeDoanhThuNgay> getDataList() {

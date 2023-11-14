@@ -45,7 +45,7 @@ public class ThongKeDoanhThuServices {
 				dao_ThongKeDoanhThu.TongDoanhThuTrongNgayCuaNhanVien(today, nhanVien.getMaNhanVien().trim()));
 
 		ArrayList<DuLieuBieuDoThongKeDoanhThu> data = dao_ThongKeDoanhThu
-				.duLieuBieuDo_Top5NgayDoanhThuCaoNhatTrongThang(10, 2022, nhanVien.getMaNhanVien().trim());
+				.duLieuBieuDo_Top5NgayDoanhThuCaoNhatTrongThangCuaNhanVien(10, 2022, nhanVien.getMaNhanVien().trim());
 		data.add(0, doanhThuNgayHienTai);
 		panelContain.removeAll();
 		BieuDoThongKePanel bieuDoThongKePanel = new BieuDoThongKePanel(data, tenBieuDo);
@@ -56,7 +56,7 @@ public class ThongKeDoanhThuServices {
 		panelContain.repaint(); // Cần repaint để vẽ lại giao diện
 	}
 
-	private void LayDuLieuThongKeNgay(ModelThongKeDoanhThuNgay model, NhanVien taiKhoan, LocalDate today) {
+	private void LayDuLieuThongKeNgayTheoNv(ModelThongKeDoanhThuNgay model, NhanVien taiKhoan, LocalDate today) {
 		int tongHdDuocLap;
 		int tongMhBanRa;
 		float tongDoanhThu;
@@ -78,6 +78,36 @@ public class ThongKeDoanhThuServices {
 		tongTienHangDaBan = tongTienNhapHang + tongTienNhapHang * 0.7f;
 		tongTienKhuyenMai = dao_ThongKeDoanhThu.TongTienGiamGiaTrongNgayTheoNhanVien(model.getDate(),
 				model.getMaNhanVien());
+		tongThue = tongDoanhThu * 0.1f;
+		tongLai = tongDoanhThu - tongTienNhapHang - tongTienKhuyenMai - tongThue;
+		model.setTongHdDuocLap(tongHdDuocLap);
+		model.setTongMhBanRa(tongMhBanRa);
+		model.setTongDoanhThu(tongDoanhThu);
+		model.setTongTienNhapHang(tongTienNhapHang);
+		model.setTongTienHangDaBan(tongTienHangDaBan);
+		model.setTongTienKhuyenMai(tongTienKhuyenMai);
+		model.setTongThue(tongThue);
+		model.setTongLai(tongLai);
+	}
+	private void LayDuLieuThongKeNgay(ModelThongKeDoanhThuNgay model, LocalDate today) {
+		int tongHdDuocLap;
+		int tongMhBanRa;
+		float tongDoanhThu;
+		float tongTienNhapHang;
+		float tongTienHangDaBan;
+		float tongTienKhuyenMai;
+		float tongThue;
+		float tongLai;
+		model.setDate(today);
+		model.setMaNhanVien("Tât cả");
+		Dao_ThongKeDoanhThu dao_ThongKeDoanhThu = new Dao_ThongKeDoanhThu();
+
+		tongHdDuocLap = dao_ThongKeDoanhThu.TongHoaDonLapTrongNgay(model.getDate());
+		tongMhBanRa = dao_ThongKeDoanhThu.TongSoLuongMatHangBanRaTrongNgay(model.getDate());
+		tongDoanhThu = dao_ThongKeDoanhThu.TongDoanhThuTrongNgay(model.getDate());
+		tongTienNhapHang = dao_ThongKeDoanhThu.TongVonNhapHangTrongNgay(model.getDate());
+		tongTienHangDaBan = tongTienNhapHang + tongTienNhapHang * 0.7f;
+		tongTienKhuyenMai = dao_ThongKeDoanhThu.TongTienGiamGiaTrongNgay(model.getDate());
 		tongThue = tongDoanhThu * 0.1f;
 		tongLai = tongDoanhThu - tongTienNhapHang - tongTienKhuyenMai - tongThue;
 		model.setTongHdDuocLap(tongHdDuocLap);
@@ -141,7 +171,7 @@ public class ThongKeDoanhThuServices {
 		return instant.atZone(ZoneId.systemDefault()).toLocalDate();
 	}
 
-	public ArrayList<ModelThongKeDoanhThuNgay> thongKeCacNgayTrongThang(int thang, int nam, NhanVien taiKhoan) {
+	public ArrayList<ModelThongKeDoanhThuNgay> thongKeCacNgayTrongThangTheoNv(int thang, int nam, NhanVien taiKhoan) {
 		ArrayList<ModelThongKeDoanhThuNgay> duLieuThongKe = new ArrayList<>();
 		LocalDate ngayHienTai = LocalDate.of(nam, thang, 1);
 		// Lặp qua từng ngày của tháng
@@ -150,7 +180,22 @@ public class ThongKeDoanhThuServices {
 			ModelThongKeDoanhThuNgay doanhThuNgay = new ModelThongKeDoanhThuNgay();
 			doanhThuNgay.setDate(ngayHienTai);
 			doanhThuNgay.setMaNhanVien(taiKhoan.getMaNhanVien().toString());
-			LayDuLieuThongKeNgay(doanhThuNgay, taiKhoan, ngayHienTai);
+			LayDuLieuThongKeNgayTheoNv(doanhThuNgay, taiKhoan, ngayHienTai);
+			duLieuThongKe.add(doanhThuNgay);
+			// Chuyển sang ngày tiếp theo
+			ngayHienTai = ngayHienTai.plusDays(1);
+		}
+		return duLieuThongKe;
+	}
+	public ArrayList<ModelThongKeDoanhThuNgay> thongKeCacNgayTrongThang(int thang, int nam) {
+		ArrayList<ModelThongKeDoanhThuNgay> duLieuThongKe = new ArrayList<>();
+		LocalDate ngayHienTai = LocalDate.of(nam, thang, 1);
+		// Lặp qua từng ngày của tháng
+		while (ngayHienTai.getMonthValue() == thang) {
+			ModelThongKeDoanhThuNgay doanhThuNgay = new ModelThongKeDoanhThuNgay();
+			doanhThuNgay.setDate(ngayHienTai);
+			doanhThuNgay.setMaNhanVien("Tất cả");
+			LayDuLieuThongKeNgay(doanhThuNgay, ngayHienTai);
 			duLieuThongKe.add(doanhThuNgay);
 			// Chuyển sang ngày tiếp theo
 			ngayHienTai = ngayHienTai.plusDays(1);

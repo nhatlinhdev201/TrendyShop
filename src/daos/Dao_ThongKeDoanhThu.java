@@ -5,12 +5,14 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import connection.ConnectDataBase;
+import entities.NhanVien;
 import modelsThongKe.DuLieuBieuDoThongKeDoanhThu;
 
 public class Dao_ThongKeDoanhThu {
@@ -43,6 +45,22 @@ public class Dao_ThongKeDoanhThu {
 			Date sqlDate = Date.valueOf(ngayThongKe);
 			preparedStatement.setDate(1, sqlDate);
 			preparedStatement.setString(2, maNhanVien);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			if (resultSet.next()) {
+				totalOrders = resultSet.getInt("TotalOrders");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return totalOrders;
+	}
+	public int TongHoaDonLapTrongNgay(LocalDate ngayThongKe) {
+		int totalOrders = 0;
+		String query = "SELECT COUNT(*) AS TotalOrders " + "FROM HoaDon "
+				+ "WHERE CONVERT(DATE, thoiGianTao) = ?";
+		try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+			Date sqlDate = Date.valueOf(ngayThongKe);
+			preparedStatement.setDate(1, sqlDate);
 			ResultSet resultSet = preparedStatement.executeQuery();
 			if (resultSet.next()) {
 				totalOrders = resultSet.getInt("TotalOrders");
@@ -122,13 +140,14 @@ public class Dao_ThongKeDoanhThu {
 
 	// <==============pass testing================>
 
-	public int TongSoLuongMatHangBanRaTrongNgay(LocalDate ngayThongKe) {
+		public int TongSoLuongMatHangNhanVienBanRaTrongNgay(LocalDate ngayThongKe, String maNhanVien) {
 		int totalItemsSold = 0;
 		String query = "SELECT SUM(soLuong) AS TotalItemsSold " + "FROM ChiTietHoaDon "
 				+ "JOIN HoaDon ON ChiTietHoaDon.maHoaDon = HoaDon.maHoaDon "
-				+ "WHERE CONVERT(DATE, HoaDon.thoiGianTao) = ?";
+				+ "WHERE CONVERT(DATE, HoaDon.thoiGianTao) = ? AND HoaDon.maNhanVien = ?";
 		try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 			preparedStatement.setDate(1, java.sql.Date.valueOf(ngayThongKe));
+			preparedStatement.setString(2, maNhanVien);
 			ResultSet resultSet = preparedStatement.executeQuery();
 			if (resultSet.next()) {
 				totalItemsSold = resultSet.getInt("TotalItemsSold");
@@ -138,15 +157,13 @@ public class Dao_ThongKeDoanhThu {
 		}
 		return totalItemsSold;
 	}
-
-	public int TongSoLuongMatHangNhanVienBanRaTrongNgay(LocalDate ngayThongKe, String maNhanVien) {
+	public int TongSoLuongMatHangBanRaTrongNgay(LocalDate ngayThongKe) {
 		int totalItemsSold = 0;
 		String query = "SELECT SUM(soLuong) AS TotalItemsSold " + "FROM ChiTietHoaDon "
 				+ "JOIN HoaDon ON ChiTietHoaDon.maHoaDon = HoaDon.maHoaDon "
-				+ "WHERE CONVERT(DATE, HoaDon.thoiGianTao) = ? AND HoaDon.maNhanVien = ?";
+				+ "WHERE CONVERT(DATE, HoaDon.thoiGianTao) = ?";
 		try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 			preparedStatement.setDate(1, java.sql.Date.valueOf(ngayThongKe));
-			preparedStatement.setString(2, maNhanVien);
 			ResultSet resultSet = preparedStatement.executeQuery();
 			if (resultSet.next()) {
 				totalItemsSold = resultSet.getInt("TotalItemsSold");
@@ -230,7 +247,23 @@ public class Dao_ThongKeDoanhThu {
 	}
 
 	// <===========pass testing 2===========>
-
+	public float TongDoanhThuTrongNgayCuaNhanVien(LocalDate ngayThongKe, String maNhanVien) {
+		float totalRevenue = 0;
+		String query = "SELECT SUM(tongThanhTien) AS TotalRevenue " + "FROM HoaDon "
+				+ "WHERE CONVERT(DATE, thoiGianTao) = ? AND maNhanVien = ?";
+		try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+			Date sqlDate = Date.valueOf(ngayThongKe);
+			preparedStatement.setDate(1, sqlDate);
+			preparedStatement.setString(2, maNhanVien);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			if (resultSet.next()) {
+				totalRevenue = resultSet.getFloat("TotalRevenue");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return totalRevenue;
+	}
 	public float TongDoanhThuTrongNgay(LocalDate ngayThongKe) {
 		float totalRevenue = 0;
 		String query = "SELECT SUM(tongThanhTien) AS TotalRevenue " + "FROM HoaDon "
@@ -247,8 +280,7 @@ public class Dao_ThongKeDoanhThu {
 		}
 		return totalRevenue;
 	}
-
-	public float TongDoanhThuTrongNgayCuaNhanVien(LocalDate ngayThongKe, String maNhanVien) {
+	public float TongDoanhThuTrongNgay(LocalDate ngayThongKe, String maNhanVien) {
 		float totalRevenue = 0;
 		String query = "SELECT SUM(tongThanhTien) AS TotalRevenue " + "FROM HoaDon "
 				+ "WHERE CONVERT(DATE, thoiGianTao) = ? AND maNhanVien = ?";
@@ -552,7 +584,7 @@ public class Dao_ThongKeDoanhThu {
 		return totalDiscountAmount;
 	}
 
-	public ArrayList<DuLieuBieuDoThongKeDoanhThu> duLieuBieuDo_Top5NgayDoanhThuCaoNhatTrongThang(int thangThongKe,
+	public ArrayList<DuLieuBieuDoThongKeDoanhThu> duLieuBieuDo_Top5NgayDoanhThuCaoNhatTrongThangCuaNhanVien(int thangThongKe,
 			int namCuaThangThongKe, String maNhanVien) {
 		ArrayList<DuLieuBieuDoThongKeDoanhThu> danhSachDuLieu = new ArrayList<>();
 
@@ -581,8 +613,36 @@ public class Dao_ThongKeDoanhThu {
 
 		return danhSachDuLieu;
 	}
+	public ArrayList<DuLieuBieuDoThongKeDoanhThu> duLieuBieuDo_Top5NgayDoanhThuCaoNhatTrongThang(int thangThongKe,
+			int namCuaThangThongKe) {
+		ArrayList<DuLieuBieuDoThongKeDoanhThu> danhSachDuLieu = new ArrayList<>();
 
-	public ArrayList<DuLieuBieuDoThongKeDoanhThu> duLieuBieuDo_DoanhThuCacNgaTrongThang(int thangThongKe,
+		String query = "SELECT CONVERT(varchar, thoiGianTao, 23) AS ngay, SUM(tongThanhTien) AS tongDoanhThu "
+				+ "FROM HoaDon " + "WHERE MONTH(thoiGianTao) = ? AND YEAR(thoiGianTao) = ? "
+				+ "GROUP BY CONVERT(varchar, thoiGianTao, 23) " + "ORDER BY tongDoanhThu DESC "
+				+ "OFFSET 0 ROWS FETCH NEXT 5 ROWS ONLY";
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+			preparedStatement.setInt(1, thangThongKe);
+			preparedStatement.setInt(2, namCuaThangThongKe);
+
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				while (resultSet.next()) {
+					String ngay = resultSet.getString(1);
+					float tongDoanhThu = resultSet.getFloat(2);
+
+					DuLieuBieuDoThongKeDoanhThu duLieu = new DuLieuBieuDoThongKeDoanhThu(ngay, tongDoanhThu);
+					danhSachDuLieu.add(duLieu);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return danhSachDuLieu;
+	}
+
+	public ArrayList<DuLieuBieuDoThongKeDoanhThu> duLieuBieuDo_DoanhThuCacNgaTrongThangTheoNhanVien(int thangThongKe,
 			int namCuaThangThongKe, String maNhanVien) {
 		ArrayList<DuLieuBieuDoThongKeDoanhThu> danhSachDoanhThu = new ArrayList<>();
 
@@ -594,6 +654,33 @@ public class Dao_ThongKeDoanhThu {
 			preparedStatement.setInt(1, thangThongKe);
 			preparedStatement.setInt(2, namCuaThangThongKe);
 			preparedStatement.setString(3, maNhanVien);
+
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				while (resultSet.next()) {
+					String ngay = resultSet.getString("ngay");
+					float tongDoanhThu = resultSet.getFloat("tongDoanhThu");
+
+					DuLieuBieuDoThongKeDoanhThu duLieu = new DuLieuBieuDoThongKeDoanhThu(ngay, tongDoanhThu);
+					danhSachDoanhThu.add(duLieu);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return danhSachDoanhThu;
+	}
+	public ArrayList<DuLieuBieuDoThongKeDoanhThu> duLieuBieuDo_DoanhThuCacNgaTrongThang(int thangThongKe,
+			int namCuaThangThongKe) {
+		ArrayList<DuLieuBieuDoThongKeDoanhThu> danhSachDoanhThu = new ArrayList<>();
+
+		String query = "SELECT CONVERT(varchar, thoiGianTao, 23) AS ngay, SUM(tongThanhTien) AS tongDoanhThu "
+				+ "FROM HoaDon " + "WHERE MONTH(thoiGianTao) = ? AND YEAR(thoiGianTao) = ? "
+				+ "GROUP BY CONVERT(varchar, thoiGianTao, 23)";
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+			preparedStatement.setInt(1, thangThongKe);
+			preparedStatement.setInt(2, namCuaThangThongKe);
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				while (resultSet.next()) {
@@ -703,4 +790,34 @@ public class Dao_ThongKeDoanhThu {
 		}
 		return distinctYears;
 	}
+	public ArrayList<NhanVien> layDanhSachNhanVien() {
+        ArrayList<NhanVien> employees = new ArrayList<>();
+
+        try {
+            String sql = "SELECT * FROM NhanVien nv where nv.phanQuyen=0";
+            try (Statement statement = connection.createStatement(); ResultSet resultSet = statement.executeQuery(sql)) {
+                while (resultSet.next()) {
+                    NhanVien employee = new NhanVien();
+                    employee.setMaNhanVien(resultSet.getString("maNhanVien"));
+                    employee.setHoTen(resultSet.getString("hoTen"));
+                    employee.setNgaySinh(resultSet.getDate("ngaySinh"));
+                    employee.setSoCCCD(resultSet.getString("soCCCD"));
+                    employee.setSoDienThoai(resultSet.getString("soDienThoai"));
+                    employee.setEmail(resultSet.getString("email"));
+                    employee.setDiaChi(resultSet.getString("diaChi"));
+                    employee.setChucVu(resultSet.getString("chucVu"));
+                    employee.setTrangThai(resultSet.getBoolean("trangThai"));
+                    employee.setMatKhau(resultSet.getString("matKhau"));
+                    employee.setPhanQuyen(resultSet.getBoolean("phanQuyen"));
+                    employee.setAnhDaiDien(resultSet.getString("hinhAnh"));
+
+                    employees.add(employee);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return employees;
+    }
 }

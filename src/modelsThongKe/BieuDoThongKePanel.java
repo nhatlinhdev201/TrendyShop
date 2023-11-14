@@ -79,7 +79,7 @@ public class BieuDoThongKePanel extends JPanel {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         JPanel panelBieuDoThongKeTheoNgay = new JPanel();
-		panelBieuDoThongKeTheoNgay.setBounds(10, 31, 755, 346);
+		panelBieuDoThongKeTheoNgay.setBounds(407, 11, 917, 248);
 		panelBieuDoThongKeTheoNgay.setBackground(SystemColor.activeCaptionBorder);
 		frame.add(panelBieuDoThongKeTheoNgay);
 		panelBieuDoThongKeTheoNgay.setLayout(new BorderLayout(0, 0));
