@@ -538,13 +538,10 @@ public class TK_ThongKeDoanhThuNVQuanLyJPanel extends JPanel implements ActionLi
 		cbTatCaNhanVienThang.addItemListener(new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
-				// Xử lý sự kiện khi trạng thái của checkbox thay đổi
 				if (e.getStateChange() == ItemEvent.SELECTED) {
-					// Nếu checkbox được chọn, ẩn panel1
 					lamMoiDuLieuThang();
 					tatCaNhanVienThang(true);
 				} else {
-					// Nếu checkbox không được chọn, hiển thị cả hai panel1 và panel2
 					tatCaNhanVienThang(false);
 					lamMoiDuLieuThang();
 					lamMoiTableNhanVienThang(modelTblNhanVienThongKeDoanhThuThang);
@@ -552,7 +549,6 @@ public class TK_ThongKeDoanhThuNVQuanLyJPanel extends JPanel implements ActionLi
 				;
 			};
 		});
-
 		JLabel lblTimNVCanThongKe_1 = new JLabel("Tìm nhân viên cần thống kê :");
 		lblTimNVCanThongKe_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblTimNVCanThongKe_1.setBounds(10, 21, 175, 14);
@@ -1177,22 +1173,14 @@ public class TK_ThongKeDoanhThuNVQuanLyJPanel extends JPanel implements ActionLi
 		// <Table Thống kê doanh thu Năm>
 		modelTblNhanVienThongKeDoanhThuNam = new DefaultTableModel(cols, 0);
 		// <=======================>
-		if (cbTatCaNhanVienNgay.isSelected()) {
 			lamMoiDuLieuNgay();
 			lamMoiThongKeNgay(jdcChonNgayThongKe);
 			LoadDataThongKeNgay();
-
+		
 			lamMoiDuLieuThang();
 			lamMoiThongKeThang();
 			LoadDataThongKeThang();
-		} else {
-			lamMoiDuLieuNgay();
-			lamMoiThongKeNgay(jdcChonNgayThongKe);
-			LoadDataThongKeNgayTheoNV();
-			lamMoiDuLieuNgay();
-			lamMoiThongKeNgay(jdcChonNgayThongKe);
-			LoadDataThongKeThangTheoNV();
-		}
+		
 		xuatThongKeNgayExcel.addActionListener(this);
 		btnThongKeThang.addActionListener(this);
 		btnXuatDuLieuThongKeThang.addActionListener(this);
@@ -1280,38 +1268,13 @@ public class TK_ThongKeDoanhThuNVQuanLyJPanel extends JPanel implements ActionLi
 			btnLamMoiTimKiemThang.setEnabled(false);
 			txtTenNhamVienTimKiemThang.setText("");
 			txtMaNhanVienTimKiemThang.setText("");
-			modelTblNhanVienThongKeDoanhThuThang.setRowCount(0);
+			modelTblNhanVienThongKeDoanhThuThang = new DefaultTableModel(cols,0);
 			taiKhoanThongKeThang = new NhanVien();
 		} else {
 			btnTimKiemNhanVienTKDTNThang.setEnabled(true);
 			btnLamMoiTimKiemThang.setEnabled(true);
 			lamMoiTableNhanVienThang(modelTblNhanVienThongKeDoanhThuThang);
 		}
-	}
-
-	public void lamMoiDuLieuNgay() {
-		Calendar ngayHienTai = Calendar.getInstance();
-		jdcChonNgayThongKe.setDate(ngayHienTai.getTime());
-		modelThongKeDoanhThuNgay = new ModelThongKeDoanhThuNgay();
-		taiKhoanThongKeNgay = new NhanVien();
-		listModalThongKeNgay = new ArrayList<>();
-		modelThongKeDoanhThuThang = new ModelThongKeDoanhThuThang();
-		modelThongKeDoanhThuThang = new ModelThongKeDoanhThuThang();
-		modelThongKeDoanhThuNam = new ModelThongKeDoanhThuNam();
-		listModelThongKeDoanhThuNam = new ArrayList<>();
-		txtThongKeTrenTaiKhoanNgay.setText("");
-		txtTenNhanVienDuocThongKeNgay.setText("");
-		txtNgayDuocThongKe.setText("");
-
-		txtTongSoHoaDonDuocLapNgay.setText("");
-		txtTongSoLuongMatHangBanRaNgay.setText("");
-		txtTongDoanhThuTrongNgay.setText(ChuyenThanhTien(modelThongKeDoanhThuNgay.getTongDoanhThu()));
-		txtTongTienNhapHangNgay.setText("");
-		txtTongTienHangDaBanNgay.setText("");
-		txtTongTienKhuyenMaiNgay.setText("");
-		txtTongThueNgay.setText("");
-		txtTongLaiTrongNgay.setText("");
-		VeBieuDoThongKeDoanhThuNgay(panelBieuDoThongKeDoanhThuNgay, today);
 	}
 
 	private void lamMoiThongKeThang() {
@@ -1333,16 +1296,29 @@ public class TK_ThongKeDoanhThuNVQuanLyJPanel extends JPanel implements ActionLi
 			}
 		}
 	}
+	public void lamMoiDuLieuNgay() {
+		Calendar ngayHienTai = Calendar.getInstance();
+		jdcChonNgayThongKe.setDate(ngayHienTai.getTime());
+		modelThongKeDoanhThuNgay = new ModelThongKeDoanhThuNgay();
+		listModalThongKeNgay = new ArrayList<>();
+		txtThongKeTrenTaiKhoanNgay.setText("");
+		txtTenNhanVienDuocThongKeNgay.setText("");
+		txtNgayDuocThongKe.setText("");
 
+		txtTongSoHoaDonDuocLapNgay.setText("");
+		txtTongSoLuongMatHangBanRaNgay.setText("");
+		txtTongDoanhThuTrongNgay.setText("");
+		txtTongTienNhapHangNgay.setText("");
+		txtTongTienHangDaBanNgay.setText("");
+		txtTongTienKhuyenMaiNgay.setText("");
+		txtTongThueNgay.setText("");
+		txtTongLaiTrongNgay.setText("");
+		VeBieuDoThongKeDoanhThuNgay(panelBieuDoThongKeDoanhThuNgay, today);
+	}
 	public void lamMoiDuLieuThang() {
 		lamMoiThongKeThang();
-		modelThongKeDoanhThuNgay = new ModelThongKeDoanhThuNgay();
-		taiKhoanThongKeNgay = new NhanVien();
-		listModalThongKeNgay = new ArrayList<>();
+		modelTblNhanVienThongKeDoanhThuThang = new DefaultTableModel(cols,0);
 		modelThongKeDoanhThuThang = new ModelThongKeDoanhThuThang();
-		modelThongKeDoanhThuThang = new ModelThongKeDoanhThuThang();
-		modelThongKeDoanhThuNam = new ModelThongKeDoanhThuNam();
-		listModelThongKeDoanhThuNam = new ArrayList<>();
 		txtTaiKhoanDuocThongKeThang.setText("");
 		txtTenNhanVienDuocThongKeThang.setText("");
 		txtNgaDuocThongKeThang.setText("");
@@ -1355,7 +1331,6 @@ public class TK_ThongKeDoanhThuNVQuanLyJPanel extends JPanel implements ActionLi
 		txtTongTienKhuyenMaiThang.setText("");
 		txtTongThueThang.setText("");
 		txtTongLaiTrongNgay.setText("");
-		lamMoiTableNhanVienThang(modelTblNhanVienThongKeDoanhThuThang);
 		VeBieuDoThongKeDoanhThuThang(panelBieuDoThongKeDoanhThuThang, LocalDate.now().getMonthValue(),
 				LocalDate.now().getYear());
 	}
@@ -1461,7 +1436,7 @@ public class TK_ThongKeDoanhThuNVQuanLyJPanel extends JPanel implements ActionLi
 		float tongLai;
 		model.setThangThongKe(thang);
 		model.setNamCuaThangThongKe(namCuaThang);
-		model.setMaNhanVien(taiKhoan.getMaNhanVien().trim());
+		model.setMaNhanVien(taiKhoan.getMaNhanVien());
 		Dao_ThongKeDoanhThu dao_ThongKeDoanhThu = new Dao_ThongKeDoanhThu();
 
 		tongHdDuocLap = dao_ThongKeDoanhThu.TongHoaDonDuocNhanVienLapTrongThang(model.getThangThongKe(),
@@ -1786,7 +1761,11 @@ public class TK_ThongKeDoanhThuNVQuanLyJPanel extends JPanel implements ActionLi
 			}
 		}else if(!cbTatCaNhanVienThang.isSelected()) {
 			if (o.equals(btnThongKeThang)) {
-				LoadDataThongKeThangTheoNV();
+				if (taiKhoanThongKeThang == null || taiKhoanThongKeThang.getMaNhanVien() == null) {
+					JOptionPane.showMessageDialog(this, "Hãy chọn nhân viên thống kê");
+				} else {
+					LoadDataThongKeNgayTheoNV();
+				}
 			} else if (o.equals(btnXuatDuLieuThongKeThang)) {
 				ThongKeDoanhThuServices thongKeDoanhThuServices = new ThongKeDoanhThuServices();
 				ArrayList<ModelThongKeDoanhThuNgay> data = thongKeDoanhThuServices.thongKeCacNgayTrongThangTheoNv(Integer.parseInt((String)cbxChonThangThongKe.getSelectedItem()), Integer.parseInt((String)cbxChonNamCuaThangThongKe.getSelectedItem()),taiKhoanThongKeThang);

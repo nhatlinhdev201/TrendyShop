@@ -402,7 +402,7 @@ public class TrangThongKeNVBanHangJPanel extends JPanel implements ActionListene
 
 		JTextPane txtPaneNhanXetThongKeNgay = new JTextPane();
 		txtPaneNhanXetThongKeNgay.setEditable(false);
-		txtPaneNhanXetThongKeNgay.setText("");
+		txtPaneNhanXetThongKeNgay.setText("Thống kê ngày 14/11/2023 trên tài khoản NV0002 \r\nDoanh thu hôm nay là 0 VND\r\nThấp hơn so với ngày có doanh thu cao nhất trong tháng là ngày 2/11/2023 với doanh thu 365.000.000VND\r\n");
 		txtPaneNhanXetThongKeNgay.setBounds(42, 25, 703, 52);
 		panelChuThichBieuDoThongKeNgay.add(txtPaneNhanXetThongKeNgay);
 
