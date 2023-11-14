@@ -45,18 +45,20 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import constance.SetBountJPanel;
-import daos.Dao_HangHoa;
+import daos.Dao_Voucher;
+import daos.Dao_Voucher;
 import entities.HangHoa;
+import entities.VoucherGiamGia;
 import rojerusan.RSTableMetro;
 
-public class TrangQuanLyHangHoaJPanel extends JPanel implements ActionListener, MouseListener {
+public class TrangQuanLyVoucher extends JPanel implements ActionListener, MouseListener {
 	/**
 	 *
 	 */
 	private static final long serialVersionUID = 1L;
 	private JTextField txt_Search;
 	private JPanel pnl_tieuchi;
-	private RSTableMetro tbl_HangHoa;
+	private RSTableMetro tbl_Voucher;
 	private JList<String> lst_TieuChi;
 	private JLabel lbl_TieuChiSearch;
 	private DefaultTableModel dataDefault;
@@ -64,20 +66,20 @@ public class TrangQuanLyHangHoaJPanel extends JPanel implements ActionListener, 
 	private JButton btn_edit;
 	private JButton btn_delete;
 	private JPanel pnl_Search;
-	private List<String> listThuongHieu;
-	private List<String> listXuatXu;
+	private List<String> listPhanTramGiamGia;
+	private List<String> listTrangThai;
 
 	private DefaultListModel<String> listItemSearched;
 	private JScrollPane scr_ListItemSearched;
 	private JList<String> lst_ItemSearched;
-	private List<String> listTenHangHoa;
-	private List<HangHoa> ds;
-	private Dao_HangHoa dao_HangHoa;
+//	private List<String> listTenVoucher;
+	private List<VoucherGiamGia> ds;
+	private Dao_Voucher dao_Voucher;
 	/**
 	 * Create the panel.
 	 */
-	public TrangQuanLyHangHoaJPanel() {
-		dao_HangHoa = new Dao_HangHoa();
+	public TrangQuanLyVoucher() {
+		dao_Voucher = new Dao_Voucher();
 		data();
 		setBackground(new Color(36, 170, 120));
 		this.setBounds(SetBountJPanel.X, SetBountJPanel.Y, SetBountJPanel.WIDTH, SetBountJPanel.HEIGHT);
@@ -90,7 +92,7 @@ public class TrangQuanLyHangHoaJPanel extends JPanel implements ActionListener, 
 			 *
 			 */
 			private static final long serialVersionUID = 1L;
-			String[] values = new String[] { "Mã Sản Phẩm", "Tên Sản Phẩm", "Thương Hiệu", "Xuất Xứ" };
+			String[] values = new String[] { "Mã Voucher", "Phần trăm giá bán", "Trạng thái" };
 
 			public int getSize() {
 				return values.length;
@@ -215,7 +217,7 @@ public class TrangQuanLyHangHoaJPanel extends JPanel implements ActionListener, 
 		btn_edit.setBounds(1026, 10, 100, 30);
 		pnl_Header.add(btn_edit);
 
-		btn_delete = new JButton("Ngưng bán");
+		btn_delete = new JButton("Tạm ngưng");
 		btn_delete.setIconTextGap(10);
 		btn_delete.setFont(new Font("Tahoma", Font.BOLD, 12));
 		btn_delete.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/images/icon_delete.png"))
@@ -236,101 +238,95 @@ public class TrangQuanLyHangHoaJPanel extends JPanel implements ActionListener, 
 		pnl_title.setBounds(0, 0, 1350, 40);
 		add(pnl_title);
 
-		JLabel lbl_Title = new JLabel("QUẢN LÝ HÀNG HOÁ");
+		JLabel lbl_Title = new JLabel("QUẢN LÝ VOUCHER");
 		lbl_Title.setHorizontalAlignment(SwingConstants.CENTER);
 		lbl_Title.setForeground(new Color(94, 94, 174));
 		lbl_Title.setPreferredSize(new Dimension(300, 30));
 		lbl_Title.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 25));
 		pnl_title.add(lbl_Title);
 
-		JPanel pnl_TableHangHoa = new JPanel();
-		pnl_TableHangHoa.setForeground(new Color(128, 191, 191));
-		pnl_TableHangHoa.setBackground(new Color(128, 191, 191));
-		pnl_TableHangHoa.setBorder(new TitledBorder(new LineBorder(new Color(128, 191, 191), 2), "Danh S\u00E1ch H\u00E0ng Ho\u00E1", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		pnl_TableHangHoa.setBounds(0, 89, 1350, 610);
-		add(pnl_TableHangHoa);
-		pnl_TableHangHoa.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
+		JPanel pnl_TableVocuher = new JPanel();
+		pnl_TableVocuher.setForeground(new Color(128, 191, 191));
+		pnl_TableVocuher.setBackground(new Color(128, 191, 191));
+		pnl_TableVocuher.setBorder(new TitledBorder(new LineBorder(new Color(128, 191, 191), 2), "Danh Sách Voucher", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		pnl_TableVocuher.setBounds(0, 89, 1350, 610);
+		add(pnl_TableVocuher);
+		pnl_TableVocuher.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
 
-		JScrollPane scr_hanghoa = new JScrollPane();
-		scr_hanghoa.setPreferredSize(new Dimension(1335, 580));
-		scr_hanghoa.setBorder(null);
-		scr_hanghoa.setFont(new Font("Tahoma", Font.PLAIN, 25));
-		scr_hanghoa.setForeground(new Color(192, 192, 192));
-		scr_hanghoa.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
-		scr_hanghoa.setBackground(new Color(107, 182, 182));
-		scr_hanghoa.setEnabled(false);
+		JScrollPane scr_voucher = new JScrollPane();
+		scr_voucher.setPreferredSize(new Dimension(1335, 580));
+		scr_voucher.setBorder(null);
+		scr_voucher.setFont(new Font("Tahoma", Font.PLAIN, 25));
+		scr_voucher.setForeground(new Color(192, 192, 192));
+		scr_voucher.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+		scr_voucher.setBackground(new Color(107, 182, 182));
+		scr_voucher.setEnabled(false);
 
-		scr_hanghoa.setFocusable(false);
-		pnl_TableHangHoa.add(scr_hanghoa);
+		scr_voucher.setFocusable(false);
+		pnl_TableVocuher.add(scr_voucher);
 
-		tbl_HangHoa = new RSTableMetro() {
+		tbl_Voucher = new RSTableMetro() {
 			/**
 			 *
 			 */
 			private static final long serialVersionUID = 1L;
-			boolean[] columnEditables = new boolean[] { false, false, false, false, false, false, false, false, false,
-					false,false };
-
-			public boolean isCellEditable(int row, int column) {
-				return columnEditables[column];
-			}
-		};
-		tbl_HangHoa.setFuenteFilas(new Font("Tahoma", Font.PLAIN, 14));
-		tbl_HangHoa.setBorder(null);
-		tbl_HangHoa.setIntercellSpacing(new Dimension(0, 0));
-		tbl_HangHoa.setAlignmentY(Component.TOP_ALIGNMENT);
-		tbl_HangHoa.setAlignmentX(Component.LEFT_ALIGNMENT);
-		tbl_HangHoa.setRowMargin(0);
-		tbl_HangHoa.setColorBordeFilas(new Color(0, 128, 128));
-		tbl_HangHoa.setGridColor(new Color(0, 128, 128));
-		tbl_HangHoa.setColorSelForeground(Color.WHITE);
-		tbl_HangHoa.setColorFilasForeground2(Color.BLACK);
-		tbl_HangHoa.setColorFilasForeground1(Color.BLACK);
-		tbl_HangHoa.setColorSelBackgound(new Color(102, 205, 170));
-		tbl_HangHoa.setColorFilasBackgound2(Color.WHITE);
-		tbl_HangHoa.setColorFilasBackgound1(Color.WHITE);
-		tbl_HangHoa.setColorBackgoundHead(new Color(0, 128, 128));
-		tbl_HangHoa.setColorBordeHead(new Color(0, 128, 128));
-		tbl_HangHoa.setBackground(Color.WHITE);
-		tbl_HangHoa.setFuenteFilasSelect(new Font("Tahoma", Font.BOLD, 13));
-		tbl_HangHoa.setFuenteHead(new Font("Tahoma", Font.BOLD, 13));
-		tbl_HangHoa.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		tbl_HangHoa.setAltoHead(30);
-		dataDefault = new DefaultTableModel(new String[] { "M\u00E3 H\u00E0ng Ho\u00E1", "T\u00EAn",
-				"Th\u01B0\u01A1ng hi\u1EC7u", "Xu\u1EA5t x\u1EE9", "Ch\u1EA5t li\u1EC7u", "K\u00EDch c\u1EE1",
-				"M\u00E0u s\u1EAFc", "S\u1ED1 l\u01B0\u1EE3ng t\u1ED3n", "S\u1ED1 l\u01B0\u1EE3ng b\u00E1n",
-				"\u0110\u01A1n gi\u00E1(đ)" ,"Trạng Thái"}, 0) {
-			/**
-			 *
-			 */
-			private static final long serialVersionUID = 1L;
-			boolean[] columnEditables = new boolean[] { false, false, false, false, false, false, false, false, false,
+			boolean[] columnEditables = new boolean[] { false, false, false, false, false, false,
 					false };
 
 			public boolean isCellEditable(int row, int column) {
 				return columnEditables[column];
 			}
 		};
-		tbl_HangHoa.setModel(dataDefault);
-		tbl_HangHoa.getColumnModel().getColumn(0).setResizable(false);
-		tbl_HangHoa.getColumnModel().getColumn(1).setResizable(false);
-		tbl_HangHoa.getColumnModel().getColumn(2).setResizable(false);
-		tbl_HangHoa.getColumnModel().getColumn(3).setResizable(false);
-		tbl_HangHoa.getColumnModel().getColumn(4).setResizable(false);
-		tbl_HangHoa.getColumnModel().getColumn(5).setResizable(false);
-		tbl_HangHoa.getColumnModel().getColumn(6).setResizable(false);
-		tbl_HangHoa.getColumnModel().getColumn(7).setResizable(false);
-		tbl_HangHoa.getColumnModel().getColumn(8).setResizable(false);
-		tbl_HangHoa.getColumnModel().getColumn(9).setResizable(false);
+		tbl_Voucher.setFuenteFilas(new Font("Tahoma", Font.PLAIN, 14));
+		tbl_Voucher.setBorder(null);
+		tbl_Voucher.setIntercellSpacing(new Dimension(0, 0));
+		tbl_Voucher.setAlignmentY(Component.TOP_ALIGNMENT);
+		tbl_Voucher.setAlignmentX(Component.LEFT_ALIGNMENT);
+		tbl_Voucher.setRowMargin(0);
+		tbl_Voucher.setColorBordeFilas(new Color(0, 128, 128));
+		tbl_Voucher.setGridColor(new Color(0, 128, 128));
+		tbl_Voucher.setColorSelForeground(Color.WHITE);
+		tbl_Voucher.setColorFilasForeground2(Color.BLACK);
+		tbl_Voucher.setColorFilasForeground1(Color.BLACK);
+		tbl_Voucher.setColorSelBackgound(new Color(102, 205, 170));
+		tbl_Voucher.setColorFilasBackgound2(Color.WHITE);
+		tbl_Voucher.setColorFilasBackgound1(Color.WHITE);
+		tbl_Voucher.setColorBackgoundHead(new Color(0, 128, 128));
+		tbl_Voucher.setColorBordeHead(new Color(0, 128, 128));
+		tbl_Voucher.setBackground(Color.WHITE);
+		tbl_Voucher.setFuenteFilasSelect(new Font("Tahoma", Font.BOLD, 13));
+		tbl_Voucher.setFuenteHead(new Font("Tahoma", Font.BOLD, 13));
+		tbl_Voucher.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		tbl_Voucher.setAltoHead(30);
+		dataDefault = new DefaultTableModel(new String[] { "Mã Voucher", "Tên Voucher", "Phần trăm giảm theo hóa đơn", "Ngày bắt đầu", "Ngày kết thúc",
+				"Số lượt dùng", "Trạng Thái"}, 0) {
+			/**
+			 *
+			 */
+			private static final long serialVersionUID = 1L;
+			boolean[] columnEditables = new boolean[] { false, false, false, false, false, false, false};
 
-		scr_hanghoa.setViewportView(tbl_HangHoa);
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+		};
+		tbl_Voucher.setModel(dataDefault);
+		tbl_Voucher.getColumnModel().getColumn(0).setResizable(false);
+		tbl_Voucher.getColumnModel().getColumn(1).setResizable(false);
+		tbl_Voucher.getColumnModel().getColumn(2).setResizable(false);
+		tbl_Voucher.getColumnModel().getColumn(3).setResizable(false);
+		tbl_Voucher.getColumnModel().getColumn(4).setResizable(false);
+		tbl_Voucher.getColumnModel().getColumn(5).setResizable(false);
+		tbl_Voucher.getColumnModel().getColumn(6).setResizable(false);
+
+		scr_voucher.setViewportView(tbl_Voucher);
 
 		// event
 		pnl_tieuchi.addMouseListener(this);
 		lst_TieuChi.addMouseListener(this);
 		txt_Search.addMouseListener(this);
 		pnl_Search.addMouseListener(this);
-		tbl_HangHoa.addMouseListener(this);
+		tbl_Voucher.addMouseListener(this);
 		scr_ListItemSearched.addMouseListener(this);
 		//
 
@@ -358,15 +354,15 @@ public class TrangQuanLyHangHoaJPanel extends JPanel implements ActionListener, 
 				if (!e.getValueIsAdjusting() && lst_ItemSearched.getSelectedValue() !=null) {
 					if (lst_TieuChi.getSelectedIndex() == 1) {
 						String textSearch = lst_ItemSearched.getSelectedValue();
-						loadData(dao_HangHoa.getHangHoaByTenHangHoa(textSearch));
+//						loadData(dao_Voucher.getHangHoaByVoucher(textSearch));
 						scr_ListItemSearched.setVisible(false);
 					} else if (lst_TieuChi.getSelectedIndex() == 2) {
 						String item = lst_ItemSearched.getSelectedValue();
-						loadData(dao_HangHoa.getHangHoaByThuongHieu(item));
+						loadData(dao_Voucher.getHangHoaByPhanTramGiamGia(item));
 						scr_ListItemSearched.setVisible(false);
 					} else if (lst_TieuChi.getSelectedIndex() == 3) {
 						String item = lst_ItemSearched.getSelectedValue();
-						loadData(dao_HangHoa.getHangHoaByXuatXu(item));
+						loadData(dao_Voucher.getHangHoaByTrangThai(item));
 						scr_ListItemSearched.setVisible(false);
 
 					}
@@ -389,10 +385,10 @@ public class TrangQuanLyHangHoaJPanel extends JPanel implements ActionListener, 
 	 * get danh sách các tiêu chí
 	 */
 	public void data() {
-		listThuongHieu = dao_HangHoa.getAllThuongHieu();
-		listXuatXu = dao_HangHoa.getAllXuatXu();
-		ds = dao_HangHoa.getAll();
-		listTenHangHoa = dao_HangHoa.getAllTenHangHoa();
+		listPhanTramGiamGia = dao_Voucher.getAllPhanTramGiamGia();
+		listTrangThai = dao_Voucher.getAllTrangThai();
+		ds = dao_Voucher.getAll();
+//		listTenVoucher = dao_Voucher.getAllTenHangHoa();
 	}
 
 	
@@ -400,12 +396,10 @@ public class TrangQuanLyHangHoaJPanel extends JPanel implements ActionListener, 
 	 * Load ds Hàng hóa 
 	 * @param dsHangHoa
 	 */
-	private void loadData(List<HangHoa> dsHangHoa) {
+	private void loadData(List<VoucherGiamGia> dsVoucher) {
 		dataDefault.setRowCount(0);
-		for (HangHoa hangHoa : dsHangHoa) {
-			Object[] row = { hangHoa.getMaHangHoa(), hangHoa.getTenHangHoa(), hangHoa.getThuongHieu(),
-					hangHoa.getXuatXu(), hangHoa.getChatLieu(), hangHoa.getKichCo(), hangHoa.getMauSac(),
-					hangHoa.getSoLuongTon(), hangHoa.getSoLuongDaBan(), hangHoa.getDonGiaNhap() ,hangHoa.isTrangThai()?"Còn bán":"Ngừng bán"};
+		for (VoucherGiamGia voucher : dsVoucher) {
+			Object[] row = { voucher.getMaVoucher(), voucher.getTenVoucher(), voucher.getPhanTramGiamTheoHoaDon(), voucher.getNgayBatDau(), voucher.getNgayKetThuc(), voucher.getSoLuotDung(), voucher.isTrangThai()?"Còn hoạt động":"Đã ngưng"};
 			dataDefault.addRow(row);
 			
 		}
@@ -455,23 +449,21 @@ public class TrangQuanLyHangHoaJPanel extends JPanel implements ActionListener, 
 				String textSearch = txt_Search.getText();
 				searchOnTable(textSearch, 0);
 			} else if (lst_TieuChi.getSelectedIndex() == 1) {
-				searchItem(listTenHangHoa, txt_Search.getText());
+				searchItem(listPhanTramGiamGia, txt_Search.getText());
 			} else if (lst_TieuChi.getSelectedIndex() == 2) {
-				searchItem(listThuongHieu, txt_Search.getText());
-			} else if (lst_TieuChi.getSelectedIndex() == 3) {
-				searchItem(listXuatXu, txt_Search.getText());
-			}
+				searchItem(listTrangThai, txt_Search.getText());
+			} 
 		
 	}
 
 	
 	public void searchOnTable(String textSearch, int column) {
-		tbl_HangHoa.removeRowSelectionInterval(0, tbl_HangHoa.getRowCount()-1);
+		tbl_Voucher.removeRowSelectionInterval(0, tbl_Voucher.getRowCount()-1);
 		if (textSearch.length()<=9) {
-			for (int i = 0; i < tbl_HangHoa.getRowCount(); i++) {
-				if (textSearch.toLowerCase().compareToIgnoreCase(tbl_HangHoa.getValueAt(i, column)+"")==0) {
-//					tbl_HangHoa.setRowSelectionInterval(i, i);
-					tbl_HangHoa.changeSelection(i, i, false, false);
+			for (int i = 0; i < tbl_Voucher.getRowCount(); i++) {
+				if (textSearch.toLowerCase().compareToIgnoreCase(tbl_Voucher.getValueAt(i, column)+"")==0) {
+//					tbl_Voucher.setRowSelectionInterval(i, i);
+					tbl_Voucher.changeSelection(i, i, false, false);
 					break;
 				}
 			}
@@ -483,43 +475,43 @@ public class TrangQuanLyHangHoaJPanel extends JPanel implements ActionListener, 
 		if (e.getSource().equals(btn_add)) {
 			HangHoa hangHoa = new HangHoa();
 			Object[] r = { "Thoát" };
-			JOptionPane.showOptionDialog(this, new FormThongTinHangHoa(hangHoa, "add"),"Thêm sản phẩm mới.",JOptionPane.DEFAULT_OPTION,JOptionPane.DEFAULT_OPTION,null,r,null);
-			ds = dao_HangHoa.getAll();
+//			JOptionPane.showOptionDialog(this, new FormThongTinVoucher(hangHoa, "add"),"Thêm sản phẩm mới.",JOptionPane.DEFAULT_OPTION,JOptionPane.DEFAULT_OPTION,null,r,null);
+			ds = dao_Voucher.getAll();
 			loadData(ds);
 		} else if (e.getSource().equals(btn_delete)) {
-		    if (tbl_HangHoa.getSelectedRow() == -1) {
+		    if (tbl_Voucher.getSelectedRow() == -1) {
 		        JOptionPane.showMessageDialog(this, "Vui lòng chọn sản phẩm mong muốn.");
 		    } else {
-		        int row = tbl_HangHoa.getSelectedRow();
-		        String maHangHoa = tbl_HangHoa.getValueAt(row, 0).toString();
-		        String trangThai = tbl_HangHoa.getValueAt(row, 10).toString();
+		        int row = tbl_Voucher.getSelectedRow();
+		        String maHangHoa = tbl_Voucher.getValueAt(row, 0).toString();
+		        String trangThai = tbl_Voucher.getValueAt(row, 6).toString();
 
 		        // Kiểm tra trạng thái thay đổi của sản phẩm
 		        if (trangThai == "Ngừng bán") {
-		            JOptionPane.showMessageDialog(this, "Sản phẩm hiện đã ngừng bán. Vui lòng chọn sản phẩm khác");
+		            JOptionPane.showMessageDialog(this, "Voucher hiện đã ngưng hoạt động. Vui lòng chọn Voucher khác");
 		        } else {
 		            // Hiển thị hộp thoại xác nhận
-		            int option = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xóa không?", "Xác nhận xóa", JOptionPane.YES_NO_OPTION);
+		            int option = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn tạm ngưng voucher này không?", "Xác nhận xóa", JOptionPane.YES_NO_OPTION);
 
 		            // Xác nhận nếu người dùng chọn "Yes"
 		            if (option == JOptionPane.YES_OPTION) {
-		                if (dao_HangHoa.deleteHangHoa(maHangHoa)) {
+		                if (dao_Voucher.deleteHangHoa(maHangHoa)) {
 		                    JOptionPane.showMessageDialog(this, "Đã thay đổi cập nhật trạng thái");
-		                    ds = dao_HangHoa.getAll();
+		                    ds = dao_Voucher.getAll();
 		                    loadData(ds);
 		                }
 		            }
 		        }
 		    }
 		} else if (e.getSource().equals(btn_edit)) {
-			if (tbl_HangHoa.getSelectedRow() == -1) {
+			if (tbl_Voucher.getSelectedRow() == -1) {
 				JOptionPane.showMessageDialog(this, "Vui lòng chọn sản phẩm muốn chỉnh sửa.");
 			} else {
-				int row = tbl_HangHoa.getSelectedRow();
-				HangHoa hangHoa = dao_HangHoa.getHangHoaByMaHangHao(tbl_HangHoa.getValueAt(row, 0).toString());
+				int row = tbl_Voucher.getSelectedRow();
+//				VoucherGiamGia voucher = dao_Voucher.getMaVouCher(tbl_Voucher.getValueAt(row, 0).toString());
 				Object[] r = { "Thoát" };
-				JOptionPane.showOptionDialog(this, new FormThongTinHangHoa(hangHoa, "edit"),"Chỉnh sửa thông tin sản phẩm "+hangHoa.getMaHangHoa(),JOptionPane.DEFAULT_OPTION,JOptionPane.DEFAULT_OPTION,null,r,null);
-				ds = dao_HangHoa.getAll();
+//				JOptionPane.showOptionDialog(this, new FormThongTinHangHoa(hangHoa, "edit"),"Chỉnh sửa thông tin sản phẩm "+hangHoa.getMaHangHoa(),JOptionPane.DEFAULT_OPTION,JOptionPane.DEFAULT_OPTION,null,r,null);
+				ds = dao_Voucher.getAll();
 				loadData(ds);
 			}
 		}
@@ -527,9 +519,9 @@ public class TrangQuanLyHangHoaJPanel extends JPanel implements ActionListener, 
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		if (e.getSource().equals(tbl_HangHoa)) {
+		if (e.getSource().equals(tbl_Voucher)) {
 			if (e.getClickCount() == 2) {
-				System.out.println(tbl_HangHoa.getModel().getValueAt(tbl_HangHoa.getSelectedRow(), 0));
+				System.out.println(tbl_Voucher.getModel().getValueAt(tbl_Voucher.getSelectedRow(), 0));
 			}
 		} else if (e.getSource().equals(pnl_tieuchi)) {
 			lst_TieuChi.setVisible(true);
@@ -553,7 +545,7 @@ public class TrangQuanLyHangHoaJPanel extends JPanel implements ActionListener, 
 		} else if (e.getSource().equals(pnl_Search)) {
 			lst_TieuChi.setVisible(false);
 			scr_ListItemSearched.setVisible(false);
-		} else if (e.getSource().equals(tbl_HangHoa)) {
+		} else if (e.getSource().equals(tbl_Voucher)) {
 			scr_ListItemSearched.setVisible(false);
 			txt_Search.setFocusable(false);
 		}
@@ -564,11 +556,12 @@ public class TrangQuanLyHangHoaJPanel extends JPanel implements ActionListener, 
 	public void mouseExited(MouseEvent e) {
 		if (e.getSource().equals(lst_TieuChi)) {
 			lst_TieuChi.setVisible(false);
-		} else if (e.getSource().equals(tbl_HangHoa)) {
+		} else if (e.getSource().equals(tbl_Voucher)) {
 			txt_Search.setFocusable(true);
 		} else if (e.getSource().equals(scr_ListItemSearched)) {
 			scr_ListItemSearched.setVisible(false);
 		}
 
 	}
+
 }
