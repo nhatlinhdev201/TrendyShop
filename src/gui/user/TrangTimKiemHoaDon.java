@@ -96,7 +96,7 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener {
 		add(menu);
 		menu.setLayout(null);
 		/* Button láº­p hÃ³a Ä‘Æ¡n */
-		btn_LapHoaDon = new JButton("Láº­p hÃ³a Ä‘Æ¡n");
+		btn_LapHoaDon = new JButton("Lập hóa đơn");
 		btn_LapHoaDon.setFont(new Font("Arial", Font.BOLD, 20));
 		btn_LapHoaDon.setBackground(new Color(255, 255, 255));
 		btn_LapHoaDon.addActionListener(new ActionListener() {
@@ -107,7 +107,7 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener {
 		menu.add(btn_LapHoaDon);
 
 //		Button tÃ¬m kiáº¿m hÃ³a Ä‘Æ¡n
-		JButton btn_TimHoaDon = new JButton("TÃ¬m kiáº¿m hÃ³a Ä‘Æ¡n");
+		JButton btn_TimHoaDon = new JButton("Tìm kiếm hóa đơn");
 		btn_TimHoaDon.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
@@ -123,7 +123,7 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener {
 		add(panel);
 		panel.setLayout(null);
 
-		JLabel lbl_title = new JLabel("TÃ¬m kiáº¿m hÃ³a Ä‘Æ¡n");
+		JLabel lbl_title = new JLabel("TÌM KIẾM HÓA ĐƠN");
 		lbl_title.setHorizontalAlignment(SwingConstants.CENTER);
 		lbl_title.setFont(new Font("Monospaced", Font.BOLD, 28));
 		lbl_title.setBounds(10, 0, 1330, 45);
@@ -133,7 +133,7 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener {
 		JPanel panel_1 = new JPanel();
 		panel_1.setBounds(20, 57, 220, 45);
 		panel.add(panel_1);
-		panel_1.setBorder(BorderFactory.createTitledBorder("MÃ£ hÃ³a Ä‘Æ¡n"));
+		panel_1.setBorder(BorderFactory.createTitledBorder("Mã hóa đơn"));
 		panel_1.setLayout(null);
 
 		txt_MaHoaDon = new JTextField();
@@ -144,7 +144,7 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener {
 
 		JPanel panel_1_1 = new JPanel();
 		panel_1_1.setLayout(null);
-		panel_1_1.setBorder(BorderFactory.createTitledBorder("SÄ�T khÃ¡ch hÃ ng"));
+		panel_1_1.setBorder(BorderFactory.createTitledBorder("SDT khách hàng"));
 		panel_1_1.setBounds(255, 57, 220, 45);
 		panel.add(panel_1_1);
 
@@ -156,7 +156,7 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener {
 
 		JPanel panel_1_2 = new JPanel();
 		panel_1_2.setLayout(null);
-		panel_1_2.setBorder(BorderFactory.createTitledBorder("MÃ£ nhÃ¢n viÃªn"));
+		panel_1_2.setBorder(BorderFactory.createTitledBorder("Mã nhân viên"));
 		panel_1_2.setBounds(493, 57, 220, 45);
 		panel.add(panel_1_2);
 
@@ -168,7 +168,7 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener {
 
 		JPanel panel_1_3 = new JPanel();
 		panel_1_3.setLayout(null);
-		panel_1_3.setBorder(BorderFactory.createTitledBorder("Tá»« ngÃ y"));
+		panel_1_3.setBorder(BorderFactory.createTitledBorder("Từ ngày"));
 		panel_1_3.setBounds(735, 57, 220, 45);
 		panel.add(panel_1_3);
 
@@ -179,7 +179,7 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener {
 
 		JPanel panel_1_4 = new JPanel();
 		panel_1_4.setLayout(null);
-		panel_1_4.setBorder(BorderFactory.createTitledBorder("Ä�áº¿n ngÃ y"));
+		panel_1_4.setBorder(BorderFactory.createTitledBorder("Đến ngày"));
 		panel_1_4.setBounds(976, 56, 220, 45);
 		panel.add(panel_1_4);
 
@@ -188,7 +188,7 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener {
 		dateChooser_DenNgay.setBounds(10, 14, 200, 25);
 		panel_1_4.add(dateChooser_DenNgay);
 
-		btn_Tim = new JButton("TÃ¬m");
+		btn_Tim = new JButton("Tìm");
 		btn_Tim.setBackground(new Color(131, 198, 252));
 		btn_Tim.setBounds(1231, 58, 98, 38);
 		panel.add(btn_Tim);
@@ -286,7 +286,7 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener {
 //    		panel.add(panel_3);
 			panel_3.setLayout(null);
 
-			JLabel lblNewLabel = new JLabel("MÃ£ hÃ³a Ä‘Æ¡n:");
+			JLabel lblNewLabel = new JLabel("Mã hóa đơn:");
 			lblNewLabel.setFont(new Font("Monospaced", Font.BOLD, 17));
 			lblNewLabel.setBounds(10, 11, 175, 27);
 			panel_3.add(lblNewLabel);
@@ -297,7 +297,7 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener {
 			lbl_MaHoaDon.setBounds(178, 11, 190, 27);
 			panel_3.add(lbl_MaHoaDon);
 
-			JLabel lblNewLabel_3 = new JLabel("NhÃ¢n viÃªn:");
+			JLabel lblNewLabel_3 = new JLabel("Nhân viên:");
 			lblNewLabel_3.setFont(new Font("Monospaced", Font.PLAIN, 13));
 			lblNewLabel_3.setBounds(10, 49, 118, 20);
 			panel_3.add(lblNewLabel_3);
@@ -308,7 +308,7 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener {
 			lbl_NhanVien.setBounds(120, 49, 163, 20);
 			panel_3.add(lbl_NhanVien);
 
-			JLabel lblNewLabel_5 = new JLabel("Thuáº¿:");
+			JLabel lblNewLabel_5 = new JLabel("Thuế:");
 			lblNewLabel_5.setFont(new Font("Monospaced", Font.PLAIN, 13));
 			lblNewLabel_5.setBounds(10, 80, 118, 20);
 			panel_3.add(lblNewLabel_5);
@@ -319,17 +319,17 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener {
 			lbl_Thue.setBounds(120, 80, 163, 20);
 			panel_3.add(lbl_Thue);
 
-			JLabel lblNewLabel_7 = new JLabel("KhÃ¡ch hÃ ng:");
+			JLabel lblNewLabel_7 = new JLabel("Khách hàng:");
 			lblNewLabel_7.setFont(new Font("Monospaced", Font.PLAIN, 13));
 			lblNewLabel_7.setBounds(322, 49, 133, 20);
 			panel_3.add(lblNewLabel_7);
 
-			JLabel lblNewLabel_8 = new JLabel("MÃ£ giáº£m giÃ¡:");
+			JLabel lblNewLabel_8 = new JLabel("Mã giảm giá:");
 			lblNewLabel_8.setFont(new Font("Monospaced", Font.PLAIN, 13));
 			lblNewLabel_8.setBounds(322, 80, 133, 20);
 			panel_3.add(lblNewLabel_8);
 
-			JLabel lblNewLabel_9 = new JLabel("Sá»‘ Ä‘iá»‡n thoáº¡i:");
+			JLabel lblNewLabel_9 = new JLabel("SĐT khách hàng:");
 			lblNewLabel_9.setFont(new Font("Monospaced", Font.PLAIN, 13));
 			lblNewLabel_9.setBounds(619, 49, 133, 20);
 			panel_3.add(lblNewLabel_9);
@@ -350,7 +350,7 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener {
 			lbl_SDT.setBounds(750, 49, 133, 20);
 			panel_3.add(lbl_SDT);
 
-			JLabel lblLblngaylap = new JLabel("NgÃ y láº­p:");
+			JLabel lblLblngaylap = new JLabel("Ngày lập:");
 			lblLblngaylap.setHorizontalAlignment(SwingConstants.RIGHT);
 			lblLblngaylap.setFont(new Font("Monospaced", Font.PLAIN, 13));
 			lblLblngaylap.setBounds(991, 10, 100, 20);
@@ -404,8 +404,6 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener {
 				panel_5.setBackground(new Color(255, 255, 255));
 				// Đọc hình ảnh từ file hoặc URL
 				ImageIcon originalIcon = new ImageIcon(hh.getHinhAnh());
-//				ImageIcon originalIcon = new ImageIcon("img\\plus.png");
-//>>>>>>> origin/main
 
 				// Láº¥y kÃ­ch thÆ°á»›c ban Ä‘áº§u cá»§a áº£nh
 				int originalWidth = originalIcon.getIconWidth();
@@ -429,27 +427,27 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener {
 
 				panel_4.add(panel_5);
 
-				JLabel lblNewLabel_2 = new JLabel("TÃªn sáº£n pháº©m");
+				JLabel lblNewLabel_2 = new JLabel("Tên sản phẩm");
 				lblNewLabel_2.setFont(new Font("Monospaced", Font.BOLD, 17));
 				lblNewLabel_2.setBounds(128, 0, 271, 30);
 				panel_4.add(lblNewLabel_2);
 
-				JLabel lblNewLabel_4 = new JLabel("MÃ£ hÃ ng:");
+				JLabel lblNewLabel_4 = new JLabel("Mã hàng:");
 				lblNewLabel_4.setFont(new Font("Monospaced", Font.PLAIN, 13));
 				lblNewLabel_4.setBounds(138, 30, 100, 20);
 				panel_4.add(lblNewLabel_4);
 
-				JLabel lblNewLabel_4_1 = new JLabel("KÃ­ch thÆ°á»›c:");
+				JLabel lblNewLabel_4_1 = new JLabel("Kích thước:");
 				lblNewLabel_4_1.setFont(new Font("Monospaced", Font.PLAIN, 13));
 				lblNewLabel_4_1.setBounds(138, 61, 100, 20);
 				panel_4.add(lblNewLabel_4_1);
 
-				JLabel lblNewLabel_4_2 = new JLabel("Xuáº¥t xá»©:");
+				JLabel lblNewLabel_4_2 = new JLabel("Xuất xứ:");
 				lblNewLabel_4_2.setFont(new Font("Monospaced", Font.PLAIN, 13));
 				lblNewLabel_4_2.setBounds(138, 95, 100, 20);
 				panel_4.add(lblNewLabel_4_2);
 				
-				JLabel lblNewLabel_4_5 = new JLabel("Sá»‘ lÆ°á»£ng:");
+				JLabel lblNewLabel_4_5 = new JLabel("Số lượng:");
 				lblNewLabel_4_5.setFont(new Font("Monospaced", Font.PLAIN, 13));
 				lblNewLabel_4_5.setBounds(448, 30, 100, 20);
 				panel_4.add(lblNewLabel_4_5);
@@ -474,12 +472,12 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener {
 				lbl_SoLuong.setBounds(568, 30, 116, 20);
 				panel_4.add(lbl_SoLuong);
 
-				JLabel lblNewLabel_4_3 = new JLabel("MÃ u sáº¯c:");
+				JLabel lblNewLabel_4_3 = new JLabel("Màu sắc:");
 				lblNewLabel_4_3.setFont(new Font("Monospaced", Font.PLAIN, 13));
 				lblNewLabel_4_3.setBounds(448, 65, 100, 20);
 				panel_4.add(lblNewLabel_4_3);
 
-				JLabel lblNewLabel_4_4 = new JLabel("NhÃ  cung cáº¥p:");
+				JLabel lblNewLabel_4_4 = new JLabel("Nhà cung cấp:");
 				lblNewLabel_4_4.setFont(new Font("Monospaced", Font.PLAIN, 13));
 				lblNewLabel_4_4.setBounds(448, 95, 110, 20);
 				panel_4.add(lblNewLabel_4_4);
@@ -489,12 +487,12 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener {
 				lbl_NhaCungCap.setBounds(568, 95, 183, 20);
 				panel_4.add(lbl_NhaCungCap);
 
-				JLabel lblNewLabel_4_6 = new JLabel("GiÃ¡ bÃ¡n:");
+				JLabel lblNewLabel_4_6 = new JLabel("Giá bán:");
 				lblNewLabel_4_6.setFont(new Font("Monospaced", Font.PLAIN, 13));
 				lblNewLabel_4_6.setBounds(776, 95, 100, 20);
 				panel_4.add(lblNewLabel_4_6);
 
-				JLabel lblNewLabel_4_7 = new JLabel("Cháº¥t liá»‡u:");
+				JLabel lblNewLabel_4_7 = new JLabel("Chất liệu:");
 				lblNewLabel_4_7.setFont(new Font("Monospaced", Font.PLAIN, 13));
 				lblNewLabel_4_7.setBounds(776, 65, 100, 20);
 				panel_4.add(lblNewLabel_4_7);
@@ -510,7 +508,7 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener {
 				lbl_GiaBan.setBounds(872, 95, 139, 20);
 				panel_4.add(lbl_GiaBan);
 
-				JLabel lblNewLabel_4_10 = new JLabel("VNÄ�");
+				JLabel lblNewLabel_4_10 = new JLabel("VNĐ");
 				lblNewLabel_4_10.setFont(new Font("Monospaced", Font.PLAIN, 13));
 				lblNewLabel_4_10.setBounds(1026, 95, 56, 20);
 				panel_4.add(lblNewLabel_4_10);
@@ -539,7 +537,7 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener {
 //    		panel_2.add(panel_6);
 			panel_6.setLayout(null);
 
-			JLabel lblNewLabel_4_5 = new JLabel("Tá»•ng tiá»�n hÃ ng:");
+			JLabel lblNewLabel_4_5 = new JLabel("Tổng tiền hàng:");
 			lblNewLabel_4_5.setFont(new Font("Monospaced", Font.PLAIN, 13));
 			lblNewLabel_4_5.setBounds(28, 11, 205, 20);
 			panel_6.add(lblNewLabel_4_5);
@@ -550,12 +548,12 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener {
 			lbl_TongTienHang.setBounds(266, 11, 129, 20);
 			panel_6.add(lbl_TongTienHang);
 
-			JLabel lblNewLabel_4_10_1 = new JLabel("VNÄ�");
+			JLabel lblNewLabel_4_10_1 = new JLabel("VNĐ");
 			lblNewLabel_4_10_1.setFont(new Font("Monospaced", Font.PLAIN, 13));
 			lblNewLabel_4_10_1.setBounds(402, 11, 56, 20);
 			panel_6.add(lblNewLabel_4_10_1);
 
-			JLabel lblNewLabel_4_12 = new JLabel("Tá»•ng tiá»�n thuáº¿:");
+			JLabel lblNewLabel_4_12 = new JLabel("Tổng tiền thuế:");
 			lblNewLabel_4_12.setFont(new Font("Monospaced", Font.PLAIN, 13));
 			lblNewLabel_4_12.setBounds(28, 36, 205, 20);
 			panel_6.add(lblNewLabel_4_12);
@@ -566,12 +564,12 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener {
 			lbl_TongTienThue.setBounds(266, 36, 129, 20);
 			panel_6.add(lbl_TongTienThue);
 
-			JLabel lblNewLabel_4_10_2 = new JLabel("VNÄ�");
+			JLabel lblNewLabel_4_10_2 = new JLabel("VNĐ");
 			lblNewLabel_4_10_2.setFont(new Font("Monospaced", Font.PLAIN, 13));
 			lblNewLabel_4_10_2.setBounds(402, 36, 56, 20);
 			panel_6.add(lblNewLabel_4_10_2);
 
-			JLabel lblNewLabel_4_12_1 = new JLabel("Tá»•ng tiá»�n giáº£m giÃ¡:");
+			JLabel lblNewLabel_4_12_1 = new JLabel("Tổng tiền giảm giá:");
 			lblNewLabel_4_12_1.setFont(new Font("Monospaced", Font.PLAIN, 13));
 			lblNewLabel_4_12_1.setBounds(28, 60, 205, 20);
 			panel_6.add(lblNewLabel_4_12_1);
@@ -583,12 +581,12 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener {
 			lbl_TongTienGiamGia.setBounds(266, 60, 129, 20);
 			panel_6.add(lbl_TongTienGiamGia);
 
-			JLabel lblNewLabel_4_10_2_1 = new JLabel("VNÄ�");
+			JLabel lblNewLabel_4_10_2_1 = new JLabel("VNĐ");
 			lblNewLabel_4_10_2_1.setFont(new Font("Monospaced", Font.PLAIN, 13));
 			lblNewLabel_4_10_2_1.setBounds(402, 60, 56, 20);
 			panel_6.add(lblNewLabel_4_10_2_1);
 
-			JLabel lblNewLabel_4_14 = new JLabel("Tá»•ng tiá»�n thanh toÃ¡n:");
+			JLabel lblNewLabel_4_14 = new JLabel("Tổng tiền thanh toán:");
 			lblNewLabel_4_14.setFont(new Font("Monospaced", Font.PLAIN, 16));
 			lblNewLabel_4_14.setBounds(28, 91, 225, 20);
 			panel_6.add(lblNewLabel_4_14);
@@ -600,7 +598,7 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener {
 			lbl_TongTienThanhToan.setBounds(253, 91, 142, 20);
 			panel_6.add(lbl_TongTienThanhToan);
 
-			JLabel lblNewLabel_4_10_3 = new JLabel("VNÄ�");
+			JLabel lblNewLabel_4_10_3 = new JLabel("VNĐ");
 			lblNewLabel_4_10_3.setForeground(new Color(236, 109, 91));
 			lblNewLabel_4_10_3.setFont(new Font("Monospaced", Font.PLAIN, 16));
 			lblNewLabel_4_10_3.setBounds(402, 91, 56, 20);
@@ -649,7 +647,7 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener {
 //			
 			List<HoaDon> dsHoaDon = dao_HoaDon.getHoaDonTheoMa(maHD);
 			if(dsHoaDon.size()==0) {
-				JOptionPane.showMessageDialog(this, "KhÃ´ng tÃ¬m tháº¥y hÃ³a Ä‘Æ¡n cÃ³ mÃ£: "+ maHD);
+				JOptionPane.showMessageDialog(this, "Không tìm thấy hóa đơn có mã: "+ maHD);
 			}
 			DanhSachHoaDon(dsHoaDon);
 			return;
@@ -672,7 +670,7 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener {
 				}
 			}
 			if(ds.size()==0) {
-				JOptionPane.showMessageDialog(this, "KhÃ´ng tÃ¬m tháº¥y hÃ³a Ä‘Æ¡n cÃ³ sá»‘ Ä‘iá»‡n thoáº¡i khÃ¡ch hÃ ng lÃ : "+ soDienThoai);
+				JOptionPane.showMessageDialog(this, "Không tìm thấy hóa đơn có SĐT khách hàng là : "+ soDienThoai);
 				setPanelChiTietHoaDon();
 				return;
 			}
@@ -687,7 +685,7 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener {
 				}
 			}
 			if(ds.size()==0) {
-				JOptionPane.showMessageDialog(this, "KhÃ´ng tÃ¬m tháº¥y hÃ³a Ä‘Æ¡n cÃ³ mÃ£ nhÃ¢n viÃªn: "+ ma_NV);
+				JOptionPane.showMessageDialog(this, "Không tìm thấy hóa đơn có mã nhân viên: "+ ma_NV);
 				setPanelChiTietHoaDon();
 				return;
 			}
@@ -695,30 +693,30 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener {
 		}
 		
 		if(tuNgay==null && denNgay!=null) {
-			JOptionPane.showMessageDialog(this,"Pháº£i nháº­p ngÃ y báº¯t Ä‘áº§u");
+			JOptionPane.showMessageDialog(this,"Phải nhập ngày bắt đầu");
 			dateChooser_TuNgay.requestFocus();
 			return;
 		}else if(tuNgay!=null && denNgay==null) {
-			JOptionPane.showMessageDialog(this,"Pháº£i nháº­p ngÃ y káº¿t thÃºc");
+			JOptionPane.showMessageDialog(this,"Phải nhập ngày kết thúc");
 			dateChooser_DenNgay.requestFocus();
 			return;
 		}else if(tuNgay!=null && denNgay!=null) {
 			if(tuNgay.compareTo(denNgay)>=0) {
-				JOptionPane.showMessageDialog(this, "NgÃ y káº¿t thÃºc pháº£i lá»›n hÆ¡n hoáº·c báº±ng ngÃ y báº¯t Ä‘áº§u");
+				JOptionPane.showMessageDialog(this, "Ngày kết thúc phải lớn hơn ngày bắt đầu");
 				return;
 			}else if(tuNgay.compareTo(new Date())>=0) {
-				JOptionPane.showMessageDialog(this, "NgÃ y báº¯t Ä‘áº§u pháº£i nhá»� hÆ¡n ngÃ y hiá»‡n táº¡i");
+				JOptionPane.showMessageDialog(this, "Ngày bắt đầu phải nhỏ hơn ngày hiện tại");
 				return;
 			}
 			List<HoaDon> ds = new ArrayList<>();
 			for (HoaDon hoaDon : dsHD) {
 				Date thoiGianTao = Date.from(hoaDon.getThoiGianTao().atStartOfDay(ZoneId.systemDefault()).toInstant());
-				if(tuNgay.compareTo(thoiGianTao)<=0 && denNgay.compareTo(thoiGianTao)>=0) {
+				if(tuNgay.compareTo(thoiGianTao)<0 && denNgay.compareTo(thoiGianTao)>=0) {
 					ds.add(hoaDon);
 				}
 			}
 			if(ds.size()==0) {
-				JOptionPane.showMessageDialog(this, "KhÃ´ng tÃ¬m tháº¥y hÃ³a Ä‘Æ¡n tá»« dá»¯ liá»‡u trÃªn ");
+				JOptionPane.showMessageDialog(this, "Không tìm thấy hóa đơn từ dữ liệu trên ");
 				setPanelChiTietHoaDon();
 				return;
 			}
@@ -726,7 +724,7 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener {
 		}
 		
 		
-		System.out.println(tuNgay);
+		
 		DanhSachHoaDon(dsHD);
 		
 	}
