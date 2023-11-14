@@ -158,7 +158,7 @@ public class TrangChinhNVBanHang extends JFrame implements ActionListener {
 		trangChuPanel = new TrangChuPanel();
 		trangHuongDanJPanel = new TrangHuongDanJPanel();
 		trangQLKhachHangPanel = new TrangQLKhachHangPanel();
-		trangBanHangJPanel = new TrangBanHangJPanel();
+		trangBanHangJPanel = new TrangBanHangJPanel(null);
 		trangThongKeNVBanHangJPanel = new TrangThongKeNVBanHangJPanel();
 		
 		switchContent(trangChuPanel);

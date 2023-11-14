@@ -231,7 +231,7 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener {
 		// TODO Auto-generated method stub
 		Object o = e.getSource();
 		if (o.equals(btn_LapHoaDon)) {
-			switchContent(new TrangBanHangJPanel());
+			switchContent(new TrangBanHangJPanel(null));
 		}else
 		if (o.equals(btn_Tim)) {
 			
@@ -389,11 +389,11 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener {
 				panel_4.setLayout(null);
 
 				JPanel panel_5 = new JPanel();
-				panel_5.setBorder(new LineBorder(new Color(0, 0, 0)));
-				panel_5.setBounds(10, 11, 98, 117);
+				panel_5.setBounds(10, 11, 100, 120);
+				panel_5.setBackground(new Color(255, 255, 255));
 				// Đọc hình ảnh từ file hoặc URL
-//				ImageIcon originalIcon = new ImageIcon(listChiTietHoaDon.get(i).getHangHoa().getHinhAnh());
-				ImageIcon originalIcon = new ImageIcon("img\\plus.png");
+				ImageIcon originalIcon = new ImageIcon(hh.getHinhAnh());
+//				ImageIcon originalIcon = new ImageIcon("img\\plus.png");
 
 				// Lấy kích thước ban đầu của ảnh
 				int originalWidth = originalIcon.getIconWidth();
@@ -401,7 +401,7 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener {
 
 				// Tính toán kích thước mới (ví dụ: giảm kích thước xuống còn 100x100 pixel)
 				int newWidth = 100;
-				int newHeight = 100;
+				int newHeight = 120;
 
 				// Thay đổi kích thước của ảnh
 				Image scaledImage = originalIcon.getImage().getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);

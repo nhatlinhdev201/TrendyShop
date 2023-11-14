@@ -24,6 +24,10 @@ class AbstractTableHoaDon extends AbstractTableModel  {
         data.add(chiTiet);
         fireTableDataChanged();
     }
+    public void removeAllHoaDon() {
+        data.removeAll(data);
+        fireTableDataChanged();
+    }
     
     public void setHangHoa(int row, ChiTietHoaDon chiTiet) {
         data.set(row, chiTiet);

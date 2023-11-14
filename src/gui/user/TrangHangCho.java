@@ -53,6 +53,7 @@ public class TrangHangCho extends JFrame implements ActionListener {
 	private List<HoaDon> list_HoaDon;
 	private Dao_VoucherGiamGia dao_VoucherGiamGia;
 	private Dao_ChiTietHoaDon dao_ChiTiet;
+	
 
 	/**
 	 * Create the panel.
@@ -69,6 +70,7 @@ public class TrangHangCho extends JFrame implements ActionListener {
 		setSize(500, 444);
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(null);
+		setResizable(false);
 
 		JLabel lblNewLabel = new JLabel("Hàng chờ");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -172,6 +174,7 @@ public class TrangHangCho extends JFrame implements ActionListener {
 			if (isSelected) {
 				button.setForeground(table.getSelectionForeground());
 				txt_SDT.setText(list_KhachHangCho.get(row).getSoDienThoai());
+				timHoaDonDuocChon();
 
 			} else {
 				button.setForeground(table.getForeground());
@@ -255,9 +258,15 @@ public class TrangHangCho extends JFrame implements ActionListener {
 		} else if (o.equals(btn_TimHangCho)) {
 			timHangCho();
 		} else if (o.equals(btn_ThemHangCho)) {
+			if(!timSoDienThoaiTrungVoiHangCho()) return;
 			themHangCho();
 		}
-//		}else if(o.equals(btn_ThanhToan)) {
+		else if(o.equals(btn_ThanhToan)) {
+			new TrangBanHangJPanel(timHoaDonDuocChon());
+			this.dispose();
+			
+		}
+//		}else if() {
 ////			Thực hiện thêm thông tin từ hàng chờ sang hóa đơn
 ////			Hỏi có muốn thực hiện k
 //			if(true) {/*Biểu thức kiểm tra xem trang lập hóa đơn có trống kh*/
@@ -316,7 +325,6 @@ public class TrangHangCho extends JFrame implements ActionListener {
 		if(!kiemTraSDT()) {
 			return;
 		}
-		if(!kiemTraSDT()) return;
 		KhachHang khThem = null;
 
 		List<ChiTietHoaDon> list_ChiTietHoaDonCho = TrangBanHangJPanel.listChiTietHD;
@@ -355,10 +363,14 @@ public class TrangHangCho extends JFrame implements ActionListener {
 		HoaDon hoaDon = list_HoaDon.get(selected);
 		KhachHang khachHang= list_KhachHangCho.get(selected);
 		
+		
 		String maHD = hoaDon.getMaHoaDon();
 		dao_ChiTiet.deleteChiTietHoaDon(maHD);
 		dao_HoaDon.deleteHoaDon(maHD);
 		if(khachHang.getMaKhachHang().substring(0, 2).equals("KC")) dao_KhachHang.deleteKhachHang(khachHang.getMaKhachHang());
+		list_HoaDon.remove(selected);
+		list_KhachHangCho.remove(selected);
+		
 		
 	}
 	public boolean timSoDienThoaiTrungVoiHangCho() {
@@ -373,5 +385,15 @@ public class TrangHangCho extends JFrame implements ActionListener {
 	
 	public void thanhToanHangCho() {
 		
+	}
+	
+	
+	public HoaDon timHoaDonDuocChon() {
+		if(table.getSelectedRow()>=0)
+		return list_HoaDon.get(table.getSelectedRow());
+		else {
+			JOptionPane.showMessageDialog(this, "Vui lòng chọn hàng chờ bạn muốn thanh toán");
+			return null;
+		}
 	}
 }
