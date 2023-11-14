@@ -50,6 +50,7 @@ public class FromThemNhanVien extends JFrame {
 
 	/**
 	 * Create the frame.
+	 * @param parentFrame 
 	 */
 	public FromThemNhanVien() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
