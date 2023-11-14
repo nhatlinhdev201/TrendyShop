@@ -2,23 +2,43 @@ package gui;
 
 import java.awt.EventQueue;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import connection.ConnectDataBase;
+import entities.NhanVien;
+import gui.admin.TrangChinhNVQuanLy;
+import gui.user.TrangChinhNVBanHang;
+
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 public class TrangDangNhap extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField txt_taiKhoan;
 	private JPasswordField passwordField;
-
+	public Connection connection;
+	public static NhanVien taiKhoan;
+	private String tenTaiKhoanAdmin = "ADMIN";
+	private String matKhauAdmin = "ADMIN";
+	public static boolean TrangThaiDangNhapNhanVien = false;
+	public static boolean TrangThaiDangNhapQuanLy = false;
 	/**
 	 * Launch the application.
 	 */
@@ -110,6 +130,170 @@ public class TrangDangNhap extends JFrame {
 		passwordField = new JPasswordField();
 		passwordField.setBounds(77, 0, 155, 32);
 		passwordField.setBorder(null);
-		panel_1_1.add(passwordField);;
+		panel_1_1.add(passwordField);
+		
+		JButton btn_dangNhap = new JButton("Đăng nhập");
+		btn_dangNhap.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent e) {
+		        String taiKhoan = txt_taiKhoan.getText();
+		        String matKhau = new String(passwordField.getPassword());
+		        loadTaiKhoan(taiKhoan,matKhau);
+		        if(taiKhoan.trim().equals("") && matKhau.trim().equals(""))
+		        {
+		        	JOptionPane.showMessageDialog(
+		                    null,
+		                    "Tài khoản mật khẩu không được để trống !",
+		                    "Thông báo",
+		                    JOptionPane.ERROR_MESSAGE,
+		                    new ImageIcon("images/warning.png"));
+		        }else {
+		        	try {
+		        		 kiemTraDangNhap(taiKhoan, matKhau);
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+		       
+		        }
+		    }
+		});
+		btn_dangNhap.setBackground(new Color(124, 252, 0));
+		btn_dangNhap.setFont(new Font("Tahoma", Font.BOLD, 20));
+		btn_dangNhap.setBounds(81, 294, 161, 39);
+		setLocationRelativeTo(null);
+		panel.add(btn_dangNhap);;
 	}
+//	public static void kiemTraDangNhap(String taiKhoan, String matKhau) {
+//        boolean dangNhapThanhCong = false;
+//        
+//        
+//        
+//
+//        if (dangNhapThanhCong) {
+//            // Nếu đăng nhập thành công, kiểm tra loại tài khoản và thực hiện các hành động tương ứng
+//            if (taiKhoan.contains("QL")) {
+//                JOptionPane.showMessageDialog(null, "Đăng nhập thành công! Chuyển đến trang quản lý.");
+//                // Thực hiện các hành động cho trang quản lý
+//                // Ví dụ: Mở JFrame trang quản lý
+//                // MainFormQuanLy mainFormQuanLy = new MainFormQuanLy();
+//                // mainFormQuanLy.setVisible(true);
+//            } else if (taiKhoan.contains("NV")) {
+//                JOptionPane.showMessageDialog(null, "Đăng nhập thành công! Chuyển đến trang nhân viên.");
+//                // Thực hiện các hành động cho trang nhân viên
+//                // Ví dụ: Mở JFrame trang nhân viên
+//                // MainFormNhanVien mainFormNhanVien = new MainFormNhanVien();
+//                // mainFormNhanVien.setVisible(true);
+//            } else {
+//                JOptionPane.showMessageDialog(null, "Loại tài khoản không hợp lệ!");
+//            }
+//        } else {
+//            JOptionPane.showMessageDialog(null, "Đăng nhập không thành công. Vui lòng kiểm tra tài khoản và mật khẩu.");
+//        }
+//    }
+	public boolean kiemTraDangNhap(String tenDangNhap, String matKhau) {
+		if(taiKhoan != null)
+		{
+		 if (taiKhoan.getMaNhanVien().equalsIgnoreCase(tenDangNhap)
+				&& taiKhoan.getMatKhau().equalsIgnoreCase(matKhau)
+				&& tenDangNhap.contains("NV")) {
+//			TrangThaiDangNhapNhanVien = true;
+			TrangChinhNVBanHang trangChinhNVBanHang = new TrangChinhNVBanHang();
+			this.dispose();	
+			trangChinhNVBanHang.setVisible(true);
+			
+			return true;
+		} else if (taiKhoan.getMaNhanVien().equalsIgnoreCase(tenDangNhap)
+				&& taiKhoan.getMatKhau().equalsIgnoreCase(matKhau)
+				&& tenDangNhap.contains("QL")) {
+//			TrangThaiDangNhapQuanLy = true;
+			this.dispose();	
+			TrangChinhNVQuanLy trangChinhNVQuanLy2 = new TrangChinhNVQuanLy();
+			trangChinhNVQuanLy2.setVisible(true);
+
+			return true;
+		}
+	}else {
+		JOptionPane.showMessageDialog(
+                null,
+                "Tài khoản mật khẩu không đúng !",
+                "Thông báo",
+                JOptionPane.ERROR_MESSAGE,
+                new ImageIcon("images/warning.png"));
+	}
+		return false;
+	}
+
+	
+	public boolean KiemTraDuLieu() {
+		String tenUser = txt_taiKhoan.getText();
+		// ten dang nhap phai la chu hoac so va khong co ki tu dac biet co toi da tu
+		// 5-20 ki tu
+		boolean match = tenUser.matches("[a-zA-z0-9 ]{3,20}");
+		if (match != true) {
+			 JOptionPane.showMessageDialog(this, "Tài Khoản Không Hợp lệ");
+			return false;
+		} else
+			return true;
+	}
+	public void loadTaiKhoan(String maNhanVien, String matKhau) {
+	    try {
+	        connection = ConnectDataBase.getInstance().connection;
+	        PreparedStatement stmt = null;
+	        String sql = "SELECT * FROM dbo.NhanVien WHERE maNhanVien=? AND matKhau=?";
+
+	        stmt = connection.prepareStatement(sql);
+	        stmt.setString(1, maNhanVien);
+	        stmt.setString(2, matKhau);
+	        ResultSet rs = stmt.executeQuery();
+	        while (rs.next()) {
+	            String ten = rs.getString("maNhanVien").trim(); // Thay đổi chỉ số cột nếu cần thiết
+	            String mk = rs.getString("matKhau").trim();
+	            boolean loaiTk = rs.getBoolean("phanQuyen");
+	            taiKhoan = new NhanVien(maNhanVien, matKhau, loaiTk);
+	        }
+	    } catch (Exception e) {
+	        // Xử lý ngoại lệ (exception handling) nên được thực hiện cụ thể hơn để có thể hiểu và xử lý lỗi một cách chính xác.
+	        e.printStackTrace();
+	    }
+	}
+//	public void logIn() {
+//		try {
+//			if (KiemTraDuLieu()) {
+//				String taiKhoan = txt_taiKhoan.getText();
+//		        String matKhau = new String(passwordField.getPassword());
+//		        loadTaiKhoanQL(taiKhoan, matKhau);
+//				if (kiemTraDangNhap(taiKhoan, matKhau) && TrangThaiDangNhapNhanVien == true
+//						&& TrangThaiDangNhapQuanLy == true) {
+//					usernameToGetNhanVien = txtUser.getText();
+//					System.out.println("1 " + usernameToGetNhanVien);
+//					FrmManHinhChinh frmManHinhChinh = new FrmManHinhChinh();
+//					frmManHinhChinh.setVisible(true);
+//					this.setVisible(false);
+//				} else if (kiemTraDangNhap(tenDN, matKhau) && TrangThaiDangNhapNhanVien == true) {
+//					usernameToGetNhanVien = txtUser.getText();
+//					System.out.println("2 " + usernameToGetNhanVien);
+//					FrmManHinhChinh frmManHinhChinh = new FrmManHinhChinh();
+//					frmManHinhChinh.mntmQuanLyThuoc.setEnabled(false);
+//					frmManHinhChinh.mnNhanVien.setEnabled(false);
+//					frmManHinhChinh.mnThongKe.setEnabled(false);
+//					frmManHinhChinh.setVisible(true);
+//					this.setVisible(false);
+//				} else if (kiemTraDangNhap(tenDN, matKhau) && TrangThaiDangNhapQuanLy == true) {
+//					usernameToGetNhanVien = txtUser.getText();
+//					System.out.println("3 " + usernameToGetNhanVien);
+//					FrmManHinhChinh frmManHinhChinh = new FrmManHinhChinh();
+//					frmManHinhChinh.mnLapHoaDon.setEnabled(false);
+//					frmManHinhChinh.setVisible(true);
+//
+//					this.setVisible(false);
+//				}
+//
+//				else
+//					JOptionPane.showMessageDialog(this, "Tên Đăng Nhập, Hoặc Mật Khẩu Sai.");
+//			}
+//		} catch (Exception e2) {
+//			// TODO: handle exception
+//			// e2.printStackTrace();
+//			JOptionPane.showMessageDialog(this, "Tên Đăng Nhập, Hoặc Mật Khẩu Sai.");
+//		}
+//	}
 }

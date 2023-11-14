@@ -3,6 +3,7 @@ package daos;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -32,7 +33,7 @@ public class Dao_VoucherGiamGia {
 				voucher.setNgayBatDau(resultSet.getDate("ngayBatDau"));
 				voucher.setNgayKetThuc(resultSet.getDate("ngayKetThuc"));
 				voucher.setTrangThai(resultSet.getBoolean("trangThai"));
-				voucher.setSoLuotSuDung(resultSet.getInt("soLuotDung"));
+				voucher.setSoLuotDung(resultSet.getInt("soLuotDung"));
 				dsVoucher.add(voucher);
 			}
 
@@ -56,7 +57,7 @@ public class Dao_VoucherGiamGia {
 				voucher.setNgayBatDau(resultSet.getDate("ngayBatDau"));
 				voucher.setNgayKetThuc(resultSet.getDate("ngayKetThuc"));
 				voucher.setTrangThai(resultSet.getBoolean("trangThai"));
-				voucher.setSoLuotSuDung(resultSet.getInt("soLuotDung"));
+				voucher.setSoLuotDung(resultSet.getInt("soLuotDung"));
 				dsVoucher.add(voucher);
 			}
 
@@ -80,7 +81,7 @@ public class Dao_VoucherGiamGia {
 				voucher.setNgayBatDau(resultSet.getDate("ngayBatDau"));
 				voucher.setNgayKetThuc(resultSet.getDate("ngayKetThuc"));
 				voucher.setTrangThai(resultSet.getBoolean("trangThai"));
-				voucher.setSoLuotSuDung(resultSet.getInt("soLuotDung"));
+				voucher.setSoLuotDung(resultSet.getInt("soLuotDung"));
 			}
 
 		} catch (Exception e) {
@@ -89,6 +90,7 @@ public class Dao_VoucherGiamGia {
 		return voucher;
 	}
 	
+//<<<<<<< HEAD
 	
 	public List<String> getAllPhanTramGiamGia() {
 		List<String> dsPhanTramGiamGia = null;
@@ -140,4 +142,35 @@ public class Dao_VoucherGiamGia {
 		}
 		return dsTenVoucher;
 	}
+//=======
+	public boolean updateVoucher(VoucherGiamGia voucher) {
+		try {
+
+			String updateQuery = "UPDATE VoucherGiamGia " + "SET tenVoucher = ?, moTaChuongTrinh = ?, phanTramGiamTheoHoaDon = ?, ngayBatDau = ?, "
+					+ "ngayKetThuc = ?, trangThai = ?, soLuotDung = ? "
+					+ "WHERE maVoucher = ?";
+
+			PreparedStatement preparedStatement = connection.prepareStatement(updateQuery);
+			preparedStatement.setString(1, voucher.getTenVoucher());
+			preparedStatement.setString(2,voucher.getMoTaChuongTrinh());
+			preparedStatement.setFloat(3, Float.valueOf(voucher.getPhanTramGiamTheoHoaDon()).shortValue());
+			preparedStatement.setDate(4, java.sql.Date.valueOf(voucher.getNgayBatDau().toString()));
+			preparedStatement.setDate(5, java.sql.Date.valueOf(voucher.getNgayKetThuc().toString()));
+			preparedStatement.setBoolean(6, voucher.isTrangThai());
+			preparedStatement.setInt(7, voucher.getSoLuotDung());
+			preparedStatement.setString(8, voucher.getMaVoucher());
+
+			int n = preparedStatement.executeUpdate();
+			if (n > 0) {
+				return true;
+			}
+			preparedStatement.close();
+			connection.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+//>>>>>>> origin/main
 }

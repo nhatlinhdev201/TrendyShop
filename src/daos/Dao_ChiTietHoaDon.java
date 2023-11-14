@@ -1,8 +1,10 @@
 package daos;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -68,6 +70,51 @@ public class Dao_ChiTietHoaDon {
 		}
 		return dsChiTietHoaDon;
 	}
+
+	public boolean insertChiTietHoadon(ChiTietHoaDon chitiet) {
+		try {
+
+			String insertQuery = "INSERT INTO ChiTietHoaDon (maHangHoa, maHoaDon, soLuong, giaBan, thanhTien) "
+					+ "VALUES (?, ?, ?, ?, ?)";
+
+			PreparedStatement preparedStatement = connection.prepareStatement(insertQuery);
+			preparedStatement.setString(1, chitiet.getHangHoa().getMaHangHoa());
+			preparedStatement.setString(2, chitiet.getHoaDon().getMaHoaDon());
+			preparedStatement.setInt(3, chitiet.getSoLuong());
+			preparedStatement.setDouble(4, chitiet.getGiaBan());
+			preparedStatement.setDouble(5, chitiet.getThanhTien());
+
+			int n = preparedStatement.executeUpdate();
+			if (n > 0) {
+				return true;
+			}
+			preparedStatement.close();
+			connection.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
 	
-	
+	/**
+	 * Quyền Cơ:
+	 * Xóa chi tiết hóa đơn 
+	 * @param mahd
+	 * @return
+	 */
+	public boolean deleteChiTietHoaDon(String mahd) {
+		try {
+			PreparedStatement preparedStatement = connection
+					.prepareStatement("delete from ChiTietHoaDon where maHoaDon ='"+mahd+"'");
+			int n = preparedStatement.executeUpdate();
+			if (n > 0) {
+				return true;
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
 }

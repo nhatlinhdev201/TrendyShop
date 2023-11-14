@@ -2,13 +2,19 @@ package gui;
 
 import java.awt.EventQueue;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.Image;
+import java.time.LocalDate;
+
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
+
+import java.awt.BorderLayout;
 import java.awt.Color;
 
 public class TrangThongTinDangNhap extends JFrame {
@@ -56,13 +62,13 @@ public class TrangThongTinDangNhap extends JFrame {
 		lblNewLabel_1.setBounds(262, 54, 140, 14);
 		contentPane.add(lblNewLabel_1);
 		
-		JLabel lbl_ThoiGianDangNhap = new JLabel("19/01/2023");
+		JLabel lbl_ThoiGianDangNhap = new JLabel(LocalDate.now().toString());
 		lbl_ThoiGianDangNhap.setBounds(418, 54, 77, 14);
 		contentPane.add(lbl_ThoiGianDangNhap);
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panel.setBounds(45, 90, 118, 148);
+		panel.setBounds(35, 90, 120, 150);
 		contentPane.add(panel);
 		
 		JLabel lblNewLabel_3 = new JLabel("Mã nhân viên:");
@@ -70,7 +76,7 @@ public class TrangThongTinDangNhap extends JFrame {
 		lblNewLabel_3.setBounds(184, 90, 123, 14);
 		contentPane.add(lblNewLabel_3);
 		
-		JLabel lbl_MaNhanVien = new JLabel("NV001");
+		JLabel lbl_MaNhanVien = new JLabel();
 		lbl_MaNhanVien.setFont(new Font("Monospaced", Font.PLAIN, 13));
 		lbl_MaNhanVien.setBounds(328, 90, 147, 14);
 		contentPane.add(lbl_MaNhanVien);
@@ -134,5 +140,30 @@ public class TrangThongTinDangNhap extends JFrame {
 		lbl_ChucVu.setFont(new Font("Monospaced", Font.PLAIN, 13));
 		lbl_ChucVu.setBounds(328, 240, 147, 14);
 		contentPane.add(lbl_ChucVu);
+		
+		// Đọc hình ảnh từ file hoặc URL
+//		ImageIcon originalIcon = new ImageIcon(listChiTietHoaDon.get(i).getHangHoa().getHinhAnh());
+		ImageIcon originalIcon = new ImageIcon("img\\NV_QuyenCo.jpg");
+
+		// Lấy kích thước ban đầu của ảnh
+		int originalWidth = originalIcon.getIconWidth();
+		int originalHeight = originalIcon.getIconHeight();
+
+		// Tính toán kích thước mới (ví dụ: giảm kích thước xuống còn 100x100 pixel)
+		int newWidth = 120;
+		int newHeight = 150;
+
+		// Thay đổi kích thước của ảnh
+		Image scaledImage = originalIcon.getImage().getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
+
+		// Tạo một ImageIcon mới từ ảnh đã thay đổi kích thước
+		ImageIcon scaledIcon = new ImageIcon(scaledImage);
+		panel.setLayout(new BorderLayout(0, 0));
+
+		// Tạo JLabel để hiển thị hình ảnh
+		JLabel label = new JLabel(scaledIcon);
+
+		// Thêm JLabel vào panel
+		panel.add(label);
 	}
 }

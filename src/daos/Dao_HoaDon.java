@@ -20,6 +20,7 @@ public class Dao_HoaDon {
 	public Dao_HoaDon() {
 		connection = ConnectDataBase.getInstance().connection;
 	}
+
 	public boolean insertHoaDon(HoaDon hoaDon) {
 		try {
 
@@ -27,14 +28,14 @@ public class Dao_HoaDon {
 					+ "VALUES (?, ?, ?, ?, ?, ?,?)";
 
 			PreparedStatement preparedStatement = connection.prepareStatement(insertQuery);
-			preparedStatement.setString(0, hoaDon.getMaHoaDon());
-			preparedStatement.setDate(1, Date.valueOf(hoaDon.getThoiGianTao()));
-			preparedStatement.setDouble(2, hoaDon.getTongThanhTien());
-			preparedStatement.setString(3, hoaDon.getVoucher().getMaVoucher());
-			preparedStatement.setString(4, hoaDon.getKhachHang().getMaKhachHang());
-			preparedStatement.setString(5, hoaDon.getNguoiLapHoaDon().getMaNhanVien());
-			preparedStatement.setBoolean(6, hoaDon.isTrangThaiThanhToan());
-			
+
+			preparedStatement.setString(1, hoaDon.getMaHoaDon());
+			preparedStatement.setDate(2, Date.valueOf(hoaDon.getThoiGianTao()));
+			preparedStatement.setLong(3,(long)  hoaDon.getTongThanhTien());
+			preparedStatement.setString(4, hoaDon.getVoucher().getMaVoucher());
+			preparedStatement.setString(5, hoaDon.getKhachHang().getMaKhachHang());
+			preparedStatement.setString(6, hoaDon.getNguoiLapHoaDon().getMaNhanVien());
+			preparedStatement.setBoolean(7, hoaDon.isTrangThaiThanhToan());
 
 			int n = preparedStatement.executeUpdate();
 			if (n > 0) {
@@ -47,7 +48,7 @@ public class Dao_HoaDon {
 		}
 		return false;
 	}
-	
+
 	public List<HoaDon> getAll() {
 		List<HoaDon> dsHoaDon = null;
 		try {
@@ -63,8 +64,7 @@ public class Dao_HoaDon {
 				hoaDon.setKhachHang(new KhachHang(resultSet.getString("maKhachHang")));
 				hoaDon.setNguoiLapHoaDon(new NhanVien(resultSet.getString("maNhanVien").trim()));
 				hoaDon.setTrangThaiThanhToan(resultSet.getBoolean("trangThaiThanhToan"));
-				
-				
+
 				dsHoaDon.add(hoaDon);
 			}
 
@@ -73,11 +73,12 @@ public class Dao_HoaDon {
 		}
 		return dsHoaDon;
 	}
-	
+
 	public List<HoaDon> getHoaDonTheoMa(String maHD) {
 		List<HoaDon> dsHoaDon = null;
 		try {
-			PreparedStatement statement = connection.prepareStatement("select * from HoaDon where maHoaDon = '"+maHD+"'");
+			PreparedStatement statement = connection
+					.prepareStatement("select * from HoaDon where maHoaDon = '" + maHD + "'");
 			ResultSet resultSet = statement.executeQuery();
 			dsHoaDon = new ArrayList<HoaDon>();
 			while (resultSet.next()) {
@@ -89,8 +90,7 @@ public class Dao_HoaDon {
 				hoaDon.setKhachHang(new KhachHang(resultSet.getString("maKhachHang")));
 				hoaDon.setNguoiLapHoaDon(new NhanVien(resultSet.getString("maNhanVien")));
 				hoaDon.setTrangThaiThanhToan(resultSet.getBoolean("trangThaiThanhToan"));
-				
-				
+
 				dsHoaDon.add(hoaDon);
 			}
 
@@ -99,11 +99,12 @@ public class Dao_HoaDon {
 		}
 		return dsHoaDon;
 	}
-	
+
 	public List<HoaDon> getHoaDonTheoMaKhachHang(String maKH) {
 		List<HoaDon> dsHoaDon = null;
 		try {
-			PreparedStatement statement = connection.prepareStatement("select * from HoaDon where maKhachHang = '"+maKH+"'");
+			PreparedStatement statement = connection
+					.prepareStatement("select * from HoaDon where maKhachHang = '" + maKH + "'");
 			ResultSet resultSet = statement.executeQuery();
 			dsHoaDon = new ArrayList<HoaDon>();
 			while (resultSet.next()) {
@@ -115,8 +116,87 @@ public class Dao_HoaDon {
 				hoaDon.setKhachHang(new KhachHang(resultSet.getString("maKhachHang")));
 				hoaDon.setNguoiLapHoaDon(new NhanVien(resultSet.getString("maNhanVien")));
 				hoaDon.setTrangThaiThanhToan(resultSet.getBoolean("trangThaiThanhToan"));
-				
-				
+
+				dsHoaDon.add(hoaDon);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dsHoaDon;
+	}
+
+	public List<HoaDon> getHoaDonTheoMaNhanVien(String maNhanVien) {
+		List<HoaDon> dsHoaDon = null;
+		try {
+			PreparedStatement statement = connection
+					.prepareStatement("select * from HoaDon where maNhanVien = '" + maNhanVien + "'");
+			ResultSet resultSet = statement.executeQuery();
+			dsHoaDon = new ArrayList<HoaDon>();
+			while (resultSet.next()) {
+				HoaDon hoaDon = new HoaDon();
+				hoaDon.setMaHoaDon(resultSet.getString("maHoaDon").trim());
+				hoaDon.setThoiGianTao(resultSet.getDate("thoiGianTao").toLocalDate());
+				hoaDon.setTongThanhTien(resultSet.getDouble("tongThanhTien"));
+				hoaDon.setVoucher(new VoucherGiamGia(resultSet.getString("maVoucher")));
+				hoaDon.setKhachHang(new KhachHang(resultSet.getString("maKhachHang")));
+				hoaDon.setNguoiLapHoaDon(new NhanVien(resultSet.getString("maNhanVien")));
+				hoaDon.setTrangThaiThanhToan(resultSet.getBoolean("trangThaiThanhToan"));
+
+				dsHoaDon.add(hoaDon);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dsHoaDon;
+	}
+
+	/**
+	 * Quyền Cơ
+	 * Lay ra ma hoa don duoc lap gan nhat trong ngay
+	 * @param ngay
+	 * @return Mã hóa đơn
+	 */
+	public int getHoaDonDuocLapGanNhatTrongNgay(String ngay) {
+		int maHoaDon = 0;
+		try {
+			PreparedStatement statement = connection.prepareStatement(
+					"select top 1 *from HoaDon where thoiGianTao = '" + ngay + "' order by maHoaDon desc");
+			ResultSet resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				maHoaDon = Integer.parseInt(resultSet.getString("maHoaDon").trim().substring(10));
+
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return maHoaDon;
+	}
+
+	/**
+	 * Quyền Cơ:
+	 * Lấy danh sách những hóa đơn chưa được thanh toán (đưa vào hàng chờ)
+	 * @return
+	 */
+	public List<HoaDon> getHoaDonChuaThanhToan() {
+		List<HoaDon> dsHoaDon = null;
+		try {
+			PreparedStatement statement = connection
+					.prepareStatement("select*from HoaDon where trangThaiThanhToan = 0");
+			ResultSet resultSet = statement.executeQuery();
+			dsHoaDon = new ArrayList<HoaDon>();
+			while (resultSet.next()) {
+				HoaDon hoaDon = new HoaDon();
+				hoaDon.setMaHoaDon(resultSet.getString("maHoaDon").trim());
+				hoaDon.setThoiGianTao(resultSet.getDate("thoiGianTao").toLocalDate());
+				hoaDon.setTongThanhTien(resultSet.getDouble("tongThanhTien"));
+				hoaDon.setVoucher(new VoucherGiamGia(resultSet.getString("maVoucher")));
+				hoaDon.setKhachHang(new KhachHang(resultSet.getString("maKhachHang")));
+				hoaDon.setNguoiLapHoaDon(new NhanVien(resultSet.getString("maNhanVien")));
+				hoaDon.setTrangThaiThanhToan(resultSet.getBoolean("trangThaiThanhToan"));
+
 				dsHoaDon.add(hoaDon);
 			}
 
@@ -126,29 +206,24 @@ public class Dao_HoaDon {
 		return dsHoaDon;
 	}
 	
-	public List<HoaDon> getHoaDonTheoMaNhanVien(String maNhanVien) {
-		List<HoaDon> dsHoaDon = null;
+	/**
+	 * Quyền Cơ:
+	 * Xóa hóa đơn là hàng chờ ra hỏi database
+	 * @param mahd
+	 * @return
+	 */
+	public boolean deleteHoaDon(String mahd) {
 		try {
-			PreparedStatement statement = connection.prepareStatement("select * from HoaDon where maNhanVien = '"+maNhanVien+"'");
-			ResultSet resultSet = statement.executeQuery();
-			dsHoaDon = new ArrayList<HoaDon>();
-			while (resultSet.next()) {
-				HoaDon hoaDon = new HoaDon();
-				hoaDon.setMaHoaDon(resultSet.getString("maHoaDon").trim());
-				hoaDon.setThoiGianTao(resultSet.getDate("thoiGianTao").toLocalDate());
-				hoaDon.setTongThanhTien(resultSet.getDouble("tongThanhTien"));
-				hoaDon.setVoucher(new VoucherGiamGia(resultSet.getString("maVoucher")));
-				hoaDon.setKhachHang(new KhachHang(resultSet.getString("maKhachHang")));
-				hoaDon.setNguoiLapHoaDon(new NhanVien(resultSet.getString("maNhanVien")));
-				hoaDon.setTrangThaiThanhToan(resultSet.getBoolean("trangThaiThanhToan"));
-				
-				
-				dsHoaDon.add(hoaDon);
+			PreparedStatement preparedStatement = connection
+					.prepareStatement("delete from HoaDon where maHoaDon ='"+mahd+"'");
+			int n = preparedStatement.executeUpdate();
+			if (n > 0) {
+				return true;
 			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return dsHoaDon;
+		return false;
 	}
-}	
+}

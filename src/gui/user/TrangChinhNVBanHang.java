@@ -19,9 +19,12 @@ import javax.swing.border.EmptyBorder;
 
 import constance.SetBoundsJFrameMain;
 import constance.SetBountJPanel;
+import daos.Dao_NhanVien;
+import entities.NhanVien;
 import gui.TrangChuPanel;
 import gui.TrangHuongDanJPanel;
 import gui.TrangQLKhachHangPanel;
+import gui.TrangThongTinDangNhap;
 import gui.admin.TrangQLNhanVienJPanel;
 import gui.admin.TrangQuanLyHangHoaJPanel;
 import gui.admin.TrangThongKeNVQuanLyJPanel;
@@ -42,8 +45,13 @@ public class TrangChinhNVBanHang extends JFrame implements ActionListener {
 	private TrangBanHangJPanel trangBanHangJPanel;
 	private TrangThongKeNVBanHangJPanel trangThongKeNVBanHangJPanel;
 	private JPanel currentContent;
+	
+	private Dao_NhanVien dao_nhanVien;
+	
+	static NhanVien nv;
 
-	/**
+
+		/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
@@ -65,6 +73,12 @@ public class TrangChinhNVBanHang extends JFrame implements ActionListener {
 	 * Create the frame.
 	 */
 	public TrangChinhNVBanHang() {
+		
+		dao_nhanVien = new Dao_NhanVien();
+		
+		nv = dao_nhanVien.getNhanVienTheoMa("NV0002");
+		
+		
 		setBackground(new Color(255, 204, 153));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(SetBoundsJFrameMain.WINDOWX, SetBoundsJFrameMain.WINDOWY, SetBoundsJFrameMain.WINDOW_WIDTH,
@@ -123,7 +137,7 @@ public class TrangChinhNVBanHang extends JFrame implements ActionListener {
 		btnMenuCnQlyTroGiup.setBounds(560, 0, 138, 26);
 		mainMenu.add(btnMenuCnQlyTroGiup);
 
-		JLabel lblUsernameLogin = new JLabel("Nhật Linh");
+		JLabel lblUsernameLogin = new JLabel(nv.getHoTen());
 		lblUsernameLogin.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		lblUsernameLogin.setBounds(1113, 5, 158, 21);
 		mainMenu.add(lblUsernameLogin);
@@ -144,7 +158,7 @@ public class TrangChinhNVBanHang extends JFrame implements ActionListener {
 		trangChuPanel = new TrangChuPanel();
 		trangHuongDanJPanel = new TrangHuongDanJPanel();
 		trangQLKhachHangPanel = new TrangQLKhachHangPanel();
-		trangBanHangJPanel = new TrangBanHangJPanel();
+		trangBanHangJPanel = new TrangBanHangJPanel(null);
 		trangThongKeNVBanHangJPanel = new TrangThongKeNVBanHangJPanel();
 		
 		switchContent(trangChuPanel);
@@ -174,7 +188,7 @@ public class TrangChinhNVBanHang extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
 		if (o.equals(btnMenuTrangChu)) {
-			switchContent(trangChuPanel);
+			switchContent(new TrangChuPanel());
 		}else if(o.equals(btnMenuCnQlyKhachHang)) {
 			switchContent(trangQLKhachHangPanel);
 		}else if(o.equals(btnMenuCnQlyKhachHang)) {
@@ -186,7 +200,7 @@ public class TrangChinhNVBanHang extends JFrame implements ActionListener {
 		} else if (o.equals(btnMenuCnQlyThongKe)) {
 			switchContent(trangThongKeNVBanHangJPanel);
 		} else if (o.equals(btnMenuCnXemThongTinTK)) {
-			JOptionPane.showMessageDialog(this, "Nhật Linh");
+			new TrangThongTinDangNhap().setVisible(true);
 		} else if (o.equals(btnMenuCnDangXuatTK)) {
 			JOptionPane.showMessageDialog(this, "Đăng xuất thành công");
 		} else {

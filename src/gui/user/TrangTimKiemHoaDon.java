@@ -34,6 +34,7 @@ import entities.ChiTietHoaDon;
 import entities.HangHoa;
 import entities.HoaDon;
 import entities.KhachHang;
+import entities.NhanVien;
 import entities.VoucherGiamGia;
 
 import javax.swing.JLabel;
@@ -69,11 +70,12 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener {
 	private DecimalFormat decimalFormat = new DecimalFormat("#,##0");
 	private JDateChooser dateChooser_TuNgay;
 	private JDateChooser dateChooser_DenNgay;
+	private NhanVien nv_DangNhap;
 
 	/**
 	 * Create the panel.
 	 */
-	public TrangTimKiemHoaDon() {
+	public TrangTimKiemHoaDon(NhanVien nhanVienDangNhap) {
 		dao_HoaDon = new Dao_HoaDon();
 		dao_ChiTietHoaDon = new Dao_ChiTietHoaDon();
 		dao_NhanVien = new Dao_NhanVien();
@@ -81,6 +83,8 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener {
 		dao_Voucher = new Dao_VoucherGiamGia();
 		dao_HangHoa = new Dao_HangHoa();
 		Dao_NhaCungCap = new Dao_NhaCungCap();
+		
+		nv_DangNhap = nhanVienDangNhap;
 
 		/* Thiáº¿t láº­p jpanel cho trang bÃ¡n hÃ ng */
 		this.setBounds(SetBountJPanel.X, SetBountJPanel.Y, SetBountJPanel.WIDTH, SetBountJPanel.HEIGHT);
@@ -205,7 +209,6 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener {
 		txt_MaHoaDon.addActionListener(this);
 		txt_SDT.addActionListener(this);
 		txt_maNV.addActionListener(this);
-		
 
 	}
 
@@ -228,7 +231,7 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener {
 		// TODO Auto-generated method stub
 		Object o = e.getSource();
 		if (o.equals(btn_LapHoaDon)) {
-			switchContent(new TrangBanHangJPanel());
+			switchContent(new TrangBanHangJPanel(null));
 		}else
 		if (o.equals(btn_Tim)) {
 			
@@ -272,7 +275,7 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener {
 			
 			
 			if(!listHoaDon.get(j).isTrangThaiThanhToan()) break;
-			KhachHang kh = dao_KhachHang.getKhachHangTheoMa(listHoaDon.get(j).getKhachHang().getMaKhachHang().trim());
+			KhachHang kh = dao_KhachHang.getKhachHangTheoMa(listHoaDon.get(j).getKhachHang().getMaKhachHang());
 			VoucherGiamGia voucher = dao_Voucher.getTheoMaVouCher(listHoaDon.get(j).getVoucher().getMaVoucher());
 			
 
@@ -337,10 +340,10 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener {
 			lbl_KhachHang.setBounds(420, 49, 170, 20);
 			panel_3.add(lbl_KhachHang);
 
-			JLabel lbl_MaGiamGia = new JLabel(voucher.getTenVoucher());
-			lbl_MaGiamGia.setFont(new Font("Monospaced", Font.PLAIN, 13));
-			lbl_MaGiamGia.setBounds(440, 80, 500, 20);
-			panel_3.add(lbl_MaGiamGia);
+//			JLabel lbl_MaGiamGia = new JLabel(voucher.getTenVoucher());
+//			lbl_MaGiamGia.setFont(new Font("Monospaced", Font.PLAIN, 13));
+//			lbl_MaGiamGia.setBounds(440, 80, 500, 20);
+//			panel_3.add(lbl_MaGiamGia);
 
 			JLabel lbl_SDT = new JLabel(kh.getSoDienThoai());
 			lbl_SDT.setFont(new Font("Monospaced", Font.PLAIN, 13));
@@ -377,7 +380,11 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener {
 
 			for (int i = 0; i < listChiTietHoaDon.size(); i++) {
 				
+//<<<<<<< HEAD
 				HangHoa hh = dao_HangHoa.getHangHoaByMaHangHao(listChiTietHoaDon.get(i).getHangHoa().getMaHangHoa());
+//=======
+//				HangHoa hh = dao_HangHoa.getListHangHoaByMaHangHoa(listChiTietHoaDon.get(i).getHangHoa().getMaHangHoa());
+//>>>>>>> origin/main
 				
 				JPanel panel_4 = new JPanel();
 				panel_4.setBorder(new LineBorder(Color.LIGHT_GRAY, 1, true));
@@ -386,11 +393,19 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener {
 				panel_4.setLayout(null);
 
 				JPanel panel_5 = new JPanel();
-				panel_5.setBorder(new LineBorder(new Color(0, 0, 0)));
-				panel_5.setBounds(10, 11, 98, 117);
-				// Ä�á»�c hÃ¬nh áº£nh tá»« file hoáº·c URL
-//				ImageIcon originalIcon = new ImageIcon(listChiTietHoaDon.get(i).getHangHoa().getHinhAnh());
-				ImageIcon originalIcon = new ImageIcon("img\\plus.png");
+//<<<<<<< HEAD
+//				panel_5.setBorder(new LineBorder(new Color(0, 0, 0)));
+//				panel_5.setBounds(10, 11, 98, 117);
+//				// Ä�á»�c hÃ¬nh áº£nh tá»« file hoáº·c URL
+////				ImageIcon originalIcon = new ImageIcon(listChiTietHoaDon.get(i).getHangHoa().getHinhAnh());
+//				ImageIcon originalIcon = new ImageIcon("img\\plus.png");
+//=======
+				panel_5.setBounds(10, 11, 100, 120);
+				panel_5.setBackground(new Color(255, 255, 255));
+				// Đọc hình ảnh từ file hoặc URL
+				ImageIcon originalIcon = new ImageIcon(hh.getHinhAnh());
+//				ImageIcon originalIcon = new ImageIcon("img\\plus.png");
+//>>>>>>> origin/main
 
 				// Láº¥y kÃ­ch thÆ°á»›c ban Ä‘áº§u cá»§a áº£nh
 				int originalWidth = originalIcon.getIconWidth();
@@ -398,7 +413,7 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener {
 
 				// TÃ­nh toÃ¡n kÃ­ch thÆ°á»›c má»›i (vÃ­ dá»¥: giáº£m kÃ­ch thÆ°á»›c xuá»‘ng cÃ²n 100x100 pixel)
 				int newWidth = 100;
-				int newHeight = 100;
+				int newHeight = 120;
 
 				// Thay Ä‘á»•i kÃ­ch thÆ°á»›c cá»§a áº£nh
 				Image scaledImage = originalIcon.getImage().getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
@@ -651,6 +666,7 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener {
 			
 			List<HoaDon> ds = new ArrayList<>();
 			for (HoaDon hoaDon : dsHD) {
+				if(kh.getMaKhachHang()==null)break;
 				if(kh.getMaKhachHang().equals(hoaDon.getKhachHang().getMaKhachHang())) {
 					ds.add(hoaDon);
 				}
