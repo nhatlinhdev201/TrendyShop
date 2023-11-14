@@ -5,6 +5,7 @@ import javax.swing.JPanel;
 import constance.SetBountJPanel;
 import daos.KhachHangDAO;
 import entities.KhachHang;
+import gui.admin.FromThemNhanVien;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -18,6 +19,7 @@ import java.awt.event.MouseListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
 import javax.swing.JScrollPane;
 import java.awt.Component;
@@ -45,6 +47,8 @@ public class TrangQLKhachHangPanel extends JPanel implements ActionListener,Mous
 	private JRadioButton btn_hoatDong ;
 	private JRadioButton btn_nghi;
 	private JButton btn_timKiem;
+	private JButton btn_them;
+	private JButton btn_load;
 	private static DefaultTableModel tableModel;
 	/**
 	 * Create the panel.
@@ -269,10 +273,10 @@ public class TrangQLKhachHangPanel extends JPanel implements ActionListener,Mous
         add(txt_timKiem);
         txt_timKiem.setColumns(10);
         
-        JButton btn_them = new JButton("Thêm");
+        btn_them = new JButton("Thêm");
         btn_them.setBackground(Color.GREEN);
         btn_them.setFont(new Font("Tahoma", Font.PLAIN, 14));
-        btn_them.setBounds(92, 619, 123, 33);
+        btn_them.setBounds(32, 619, 123, 33);
         String iconPath_them = "/images/plus.png";
 		ImageIcon iconThem = new ImageIcon(this.getClass().getResource(iconPath_them)); // Sử dụng getResource để lấy đường dẫn từ resources của ứng dụng
 
@@ -290,7 +294,7 @@ public class TrangQLKhachHangPanel extends JPanel implements ActionListener,Mous
         JButton btn_capNhat = new JButton("Cập nhật");
         btn_capNhat.setBackground(Color.ORANGE);
         btn_capNhat.setFont(new Font("Tahoma", Font.PLAIN, 14));
-        btn_capNhat.setBounds(249, 619, 123, 33);
+        btn_capNhat.setBounds(189, 619, 123, 33);
         String iconPath_capnhat = "/images/updated.png";
 		ImageIcon iconCapNhat = new ImageIcon(this.getClass().getResource(iconPath_capnhat)); // Sử dụng getResource để lấy đường dẫn từ resources của ứng dụng
 
@@ -301,9 +305,18 @@ public class TrangQLKhachHangPanel extends JPanel implements ActionListener,Mous
         add(btn_capNhat);
         docDuLieu();
         
+        
+        
+        btn_load = new JButton("LOAD");
+        btn_load.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        btn_load.setBackground(Color.ORANGE);
+        btn_load.setBounds(340, 619, 123, 33);
+        add(btn_load);
+        
         btn_capNhat.addActionListener(this);
         btn_timKiem.addActionListener(this);
-        
+        btn_them.addActionListener(this);
+        btn_load.addActionListener(this);
 	}
 	  public static void docDuLieu() {
 	        try {
@@ -389,13 +402,32 @@ public class TrangQLKhachHangPanel extends JPanel implements ActionListener,Mous
 		                ex.printStackTrace();
 		            }
 		        }
-		    }
+		    }else if(obj.equals(btn_them))
+		    {
+		    	FromThemKhachHang fromThemKhachHang = new FromThemKhachHang();
+		    	fromThemKhachHang.setVisible(true);	
+		    }else if(obj.equals(btn_load))
+			{
+		    	clearTable();
+			}
 		}
-	
 	  private void clearTable() {
-		    // Clear the existing data in the table model
-		    while (tableModel.getRowCount() > 0) {
-		        tableModel.removeRow(0);
+	        int rowCount = tableModel.getRowCount();
+//	        for (int i = rowCount - 1; i >= 0; i--) {
+	           tableModel.removeRow(5);
+//	        }
+	    }
+	  private void loadDataIntoTable() {
+		    try {
+		        // Clear existing data in the table
+		        clearTable();
+
+		        // Load data from the database into the table
+		        docDuLieu();
+		        
+		        // Additional logic if needed after loading data
+		    } catch (Exception ex) {
+		        ex.printStackTrace();
 		    }
 	  }
 	@Override

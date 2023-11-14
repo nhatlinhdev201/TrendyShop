@@ -22,27 +22,28 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 
 public class TrangQLNhanVienJPanel extends JPanel {
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
-	private JTextField textField_4;
-	private JTextField textField_5;
-	private JTextField textField_6;
-	private JTextField textField_7;
-	private JTextField textField_8;
-	private JTextField textField_9;
-	private JTextField textField_10;
-	private JTextField textField_11;
+	private JTextField textField_maNV;
+	private JTextField textField_ten;
+	private JTextField textField_ngaySinh;
+	private JTextField textField_diachi;
+	private JTextField textField_chucVu;
+	private JTextField textField_matKhau;
+	private JTextField textField_cccd;
+	private JTextField textField_trangThai;
+	private JTextField textField_sdt;
+	private JTextField textField_email;
+	private JTextField textField_phanQuyen;
+	private JTextField textField_anh;
 	private JTextField textField_12;
-
+	private JFrame parentFrame;
 	/**
 	 * Create the panel.
 	 */
 	public TrangQLNhanVienJPanel() {
 		this.setBounds(SetBountJPanel.X, SetBountJPanel.Y, SetBountJPanel.WIDTH, SetBountJPanel.HEIGHT);
 		setLayout(null);
-
+		this.parentFrame = parentFrame;
+		
 		JTable table = new JTable();
 		table.setFont(new Font("Tahoma", Font.PLAIN, 18));
 
@@ -62,120 +63,120 @@ public class TrangQLNhanVienJPanel extends JPanel {
 		lbl_manv.setBounds(464, 65, 123, 21);
 		add(lbl_manv);
 		
-		textField = new JTextField();
-		textField.setColumns(10);
-		textField.setBounds(589, 65, 177, 25);
-		add(textField);
+		textField_maNV = new JTextField();
+		textField_maNV.setColumns(10);
+		textField_maNV.setBounds(589, 65, 177, 25);
+		add(textField_maNV);
 		
 		JLabel lbl_tennv = new JLabel("Họ tên :");
 		lbl_tennv.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		lbl_tennv.setBounds(464, 97, 123, 21);
 		add(lbl_tennv);
 		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		textField_1.setBounds(589, 98, 177, 25);
-		add(textField_1);
+		textField_ten = new JTextField();
+		textField_ten.setColumns(10);
+		textField_ten.setBounds(589, 98, 177, 25);
+		add(textField_ten);
 		
 		JLabel lbl_Dfb = new JLabel("Ngày sinh :");
 		lbl_Dfb.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		lbl_Dfb.setBounds(464, 130, 123, 21);
 		add(lbl_Dfb);
 		
-		textField_2 = new JTextField();
-		textField_2.setColumns(10);
-		textField_2.setBounds(589, 130, 177, 25);
-		add(textField_2);
+		textField_ngaySinh = new JTextField();
+		textField_ngaySinh.setColumns(10);
+		textField_ngaySinh.setBounds(589, 130, 177, 25);
+		add(textField_ngaySinh);
 		
 		JLabel lbl_diachi = new JLabel("Đại chỉ :");
 		lbl_diachi.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		lbl_diachi.setBounds(821, 65, 123, 21);
 		add(lbl_diachi);
 		
-		textField_3 = new JTextField();
-		textField_3.setColumns(10);
-		textField_3.setBounds(946, 65, 177, 25);
-		add(textField_3);
+		textField_diachi = new JTextField();
+		textField_diachi.setColumns(10);
+		textField_diachi.setBounds(946, 65, 177, 25);
+		add(textField_diachi);
 		
 		JLabel lbl_chucVuu = new JLabel("Chức vụ :");
 		lbl_chucVuu.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		lbl_chucVuu.setBounds(821, 98, 123, 21);
 		add(lbl_chucVuu);
 		
-		textField_4 = new JTextField();
-		textField_4.setColumns(10);
-		textField_4.setBounds(946, 98, 177, 25);
-		add(textField_4);
+		textField_chucVu = new JTextField();
+		textField_chucVu.setColumns(10);
+		textField_chucVu.setBounds(946, 98, 177, 25);
+		add(textField_chucVu);
 		
 		JLabel lbl_makh_5 = new JLabel("Mật khẩu  :");
 		lbl_makh_5.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		lbl_makh_5.setBounds(821, 162, 123, 21);
 		add(lbl_makh_5);
 		
-		textField_5 = new JTextField();
-		textField_5.setColumns(10);
-		textField_5.setBounds(946, 162, 177, 25);
-		add(textField_5);
+		textField_matKhau = new JTextField();
+		textField_matKhau.setColumns(10);
+		textField_matKhau.setBounds(946, 162, 177, 25);
+		add(textField_matKhau);
 		
 		JLabel lbl_makh_6 = new JLabel("Số CCCD :");
 		lbl_makh_6.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		lbl_makh_6.setBounds(464, 162, 123, 21);
 		add(lbl_makh_6);
 		
-		textField_6 = new JTextField();
-		textField_6.setColumns(10);
-		textField_6.setBounds(589, 162, 177, 25);
-		add(textField_6);
+		textField_cccd = new JTextField();
+		textField_cccd.setColumns(10);
+		textField_cccd.setBounds(589, 162, 177, 25);
+		add(textField_cccd);
 		
 		JLabel lbl_trangThai = new JLabel("Trang thái :");
 		lbl_trangThai.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		lbl_trangThai.setBounds(821, 130, 123, 21);
 		add(lbl_trangThai);
 		
-		textField_7 = new JTextField();
-		textField_7.setColumns(10);
-		textField_7.setBounds(946, 130, 177, 25);
-		add(textField_7);
+		textField_trangThai = new JTextField();
+		textField_trangThai.setColumns(10);
+		textField_trangThai.setBounds(946, 130, 177, 25);
+		add(textField_trangThai);
 		
 		JLabel lbl_sdt = new JLabel("Số điện thoại :");
 		lbl_sdt.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		lbl_sdt.setBounds(464, 194, 123, 21);
 		add(lbl_sdt);
 		
-		textField_8 = new JTextField();
-		textField_8.setColumns(10);
-		textField_8.setBounds(589, 194, 177, 25);
-		add(textField_8);
+		textField_sdt = new JTextField();
+		textField_sdt.setColumns(10);
+		textField_sdt.setBounds(589, 194, 177, 25);
+		add(textField_sdt);
 		
 		JLabel lbl_email = new JLabel("Email :");
 		lbl_email.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		lbl_email.setBounds(464, 226, 123, 21);
 		add(lbl_email);
 		
-		textField_9 = new JTextField();
-		textField_9.setColumns(10);
-		textField_9.setBounds(589, 226, 177, 25);
-		add(textField_9);
+		textField_email = new JTextField();
+		textField_email.setColumns(10);
+		textField_email.setBounds(589, 226, 177, 25);
+		add(textField_email);
 		
 		JLabel lbl_makh_10 = new JLabel("Phân quyền :");
 		lbl_makh_10.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		lbl_makh_10.setBounds(821, 194, 123, 21);
 		add(lbl_makh_10);
 		
-		textField_10 = new JTextField();
-		textField_10.setColumns(10);
-		textField_10.setBounds(946, 194, 177, 25);
-		add(textField_10);
+		textField_phanQuyen = new JTextField();
+		textField_phanQuyen.setColumns(10);
+		textField_phanQuyen.setBounds(946, 194, 177, 25);
+		add(textField_phanQuyen);
 		
 		JLabel lbl_makh_11 = new JLabel("Hình ảnh :");
 		lbl_makh_11.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		lbl_makh_11.setBounds(821, 226, 123, 21);
 		add(lbl_makh_11);
 		
-		textField_11 = new JTextField();
-		textField_11.setColumns(10);
-		textField_11.setBounds(946, 226, 177, 25);
-		add(textField_11);
+		textField_anh = new JTextField();
+		textField_anh.setColumns(10);
+		textField_anh.setBounds(946, 226, 177, 25);
+		add(textField_anh);
 		
 		JButton btn_timKiem = new JButton("Tìm kiếm");
 		btn_timKiem.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -207,7 +208,7 @@ public class TrangQLNhanVienJPanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 // Hiển thị form nhập thông tin nhân viên khi nhấn nút "Thêm"
             	FromThemNhanVien formThemNhanVien = new FromThemNhanVien();
-                 formThemNhanVien.setVisible(true);
+                formThemNhanVien.setVisible(true);
             }
         });
 		
