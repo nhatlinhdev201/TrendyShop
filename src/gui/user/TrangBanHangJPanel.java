@@ -878,9 +878,12 @@ public class TrangBanHangJPanel extends JPanel implements ActionListener, Action
 
 		listChiTietHD.add(ct);
 		txt_MaHangHoa.setText("");
-
+		model.removeAllHoaDon();
+		for (ChiTietHoaDon chiTietHoaDon : listChiTietHD) {
+			model.addHangHoa(chiTietHoaDon);
+		}
 		
-		model.addHangHoa(ct);
+//		model.addHangHoa(ct);
 		tinhTongCacThanhTien();
 		comboBox_KichThuoc.removeAllItems();
 		spinner_SoLuong.setValue(1);
@@ -1025,9 +1028,9 @@ public class TrangBanHangJPanel extends JPanel implements ActionListener, Action
 			
 			listChiTiet.add(ct);
 		}
-		txt_SDTKhachHang.setText(kh.getSoDienThoai());
-		comboBox_MaGiamGia.setSelectedItem(vc.getMaVoucher().trim());
-		tinhTongCacThanhTien();
+//		txt_SDTKhachHang.setText(kh.getSoDienThoai());
+//		comboBox_MaGiamGia.setSelectedItem(vc.getMaVoucher().trim());
+//		tinhTongCacThanhTien();
 	}
 	
 }

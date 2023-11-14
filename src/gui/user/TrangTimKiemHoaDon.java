@@ -274,7 +274,7 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener {
 			p.add(panel, c);
 			
 			
-			if(!listHoaDon.get(j).isTrangThaiThanhToan()) break;
+			if(!listHoaDon.get(j).isTrangThaiThanhToan()) continue;
 			KhachHang kh = dao_KhachHang.getKhachHangTheoMa(listHoaDon.get(j).getKhachHang().getMaKhachHang());
 			VoucherGiamGia voucher = dao_Voucher.getTheoMaVouCher(listHoaDon.get(j).getVoucher().getMaVoucher());
 			

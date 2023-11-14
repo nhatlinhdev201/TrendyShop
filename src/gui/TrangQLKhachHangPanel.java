@@ -409,13 +409,14 @@ public class TrangQLKhachHangPanel extends JPanel implements ActionListener,Mous
 		    }else if(obj.equals(btn_load))
 			{
 		    	clearTable();
+		    	docDuLieu();
 			}
 		}
 	  private void clearTable() {
 	        int rowCount = tableModel.getRowCount();
-//	        for (int i = rowCount - 1; i >= 0; i--) {
-	           tableModel.removeRow(5);
-//	        }
+	        for (int i = rowCount - 1; i >= 0; i--) {
+	           tableModel.removeRow(i);
+	        }
 	    }
 	  private void loadDataIntoTable() {
 		    try {
