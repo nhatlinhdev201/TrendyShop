@@ -202,6 +202,8 @@ public class FromThemNhanVien extends JFrame {
                 if (result == JFileChooser.APPROVE_OPTION) {
                     // Lấy đường dẫn của ảnh đã chọn và xử lý nó ở đây
                     String imagePath = fileChooser.getSelectedFile().getAbsolutePath();
+                    ImageIcon imageIcon = new ImageIcon(imagePath);
+                    imageLabel.setIcon(imageIcon);
                     // Lưu đường dẫn ảnh vào cơ sở dữ liệu sau khi nhấn nút lưu
                 }
             }

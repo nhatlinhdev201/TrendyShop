@@ -413,10 +413,10 @@ public class TrangQLKhachHangPanel extends JPanel implements ActionListener,Mous
 		}
 	  private void clearTable() {
 	        int rowCount = tableModel.getRowCount();
-//	        for (int i = rowCount - 1; i >= 0; i--) {
-	           tableModel.removeRow(5);
-//	        }
+	        for (int i = rowCount - 1; i >= 0; i--) {
+	           tableModel.removeRow(i);
 	    }
+	  }  
 	  private void loadDataIntoTable() {
 		    try {
 		        // Clear existing data in the table
