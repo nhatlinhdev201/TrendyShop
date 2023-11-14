@@ -26,13 +26,11 @@ import javax.swing.JTextField;
 public class FromThemKhachHang extends JFrame {
 	static Dao_KhachHang dao_kh = new Dao_KhachHang();
 	private JPanel contentPane;
-	private JTextField txt_ten;
-	private JTextField txt_sdt;
-	private JTextField txt_email;
-	private JTextField txt_diachi;
+	private JTextField textField_1;
+	private JTextField textField_2;
+	private JTextField textField_3;
+	private JTextField textField_4;
 	private JButton btn_save;
-	private JRadioButton rdb_hoatdong;
-	private JRadioButton rdb_nghi;
 	/**
 	 * Launch the application.
 	 */
@@ -66,25 +64,25 @@ public class FromThemKhachHang extends JFrame {
 		nameField.setBounds(154, 79, 123, 21);
 		contentPane.add(nameField);
 		
-		txt_ten = new JTextField();
-		txt_ten.setColumns(10);
-		txt_ten.setBounds(279, 80, 177, 25);
-		contentPane.add(txt_ten);
+		textField_1 = new JTextField();
+		textField_1.setColumns(10);
+		textField_1.setBounds(279, 80, 177, 25);
+		contentPane.add(textField_1);
 		
-		txt_sdt = new JTextField();
-		txt_sdt.setColumns(10);
-		txt_sdt.setBounds(279, 112, 177, 25);
-		contentPane.add(txt_sdt);
+		textField_2 = new JTextField();
+		textField_2.setColumns(10);
+		textField_2.setBounds(279, 112, 177, 25);
+		contentPane.add(textField_2);
 		
-		txt_email = new JTextField();
-		txt_email.setColumns(10);
-		txt_email.setBounds(279, 144, 177, 25);
-		contentPane.add(txt_email);
+		textField_3 = new JTextField();
+		textField_3.setColumns(10);
+		textField_3.setBounds(279, 144, 177, 25);
+		contentPane.add(textField_3);
 		
-		txt_diachi = new JTextField();
-		txt_diachi.setColumns(10);
-		txt_diachi.setBounds(279, 176, 177, 25);
-		contentPane.add(txt_diachi);
+		textField_4 = new JTextField();
+		textField_4.setColumns(10);
+		textField_4.setBounds(279, 176, 177, 25);
+		contentPane.add(textField_4);
 		
 		JLabel trangthaiField = new JLabel("Trạng thái :");
 		trangthaiField.setFont(new Font("Tahoma", Font.PLAIN, 17));
@@ -113,12 +111,12 @@ public class FromThemKhachHang extends JFrame {
 		contentPane.add(btn_save);
 		
 		JRadioButton rdb_hoatdong = new JRadioButton("Hoạt động");
-		rdb_hoatdong.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		rdb_hoatdong.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		rdb_hoatdong.setBounds(279, 208, 109, 23);
 		contentPane.add(rdb_hoatdong);
 		
 		JRadioButton rdb_nghi = new JRadioButton("Nghỉ");
-		rdb_nghi.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		rdb_nghi.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		rdb_nghi.setBounds(383, 208, 109, 23);
 		contentPane.add(rdb_nghi);
 		btn_save.addActionListener(new ActionListener() {
@@ -127,18 +125,18 @@ public class FromThemKhachHang extends JFrame {
             	Random random = new Random();
                 int randomNumber = random.nextInt(900) + 100;
             	String makh = "KH" + randomNumber;
-                String tenKhachHang = txt_ten.getText();
-                String soDienThoai = txt_sdt.getText();
-                String email = txt_email.getText();
-                String diaChi = txt_diachi.getText();
+                String tenKhachHang = textField_1.getText();
+                String soDienThoai = textField_2.getText();
+                String email = textField_3.getText();
+                String diaChi = textField_4.getText();
                 boolean trangThai = rdb_hoatdong.isSelected(); // true nếu hoạt động, ngược lại là false
 
                 // Kiểm tra và xử lý các điều kiện khác nếu cần thiết
 
                 // Tạo đối tượng KhachHang từ thông tin đã nhập
                 KhachHang khachHang = new KhachHang();
-	            khachHang.setMaKhachHang(makh);
-	            khachHang.setTenKhachHang(tenKhachHang);
+                khachHang.setMaKhachHang(makh);
+                khachHang.setTenKhachHang(tenKhachHang);
                 khachHang.setSoDienThoai(soDienThoai);
                 khachHang.setEmail(email);
                 khachHang.setDiaChi(diaChi);
@@ -164,21 +162,5 @@ public class FromThemKhachHang extends JFrame {
 
 
         contentPane.setVisible(true);
-	}
-	private void kiemTraHople() {
-	    // Kiểm tra các trường không được để trống
-	    if (txt_ten.getText().isEmpty() || txt_sdt.getText().isEmpty() || txt_email.getText().isEmpty() || txt_diachi.getText().isEmpty()) {
-	        JOptionPane.showMessageDialog(contentPane, "Vui lòng nhập đầy đủ thông tin!");
-	        return; // Dừng hàm nếu có trường trống
-	    }
-
-	    // Kiểm tra JRadioButton đã được chọn chưa
-	    if (!rdb_hoatdong.isSelected() && !rdb_nghi.isSelected()) {
-	        JOptionPane.showMessageDialog(contentPane, "Vui lòng chọn trạng thái hoạt động hoặc nghỉ!");
-	        return; // Dừng hàm nếu không có JRadioButton nào được chọn
-	    }
-
-	    // Nếu không có lỗi, tiếp tục thêm khách hàng
-//	    themKhachHang();
 	}
 }

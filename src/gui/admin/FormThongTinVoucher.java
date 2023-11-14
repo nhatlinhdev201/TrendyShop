@@ -27,19 +27,21 @@ import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.LineBorder;
 
-import daos.Dao_HangHoa;
+import daos.Dao_Voucher;
 import daos.Dao_NhaCungCap;
+import daos.Dao_Voucher;
 import entities.HangHoa;
 import entities.NhaCungCap;
+import entities.VoucherGiamGia;
 
-public class FormThongTinHangHoa extends JPanel implements ActionListener {
+public class FormThongTinVoucher extends JPanel implements ActionListener {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	private JTextField txt_Ten;
-	private JTextField txt_ThuongHieu;
-	private JTextField txt_XuatXu;
+	private JTextField txt_PhanTramGiamGia;
+	private JTextField txt_TrangThai;
 	private JTextField txt_PhanLoai;
 	private JTextField txt_ChatLieu;
 	private JTextField txt_MauSac;
@@ -52,18 +54,18 @@ public class FormThongTinHangHoa extends JPanel implements ActionListener {
 	private JButton btn_ChonAnh;
 	private JButton btn_Save;
 	private JLabel lbl_CurentTrangThai;
-	private HangHoa hangHoa;
-	private Dao_HangHoa dao_HangHoa;
+	private VoucherGiamGia hangHoa;
+	private Dao_Voucher dao_Voucher;
 	private JCheckBox ckb_banlai;
 	private DefaultComboBoxModel<NhaCungCap> ncc;
 	private File sr;
 	private JLabel lbl_Image;
 	private static File a;
 
-	public FormThongTinHangHoa(HangHoa hh, String cvThucThi) {
+	public FormThongTinVoucher(VoucherGiamGia hh, String cvThucThi) {
 		setBackground(new Color(102, 205, 170));
 		setLayout(null);
-		dao_HangHoa = new Dao_HangHoa();
+		dao_Voucher = new Dao_Voucher();
 		this.hangHoa = hh;
 		setPreferredSize(new Dimension(1020, 425));
 		JPanel pnl_Image = new JPanel();
@@ -95,10 +97,10 @@ public class FormThongTinHangHoa extends JPanel implements ActionListener {
 		pnl_InfoProduct.add(txt_Ten);
 		txt_Ten.setColumns(10);
 
-		txt_ThuongHieu = new JTextField();
-		txt_ThuongHieu.setColumns(10);
-		txt_ThuongHieu.setBounds(110, 41, 200, 25);
-		pnl_InfoProduct.add(txt_ThuongHieu);
+		txt_PhanTramGiamGia = new JTextField();
+		txt_PhanTramGiamGia.setColumns(10);
+		txt_PhanTramGiamGia.setBounds(110, 41, 200, 25);
+		pnl_InfoProduct.add(txt_PhanTramGiamGia);
 
 		JLabel lbl_ThuongHieu = new JLabel("Thương hiệu :");
 		lbl_ThuongHieu.setVerticalAlignment(SwingConstants.BOTTOM);
@@ -106,10 +108,10 @@ public class FormThongTinHangHoa extends JPanel implements ActionListener {
 		lbl_ThuongHieu.setBounds(10, 46, 100, 20);
 		pnl_InfoProduct.add(lbl_ThuongHieu);
 
-		txt_XuatXu = new JTextField();
-		txt_XuatXu.setColumns(10);
-		txt_XuatXu.setBounds(110, 77, 200, 25);
-		pnl_InfoProduct.add(txt_XuatXu);
+		txt_TrangThai = new JTextField();
+		txt_TrangThai.setColumns(10);
+		txt_TrangThai.setBounds(110, 77, 200, 25);
+		pnl_InfoProduct.add(txt_TrangThai);
 
 		JLabel lbl_XuatXu = new JLabel("Xuất xứ");
 		lbl_XuatXu.setVerticalAlignment(SwingConstants.BOTTOM);
@@ -268,33 +270,15 @@ public class FormThongTinHangHoa extends JPanel implements ActionListener {
 
 	/**
 	 * Lấy dữ liệu và chỉnh sửa thông tin hàng hóa
-	 * @param hh
+	 * @param hangHoa2
 	 */
-	public void setText(HangHoa hh) {
-		txt_Ten.setText(hh.getTenHangHoa());
-		txt_ThuongHieu.setText(hh.getThuongHieu());
-		txt_XuatXu.setText(hh.getXuatXu());
-		txt_MauSac.setText(hh.getMauSac());
-		txt_ChatLieu.setText(hh.getChatLieu());
-		txt_PhanLoai.setText(hh.getPhanLoai());
-		txtMoTa.setText(hh.getChiTietMoTa());
-		txt_KichCo.setText(hh.getKichCo());
-		lbl_Image.setIcon(new ImageIcon(new ImageIcon(hh.getHinhAnh()).getImage().getScaledInstance(305,
-				368, java.awt.Image.SCALE_SMOOTH)));
-		spn_GiaNhap.setValue(hh.getDonGiaNhap());
-		spn_SoLuongTon.setValue(hh.getSoLuongTon());
-		spn_SoLuongBan.setValue(hh.getSoLuongDaBan());
-		lbl_CurentTrangThai.setText(hh.isTrangThai() ? "Còn Bán" : "Ngừng Bán");
+	public void setText(VoucherGiamGia hangHoa2) {
+		txt_Ten.setText(hangHoa2.getTenVoucher());
+		txt_PhanTramGiamGia.setText(hangHoa2.getMoTaChuongTrinh());
+		spn_GiaNhap.setValue(hangHoa2.getPhanTramGiamTheoHoaDon());
+		spn_SoLuongTon.setValue(hangHoa2.getSoLuotDung());
+		lbl_CurentTrangThai.setText(hangHoa2.isTrangThai() ? "Đang hoạt động" : "Đã Ngưng");
 		
-		String maNCC = hh.getMaNhaCungCap();
-		int index = 0;
-		for (NhaCungCap item : new Dao_NhaCungCap().getAll()) {
-			if (maNCC.equalsIgnoreCase(item.getMaNhaCungCap())) {
-				cmb_NhaCungCap.setSelectedIndex(index);
-				break;
-			}
-			index++;
-		}
 
 	}
 
@@ -303,8 +287,8 @@ public class FormThongTinHangHoa extends JPanel implements ActionListener {
 	 */
 	public void reText() {
 		txt_Ten.setText("");
-		txt_ThuongHieu.setText("");
-		txt_XuatXu.setText("");
+		txt_PhanTramGiamGia.setText("");
+		txt_TrangThai.setText("");
 		txt_MauSac.setText("");
 		txt_ChatLieu.setText("");
 		txt_PhanLoai.setText("");
@@ -324,19 +308,19 @@ public class FormThongTinHangHoa extends JPanel implements ActionListener {
 	public String createMaHangHoa(String ma) {
 		System.out.println(ma);
 		
-		int id = Integer.parseInt(ma.substring(2));
+		int id = Integer.parseInt(ma.substring(3));
 		if (id < 9) {
 			id++;
-			return "HH000" + id ;
+			return "NCC000" + id ;
 		} else if (id < 99) {
 			id++;
-			return "HH00" + id ;
+			return "NCC00" + id ;
 		} else if (id < 999) {
 			id++;
-			return "HH0" + id ;
+			return "NCC0" + id ;
 		}
 		id++;
-		return "HH" + id ;
+		return "NCC" + id ;
 	}
 	
 	
@@ -360,98 +344,6 @@ public class FormThongTinHangHoa extends JPanel implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-	    if (e.getSource().equals(btn_ChonAnh)) {
-	        importImage();
-	    } else if (e.getSource().equals(btn_Save)) {
-	      
-	            // Kiểm tra các trường dữ liệu nếu là null hoặc trống
-	            String ten = txt_Ten.getText().trim();
-	            String thuongHieu = txt_ThuongHieu.getText().trim();
-	            String xuatXu = txt_XuatXu.getText().trim();
-	            String mauSac = txt_MauSac.getText().trim();
-	            String chatLieu = txt_ChatLieu.getText().trim();
-	            String phanLoai = txt_PhanLoai.getText().trim();
-	            String kichCo = txt_KichCo.getText().trim();
-	            String moTa = txtMoTa.getText().trim();
-	            String nhaCungCap = ((NhaCungCap) cmb_NhaCungCap.getSelectedItem()).getMaNhaCungCap();
-	            double giaNhap = (double) spn_GiaNhap.getValue();
-	            int soLuongTon = (int) spn_SoLuongTon.getValue();
-	            int soLuongBan = (int) spn_SoLuongBan.getValue();
-
-	            // Kiểm tra các trường dữ liệu
-	            if (ten.isEmpty() || thuongHieu.isEmpty() || xuatXu.isEmpty() || mauSac.isEmpty() || chatLieu.isEmpty()
-	                    || phanLoai.isEmpty() || kichCo.isEmpty() || moTa.isEmpty()) {
-	                JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin sản phẩm.");
-	            } else {
-	                HangHoa hh = new HangHoa(hangHoa.getMaHangHoa(), ten, phanLoai, thuongHieu, xuatXu, chatLieu, moTa,
-	                        hangHoa.getHinhAnh(), nhaCungCap, kichCo, mauSac, soLuongTon, soLuongBan, giaNhap, true);
-	                if (btn_Save.getText().equals("Lưu Thay Đổi")) {
-	                    hh.setTrangThai(ckb_banlai.isSelected());
-	                    // nếu có chọn hình ảnh mới thì thực hiện copy hình ảnh thay thế ảnh củ
-	                    // =================================
-	                    if (sr != null) {
-	                        try {
-	                            File anh = new File(hh.getHinhAnh());
-	                            System.out.println(anh.getAbsolutePath());
-	                            System.out.println(sr.getAbsolutePath());
-	                            Files.copy(sr.toPath(), anh.toPath(), StandardCopyOption.REPLACE_EXISTING);
-	                        } catch (IOException e1) {
-	                            e1.printStackTrace();
-	                        }
-	                    }
-	                    // =================================
-	                    if (dao_HangHoa.updateHangHoa(hh)) {
-	                        JOptionPane.showMessageDialog(this,
-	                                "Đã cập nhật thông tin sản phẩm " + hangHoa.getMaHangHoa() + " thành công.");
-	                        reText();
-	                    } else {
-	                        JOptionPane.showMessageDialog(this,
-	                                "Cập nhật thông tin sản phẩm " + hangHoa.getMaHangHoa() + " Thất Bại.");
-	                    }
-	                } else {
-	                    // nếu mà có chọn hình ảnh thì sr sẽ khác null
-	                	if (sr != null) {
-	                	    // Lấy mã hàng hóa mới
-	                		 Integer maHangHoaMoi = dao_HangHoa.getMaHangHoaNew(); // Integer để có thể kiểm tra null
-	                		 
-	                		 if (maHangHoaMoi != null && maHangHoaMoi > 0) {
-	                		        maHangHoaMoi++; // Tăng giá trị
-	                		    } else {
-	                		        maHangHoaMoi = 1; // Giá trị mặc định nếu không có giá trị hoặc giá trị không hợp lệ
-	                		    }
-	                		 
-	                	    // Tăng mã hàng hóa mới thêm 1 và kết hợp với kích cỡ
-	                	    String ma = "HH" + String.format("%04d", maHangHoaMoi + 1) + kichCo;
-	                	    
-//	                	    System.out.println(ma);
-	                	    if(ma!=null) {
-	                	    	hangHoa.setMaHangHoa(ma);
-
-		                	    String tienToFile = sr.getAbsolutePath().substring(sr.getAbsolutePath().lastIndexOf("."));
-		                	    a = new File("img\\" + hangHoa.getMaHangHoa() + tienToFile);
-
-		                	    // Thực hiện copy hình ảnh vào thư mục img
-		                	    try {
-		                	        Files.copy(sr.toPath(), a.toPath());
-		                	    } catch (IOException e1) {
-		                	        e1.printStackTrace();
-		                	    }
-
-		                	    if (dao_HangHoa.insertHangHoa(hh)) {
-		                	        JOptionPane.showMessageDialog(this, "Thêm sản phẩm " + hangHoa.getMaHangHoa() + " thành công.");
-		                	        reText();
-		                	    } else {
-		                	        JOptionPane.showMessageDialog(this, "Thêm thông tin sản phẩm " + hangHoa.getMaHangHoa() + " Thất Bại.");
-		                	    }
-	                	    }else {
-	                	        // Xử lý nếu ma là null
-	                	        JOptionPane.showMessageDialog(this, "Lỗi: Không thể tạo mã hàng hóa mới. Vui lòng thêm lại");
-	                	    }
-	                
-	                	}
-	                }
-	            
-	        }
-	    }
+//	  
 	}
 }
