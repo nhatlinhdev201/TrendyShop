@@ -32,6 +32,8 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.JRadioButton;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
 
 public class TrangQLKhachHangPanel extends JPanel implements ActionListener,MouseListener{
 	 private static final Font TABLE_FONT = new Font("Tahoma", Font.PLAIN, 15);
@@ -252,7 +254,7 @@ public class TrangQLKhachHangPanel extends JPanel implements ActionListener,Mous
         
         btn_timKiem = new JButton("Tìm kiếm");
         btn_timKiem.setFont(new Font("Tahoma", Font.PLAIN, 14));
-        btn_timKiem.setBounds(473, 21, 123, 33);
+        btn_timKiem.setBounds(597, 21, 123, 33);
        
         
         
@@ -269,7 +271,7 @@ public class TrangQLKhachHangPanel extends JPanel implements ActionListener,Mous
 		add(btn_timKiem);
         
         txt_timKiem = new JTextField();
-        txt_timKiem.setBounds(595, 21, 280, 33);
+        txt_timKiem.setBounds(719, 21, 280, 33);
         add(txt_timKiem);
         txt_timKiem.setColumns(10);
         
@@ -317,6 +319,13 @@ public class TrangQLKhachHangPanel extends JPanel implements ActionListener,Mous
         btn_timKiem.addActionListener(this);
         btn_them.addActionListener(this);
         btn_load.addActionListener(this);
+        
+        JComboBox combobox_search = new JComboBox();
+        combobox_search.setFont(new Font("Tahoma", Font.BOLD, 13));
+        combobox_search.setModel(new DefaultComboBoxModel(new String[] {"Mã khách hàng", "Tên khách hàng", "Số điện thoại"}));
+        combobox_search.setMaximumRowCount(3);
+        combobox_search.setBounds(473, 21, 123, 33);
+        add(combobox_search);
 	}
 	  public static void docDuLieu() {
 	        try {
