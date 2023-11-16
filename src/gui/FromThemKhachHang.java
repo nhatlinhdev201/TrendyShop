@@ -25,12 +25,19 @@ import javax.swing.JTextField;
 
 public class FromThemKhachHang extends JFrame {
 	static Dao_KhachHang dao_kh = new Dao_KhachHang();
+	private JLabel emailield;
+	private JRadioButton rdb_hoatdong;
 	private JPanel contentPane;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
-	private JTextField textField_4;
+	private JTextField txt_ten;
+	private JTextField txt_sdt;
+	private JTextField txt_email;
+	private JTextField txt_diaChi;
 	private JButton btn_save;
+	private JLabel nameField;
+	private JLabel fliedsdt;
+	private JLabel trangthaiField;
+	private JLabel phoneField;
+	private JRadioButton rdb_nghi;
 	/**
 	 * Launch the application.
 	 */
@@ -59,63 +66,63 @@ public class FromThemKhachHang extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel nameField = new JLabel("Tên KH  :");
+		nameField = new JLabel("Tên KH  :");
 		nameField.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		nameField.setBounds(154, 79, 123, 21);
 		contentPane.add(nameField);
 		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		textField_1.setBounds(279, 80, 177, 25);
-		contentPane.add(textField_1);
+		txt_ten = new JTextField();
+		txt_ten.setColumns(10);
+		txt_ten.setBounds(279, 80, 177, 25);
+		contentPane.add(txt_ten);
 		
-		textField_2 = new JTextField();
-		textField_2.setColumns(10);
-		textField_2.setBounds(279, 112, 177, 25);
-		contentPane.add(textField_2);
+		txt_sdt = new JTextField();
+		txt_sdt.setColumns(10);
+		txt_sdt.setBounds(279, 112, 177, 25);
+		contentPane.add(txt_sdt);
 		
-		textField_3 = new JTextField();
-		textField_3.setColumns(10);
-		textField_3.setBounds(279, 144, 177, 25);
-		contentPane.add(textField_3);
+		txt_email = new JTextField();
+		txt_email.setColumns(10);
+		txt_email.setBounds(279, 144, 177, 25);
+		contentPane.add(txt_email);
 		
-		textField_4 = new JTextField();
-		textField_4.setColumns(10);
-		textField_4.setBounds(279, 176, 177, 25);
-		contentPane.add(textField_4);
+		txt_diaChi = new JTextField();
+		txt_diaChi.setColumns(10);
+		txt_diaChi.setBounds(279, 176, 177, 25);
+		contentPane.add(txt_diaChi);
 		
-		JLabel trangthaiField = new JLabel("Trạng thái :");
+		trangthaiField = new JLabel("Trạng thái :");
 		trangthaiField.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		trangthaiField.setBounds(154, 208, 123, 21);
 		contentPane.add(trangthaiField);
 		
-		JLabel phoneField = new JLabel("Địa chỉ :");
+		phoneField = new JLabel("Địa chỉ :");
 		phoneField.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		phoneField.setBounds(154, 176, 123, 21);
 		contentPane.add(phoneField);
 		
-		JLabel emailield = new JLabel("Email :");
+		emailield = new JLabel("Email :");
 		emailield.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		emailield.setBounds(154, 144, 123, 21);
 		contentPane.add(emailield);
 		
-		JLabel fliedsdt = new JLabel("SDT");
+		fliedsdt = new JLabel("SDT");
 		fliedsdt.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		fliedsdt.setBounds(154, 112, 123, 21);
 		contentPane.add(fliedsdt);
 		
-		JButton btn_save = new JButton("Save");
+		btn_save = new JButton("Save");
 		btn_save.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 17));
 		btn_save.setSize(177, 30);
 		btn_save.setLocation(261, 441);
 		contentPane.add(btn_save);
 		
-		JRadioButton rdb_hoatdong = new JRadioButton("Hoạt động");
+		rdb_hoatdong = new JRadioButton("Hoạt động");
 		rdb_hoatdong.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		rdb_hoatdong.setBounds(279, 208, 109, 23);
 		contentPane.add(rdb_hoatdong);
 		
-		JRadioButton rdb_nghi = new JRadioButton("Nghỉ");
+		rdb_nghi = new JRadioButton("Nghỉ");
 		rdb_nghi.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		rdb_nghi.setBounds(383, 208, 109, 23);
 		contentPane.add(rdb_nghi);
@@ -125,12 +132,12 @@ public class FromThemKhachHang extends JFrame {
             	Random random = new Random();
                 int randomNumber = random.nextInt(900) + 100;
             	String makh = "KH" + randomNumber;
-                String tenKhachHang = textField_1.getText();
-                String soDienThoai = textField_2.getText();
-                String email = textField_3.getText();
-                String diaChi = textField_4.getText();
+                String tenKhachHang = txt_ten.getText();
+                String soDienThoai = txt_sdt.getText();
+                String email = txt_email.getText();
+                String diaChi = txt_diaChi.getText();
                 boolean trangThai = rdb_hoatdong.isSelected(); // true nếu hoạt động, ngược lại là false
-
+                kiemTraHople();
                 // Kiểm tra và xử lý các điều kiện khác nếu cần thiết
 
                 // Tạo đối tượng KhachHang từ thông tin đã nhập
@@ -159,8 +166,21 @@ public class FromThemKhachHang extends JFrame {
                 
             }
         });
-
+		
 
         contentPane.setVisible(true);
+	}
+	private void kiemTraHople() {
+	    // Kiểm tra các trường không được để trống
+	    if (txt_ten.getText().isEmpty() || txt_sdt.getText().isEmpty() || txt_email.getText().isEmpty() || txt_diaChi.getText().isEmpty()) {
+	        JOptionPane.showMessageDialog(contentPane, "Vui lòng nhập đầy đủ thông tin!");
+	        return; // Dừng hàm nếu có trường trống
+	    }
+
+	    // Kiểm tra JRadioButton đã được chọn chưa
+	    if (!rdb_hoatdong.isSelected() && !rdb_nghi.isSelected()) {
+	        JOptionPane.showMessageDialog(contentPane, "Vui lòng chọn trạng thái hoạt động hoặc nghỉ!");
+	        return; // Dừng hàm nếu không có JRadioButton nào được chọn
+	    }
 	}
 }
