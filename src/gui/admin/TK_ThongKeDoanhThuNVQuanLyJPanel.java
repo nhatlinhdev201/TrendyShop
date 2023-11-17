@@ -26,15 +26,26 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.awt.event.ActionEvent;
 import com.toedter.calendar.JDateChooser;
+
+import constance.ModelThongKeDoanhThu;
+
 import javax.swing.JTextPane;
 import java.awt.SystemColor;
 import java.awt.Label;
 
 public class TK_ThongKeDoanhThuNVQuanLyJPanel extends JPanel implements ActionListener {
-	private String[] cols = { "Xếp hạng theo doanh thu", "Nhân viên", "Tổng doanh thu (vnđ)", "Tổng lãi trên nhân viên (vnđ)", "Số hóa đơn được lập" };
+	private String[] cols = { "Xếp hạng theo doanh thu", "Nhân viên", "Tổng doanh thu (vnđ)", "Tổng lãi trong ngày (vnđ)", "Số hóa đơn được lập" };
 	private DefaultTableModel modelTableThongKeNgay;
+	private ModelThongKeDoanhThu modelDuLieu;
+	private ArrayList<ModelThongKeDoanhThu> listDuLieuThongKe;
 
 	private JTextField txtTenNhanVienTimKiemNgay;
 	private JTextField txtMaNhanVienTimKiemNgay;
@@ -47,6 +58,7 @@ public class TK_ThongKeDoanhThuNVQuanLyJPanel extends JPanel implements ActionLi
 	private JTextField txtTongSoHoaDonDuocLapCHNgay;
 	private JTextField txtTongThueCHNgay;
 	private JTextField txtTongKhuyenMaiCHNgay;
+	private JDateChooser jdcChonNgayThongKe;
 
 	/**
 	 * Create the panel.
@@ -77,10 +89,7 @@ public class TK_ThongKeDoanhThuNVQuanLyJPanel extends JPanel implements ActionLi
 		panelTabThongKeTheoNgay.setLayout(null);
 
 		JPanel panelDuLieuThongKe = new JPanel();
-		panelDuLieuThongKe.setBorder(new TitledBorder(
-				new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)),
-				"D\u1EEF li\u1EC7u th\u1ED1ng k\u00EA", TitledBorder.CENTER, TitledBorder.TOP, null,
-				new Color(0, 0, 0)));
+		panelDuLieuThongKe.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		panelDuLieuThongKe.setBounds(10, 11, 791, 579);
 		panelTabThongKeTheoNgay.add(panelDuLieuThongKe);
 		panelDuLieuThongKe.setLayout(null);
@@ -117,7 +126,7 @@ public class TK_ThongKeDoanhThuNVQuanLyJPanel extends JPanel implements ActionLi
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnLocDuLieuNgay.setBounds(412, 73, 100, 31);
+		btnLocDuLieuNgay.setBounds(412, 73, 114, 31);
 		panelBoLocTimKiem.add(btnLocDuLieuNgay);
 
 		JLabel lblThongKeNgay = new JLabel("Thống kê ngày :");
@@ -125,12 +134,12 @@ public class TK_ThongKeDoanhThuNVQuanLyJPanel extends JPanel implements ActionLi
 		panelBoLocTimKiem.add(lblThongKeNgay);
 		lblThongKeNgay.setFont(new Font("Tahoma", Font.PLAIN, 13));
 
-		JDateChooser jdcChonNgayThongKe = new JDateChooser();
+		jdcChonNgayThongKe = new JDateChooser();
 		jdcChonNgayThongKe.setBounds(536, 30, 185, 23);
 		panelBoLocTimKiem.add(jdcChonNgayThongKe);
 
 		JButton btnLamMoiDuLieuNgay = new JButton("Làm mới dữ liệu");
-		btnLamMoiDuLieuNgay.setBounds(537, 73, 124, 31);
+		btnLamMoiDuLieuNgay.setBounds(537, 73, 151, 31);
 		panelBoLocTimKiem.add(btnLamMoiDuLieuNgay);
 
 		JPanel panelBangNhanVienTKDTNgay = new JPanel();
@@ -289,10 +298,6 @@ public class TK_ThongKeDoanhThuNVQuanLyJPanel extends JPanel implements ActionLi
 		panelBieuDoThongKeDoanhThuNgay.setBounds(10, 11, 504, 515);
 		panelBieuDoThongKeNgay.add(panelBieuDoThongKeDoanhThuNgay);
 		panelBieuDoThongKeDoanhThuNgay.setLayout(null);
-		
-		JLabel lblNewLabel_2 = new JLabel("doanh thu các nhân viên trong ngày");
-		lblNewLabel_2.setBounds(104, 237, 218, 14);
-		panelBieuDoThongKeDoanhThuNgay.add(lblNewLabel_2);
 
 		btnXuatDuLieuThongKeNgay = new JButton("Xuất dữ liệu thống kê");
 		btnXuatDuLieuThongKeNgay.setFont(new Font("Tahoma", Font.BOLD, 10));
@@ -310,9 +315,26 @@ public class TK_ThongKeDoanhThuNVQuanLyJPanel extends JPanel implements ActionLi
 		panelTabThongKeTheoNam.setBackground(new Color(102, 205, 170));
 		tabbedPane.addTab("Theo năm", null, panelTabThongKeTheoNam, null);
 		panelTabThongKeTheoNam.setLayout(null);
+		
+		lamMoiNgay(jdcChonNgayThongKe);
 
 	}
 
+	private LocalDate layNgayDuocChon(JDateChooser chooser) {
+		Date date = chooser.getDate();
+		return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+	}
+	private void lamMoiNgay(JDateChooser chooser) {
+		Calendar ngayHienTai = Calendar.getInstance();
+		chooser.setDate(ngayHienTai.getTime());
+	}
+	public String ChuyenThanhTien(float money) {
+		long roundedMoney = Math.round(money);
+		DecimalFormat decimalFormat = new DecimalFormat("#,###");
+		String formattedMoney = decimalFormat.format(roundedMoney);
+		return formattedMoney;
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
