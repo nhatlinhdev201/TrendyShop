@@ -1,7 +1,8 @@
 package constance;
 
 public class ModelThongKeDoanhThu {
-	private String nhanVien;
+	private String maNhanVien;
+	private String tenNhanVien;
 	private double tongDoanhThu;
 	private double tongTienNhapHang;
 	private double tongTienLai;
@@ -10,10 +11,12 @@ public class ModelThongKeDoanhThu {
 	private double tongKhyuenMai;
 	private String thoiGianThongKe;
 	private String xepHang;
-	public ModelThongKeDoanhThu(String nhanVien, double tongDoanhThu, double tongTienNhapHang, double tongTienLai,
-			double tongSoHoaDonDuocLap, double tongThue, double tongKhyuenMai, String thoiGianThongKe, String xepHang) {
+	public ModelThongKeDoanhThu(String maNhanVien, String tenNhanVien, double tongDoanhThu, double tongTienNhapHang,
+			double tongTienLai, double tongSoHoaDonDuocLap, double tongThue, double tongKhyuenMai,
+			String thoiGianThongKe, String xepHang) {
 		super();
-		this.nhanVien = nhanVien;
+		this.maNhanVien = maNhanVien;
+		this.tenNhanVien = tenNhanVien;
 		this.tongDoanhThu = tongDoanhThu;
 		this.tongTienNhapHang = tongTienNhapHang;
 		this.tongTienLai = tongTienLai;
@@ -27,11 +30,17 @@ public class ModelThongKeDoanhThu {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public String getNhanVien() {
-		return nhanVien;
+	public String getMaNhanVien() {
+		return maNhanVien;
 	}
-	public void setNhanVien(String nhanVien) {
-		this.nhanVien = nhanVien;
+	public void setMaNhanVien(String maNhanVien) {
+		this.maNhanVien = maNhanVien;
+	}
+	public String getTenNhanVien() {
+		return tenNhanVien;
+	}
+	public void setTenNhanVien(String tenNhanVien) {
+		this.tenNhanVien = tenNhanVien;
 	}
 	public double getTongDoanhThu() {
 		return tongDoanhThu;
@@ -83,9 +92,9 @@ public class ModelThongKeDoanhThu {
 	}
 	@Override
 	public String toString() {
-		return "ModelThongKeDoanhThu [nhanVien=" + nhanVien + ", tongDoanhThu=" + tongDoanhThu + ", tongTienNhapHang="
-				+ tongTienNhapHang + ", tongTienLai=" + tongTienLai + ", tongSoHoaDonDuocLap=" + tongSoHoaDonDuocLap
-				+ ", tongThue=" + tongThue + ", tongKhyuenMai=" + tongKhyuenMai + ", thoiGianThongKe=" + thoiGianThongKe
-				+ ", xepHang=" + xepHang + "]";
+		return "ModelThongKeDoanhThu [maNhanVien=" + maNhanVien + ", tenNhanVien=" + tenNhanVien + ", tongDoanhThu="
+				+ tongDoanhThu + ", tongTienNhapHang=" + tongTienNhapHang + ", tongTienLai=" + tongTienLai
+				+ ", tongSoHoaDonDuocLap=" + tongSoHoaDonDuocLap + ", tongThue=" + tongThue + ", tongKhyuenMai="
+				+ tongKhyuenMai + ", thoiGianThongKe=" + thoiGianThongKe + ", xepHang=" + xepHang + "]";
 	}
 }

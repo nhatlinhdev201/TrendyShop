@@ -8,14 +8,25 @@
 	</classpathentry>
 	<classpathentry exported="true" kind="lib" path="jgoodies-common-1.8.0.jar" sourcepath="jgoodies-common-1.8.0-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="jgoodies-forms-1.8.0.jar" sourcepath="jgoodies-forms-1.8.0-sources.jar"/>
-	<classpathentry kind="lib" path="lib/sqljdbc42.jar"/>
-	<classpathentry kind="lib" path="lib/jcalendar-1.4.jar"/>
-	<classpathentry kind="lib" path="lib/jgoodies-looks-2.4.1.jar"/>
-	<classpathentry kind="lib" path="lib/junit-4.6.jar"/>
-	<classpathentry kind="lib" path="lib/RSTableMetro.jar"/>
-	<classpathentry kind="lib" path="jdatepicker-1.3.4.jar"/>
-	<classpathentry kind="lib" path="jgoodies-common-1.8.0-sources.jar"/>
-	<classpathentry kind="lib" path="jgoodies-forms-1.8.0-sources.jar"/>
-	<classpathentry kind="lib" path="lib/jgoodies-common-1.2.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/sqljdbc42.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jcalendar-1.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jgoodies-looks-2.4.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/junit-4.6.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/RSTableMetro.jar"/>
+	<classpathentry exported="true" kind="lib" path="jdatepicker-1.3.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="jgoodies-common-1.8.0-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="jgoodies-forms-1.8.0-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jgoodies-common-1.2.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/freechart/hamcrest-core-1.3.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/freechart/jcommon-1.0.23.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/freechart/jfreechart-1.0.19.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/freechart/jfreechart-1.0.19-experimental.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/freechart/jfreechart-1.0.19-swt.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/freechart/jfreesvg-2.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/freechart/junit-4.11.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/freechart/orsoncharts-1.4-eval-nofx.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/freechart/orsonpdf-1.6-eval.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/freechart/servlet.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/freechart/swtgraphics2d.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
