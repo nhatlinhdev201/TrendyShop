@@ -32,6 +32,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.JRadioButton;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 
 public class TrangQLKhachHangPanel extends JPanel implements ActionListener,MouseListener{
 	 private static final Font TABLE_FONT = new Font("Tahoma", Font.PLAIN, 15);
@@ -50,6 +51,7 @@ public class TrangQLKhachHangPanel extends JPanel implements ActionListener,Mous
 	private JButton btn_them;
 	private JButton btn_load;
 	private static DefaultTableModel tableModel;
+	private  JComboBox<String> comboBox;
 	/**
 	 * Create the panel.
 	 */
@@ -252,7 +254,7 @@ public class TrangQLKhachHangPanel extends JPanel implements ActionListener,Mous
         
         btn_timKiem = new JButton("Tìm kiếm");
         btn_timKiem.setFont(new Font("Tahoma", Font.PLAIN, 14));
-        btn_timKiem.setBounds(473, 21, 123, 33);
+        btn_timKiem.setBounds(595, 21, 123, 33);
        
         
         
@@ -269,7 +271,7 @@ public class TrangQLKhachHangPanel extends JPanel implements ActionListener,Mous
 		add(btn_timKiem);
         
         txt_timKiem = new JTextField();
-        txt_timKiem.setBounds(595, 21, 280, 33);
+        txt_timKiem.setBounds(717, 21, 280, 33);
         add(txt_timKiem);
         txt_timKiem.setColumns(10);
         
@@ -317,6 +319,11 @@ public class TrangQLKhachHangPanel extends JPanel implements ActionListener,Mous
         btn_timKiem.addActionListener(this);
         btn_them.addActionListener(this);
         btn_load.addActionListener(this);
+        
+        String[] items = {"Mã khách hàng","Tên khách hàng" ,"Số điện thoại"};
+        comboBox = new JComboBox<>(items);
+        comboBox.setBounds(473, 25, 114, 29);
+        add(comboBox);
 	}
 	  public static void docDuLieu() {
 	        try {
