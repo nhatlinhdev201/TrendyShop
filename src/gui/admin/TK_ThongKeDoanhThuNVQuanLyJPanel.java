@@ -436,7 +436,14 @@ public class TK_ThongKeDoanhThuNVQuanLyJPanel extends JPanel implements ActionLi
 			if(dataThongKeNhanVienNgay.size()==0 || dataToanCuaHangTrongNgay == null) {
 				JOptionPane.showMessageDialog(this, "Không có dữ liệu thống kê !");
 			} else {
-				JOptionPane.showMessageDialog(this, "ok");
+				ThongKeDoanhThuServices services = new ThongKeDoanhThuServices();
+				LocalDate ngayThongKe = layNgayDuocChon(jdcChonNgayThongKe);
+				if(services.xuatFileExcelThongKeNgay(ngayThongKe)) {
+					JOptionPane.showMessageDialog(this, "Dữ liệu đã được lưu tại DuLieuThongKe\\"+"ThongKeDoanhThuCacNgayTrongThang" + ngayThongKe.getMonthValue() + "-"
+							+ ngayThongKe.getYear() + ".xlsx");
+				} else {
+					JOptionPane.showMessageDialog(this, "Lỗi không thể tạo thống kê !");
+				}
 			}
 		}
 	}
