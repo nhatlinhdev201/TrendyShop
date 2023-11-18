@@ -14,55 +14,88 @@ import java.util.ArrayList;
 
 public class ExcelExporter {
 
-    public static void exportToExcel(ArrayList<ModelExportFileThongKe> dataList, String filePath) {
-        try (Workbook workbook = new XSSFWorkbook()) {
-            Sheet sheet = workbook.createSheet("DuLieuThongKe");
+	public static void exportToExcel(ArrayList<ModelExportFileThongKe> duLieuFileExcel, String filePath) {
+		try (Workbook workbook = new XSSFWorkbook()) {
+			Sheet sheet = workbook.createSheet("DuLieuThongKe");
 
-            // Tạo header
-            Row headerRow = sheet.createRow(0);
-            headerRow.createCell(0).setCellValue("Thời Gian");
+			// Tạo Font cho tiêu đề in đậm
+			Font headerFont = workbook.createFont();
+			headerFont.setBold(true);
 
-            // Tạo các cột nhân viên
-            ArrayList<String> nhanVienList = new ArrayList<>();
-            for (ModelExportFileThongKe duLieuThongKe : dataList) {
-                for (ModelThongKeDoanhThu duLieuNhanVien : duLieuThongKe.getDataNhanVien()) {
-                    String tenNhanVien = duLieuNhanVien.getTenNhanVien();
-                    if (!nhanVienList.contains(tenNhanVien)) {
-                        nhanVienList.add(tenNhanVien);
-                        headerRow.createCell(nhanVienList.indexOf(tenNhanVien) + 1).setCellValue(tenNhanVien);
-                    }
-                }
-            }
+			// Tạo CellStyle cho tiêu đề in đậm
+			CellStyle headerCellStyle = workbook.createCellStyle();
+			headerCellStyle.setFont(headerFont);
 
-            // Ghi dữ liệu
-            int rowNum = 1;
-            for (ModelExportFileThongKe duLieuThongKe : dataList) {
-                Row row = sheet.createRow(rowNum++);
-                row.createCell(0).setCellValue(duLieuThongKe.getThoiGian());
+			// Tạo header
+			Row headerRow = sheet.createRow(0);
+			headerRow.createCell(0).setCellValue("Thời Gian");
+			headerRow.createCell(1).setCellValue("Xếp hạng doanh thu");
+			headerRow.createCell(2).setCellValue("Mã nhân viên");
+			headerRow.createCell(3).setCellValue("Tên nhân viên");
+			headerRow.createCell(4).setCellValue("Tổng doanh thu");
+			headerRow.createCell(5).setCellValue("Tổng tiền nhập hàng");
+			headerRow.createCell(6).setCellValue("Tổng lãi trong ngày");
+			headerRow.createCell(7).setCellValue("Tổng hóa đơn được lập");
+			headerRow.createCell(8).setCellValue("Tổng thuế");
+			headerRow.createCell(9).setCellValue("Tổng tiền khuyến mãi");
+			
 
-                for (ModelThongKeDoanhThu duLieuNhanVien : duLieuThongKe.getDataNhanVien()) {
-                    int columnIndex = nhanVienList.indexOf(duLieuNhanVien.getTenNhanVien()) + 1;
-                    row.createCell(columnIndex).setCellValue(duLieuNhanVien.getTongDoanhThu());
-                }
-            }
+			// Áp dụng CellStyle cho tiêu đề
+			for (Cell cell : headerRow) {
+				cell.setCellStyle(headerCellStyle);
+			}
+			// Ghi dữ liệu
+			int rowNum = 1;
+			for (ModelExportFileThongKe modelExportFileThongKe : duLieuFileExcel) {
+				String thoiGian = modelExportFileThongKe.getThoiGian();
+				ArrayList<ModelThongKeDoanhThu> dataNhanVien = modelExportFileThongKe.getDataNhanVien();
 
-            // Lưu file
-            try (FileOutputStream fileOut = new FileOutputStream(filePath)) {
-                workbook.write(fileOut);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+				for (int i = 0; i < dataNhanVien.size(); i++) {
+					ModelThongKeDoanhThu modelThongKeDoanhThu = dataNhanVien.get(i);
 
-    public static void main(String[] args) {
-    	ThongKeDoanhThuServices services = new ThongKeDoanhThuServices();
-        // Tạo một danh sách dữ liệu mẫu
-        ArrayList<ModelExportFileThongKe> dataList = new ArrayList<>();
-        dataList = services.layDuLieuFileThongKeNgay(LocalDate.now());
-        // Thêm dữ liệu vào dataList
+					Row row = sheet.createRow(rowNum++);
 
-        // Xuất ra file Excel
-        exportToExcel(dataList, "DuLieuThongKe.xlsx");
-    }
+					// Chỉ ghi giá trị ở dòng đầu tiên của mỗi nhóm thời gian
+					if (i == 0) {
+						row.createCell(0).setCellValue(thoiGian);
+					}
+
+					// if(modelThongKeDoanhThu.getTongDoanhThu()!=0) {
+					row.createCell(1).setCellValue(modelThongKeDoanhThu.getXepHang());
+					row.createCell(2).setCellValue(modelThongKeDoanhThu.getMaNhanVien().trim());
+					row.createCell(3).setCellValue(modelThongKeDoanhThu.getTenNhanVien().trim());
+					row.createCell(4).setCellValue(modelThongKeDoanhThu.getTongDoanhThu());
+					row.createCell(5).setCellValue(modelThongKeDoanhThu.getTongTienNhapHang());
+					row.createCell(6).setCellValue(modelThongKeDoanhThu.getTongTienLai());
+					row.createCell(7).setCellValue(modelThongKeDoanhThu.getTongSoHoaDonDuocLap());
+					row.createCell(8).setCellValue(modelThongKeDoanhThu.getTongThue());
+					row.createCell(9).setCellValue(modelThongKeDoanhThu.getTongKhyuenMai());
+					
+					// }
+				}
+			}
+			// Đặt độ rộng của các cột
+			for (int i = 0; i < headerRow.getPhysicalNumberOfCells(); i++) {
+				sheet.autoSizeColumn(i);
+			}
+
+			// Lưu file
+			try (FileOutputStream fileOut = new FileOutputStream(filePath)) {
+				workbook.write(fileOut);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static void main(String[] args) {
+		ThongKeDoanhThuServices services = new ThongKeDoanhThuServices();
+		// Tạo một danh sách dữ liệu mẫu
+		ArrayList<ModelExportFileThongKe> dataList = new ArrayList<>();
+		dataList = services.layDuLieuFileThongKeNgay(LocalDate.now());
+		// Thêm dữ liệu vào dataList
+
+		// Xuất ra file Excel
+		exportToExcel(dataList, "DuLieuThongKe.xlsx");
+	}
 }
