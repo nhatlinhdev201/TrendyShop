@@ -316,4 +316,241 @@ public class Dao_ThongKeDoanhThu {
 		}
 		return totalDiscountAmount;
 	}
+	public int TongHoaDonTrongNgay(LocalDate ngayThongKe) {
+		int totalOrders = 0;
+		String query = "SELECT COUNT(*) AS TotalOrders " + "FROM HoaDon " + "WHERE CONVERT(DATE, thoiGianTao) = ?";
+		try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+			preparedStatement.setDate(1, Date.valueOf(ngayThongKe));
+			ResultSet resultSet = preparedStatement.executeQuery();
+			if (resultSet.next()) {
+				totalOrders = resultSet.getInt("TotalOrders");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return totalOrders;
+	}
+	public int TongHoaDonTrongThang(int thangThongKe, int namCuaThangThongKe) {
+		int totalOrders = 0;
+		String query = "SELECT COUNT(*) AS TotalOrders " + "FROM HoaDon "
+				+ "WHERE MONTH(thoiGianTao) = ? AND YEAR(thoiGianTao) = ?";
+		try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+			preparedStatement.setInt(1, thangThongKe);
+			preparedStatement.setInt(2, namCuaThangThongKe);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			if (resultSet.next()) {
+				totalOrders = resultSet.getInt("TotalOrders");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return totalOrders;
+	}
+	public int TongHoaDonDuocLapTrongNam(int namThongKe) {
+		int totalOrders = 0;
+		String query = "SELECT COUNT(*) AS TotalOrders " + "FROM HoaDon " + "WHERE YEAR(thoiGianTao) = ?";
+		try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+			preparedStatement.setInt(1, namThongKe);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			if (resultSet.next()) {
+				totalOrders = resultSet.getInt("TotalOrders");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return totalOrders;
+	}
+	public int TongSoLuongMatHangBanRaTrongNgay(LocalDate ngayThongKe) {
+		int totalItemsSold = 0;
+		String query = "SELECT SUM(soLuong) AS TotalItemsSold " + "FROM ChiTietHoaDon "
+				+ "JOIN HoaDon ON ChiTietHoaDon.maHoaDon = HoaDon.maHoaDon "
+				+ "WHERE CONVERT(DATE, HoaDon.thoiGianTao) = ?";
+		try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+			preparedStatement.setDate(1, java.sql.Date.valueOf(ngayThongKe));
+			ResultSet resultSet = preparedStatement.executeQuery();
+			if (resultSet.next()) {
+				totalItemsSold = resultSet.getInt("TotalItemsSold");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return totalItemsSold;
+	}
+	public int TongSoLuongMatHangBanRaTrongThang(int thangDuocThongKe, int namCuaThangDuocThongKe) {
+		int totalItemsSold = 0;
+		String query = "SELECT SUM(soLuong) AS TotalItemsSold " + "FROM ChiTietHoaDon "
+				+ "JOIN HoaDon ON ChiTietHoaDon.maHoaDon = HoaDon.maHoaDon "
+				+ "WHERE MONTH(HoaDon.thoiGianTao) = ? AND YEAR(HoaDon.thoiGianTao) = ?";
+		try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+			preparedStatement.setInt(1, thangDuocThongKe);
+			preparedStatement.setInt(2, namCuaThangDuocThongKe);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			if (resultSet.next()) {
+				totalItemsSold = resultSet.getInt("TotalItemsSold");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return totalItemsSold;
+	}
+	public int TongSoLuongMatHangBanRaTrongNam(int namThongKe) {
+		int totalItemsSold = 0;
+		String query = "SELECT SUM(soLuong) AS TotalItemsSold " + "FROM ChiTietHoaDon "
+				+ "JOIN HoaDon ON ChiTietHoaDon.maHoaDon = HoaDon.maHoaDon " + "WHERE YEAR(HoaDon.thoiGianTao) = ?";
+		try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+			preparedStatement.setInt(1, namThongKe);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			if (resultSet.next()) {
+				totalItemsSold = resultSet.getInt("TotalItemsSold");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return totalItemsSold;
+	}
+	public float TongDoanhThuTrongNgay(LocalDate ngayThongKe) {
+		float totalRevenue = 0;
+		String query = "SELECT SUM(tongThanhTien) AS TotalRevenue " + "FROM HoaDon "
+				+ "WHERE CONVERT(DATE, thoiGianTao) = ?";
+		try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+			Date sqlDate = Date.valueOf(ngayThongKe);
+			preparedStatement.setDate(1, sqlDate);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			if (resultSet.next()) {
+				totalRevenue = resultSet.getFloat("TotalRevenue");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return totalRevenue;
+	}
+	public float TongDoanhThuTrongThang(int thangThongKe, int namCuaThangThongKe) {
+		float totalRevenue = 0;
+		String query = "SELECT SUM(tongThanhTien) AS TotalRevenue " + "FROM HoaDon "
+				+ "WHERE MONTH(thoiGianTao) = ? AND YEAR(thoiGianTao) = ?";
+		try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+			preparedStatement.setInt(1, thangThongKe);
+			preparedStatement.setInt(2, namCuaThangThongKe);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			if (resultSet.next()) {
+				totalRevenue = resultSet.getFloat("TotalRevenue");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return totalRevenue;
+	}
+	public float TongDoanhThuTrongNam(int namThongKe) {
+		float totalRevenue = 0;
+		String query = "SELECT SUM(tongThanhTien) AS TotalRevenue " + "FROM HoaDon " + "WHERE YEAR(thoiGianTao) = ?";
+		try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+			preparedStatement.setInt(1, namThongKe);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			if (resultSet.next()) {
+				totalRevenue = resultSet.getFloat("TotalRevenue");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return totalRevenue;
+	}
+	public float TongVonNhapHangTrongNgay(LocalDate ngayThongKe) {
+		float totalCostPrice = 0;
+		String query = "SELECT SUM(hh.donGiaNhap * cthd.soLuong) AS TotalCostPrice " + "FROM ChiTietHoaDon cthd "
+				+ "JOIN HangHoa hh ON cthd.maHangHoa = hh.maHangHoa " + "JOIN HoaDon hd ON cthd.maHoaDon = hd.maHoaDon "
+				+ "WHERE CONVERT(DATE, hd.thoiGianTao) = ?";
+		try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+			Date sqlDate = Date.valueOf(ngayThongKe);
+			preparedStatement.setDate(1, sqlDate);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			if (resultSet.next()) {
+				totalCostPrice = resultSet.getFloat("TotalCostPrice");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return totalCostPrice;
+	}
+	public float TongVonNhapHangTrongThang(int thangThongKe, int namCuaThangThongKe) {
+		float totalCostPrice = 0;
+		String query = "SELECT SUM(hh.donGiaNhap * cthd.soLuong) AS TotalCostPrice " + "FROM ChiTietHoaDon cthd "
+				+ "JOIN HangHoa hh ON cthd.maHangHoa = hh.maHangHoa " + "JOIN HoaDon hd ON cthd.maHoaDon = hd.maHoaDon "
+				+ "WHERE MONTH(hd.thoiGianTao) = ? AND YEAR(hd.thoiGianTao) = ?";
+		try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+			preparedStatement.setInt(1, thangThongKe);
+			preparedStatement.setInt(2, namCuaThangThongKe);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			if (resultSet.next()) {
+				totalCostPrice = resultSet.getFloat("TotalCostPrice");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return totalCostPrice;
+	}
+	public float TongVonNhapHangTrongNam(int namThongKe) {
+		float totalCostPrice = 0;
+		String query = "SELECT SUM(hh.donGiaNhap * cthd.soLuong) AS TotalCostPrice " + "FROM ChiTietHoaDon cthd "
+				+ "JOIN HangHoa hh ON cthd.maHangHoa = hh.maHangHoa " + "JOIN HoaDon hd ON cthd.maHoaDon = hd.maHoaDon "
+				+ "WHERE YEAR(hd.thoiGianTao) = ?";
+		try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+			preparedStatement.setInt(1, namThongKe);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			if (resultSet.next()) {
+				totalCostPrice = resultSet.getFloat("TotalCostPrice");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return totalCostPrice;
+	}
+	public float TongTienGiamGiaTrongNgay(LocalDate ngayThongKe) {
+		float totalDiscountAmount = 0;
+		String query = "SELECT SUM(hd.tongThanhTien * vg.phanTramGiamTheoHoaDon / 100) AS TotalDiscountAmount "
+				+ "FROM HoaDon hd " + "LEFT JOIN VoucherGiamGia vg ON hd.maVoucher = vg.maVoucher "
+				+ "WHERE CONVERT(DATE, hd.thoiGianTao) = ?";
+		try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+			preparedStatement.setDate(1, java.sql.Date.valueOf(ngayThongKe));
+			ResultSet resultSet = preparedStatement.executeQuery();
+			if (resultSet.next()) {
+				totalDiscountAmount = resultSet.getFloat("TotalDiscountAmount");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return totalDiscountAmount;
+	}
+	public float TongTienGiamGiaTrongThang(int thangThongKe, int namCuaThangThongKe) {
+		float totalDiscountAmount = 0;
+		String query = "SELECT SUM(hd.tongThanhTien * vg.phanTramGiamTheoHoaDon / 100) AS TotalDiscountAmount "
+				+ "FROM HoaDon hd " + "LEFT JOIN VoucherGiamGia vg ON hd.maVoucher = vg.maVoucher "
+				+ "WHERE MONTH(hd.thoiGianTao) = ? AND YEAR(hd.thoiGianTao) = ?";
+		try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+			preparedStatement.setInt(1, thangThongKe);
+			preparedStatement.setInt(2, namCuaThangThongKe);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			if (resultSet.next()) {
+				totalDiscountAmount = resultSet.getFloat("TotalDiscountAmount");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return totalDiscountAmount;
+	}
+	public float TongTienGiamGiaTrongNam(int namThongKe) {
+		float totalDiscountAmount = 0;
+		String query = "SELECT SUM(hd.tongThanhTien * vg.phanTramGiamTheoHoaDon / 100) AS TotalDiscountAmount "
+				+ "FROM HoaDon hd " + "LEFT JOIN VoucherGiamGia vg ON hd.maVoucher = vg.maVoucher "
+				+ "WHERE YEAR(hd.thoiGianTao) = ?";
+		try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+			preparedStatement.setInt(1, namThongKe);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			if (resultSet.next()) {
+				totalDiscountAmount = resultSet.getFloat("TotalDiscountAmount");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return totalDiscountAmount;
+	}
 }
