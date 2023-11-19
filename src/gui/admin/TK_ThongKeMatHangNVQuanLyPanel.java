@@ -31,7 +31,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 
-public class TK_ThongKeBanHangNVQuanLyPanel extends JPanel implements ActionListener {
+public class TK_ThongKeMatHangNVQuanLyPanel extends JPanel implements ActionListener {
 	private String[] cols = { "Xếp hạng", "Mã sản phẩm", "Tên sản phẩm", "Số lượng bán ra" };
 	private DefaultTableModel modelTblThongKeBanHangNgay;
 	private JTable tblThongKeBanHangNgay;
@@ -56,7 +56,7 @@ public class TK_ThongKeBanHangNVQuanLyPanel extends JPanel implements ActionList
 	/**
 	 * Create the panel.
 	 */
-	public TK_ThongKeBanHangNVQuanLyPanel() {
+	public TK_ThongKeMatHangNVQuanLyPanel() {
 		this.setBounds(0, 0, 1350, 640);
 		setLayout(null);
 

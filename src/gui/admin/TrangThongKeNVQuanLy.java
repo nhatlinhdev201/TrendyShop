@@ -27,7 +27,7 @@ import java.awt.BorderLayout;
 
 public class TrangThongKeNVQuanLy extends JPanel implements ActionListener{
 
-	private TK_ThongKeBanHangNVQuanLyPanel panelThongKeBanHang;
+	private TK_ThongKeMatHangNVQuanLyPanel panelThongKeBanHang;
 	private TK_ThongKeDoanhThuNVQuanLyJPanel panelThongKeDoanhThu;
 	
 
@@ -37,7 +37,7 @@ public class TrangThongKeNVQuanLy extends JPanel implements ActionListener{
 	public TrangThongKeNVQuanLy() {
 		this.setBounds(SetBountJPanel.X, SetBountJPanel.Y, SetBountJPanel.WIDTH, SetBountJPanel.HEIGHT);
 		setLayout(null);
-		panelThongKeBanHang = new TK_ThongKeBanHangNVQuanLyPanel();
+		panelThongKeBanHang = new TK_ThongKeMatHangNVQuanLyPanel();
 		panelThongKeDoanhThu = new TK_ThongKeDoanhThuNVQuanLyJPanel();
 		
 		

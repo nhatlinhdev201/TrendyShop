@@ -140,7 +140,7 @@ public class TK_ThongKeDoanhThuNVQuanLyJPanel extends JPanel implements ActionLi
 		// <==========================================================>
 		JPanel panelTabThongKeTheoNgay = new JPanel();
 		panelTabThongKeTheoNgay.setBackground(new Color(102, 205, 170));
-		tabbedPane.addTab("Thống kê trên ngày", null, panelTabThongKeTheoNgay, null);
+		tabbedPane.addTab("Thống kê trong ngày", null, panelTabThongKeTheoNgay, null);
 		panelTabThongKeTheoNgay.setLayout(null);
 
 		JPanel panelDuLieuThongKe = new JPanel();
@@ -223,7 +223,7 @@ public class TK_ThongKeDoanhThuNVQuanLyJPanel extends JPanel implements ActionLi
 		// <=============================================================>
 		JPanel panelTabThongKeTheoThang = new JPanel();
 		panelTabThongKeTheoThang.setBackground(new Color(102, 205, 170));
-		tabbedPane.addTab("Thống kê trên tháng", null, panelTabThongKeTheoThang, null);
+		tabbedPane.addTab("Thống kê trong tháng", null, panelTabThongKeTheoThang, null);
 		panelTabThongKeTheoThang.setLayout(null);
 
 		JPanel panelDuLieuThongKe_1 = new JPanel();
@@ -475,7 +475,7 @@ public class TK_ThongKeDoanhThuNVQuanLyJPanel extends JPanel implements ActionLi
 		// <==================================================>
 		JPanel panelTabThongKeTheoNam = new JPanel();
 		panelTabThongKeTheoNam.setBackground(new Color(102, 205, 170));
-		tabbedPane.addTab("Thống kê trên năm", null, panelTabThongKeTheoNam, null);
+		tabbedPane.addTab("Thống kê trong năm", null, panelTabThongKeTheoNam, null);
 		panelTabThongKeTheoNam.setLayout(null);
 
 		JPanel panelDuLieuThongKe_1_1 = new JPanel();
