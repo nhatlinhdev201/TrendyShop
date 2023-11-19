@@ -10,7 +10,9 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
@@ -45,6 +47,8 @@ import entities.NhanVien;
 import services.ThongKeDoanhThuServices;
 
 import javax.swing.JTextPane;
+import javax.swing.SwingConstants;
+
 import java.awt.SystemColor;
 import java.awt.Label;
 
@@ -187,6 +191,12 @@ public class TK_ThongKeDoanhThuNVQuanLyJPanel extends JPanel implements ActionLi
 		modelTableThongKeNgay = new DefaultTableModel(cols, 0);
 		tblDuLieuTKNVNgay = new JTable(modelTableThongKeNgay);
 		panelBangNhanVienTKDTNgay.add(new JScrollPane(tblDuLieuTKNVNgay), BorderLayout.CENTER);
+		for(int i=2; i < cols.length; i++) {
+        	TableColumn column = tblDuLieuTKNVNgay.getColumnModel().getColumn(i);
+            DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+            renderer.setHorizontalAlignment(SwingConstants.RIGHT);
+            column.setCellRenderer(renderer);
+        }
 		tblDuLieuTKNVNgay.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 
 			@Override
@@ -274,6 +284,12 @@ public class TK_ThongKeDoanhThuNVQuanLyJPanel extends JPanel implements ActionLi
 		modelTableThongKeThang = new DefaultTableModel(cols, 0);
 		tblNhanVienThang = new JTable(modelTableThongKeThang);
 		panelBangNhanVienTKDTThang.add(new JScrollPane(tblNhanVienThang), BorderLayout.CENTER);
+		for(int i=2; i < cols.length; i++) {
+        	TableColumn column = tblNhanVienThang.getColumnModel().getColumn(i);
+            DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+            renderer.setHorizontalAlignment(SwingConstants.RIGHT);
+            column.setCellRenderer(renderer);
+        }
 		tblNhanVienThang.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 
 			@Override
@@ -526,6 +542,13 @@ public class TK_ThongKeDoanhThuNVQuanLyJPanel extends JPanel implements ActionLi
 		modelTableThongKeNam = new DefaultTableModel(cols, 0);
 		tblBangNhanVienNam = new JTable(modelTableThongKeNam);
 		panelBangNhanVienTKDTNam.add(new JScrollPane(tblBangNhanVienNam), BorderLayout.CENTER);
+		// Đặt căn lề phải cho cột 
+        for(int i=2; i < cols.length; i++) {
+        	TableColumn column = tblBangNhanVienNam.getColumnModel().getColumn(i);
+            DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+            renderer.setHorizontalAlignment(SwingConstants.RIGHT);
+            column.setCellRenderer(renderer);
+        }
 		tblBangNhanVienNam.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 
 			@Override
@@ -945,8 +968,8 @@ public class TK_ThongKeDoanhThuNVQuanLyJPanel extends JPanel implements ActionLi
 	public void loadDataToTable(DefaultTableModel model, ArrayList<ModelThongKeDoanhThu> dataTable) {
 		model.setRowCount(0);
 		for (ModelThongKeDoanhThu data : dataTable) {
-			model.addRow(new Object[] { data.getXepHang(), data.getTenNhanVien(), data.getTongDoanhThu(),
-					data.getTongTienLai(), data.getTongSoHoaDonDuocLap() });
+			model.addRow(new Object[] { data.getXepHang(), data.getTenNhanVien(), ChuyenThanhTien(data.getTongDoanhThu()),
+					ChuyenThanhTien(data.getTongTienLai()), ChuyenThanhTien(data.getTongSoHoaDonDuocLap()) });
 		}
 	}
 
