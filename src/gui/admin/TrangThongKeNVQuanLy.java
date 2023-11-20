@@ -27,7 +27,7 @@ import java.awt.BorderLayout;
 
 public class TrangThongKeNVQuanLy extends JPanel implements ActionListener{
 
-	private TK_ThongKeMatHangNVQuanLyPanel panelThongKeBanHang;
+	private TK_ThongKeMatHangBanChayNVQuanLyPanel panelThongKeBanHang;
 	private TK_ThongKeDoanhThuNVQuanLyJPanel panelThongKeDoanhThu;
 	
 
@@ -37,7 +37,7 @@ public class TrangThongKeNVQuanLy extends JPanel implements ActionListener{
 	public TrangThongKeNVQuanLy() {
 		this.setBounds(SetBountJPanel.X, SetBountJPanel.Y, SetBountJPanel.WIDTH, SetBountJPanel.HEIGHT);
 		setLayout(null);
-		panelThongKeBanHang = new TK_ThongKeMatHangNVQuanLyPanel();
+		panelThongKeBanHang = new TK_ThongKeMatHangBanChayNVQuanLyPanel();
 		panelThongKeDoanhThu = new TK_ThongKeDoanhThuNVQuanLyJPanel();
 		
 		
@@ -55,7 +55,7 @@ public class TrangThongKeNVQuanLy extends JPanel implements ActionListener{
 		
 		JPanel panelCN_CNThongKeBanHang = new JPanel();
 		panelCN_CNThongKeBanHang.setLayout(null);
-		tabbedPane.addTab("THỐNG KÊ BÁN HÀNG", null, panelCN_CNThongKeBanHang, null);
+		tabbedPane.addTab("THỐNG KÊ MẶT HÀNG BÁN CHẠY", null, panelCN_CNThongKeBanHang, null);
 		panelThongKeBanHang.setBorder(new LineBorder(Color.RED));
 		panelThongKeBanHang.setBounds(0, 11, 1350, 657);
 		panelCN_CNThongKeBanHang.add(panelThongKeBanHang);
