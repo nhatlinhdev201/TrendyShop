@@ -10,10 +10,13 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
+import javax.swing.text.StyledEditorKit;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -45,6 +48,8 @@ import entities.NhanVien;
 import services.ThongKeDoanhThuServices;
 
 import javax.swing.JTextPane;
+import javax.swing.SwingConstants;
+
 import java.awt.SystemColor;
 import java.awt.Label;
 
@@ -140,7 +145,7 @@ public class TK_ThongKeDoanhThuNVQuanLyJPanel extends JPanel implements ActionLi
 		// <==========================================================>
 		JPanel panelTabThongKeTheoNgay = new JPanel();
 		panelTabThongKeTheoNgay.setBackground(new Color(102, 205, 170));
-		tabbedPane.addTab("Thống kê trên ngày", null, panelTabThongKeTheoNgay, null);
+		tabbedPane.addTab("Thống kê trong ngày", null, panelTabThongKeTheoNgay, null);
 		panelTabThongKeTheoNgay.setLayout(null);
 
 		JPanel panelDuLieuThongKe = new JPanel();
@@ -187,6 +192,12 @@ public class TK_ThongKeDoanhThuNVQuanLyJPanel extends JPanel implements ActionLi
 		modelTableThongKeNgay = new DefaultTableModel(cols, 0);
 		tblDuLieuTKNVNgay = new JTable(modelTableThongKeNgay);
 		panelBangNhanVienTKDTNgay.add(new JScrollPane(tblDuLieuTKNVNgay), BorderLayout.CENTER);
+		for(int i=2; i < cols.length; i++) {
+        	TableColumn column = tblDuLieuTKNVNgay.getColumnModel().getColumn(i);
+            DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+            renderer.setHorizontalAlignment(SwingConstants.RIGHT);
+            column.setCellRenderer(renderer);
+        }
 		tblDuLieuTKNVNgay.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 
 			@Override
@@ -204,26 +215,26 @@ public class TK_ThongKeDoanhThuNVQuanLyJPanel extends JPanel implements ActionLi
 		panelBieuDoThongKeNgay.setBorder(new TitledBorder(
 				new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "",
 				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panelBieuDoThongKeNgay.setBounds(811, 11, 524, 537);
+		panelBieuDoThongKeNgay.setBounds(811, 11, 524, 494);
 		panelTabThongKeTheoNgay.add(panelBieuDoThongKeNgay);
 		panelBieuDoThongKeNgay.setLayout(null);
 
 		panelBieuDoThongKeDoanhThuNgay = new JPanel();
 		panelBieuDoThongKeDoanhThuNgay.setBackground(SystemColor.activeCaptionBorder);
-		panelBieuDoThongKeDoanhThuNgay.setBounds(10, 11, 504, 515);
+		panelBieuDoThongKeDoanhThuNgay.setBounds(10, 11, 504, 473);
 		panelBieuDoThongKeNgay.add(panelBieuDoThongKeDoanhThuNgay);
 		panelBieuDoThongKeDoanhThuNgay.setLayout(null);
 
 		btnXuatDuLieuThongKeNgay = new JButton("Xuất dữ liệu thống kê");
 		btnXuatDuLieuThongKeNgay.setFont(new Font("Tahoma", Font.BOLD, 10));
-		btnXuatDuLieuThongKeNgay.setBounds(1017, 560, 174, 30);
+		btnXuatDuLieuThongKeNgay.setBounds(1010, 516, 174, 30);
 		panelTabThongKeTheoNgay.add(btnXuatDuLieuThongKeNgay);
 		btnXuatDuLieuThongKeNgay.addActionListener(this);
 
 		// <=============================================================>
 		JPanel panelTabThongKeTheoThang = new JPanel();
 		panelTabThongKeTheoThang.setBackground(new Color(102, 205, 170));
-		tabbedPane.addTab("Thống kê trên tháng", null, panelTabThongKeTheoThang, null);
+		tabbedPane.addTab("Thống kê trong tháng", null, panelTabThongKeTheoThang, null);
 		panelTabThongKeTheoThang.setLayout(null);
 
 		JPanel panelDuLieuThongKe_1 = new JPanel();
@@ -274,6 +285,12 @@ public class TK_ThongKeDoanhThuNVQuanLyJPanel extends JPanel implements ActionLi
 		modelTableThongKeThang = new DefaultTableModel(cols, 0);
 		tblNhanVienThang = new JTable(modelTableThongKeThang);
 		panelBangNhanVienTKDTThang.add(new JScrollPane(tblNhanVienThang), BorderLayout.CENTER);
+		for(int i=2; i < cols.length; i++) {
+        	TableColumn column = tblNhanVienThang.getColumnModel().getColumn(i);
+            DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+            renderer.setHorizontalAlignment(SwingConstants.RIGHT);
+            column.setCellRenderer(renderer);
+        }
 		tblNhanVienThang.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 
 			@Override
@@ -457,25 +474,25 @@ public class TK_ThongKeDoanhThuNVQuanLyJPanel extends JPanel implements ActionLi
 				new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "",
 
 				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panelBieuDoThongKeNgay_1.setBounds(811, 11, 524, 537);
+		panelBieuDoThongKeNgay_1.setBounds(811, 11, 524, 498);
 		panelTabThongKeTheoThang.add(panelBieuDoThongKeNgay_1);
 
 		panelBieuDoThongKeDoanhThuThang = new JPanel();
 		panelBieuDoThongKeDoanhThuThang.setLayout(null);
 		panelBieuDoThongKeDoanhThuThang.setBackground(SystemColor.activeCaptionBorder);
-		panelBieuDoThongKeDoanhThuThang.setBounds(10, 11, 504, 515);
+		panelBieuDoThongKeDoanhThuThang.setBounds(10, 11, 504, 475);
 		panelBieuDoThongKeNgay_1.add(panelBieuDoThongKeDoanhThuThang);
 
 		btnXuatDuLieuThongKeThang = new JButton("Xuất dữ liệu thống kê");
 		btnXuatDuLieuThongKeThang.setFont(new Font("Tahoma", Font.BOLD, 10));
-		btnXuatDuLieuThongKeThang.setBounds(1017, 560, 174, 30);
+		btnXuatDuLieuThongKeThang.setBounds(1011, 520, 174, 30);
 		btnXuatDuLieuThongKeThang.addActionListener(this);
 		panelTabThongKeTheoThang.add(btnXuatDuLieuThongKeThang);
 
 		// <==================================================>
 		JPanel panelTabThongKeTheoNam = new JPanel();
 		panelTabThongKeTheoNam.setBackground(new Color(102, 205, 170));
-		tabbedPane.addTab("Thống kê trên năm", null, panelTabThongKeTheoNam, null);
+		tabbedPane.addTab("Thống kê trong năm", null, panelTabThongKeTheoNam, null);
 		panelTabThongKeTheoNam.setLayout(null);
 
 		JPanel panelDuLieuThongKe_1_1 = new JPanel();
@@ -526,6 +543,13 @@ public class TK_ThongKeDoanhThuNVQuanLyJPanel extends JPanel implements ActionLi
 		modelTableThongKeNam = new DefaultTableModel(cols, 0);
 		tblBangNhanVienNam = new JTable(modelTableThongKeNam);
 		panelBangNhanVienTKDTNam.add(new JScrollPane(tblBangNhanVienNam), BorderLayout.CENTER);
+		// Đặt căn lề phải cho cột 
+        for(int i=2; i < cols.length; i++) {
+        	TableColumn column = tblBangNhanVienNam.getColumnModel().getColumn(i);
+            DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+            renderer.setHorizontalAlignment(SwingConstants.RIGHT);
+            column.setCellRenderer(renderer);
+        }
 		tblBangNhanVienNam.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 
 			@Override
@@ -699,18 +723,18 @@ public class TK_ThongKeDoanhThuNVQuanLyJPanel extends JPanel implements ActionLi
 				new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "",
 
 				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panelBieuDoThongKeNgay_1_1.setBounds(811, 11, 524, 537);
+		panelBieuDoThongKeNgay_1_1.setBounds(811, 11, 524, 503);
 		panelTabThongKeTheoNam.add(panelBieuDoThongKeNgay_1_1);
 
 		panelBieuDoThongKeDoanhThuNam = new JPanel();
 		panelBieuDoThongKeDoanhThuNam.setLayout(null);
 		panelBieuDoThongKeDoanhThuNam.setBackground(SystemColor.activeCaptionBorder);
-		panelBieuDoThongKeDoanhThuNam.setBounds(10, 11, 504, 515);
+		panelBieuDoThongKeDoanhThuNam.setBounds(10, 11, 504, 478);
 		panelBieuDoThongKeNgay_1_1.add(panelBieuDoThongKeDoanhThuNam);
 
 		btnXuatDuLieuThongKeNam = new JButton("Xuất dữ liệu thống kê");
 		btnXuatDuLieuThongKeNam.setFont(new Font("Tahoma", Font.BOLD, 10));
-		btnXuatDuLieuThongKeNam.setBounds(1017, 560, 174, 30);
+		btnXuatDuLieuThongKeNam.setBounds(1015, 525, 174, 30);
 		panelTabThongKeTheoNam.add(btnXuatDuLieuThongKeNam);
 		btnXuatDuLieuThongKeNam.addActionListener(this);
 
@@ -861,12 +885,48 @@ public class TK_ThongKeDoanhThuNVQuanLyJPanel extends JPanel implements ActionLi
 		btnLamMoiThongKeNgay.setBounds(567, 22, 163, 33);
 		panel_2.add(btnLamMoiThongKeNgay);
 		btnLamMoiThongKeNgay.addActionListener(this);
-
+		
 		lamMoiNgay(jdcChonNgayThongKe);
+		
+		JLabel lblNewLabel_2 = new JLabel("Chọn thông tin và thực hiện thống kê trước khi xuất dữ liệu");
+		lblNewLabel_2.setFont(new Font("Tahoma", Font.ITALIC, 10));
+		lblNewLabel_2.setForeground(Color.RED);
+		lblNewLabel_2.setBounds(827, 557, 309, 14);
+		panelTabThongKeTheoNgay.add(lblNewLabel_2);
+		
+		JLabel lblNewLabel_2_1 = new JLabel("Dữ liệu thống kê sẽ là dữ liệu trên từng nhân viên và cả cửa hàng");
+		lblNewLabel_2_1.setForeground(Color.RED);
+		lblNewLabel_2_1.setFont(new Font("Tahoma", Font.ITALIC, 10));
+		lblNewLabel_2_1.setBounds(826, 574, 419, 14);
+		panelTabThongKeTheoNgay.add(lblNewLabel_2_1);
 		thongKeNgay();
 		lamMoiThangDuocChon(cbxChonThangThongKe, cbxChonNamCuaThangThongKe);
+		
+		JLabel lblNewLabel_2_2 = new JLabel("Chọn thông tin và thực hiện thống kê trước khi xuất dữ liệu");
+		lblNewLabel_2_2.setForeground(Color.RED);
+		lblNewLabel_2_2.setFont(new Font("Tahoma", Font.ITALIC, 10));
+		lblNewLabel_2_2.setBounds(836, 561, 309, 14);
+		panelTabThongKeTheoThang.add(lblNewLabel_2_2);
+		
+		JLabel lblNewLabel_2_1_1 = new JLabel("Dữ liệu thống kê sẽ là dữ liệu trên từng nhân viên và cả cửa hàng");
+		lblNewLabel_2_1_1.setForeground(Color.RED);
+		lblNewLabel_2_1_1.setFont(new Font("Tahoma", Font.ITALIC, 10));
+		lblNewLabel_2_1_1.setBounds(835, 578, 419, 14);
+		panelTabThongKeTheoThang.add(lblNewLabel_2_1_1);
 		thongKeThang();
 		lamMoiNamDuocChon(cbxChonNamThongKe);
+		
+		JLabel lblNewLabel_2_3 = new JLabel("Chọn thông tin và thực hiện thống kê trước khi xuất dữ liệu");
+		lblNewLabel_2_3.setForeground(Color.RED);
+		lblNewLabel_2_3.setFont(new Font("Tahoma", Font.ITALIC, 10));
+		lblNewLabel_2_3.setBounds(829, 559, 309, 14);
+		panelTabThongKeTheoNam.add(lblNewLabel_2_3);
+		
+		JLabel lblNewLabel_2_1_2 = new JLabel("Dữ liệu thống kê sẽ là dữ liệu trên từng nhân viên và cả cửa hàng");
+		lblNewLabel_2_1_2.setForeground(Color.RED);
+		lblNewLabel_2_1_2.setFont(new Font("Tahoma", Font.ITALIC, 10));
+		lblNewLabel_2_1_2.setBounds(828, 576, 419, 14);
+		panelTabThongKeTheoNam.add(lblNewLabel_2_1_2);
 		thongKeNam();
 	}
 	private void veBieuDoThongKeCacNgayTrongThang(JPanel containPanel, ArrayList<ModelThongKeDoanhThu> data, int thang,
@@ -945,14 +1005,14 @@ public class TK_ThongKeDoanhThuNVQuanLyJPanel extends JPanel implements ActionLi
 	public void loadDataToTable(DefaultTableModel model, ArrayList<ModelThongKeDoanhThu> dataTable) {
 		model.setRowCount(0);
 		for (ModelThongKeDoanhThu data : dataTable) {
-			model.addRow(new Object[] { data.getXepHang(), data.getTenNhanVien(), data.getTongDoanhThu(),
-					data.getTongTienLai(), data.getTongSoHoaDonDuocLap() });
+			model.addRow(new Object[] { data.getXepHang(), data.getTenNhanVien(), ChuyenThanhTien(data.getTongDoanhThu()),
+					ChuyenThanhTien(data.getTongTienLai()), ChuyenThanhTien(data.getTongSoHoaDonDuocLap()) });
 		}
 	}
 
 	public void lamMoiTableNgay(DefaultTableModel model) {
 		ThongKeDoanhThuServices services = new ThongKeDoanhThuServices();
-		ArrayList<ModelThongKeDoanhThu> dataTable = services.layDuLieuThongKeDoanhThuNgayTheoNv(LocalDate.now());
+		ArrayList<ModelThongKeDoanhThu> dataTable = services.layDuLieuThongKeDoanhThuNgayTheoNv(layNgayDuocChon(jdcChonNgayThongKe));
 		loadDataToTable(model, dataTable);
 		txtThongTinTimKiemNgay.setText("");
 	}
@@ -1087,15 +1147,18 @@ public class TK_ThongKeDoanhThuNVQuanLyJPanel extends JPanel implements ActionLi
 
 	public void lamMoiTableThang() {
 		ThongKeDoanhThuServices services = new ThongKeDoanhThuServices();
+		int thang = Integer.parseInt((String) cbxChonThangThongKe.getSelectedItem());
+		int namCuaThang = Integer.parseInt((String) cbxChonNamCuaThangThongKe.getSelectedItem());
 		ArrayList<ModelThongKeDoanhThu> dataTable = services
-				.layDuLieuThongKeDoanhThuThangTheoNv(LocalDate.now().getMonthValue(), LocalDate.now().getYear());
+				.layDuLieuThongKeDoanhThuThangTheoNv(thang, namCuaThang);
 		loadDataToTable(modelTableThongKeThang, dataTable);
 		txtThongTinTimKiemNhanVienThang.setText("");
 	}
 	public void lamMoiTableNam() {
 		ThongKeDoanhThuServices services = new ThongKeDoanhThuServices();
+		int nam = Integer.parseInt((String) cbxChonNamThongKe.getSelectedItem());
 		ArrayList<ModelThongKeDoanhThu> dataTable = services
-				.layDuLieuThongKeDoanhThuNamTheoNv(LocalDate.now().getYear());
+				.layDuLieuThongKeDoanhThuNamTheoNv(nam);
 		loadDataToTable(modelTableThongKeNam, dataTable);
 		txtThongTinTimKiemNhanVienNam.setText("");
 	}

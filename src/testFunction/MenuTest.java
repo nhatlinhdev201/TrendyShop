@@ -3,10 +3,14 @@ package testFunction;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
+import constance.ModelThongKeMatHang;
+import daos.Dao_ThongKeMatHang;
 import gui.TrangChuPanel;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class MenuTest extends JFrame {
 
@@ -59,8 +63,13 @@ public class MenuTest extends JFrame {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    MenuTest frame = new MenuTest();
-                    frame.setVisible(true);
+                	System.out.println("hello");
+                    Dao_ThongKeMatHang dao = new Dao_ThongKeMatHang();
+                    ArrayList<ModelThongKeMatHang> arr = dao.thongKeTop50MatHangTheoNgay(LocalDate.of(2023, 8, 18));
+                    for(ModelThongKeMatHang m : arr) {
+                    	System.out.println(m.toString());
+                    	System.out.println("check");
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
