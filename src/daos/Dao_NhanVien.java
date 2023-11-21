@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,7 +47,7 @@ public class Dao_NhanVien {
 		return result;
 	}
 	
-	public NhanVien getNhanVienTheoMa(String maNhanVien) {
+	public NhanVien getNhanVienTheoMa(String maNhanVien){
 		NhanVien nv = null;
 		try {
 			PreparedStatement statement = connection.prepareStatement("select*from NhanVien where maNhanVien = '"+maNhanVien+"'");

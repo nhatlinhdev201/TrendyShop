@@ -3,6 +3,7 @@ package gui;
 import javax.swing.JPanel;
 
 import constance.SetBountJPanel;
+import daos.Dao_KhachHang;
 import daos.KhachHangDAO;
 import entities.KhachHang;
 import gui.admin.FromThemNhanVien;
@@ -36,7 +37,7 @@ import javax.swing.JComboBox;
 
 public class TrangQLKhachHangPanel extends JPanel implements ActionListener,MouseListener{
 	 private static final Font TABLE_FONT = new Font("Tahoma", Font.PLAIN, 15);
-	static KhachHangDAO khDao = new KhachHangDAO();
+	static Dao_KhachHang khDao = new Dao_KhachHang();
 	private JTable table;
 	private JTextField txt_makh;
 	private JTextField txt_ten;
@@ -327,7 +328,7 @@ public class TrangQLKhachHangPanel extends JPanel implements ActionListener,Mous
 	}
 	  public static void docDuLieu() {
 	        try {
-	            List<KhachHang> list = khDao.getAllKhachHang();
+	            List<KhachHang> list = khDao.getAll();
 	            int i = 0;
 	            for (KhachHang khachHang : list) {
 	                // Tạo một mảng dữ liệu để chứa thông tin của khách hàng
