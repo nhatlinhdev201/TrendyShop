@@ -39,6 +39,7 @@ import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.CategoryLabelPositions;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.labels.StandardPieSectionLabelGenerator;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PiePlot;
 import org.jfree.chart.plot.PlotOrientation;
@@ -70,6 +71,72 @@ public class ThongKeDoanhThuServices {
 		tongDoanhThu = dao_ThongKeDoanhThu.TongDoanhThuTrongNgayCuaNhanVien(today, nhanVien.getMaNhanVien());
 		tongSoHoaDonDuocLap = dao_ThongKeDoanhThu.TongHoaDonDocNhanVienLapTrongNgay(today, nhanVien.getMaNhanVien());
 		tongKhyuenMai = dao_ThongKeDoanhThu.TongTienGiamGiaTrongNgayTheoNhanVien(today, nhanVien.getMaNhanVien());
+		tongThue = tongDoanhThu * 0.1f;
+		tongTienLai = tongDoanhThu - tongTienNhapHang - tongKhyuenMai - tongThue;
+
+		model.setMaNhanVien(maNhanVien);
+		model.setTenNhanVien(tenNhanVien);
+		model.setTongDoanhThu(tongDoanhThu);
+		model.setTongTienNhapHang(tongTienNhapHang);
+		model.setTongTienLai(tongTienLai);
+		model.setTongSoHoaDonDuocLap(tongSoHoaDonDuocLap);
+		model.setTongThue(tongThue);
+		model.setTongKhyuenMai(tongKhyuenMai);
+		model.setThoiGianThongKe(thoiGianThongKe);
+		model.setXepHang(xepHang);
+		return model;
+	}
+	public ModelThongKeDoanhThu layDuLieuModelThongKeDoanhThuThangTheoNv(NhanVien nhanVien, int thang, int namCuaThang) {
+		ModelThongKeDoanhThu model = new ModelThongKeDoanhThu();
+		String maNhanVien = nhanVien.getMaNhanVien();
+		String tenNhanVien = nhanVien.getHoTen();
+		double tongDoanhThu;
+		double tongTienNhapHang;
+		double tongTienLai;
+		double tongSoHoaDonDuocLap;
+		double tongThue;
+		double tongKhyuenMai;
+		String thoiGianThongKe = thang+"/"+namCuaThang;
+		String xepHang = "";
+
+		Dao_ThongKeDoanhThu dao_ThongKeDoanhThu = new Dao_ThongKeDoanhThu();
+		tongTienNhapHang = dao_ThongKeDoanhThu.TongVonNhapHangTrongThangNhanVienBan(thang, namCuaThang, maNhanVien);
+		tongDoanhThu = dao_ThongKeDoanhThu.TongDoanhThuTrongThangCuaNhanVien(thang, namCuaThang, maNhanVien);
+		tongSoHoaDonDuocLap = dao_ThongKeDoanhThu.TongHoaDonDuocNhanVienLapTrongThang(thang, namCuaThang, maNhanVien);
+		tongKhyuenMai = dao_ThongKeDoanhThu.TongTienGiamGiaTrongThangTheoNhanVien(thang, namCuaThang, maNhanVien);
+		tongThue = tongDoanhThu * 0.1f;
+		tongTienLai = tongDoanhThu - tongTienNhapHang - tongKhyuenMai - tongThue;
+
+		model.setMaNhanVien(maNhanVien);
+		model.setTenNhanVien(tenNhanVien);
+		model.setTongDoanhThu(tongDoanhThu);
+		model.setTongTienNhapHang(tongTienNhapHang);
+		model.setTongTienLai(tongTienLai);
+		model.setTongSoHoaDonDuocLap(tongSoHoaDonDuocLap);
+		model.setTongThue(tongThue);
+		model.setTongKhyuenMai(tongKhyuenMai);
+		model.setThoiGianThongKe(thoiGianThongKe);
+		model.setXepHang(xepHang);
+		return model;
+	}
+	public ModelThongKeDoanhThu layDuLieuModelThongKeDoanhThuNamTheoNv(NhanVien nhanVien,int nam) {
+		ModelThongKeDoanhThu model = new ModelThongKeDoanhThu();
+		String maNhanVien = nhanVien.getMaNhanVien();
+		String tenNhanVien = nhanVien.getHoTen();
+		double tongDoanhThu;
+		double tongTienNhapHang;
+		double tongTienLai;
+		double tongSoHoaDonDuocLap;
+		double tongThue;
+		double tongKhyuenMai;
+		String thoiGianThongKe = String.valueOf(nam);
+		String xepHang = "";
+
+		Dao_ThongKeDoanhThu dao_ThongKeDoanhThu = new Dao_ThongKeDoanhThu();
+		tongTienNhapHang = dao_ThongKeDoanhThu.TongVonNhapHangTrongNamNhanVienBan(nam, maNhanVien);
+		tongDoanhThu = dao_ThongKeDoanhThu.TongDoanhThuTrongNamCuaNhanVien(nam, maNhanVien);
+		tongSoHoaDonDuocLap = dao_ThongKeDoanhThu.TongHoaDonDuocNhanVienLapTrongNam(nam, maNhanVien);
+		tongKhyuenMai = dao_ThongKeDoanhThu.TongTienGiamGiaTrongNamTheoNhanVien(nam, maNhanVien);
 		tongThue = tongDoanhThu * 0.1f;
 		tongTienLai = tongDoanhThu - tongTienNhapHang - tongKhyuenMai - tongThue;
 
@@ -118,6 +185,71 @@ public class ThongKeDoanhThuServices {
 		model.setXepHang(xepHang);
 		return model;
 	}
+	public ModelThongKeDoanhThu layGiuLieuThongKeTrenToanCuaHangTheoThang(int thang, int namCuaThang) {
+		Dao_ThongKeDoanhThu dao_ThongKeDoanhThu = new Dao_ThongKeDoanhThu();
+		ModelThongKeDoanhThu model = new ModelThongKeDoanhThu();
+		String maNhanVien = "Toàn cửa hàng";
+		String tenNhanVien = "Toàn cửa hàng";
+		double tongDoanhThu;
+		double tongTienNhapHang;
+		double tongTienLai;
+		double tongSoHoaDonDuocLap;
+		double tongThue;
+		double tongKhyuenMai;
+		String thoiGianThongKe = thang+"/"+namCuaThang;
+		String xepHang = "Toàn cửa hàng";
+
+		tongDoanhThu = dao_ThongKeDoanhThu.TongDoanhThuTrongThang(thang, namCuaThang);
+		tongTienNhapHang = dao_ThongKeDoanhThu.TongVonNhapHangTrongThang(thang, namCuaThang);
+		tongSoHoaDonDuocLap = dao_ThongKeDoanhThu.TongHoaDonTrongThang(thang, namCuaThang);
+		tongKhyuenMai = dao_ThongKeDoanhThu.TongTienGiamGiaTrongThang(thang, namCuaThang);
+		tongThue = tongDoanhThu * 0.1f;
+		tongTienLai = tongDoanhThu - tongTienNhapHang - tongKhyuenMai - tongThue;
+		model.setMaNhanVien(maNhanVien);
+		model.setTenNhanVien(tenNhanVien);
+		model.setTongDoanhThu(tongDoanhThu);
+		model.setTongTienNhapHang(tongTienNhapHang);
+		model.setTongTienLai(tongTienLai);
+		model.setTongSoHoaDonDuocLap(tongSoHoaDonDuocLap);
+		model.setTongThue(tongThue);
+		model.setTongKhyuenMai(tongKhyuenMai);
+		model.setThoiGianThongKe(thoiGianThongKe);
+		model.setXepHang(xepHang);
+		return model;
+	}
+	
+	public ModelThongKeDoanhThu layGiuLieuThongKeTrenToanCuaHangTheoNam(int nam) {
+		Dao_ThongKeDoanhThu dao_ThongKeDoanhThu = new Dao_ThongKeDoanhThu();
+		ModelThongKeDoanhThu model = new ModelThongKeDoanhThu();
+		String maNhanVien = "Toàn cửa hàng";
+		String tenNhanVien = "Toàn cửa hàng";
+		double tongDoanhThu;
+		double tongTienNhapHang;
+		double tongTienLai;
+		double tongSoHoaDonDuocLap;
+		double tongThue;
+		double tongKhyuenMai;
+		String thoiGianThongKe = String.valueOf(nam);
+		String xepHang = "Toàn cửa hàng";
+
+		tongDoanhThu = dao_ThongKeDoanhThu.TongDoanhThuTrongNam(nam);
+		tongTienNhapHang = dao_ThongKeDoanhThu.TongVonNhapHangTrongNam(nam);
+		tongSoHoaDonDuocLap = dao_ThongKeDoanhThu.TongHoaDonDuocLapTrongNam(nam);
+		tongKhyuenMai = dao_ThongKeDoanhThu.TongTienGiamGiaTrongNam(nam);
+		tongThue = tongDoanhThu * 0.1f;
+		tongTienLai = tongDoanhThu - tongTienNhapHang - tongKhyuenMai - tongThue;
+		model.setMaNhanVien(maNhanVien);
+		model.setTenNhanVien(tenNhanVien);
+		model.setTongDoanhThu(tongDoanhThu);
+		model.setTongTienNhapHang(tongTienNhapHang);
+		model.setTongTienLai(tongTienLai);
+		model.setTongSoHoaDonDuocLap(tongSoHoaDonDuocLap);
+		model.setTongThue(tongThue);
+		model.setTongKhyuenMai(tongKhyuenMai);
+		model.setThoiGianThongKe(thoiGianThongKe);
+		model.setXepHang(xepHang);
+		return model;
+	}
 
 	public ArrayList<ModelThongKeDoanhThu> layDuLieuThongKeDoanhThuNgayTheoNv(LocalDate ngayThongKe) {
 		Dao_ThongKeDoanhThu dao_ThongKeDoanhThu = new Dao_ThongKeDoanhThu();
@@ -151,7 +283,70 @@ public class ThongKeDoanhThuServices {
 		i = 1;
 		return arr;
 	}
+	public ArrayList<ModelThongKeDoanhThu> layDuLieuThongKeDoanhThuThangTheoNv(int thang, int namCuaThang) {
+		Dao_ThongKeDoanhThu dao_ThongKeDoanhThu = new Dao_ThongKeDoanhThu();
+		ArrayList<ModelThongKeDoanhThu> arr = new ArrayList<>();
+		ArrayList<NhanVien> dataNhanVien = dao_ThongKeDoanhThu.layDanhSachNhanVienBanHang();
+		for (NhanVien nv : dataNhanVien) {
+			ModelThongKeDoanhThu model = new ModelThongKeDoanhThu();
+			model = layDuLieuModelThongKeDoanhThuThangTheoNv(nv, thang, namCuaThang);
+			arr.add(model);
+		}
+		Collections.sort(arr, new Comparator<ModelThongKeDoanhThu>() {
 
+			@Override
+			public int compare(ModelThongKeDoanhThu o1, ModelThongKeDoanhThu o2) {
+				if (o1.getTongDoanhThu() < o2.getTongDoanhThu())
+					return 1;
+				else {
+					if (o1.getTongDoanhThu() == o2.getTongDoanhThu())
+						return 0;
+					else {
+						return -1;
+					}
+				}
+			}
+		});
+		int i = 1;
+		for (ModelThongKeDoanhThu model : arr) {
+			model.setXepHang("Top " + i + " doanh thu");
+			i++;
+		}
+		i = 1;
+		return arr;
+	}
+	public ArrayList<ModelThongKeDoanhThu> layDuLieuThongKeDoanhThuNamTheoNv(int nam) {
+		Dao_ThongKeDoanhThu dao_ThongKeDoanhThu = new Dao_ThongKeDoanhThu();
+		ArrayList<ModelThongKeDoanhThu> arr = new ArrayList<>();
+		ArrayList<NhanVien> dataNhanVien = dao_ThongKeDoanhThu.layDanhSachNhanVienBanHang();
+		for (NhanVien nv : dataNhanVien) {
+			ModelThongKeDoanhThu model = new ModelThongKeDoanhThu();
+			model = layDuLieuModelThongKeDoanhThuNamTheoNv(nv, nam);
+			arr.add(model);
+		}
+		Collections.sort(arr, new Comparator<ModelThongKeDoanhThu>() {
+
+			@Override
+			public int compare(ModelThongKeDoanhThu o1, ModelThongKeDoanhThu o2) {
+				if (o1.getTongDoanhThu() < o2.getTongDoanhThu())
+					return 1;
+				else {
+					if (o1.getTongDoanhThu() == o2.getTongDoanhThu())
+						return 0;
+					else {
+						return -1;
+					}
+				}
+			}
+		});
+		int i = 1;
+		for (ModelThongKeDoanhThu model : arr) {
+			model.setXepHang("Top " + i + " doanh thu");
+			i++;
+		}
+		i = 1;
+		return arr;
+	}
 	private DefaultPieDataset taoDataSetBieuDoTron(ArrayList<ModelThongKeDoanhThu> dataList) {
 		DefaultPieDataset dataset = new DefaultPieDataset();
 		for (ModelThongKeDoanhThu data : dataList) {
@@ -160,7 +355,7 @@ public class ThongKeDoanhThuServices {
 		return dataset;
 	}
 
-	private void khoiTaoBieuDoTron(JPanel containPanel, LocalDate ngayThongKe) {
+	public void khoiTaoBieuDoTron(JPanel containPanel, LocalDate ngayThongKe) {
 		ArrayList<ModelThongKeDoanhThu> dataList = new ArrayList<>();
 		dataList = layDuLieuThongKeDoanhThuNgayTheoNv(ngayThongKe);
 		containPanel.setLayout(new BorderLayout());
@@ -172,9 +367,10 @@ public class ThongKeDoanhThuServices {
 
 		PiePlot plot = (PiePlot) chart.getPlot();
 		plot.setLabelFont(new Font("SansSerif", Font.PLAIN, 12));
-		plot.setNoDataMessage("No data available");
+		plot.setNoDataMessage("Không có dữ liệu doanh thu trong ngày");
 		plot.setCircular(true);
-
+		 // Thiết lập hiển thị phần trăm
+        plot.setLabelGenerator(new StandardPieSectionLabelGenerator("{0}={1}({2})", new DecimalFormat("0.0"), new DecimalFormat("0.0%")));
 		ChartPanel chartPanel = new ChartPanel(chart);
 		containPanel.add(chartPanel, BorderLayout.CENTER);
 	}
@@ -190,6 +386,16 @@ public class ThongKeDoanhThuServices {
 			dataDoanhThuCacNgayTrongThangTrenToanCh.add(model);
 		}
 		return dataDoanhThuCacNgayTrongThangTrenToanCh;
+	}
+	public ArrayList<ModelThongKeDoanhThu> layDuLieuThongKeCacThangTrongNam(int nam) {
+		ArrayList<ModelThongKeDoanhThu> dataDoanhThuCacThangTrongNamTrenToanCh = new ArrayList<>();
+
+		for (int month = 1; month < 13; month++) {
+			ModelThongKeDoanhThu model;
+			model = layGiuLieuThongKeTrenToanCuaHangTheoThang(month, nam);
+			dataDoanhThuCacThangTrongNamTrenToanCh.add(model);
+		}
+		return dataDoanhThuCacThangTrongNamTrenToanCh;
 	}
 
 	public void veBieuDoCotDoanhThu(JPanel contaiPanel, ArrayList<ModelThongKeDoanhThu> data, String tenBieuDo) {
@@ -209,7 +415,7 @@ public class ThongKeDoanhThuServices {
 		JFreeChart barChart = ChartFactory.createBarChart(tenBieuDo, "Thời gian", "Doanh thu", dataset,
 				PlotOrientation.VERTICAL, true, true, false);
 
-		if (data.size() > 13) {
+		if (data.size() > 10) {
 			CategoryPlot plot = barChart.getCategoryPlot();
 			CategoryAxis domainAxis = plot.getDomainAxis();
 			domainAxis.setCategoryLabelPositions(CategoryLabelPositions.UP_45);
@@ -250,15 +456,42 @@ public class ThongKeDoanhThuServices {
 		return dataset;
 	}
 
-	public ArrayList<ModelExportFileThongKe> layDuLieuFileThongKeNgay(LocalDate ngayThongKe) {
+	public ArrayList<ModelExportFileThongKe> layDuLieuFileThongKeCacNgayTrongThang(int thang, int namCuaThang) {
 		ArrayList<ModelExportFileThongKe> dataExport = new ArrayList<>();
-		YearMonth yearMonth = YearMonth.of(ngayThongKe.getYear(), ngayThongKe.getMonthValue());
+		YearMonth yearMonth = YearMonth.of(namCuaThang, thang);
 		for (int day = 1; day <= yearMonth.lengthOfMonth(); day++) {
 			ModelExportFileThongKe model = new ModelExportFileThongKe();
 			LocalDate date = yearMonth.atDay(day);
 			model.setThoiGian(date.toString());
 			ArrayList<ModelThongKeDoanhThu> dataDoanhThu = layDuLieuThongKeDoanhThuNgayTheoNv(date);
 			ModelThongKeDoanhThu doanhThuTong = layGiuLieuThongKeNgayTrenToanCuaHangTheoNgay(date);
+			dataDoanhThu.add(doanhThuTong);
+			model.setDataNhanVien(dataDoanhThu);
+			dataExport.add(model);
+		}
+//        for(ModelExportFileThongKe model : dataExport) {
+//        	System.out.println(model.toString());
+//        }
+		return dataExport;
+	}
+	public ArrayList<ModelExportFileThongKe> layDuLieuFileThongKeNgay(LocalDate ngayThongKe) {
+		ArrayList<ModelExportFileThongKe> dataExport = new ArrayList<>();
+		ModelExportFileThongKe model = new ModelExportFileThongKe();
+		model.setThoiGian(ngayThongKe.toString());
+		ArrayList<ModelThongKeDoanhThu> dataDoanhThu = layDuLieuThongKeDoanhThuNgayTheoNv(ngayThongKe);
+		ModelThongKeDoanhThu doanhThuTong = layGiuLieuThongKeNgayTrenToanCuaHangTheoNgay(ngayThongKe);
+		dataDoanhThu.add(doanhThuTong);
+		model.setDataNhanVien(dataDoanhThu);
+		dataExport.add(model);
+		return dataExport;
+	}
+	public ArrayList<ModelExportFileThongKe> layDuLieuFileThongKeCachThangTrongNam(int namCuaThang) {
+		ArrayList<ModelExportFileThongKe> dataExport = new ArrayList<>();
+		for (int month = 1; month < 13; month++) {
+			ModelExportFileThongKe model = new ModelExportFileThongKe();
+			model.setThoiGian(month+"/"+namCuaThang);
+			ArrayList<ModelThongKeDoanhThu> dataDoanhThu = layDuLieuThongKeDoanhThuThangTheoNv(month, namCuaThang);
+			ModelThongKeDoanhThu doanhThuTong = layGiuLieuThongKeTrenToanCuaHangTheoThang(month, namCuaThang);
 			dataDoanhThu.add(doanhThuTong);
 			model.setDataNhanVien(dataDoanhThu);
 			dataExport.add(model);
@@ -347,10 +580,25 @@ public class ThongKeDoanhThuServices {
 	public boolean xuatFileExcelThongKeNgay(LocalDate ngayThongKe) {
 		ThongKeDoanhThuServices services = new ThongKeDoanhThuServices();
 		ArrayList<ModelExportFileThongKe> dataList = new ArrayList<>();
-		dataList = services.layDuLieuFileThongKeNgay(ngayThongKe);
+		dataList = layDuLieuFileThongKeNgay(ngayThongKe);
 
 		// Xuất ra file Excel
-		return taoMauXuatFileExcel(dataList, "DuLieuThongKe\\"+"ThongKeDoanhThuCacNgayTrongThang" + ngayThongKe.getMonthValue() + "-"
-				+ ngayThongKe.getYear() + ".xlsx");
+		return taoMauXuatFileExcel(dataList, "DuLieuThongKe\\"+"ThongKeDoanhThuTrongNgay"+ngayThongKe.toString()+".xlsx");
+	}
+	public boolean xuatFileExcelThongKeCacNgayTrongThang(int thang, int namCuaThang) {
+		ThongKeDoanhThuServices services = new ThongKeDoanhThuServices();
+		ArrayList<ModelExportFileThongKe> dataList = new ArrayList<>();
+		dataList = services.layDuLieuFileThongKeCacNgayTrongThang(thang,namCuaThang);
+
+		// Xuất ra file Excel
+		return taoMauXuatFileExcel(dataList, "DuLieuThongKe\\"+"ThongKeDoanhThuCacNgayTrongThang"+thang+"-"+namCuaThang+ ".xlsx");
+	}
+	public boolean xuatFileExcelThongKeCacThangTrongNam(int namThongKe) {
+		ThongKeDoanhThuServices services = new ThongKeDoanhThuServices();
+		ArrayList<ModelExportFileThongKe> dataList = new ArrayList<>();
+		dataList = services.layDuLieuFileThongKeCachThangTrongNam(namThongKe);
+
+		// Xuất ra file Excel
+		return taoMauXuatFileExcel(dataList, "DuLieuThongKe\\"+"ThongKeDoanhThuCacThangTrongNam"+namThongKe+".xlsx");
 	}
 }
