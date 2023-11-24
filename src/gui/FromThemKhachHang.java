@@ -95,7 +95,7 @@ public class FromThemKhachHang extends JFrame {
 
 		trangthaiField = new JLabel("Trạng thái :");
 		trangthaiField.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		trangthaiField.setBounds(290, 241, 97, 21);
+		trangthaiField.setBounds(290, 232, 97, 21);
 		contentPane.add(trangthaiField);
 
 		phoneField = new JLabel("Địa chỉ :");
@@ -115,20 +115,20 @@ public class FromThemKhachHang extends JFrame {
 
 		btn_save = new JButton("Save");
 		btn_save.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 17));
-		btn_save.setSize(117, 30);
-		btn_save.setLocation(440, 298);
+		btn_save.setSize(199, 42);
+		btn_save.setLocation(332, 270);
 		contentPane.add(btn_save);
 
 		rdb_hoatdong = new JRadioButton("Hoạt động");
-		rdb_hoatdong.setBackground(new Color(255, 255, 255));
+		rdb_hoatdong.setBackground(new Color(152, 251, 152));
 		rdb_hoatdong.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		rdb_hoatdong.setBounds(380, 240, 102, 23);
+		rdb_hoatdong.setBounds(380, 231, 102, 23);
 		contentPane.add(rdb_hoatdong);
 
 		rdb_nghi = new JRadioButton("Nghỉ");
-		rdb_nghi.setBackground(new Color(255, 255, 255));
+		rdb_nghi.setBackground(new Color(152, 251, 152));
 		rdb_nghi.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		rdb_nghi.setBounds(484, 240, 75, 24);
+		rdb_nghi.setBounds(484, 231, 75, 24);
 		contentPane.add(rdb_nghi);
 
 		lbl_image = new JLabel("");

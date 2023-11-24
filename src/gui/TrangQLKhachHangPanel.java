@@ -340,12 +340,8 @@ public class TrangQLKhachHangPanel extends JPanel implements ActionListener, Mou
 				Object[] rowData = {
 
 						khachHang.getMaKhachHang(), khachHang.getTenKhachHang(), khachHang.getSoDienThoai(),
-						khachHang.getEmail(), khachHang.getDiaChi(), khachHang.isTrangThai() ? "Hoạt động" : "Nghỉ", // Chuyển
-																														// boolean
-																														// thành
-																														// chuỗi
+						khachHang.getEmail(), khachHang.getDiaChi(), khachHang.isTrangThai() ? "Hoạt động" : "Nghỉ", // Chuyển boolean thành chuỗi
 						khachHang.getDiemTichLuy() };
-
 				// Thêm dữ liệu vào model của bảng
 				tableModel.addRow(rowData);
 

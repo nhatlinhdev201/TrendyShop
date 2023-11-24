@@ -23,22 +23,24 @@ public class Dao_NhanVien {
 		List<NhanVien> result = null;
 		NhanVien dto;
 		try {
-			String sql = "select * from KhachHang";
+			String sql = "select * from NhanVien";
 			PreparedStatement statement = connection.prepareStatement(sql);
 			ResultSet rs = statement.executeQuery();
 			result = new ArrayList<>();
 			while (rs.next()) {
-				String maKH =rs.getString("maNhanVien");
+				String maNV =rs.getString("maNhanVien");
 				String ten = rs.getString("hoTen");
 				Date ngaySinh = rs.getDate("ngaySinh");
 				String soCCCD = rs.getString("soCCCD");
 				String soDT = rs.getString("soDienThoai");
 				String email = rs.getString("email");
-				String chucVu = rs.getString("matKhau");
-				String matKhau = rs.getString("chucVu");		
-				Boolean trangThai = rs.getBoolean("phanQuyen");
-				String anh = rs.getString("anhDaiDien");
-				dto = new NhanVien(anh, ten, ngaySinh, soCCCD, soDT, email, email, chucVu, false, matKhau, false, anh);
+				String diaChi = rs.getString("diaChi");
+				String chucVu = rs.getString("chucVu");
+				String matKhau = rs.getString("matKhau");
+				Boolean phanquyen = rs.getBoolean("phanQuyen");
+				Boolean trangThai = rs.getBoolean("trangThai");
+				String anh = rs.getString("hinhAnh");
+				dto = new NhanVien(maNV, ten, ngaySinh, soCCCD, soDT, email, diaChi, chucVu, trangThai, matKhau, phanquyen, anh);
 				result.add(dto);
 			}
 		} catch (Exception e) {
