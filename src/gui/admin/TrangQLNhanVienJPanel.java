@@ -6,6 +6,8 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.swing.JLabel;
@@ -36,20 +38,17 @@ public class TrangQLNhanVienJPanel extends JPanel {
 	private static final Font TABLE_FONT = new Font("Tahoma", Font.PLAIN, 15);
 	private static DefaultTableModel tableModel;
 	static Dao_NhanVien nvDao = new Dao_NhanVien();
+	private JLabel label_anh;
 	private JTextField textField_maNV;
 	private JTextField textField_ten;
 	private JTextField textField_ngaySinh;
 	private JTextField textField_diachi;
-	private JTextField textField_chucVu;
-	private JTextField textField_matKhau;
 	private JTextField textField_cccd;
 	private JTextField textField_sdt;
 	private JTextField textField_email;
-	private JTextField textField_phanQuyen;
-	private JTextField textField_anh;
 	private JTextField textField_12;
 	private JRadioButton btn_nghi;
-	private JRadioButton btn_hoatdong;
+	private JRadioButton btn_hoatDong;
 	private JFrame parentFrame;
 	/**
 	 * Create the panel.
@@ -67,7 +66,7 @@ public class TrangQLNhanVienJPanel extends JPanel {
 		Font headerFont = new Font("Tahoma", Font.BOLD, 15);
 
 		tableModel = new DefaultTableModel(new Object[][] {}, new String[] { "Mã NV", "Tên NV",
-				"Ngày sinh", "Email", "Địa chỉ", "Chức vụ", "Trạng thái" }) {
+				"Ngày sinh","Số CCCD","SDT","Email", "Địa chỉ", "Trạng thái","Images" }) {
 			// Override phương thức để set font cho dữ liệu trong bảng
 			@Override
 			public Class<?> getColumnClass(int columnIndex) {
@@ -93,26 +92,35 @@ public class TrangQLNhanVienJPanel extends JPanel {
 						String maNV= (String) table.getValueAt(selectedRow, 0);
 						String tenNV = (String) table.getValueAt(selectedRow, 1);
 						String ngaySinh = (String) table.getValueAt(selectedRow, 2);
-						String email = (String) table.getValueAt(selectedRow, 3);
-						String diaChi = (String) (table.getValueAt(selectedRow, 4));
-						String chuvu = (String)table.getValueAt(selectedRow, 5);
+						String soCCCD = (String) table.getValueAt(selectedRow, 3);
+						String soDienThoai = (String) table.getValueAt(selectedRow, 4);
+						String email = (String) table.getValueAt(selectedRow, 5);
+						String diaChi = (String) (table.getValueAt(selectedRow, 6));
+						String trangThai = (String)table.getValueAt(selectedRow, 7);
+						String hinhAnh = (String)table.getValueAt(selectedRow, 8);
 
 						// Display data in text fields
 						textField_maNV.setText(maNV.trim());
+						textField_cccd.setText(soCCCD.trim());
 						textField_ten.setText(tenNV.trim());
 						textField_ngaySinh.setText(ngaySinh);
-//						textField_sdt.setText(soDienThoai.trim());
+						textField_sdt.setText(soDienThoai.trim());
 						textField_email.setText(email.trim());
 						textField_diachi.setText(diaChi.trim());
+						ImageIcon icon = new ImageIcon(this.getClass().getResource(hinhAnh.trim())); // Sử dụng getResource để lấy đường dẫn từ resources của ứng dụng
+						Image scaledIcon = icon.getImage().getScaledInstance(27, 27, Image.SCALE_SMOOTH); // Thiết lập kích thước
+						ImageIcon resizedIcon1 = new ImageIcon(scaledIcon);
+						label_anh.setIcon(resizedIcon1);
+						
 
-						// Cài đặt thuộc tính selected của các nút radio btn_hoatDong và btn_nghi.
-//						if (trangThai.trim().equalsIgnoreCase("Hoạt động")) {
-//							btn_hoatDong.setSelected(true);
-//							btn_nghi.setSelected(false);
-//						} else if (trangThai.trim().equalsIgnoreCase("Nghỉ")) {
-//							btn_hoatDong.setSelected(false);
-//							btn_nghi.setSelected(true);
-//						}
+//						 Cài đặt thuộc tính selected của các nút radio btn_hoatDong và btn_nghi.
+						if (trangThai.trim().equalsIgnoreCase("Hoạt động")) {
+							btn_hoatDong.setSelected(true);
+							btn_nghi.setSelected(false);
+						} else if (trangThai.trim().equalsIgnoreCase("Nghỉ")) {
+							btn_hoatDong.setSelected(false);
+							btn_nghi.setSelected(true);
+						}
 					}
 				}
 			}
@@ -126,118 +134,78 @@ public class TrangQLNhanVienJPanel extends JPanel {
 		
 		JLabel lbl_manv = new JLabel("Mã nhân viên :");
 		lbl_manv.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		lbl_manv.setBounds(464, 65, 123, 21);
+		lbl_manv.setBounds(464, 99, 123, 21);
 		add(lbl_manv);
 		
 		textField_maNV = new JTextField();
 		textField_maNV.setColumns(10);
-		textField_maNV.setBounds(589, 65, 177, 25);
+		textField_maNV.setBounds(589, 97, 177, 25);
 		add(textField_maNV);
 		
 		JLabel lbl_tennv = new JLabel("Họ tên :");
 		lbl_tennv.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		lbl_tennv.setBounds(464, 97, 123, 21);
+		lbl_tennv.setBounds(464, 142, 123, 21);
 		add(lbl_tennv);
 		
 		textField_ten = new JTextField();
 		textField_ten.setColumns(10);
-		textField_ten.setBounds(589, 98, 177, 25);
+		textField_ten.setBounds(589, 140, 177, 25);
 		add(textField_ten);
 		
 		JLabel lbl_Dfb = new JLabel("Ngày sinh :");
 		lbl_Dfb.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		lbl_Dfb.setBounds(464, 130, 123, 21);
+		lbl_Dfb.setBounds(812, 142, 123, 21);
 		add(lbl_Dfb);
 		
 		textField_ngaySinh = new JTextField();
 		textField_ngaySinh.setColumns(10);
-		textField_ngaySinh.setBounds(589, 130, 177, 25);
+		textField_ngaySinh.setBounds(937, 140, 177, 25);
 		add(textField_ngaySinh);
 		
 		JLabel lbl_diachi = new JLabel("Đại chỉ :");
 		lbl_diachi.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		lbl_diachi.setBounds(821, 65, 123, 21);
+		lbl_diachi.setBounds(812, 99, 123, 21);
 		add(lbl_diachi);
 		
 		textField_diachi = new JTextField();
 		textField_diachi.setColumns(10);
-		textField_diachi.setBounds(946, 65, 177, 25);
+		textField_diachi.setBounds(937, 97, 177, 25);
 		add(textField_diachi);
-		
-		JLabel lbl_chucVuu = new JLabel("Chức vụ :");
-		lbl_chucVuu.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		lbl_chucVuu.setBounds(821, 98, 123, 21);
-		add(lbl_chucVuu);
-		
-		textField_chucVu = new JTextField();
-		textField_chucVu.setColumns(10);
-		textField_chucVu.setBounds(946, 98, 177, 25);
-		add(textField_chucVu);
-		
-		JLabel lbl_makh_5 = new JLabel("Mật khẩu  :");
-		lbl_makh_5.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		lbl_makh_5.setBounds(821, 162, 123, 21);
-		add(lbl_makh_5);
-		
-		textField_matKhau = new JTextField();
-		textField_matKhau.setColumns(10);
-		textField_matKhau.setBounds(946, 162, 177, 25);
-		add(textField_matKhau);
 		
 		JLabel lbl_makh_6 = new JLabel("Số CCCD :");
 		lbl_makh_6.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		lbl_makh_6.setBounds(464, 162, 123, 21);
+		lbl_makh_6.setBounds(812, 178, 123, 21);
 		add(lbl_makh_6);
 		
 		textField_cccd = new JTextField();
 		textField_cccd.setColumns(10);
-		textField_cccd.setBounds(589, 162, 177, 25);
+		textField_cccd.setBounds(937, 176, 177, 25);
 		add(textField_cccd);
 		
 		JLabel lbl_trangThai = new JLabel("Trang thái :");
 		lbl_trangThai.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		lbl_trangThai.setBounds(821, 130, 123, 21);
+		lbl_trangThai.setBounds(812, 212, 123, 21);
 		add(lbl_trangThai);
 		
 		JLabel lbl_sdt = new JLabel("Số điện thoại :");
 		lbl_sdt.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		lbl_sdt.setBounds(464, 194, 123, 21);
+		lbl_sdt.setBounds(464, 178, 123, 21);
 		add(lbl_sdt);
 		
 		textField_sdt = new JTextField();
 		textField_sdt.setColumns(10);
-		textField_sdt.setBounds(589, 194, 177, 25);
+		textField_sdt.setBounds(589, 176, 177, 25);
 		add(textField_sdt);
 		
 		JLabel lbl_email = new JLabel("Email :");
 		lbl_email.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		lbl_email.setBounds(464, 226, 123, 21);
+		lbl_email.setBounds(464, 212, 123, 21);
 		add(lbl_email);
 		
 		textField_email = new JTextField();
 		textField_email.setColumns(10);
-		textField_email.setBounds(589, 226, 177, 25);
+		textField_email.setBounds(589, 210, 177, 25);
 		add(textField_email);
-		
-		JLabel lbl_makh_10 = new JLabel("Phân quyền :");
-		lbl_makh_10.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		lbl_makh_10.setBounds(821, 194, 123, 21);
-		add(lbl_makh_10);
-		
-		textField_phanQuyen = new JTextField();
-		textField_phanQuyen.setColumns(10);
-		textField_phanQuyen.setBounds(946, 194, 177, 25);
-		add(textField_phanQuyen);
-		
-		JLabel lbl_makh_11 = new JLabel("Hình ảnh :");
-		lbl_makh_11.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		lbl_makh_11.setBounds(821, 226, 123, 21);
-		add(lbl_makh_11);
-		
-		textField_anh = new JTextField();
-		textField_anh.setColumns(10);
-		textField_anh.setBounds(946, 226, 177, 25);
-		add(textField_anh);
 		
 		JButton btn_timKiem = new JButton("Tìm kiếm");
 		btn_timKiem.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -288,33 +256,31 @@ public class TrangQLNhanVienJPanel extends JPanel {
         
 		textField_12 = new JTextField();
 		textField_12.setColumns(10);
-		textField_12.setBounds(592, 275, 223, 33);
+		textField_12.setBounds(593, 275, 222, 33);
 		add(textField_12);
 		
-		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon(TrangQLNhanVienJPanel.class.getResource("/images/picture.png")));
-		lblNewLabel.setBounds(139, 50, 263, 248);
-		add(lblNewLabel);
+		label_anh = new JLabel("");
+		label_anh.setIcon(new ImageIcon(TrangQLNhanVienJPanel.class.getResource("/images/picture.png")));
+		label_anh.setBounds(139, 50, 263, 248);
+		add(label_anh);
 		
-		btn_hoatdong = new JRadioButton("Hoạt động");
-		btn_hoatdong.setBackground(new Color(127, 255, 212));
-		btn_hoatdong.setFont(new Font("Tahoma", Font.BOLD, 15));
-		btn_hoatdong.setBounds(939, 132, 102, 23);
-		add(btn_hoatdong);
+		btn_hoatDong = new JRadioButton("Hoạt động");
+		btn_hoatDong.setBackground(new Color(127, 255, 212));
+		btn_hoatDong.setFont(new Font("Tahoma", Font.BOLD, 15));
+		btn_hoatDong.setBounds(930, 210, 102, 23);
+		add(btn_hoatDong);
 		
 		
 		btn_nghi = new JRadioButton("Đã nghỉ");
 		btn_nghi.setBackground(new Color(127, 255, 212));
 		btn_nghi.setFont(new Font("Tahoma", Font.BOLD, 15));
-		btn_nghi.setBounds(1043, 132, 83, 23);
+		btn_nghi.setBounds(1034, 210, 83, 23);
 		add(btn_nghi);
 		
 		JLabel lblNewLabel_1 = new JLabel("Thông tin nhân viên\r\n");
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 34));
 		lblNewLabel_1.setBounds(517, 11, 497, 43);
 		add(lblNewLabel_1);
-		
-		
 		docDuLieu();
 	}
 	public static void docDuLieu() {
@@ -322,12 +288,17 @@ public class TrangQLNhanVienJPanel extends JPanel {
 			List<NhanVien> list = nvDao.getAllNhanVien();
 			int i = 0;
 			for (NhanVien nv : list) {
+				 // Định dạng ngày tháng năm
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                // Định dạng ngày tháng năm và lấy ngày sinh từ đối tượng NhanVien
+                String ngaySinhFormatted = dateFormat.format(nv.getNgaySinh());
+
 				// Tạo một mảng dữ liệu để chứa thông tin của khách hàng
 				Object[] rowData = {
 
-						nv.getMaNhanVien(), nv.getHoTen(), nv.getNgaySinh(),
-						nv.getEmail(), nv.getDiaChi(),nv.getChucVu() , nv.isTrangThai() ? "Hoạt động" : "Nghỉ" // Chuyển boolean thành chuỗi
-						 };
+						nv.getMaNhanVien(), nv.getHoTen(), ngaySinhFormatted,nv.getSoCCCD(),nv.getSoDienThoai(),
+						nv.getEmail(), nv.getDiaChi(), nv.isTrangThai() ? "Hoạt động" : "Nghỉ" // Chuyển boolean thành chuỗi
+						,nv.getAnhDaiDien() };
 				// Thêm dữ liệu vào model của bảng
 				tableModel.addRow(rowData);
 
