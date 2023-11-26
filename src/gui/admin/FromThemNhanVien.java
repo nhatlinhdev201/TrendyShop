@@ -10,6 +10,8 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -31,7 +33,7 @@ public class FromThemNhanVien extends JFrame {
 	private JTextField textField_9;
 	private JTextField textField_10;
 	private JTextField textField_11;
-
+	String duongDanAnh = "/images/picture.png";
 	/**
 	 * Launch the application.
 	 */
@@ -187,10 +189,11 @@ public class FromThemNhanVien extends JFrame {
 		saveButton.setLocation(261, 441);
 		contentPane.add(saveButton);
 		
-		JLabel imageLabel = new JLabel("Ảnh");
-		imageLabel.setBounds(238, 11, 162, 175);
+		JLabel imageLabel = new JLabel("");
+		imageLabel.setBounds(238, 11, 200, 175);
         JButton chooseImageButton = new JButton("Thêm ảnh");
-        chooseImageButton.setBounds(261, 197, 135, 36);
+        chooseImageButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        chooseImageButton.setBounds(272, 197, 135, 36);
         contentPane.add(chooseImageButton);
         contentPane.add(imageLabel);
         
@@ -202,8 +205,23 @@ public class FromThemNhanVien extends JFrame {
                 if (result == JFileChooser.APPROVE_OPTION) {
                     // Lấy đường dẫn của ảnh đã chọn và xử lý nó ở đây
                     String imagePath = fileChooser.getSelectedFile().getAbsolutePath();
+                    ImageIcon imageIcon = new ImageIcon(imagePath);
+                    imageLabel.setIcon(imageIcon);
                     // Lưu đường dẫn ảnh vào cơ sở dữ liệu sau khi nhấn nút lưu
                 }
+//            	try {
+//					JFileChooser f = new JFileChooser();
+//					f.setDialogTitle("Chọn Ảnh");
+//					f.showOpenDialog(null);
+//					File ftenanh = f.getSelectedFile();
+//					duongDanAnh = ftenanh.getAbsolutePath();
+//					if (duongDanAnh!=null) {
+//						imageLabel.setIcon(String.valueOf(duongDanAnh));
+//					}
+//					
+//				} catch (Exception e2) {
+//					// TODO: handle exception
+//				}
             }
         });
 //        saveButton.addActionListener(new ActionListener() {
