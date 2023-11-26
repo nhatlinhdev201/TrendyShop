@@ -310,13 +310,6 @@ public class TrangHangCho extends JFrame implements ActionListener {
 					"Só điện thoại phải là số bắt đầu là +84XXXXXXXXX hoặc 0XXXXXXXXX. X là chữ số");
 			txt_SDT.requestFocus();
 			return false;
-		} if (!txt_SDT.getText().trim().equals(
-				dao_KhachHang.getKhachHangTheoMa(hoaDonChoThem.getKhachHang().getMaKhachHang()).getSoDienThoai())) {
-			JOptionPane.showMessageDialog(this,
-					"Do khách hàng đã là thành viên nên không được nhập số điện thoại khác");
-			txt_SDT.setText(dao_KhachHang.getKhachHangTheoMa(hoaDonChoThem.getKhachHang().getMaKhachHang()).getSoDienThoai());
-			txt_SDT.requestFocus();
-			return false;
 		}
 		return true;
 	}
@@ -335,7 +328,11 @@ public class TrangHangCho extends JFrame implements ActionListener {
 
 		ArrayList<ChiTietHoaDon> list_ChiTietHoaDonCho = listDSChiTietHoaDonChoThem;
 		HoaDon hoaDonHangCho = hoaDonChoThem;
-		khThem = hoaDonHangCho.getKhachHang();
+		khThem = dao_KhachHang.getKhachHangTheoSDT(sdt);
+		if(khThem==null) {
+			khThem = hoaDonHangCho.getKhachHang();
+		}
+		
 		if (khThem == null) {
 			khThem = new KhachHang();
 			khThem.setMaKhachHang("KC" + String.format("%04d", dao_KhachHang.getKhachHangChoGanNhat() + 1));
@@ -345,7 +342,14 @@ public class TrangHangCho extends JFrame implements ActionListener {
 			khThem.setTenKhachHang("");
 			dao_KhachHang.themKhachHang(khThem);
 		}
-
+		if (!txt_SDT.getText().trim().equals(khThem.getSoDienThoai())) {
+			JOptionPane.showMessageDialog(this,
+					"Do khách hàng đã là thành viên nên không được nhập số điện thoại khác");
+			txt_SDT.setText(
+					dao_KhachHang.getKhachHangTheoMa(hoaDonChoThem.getKhachHang().getMaKhachHang()).getSoDienThoai());
+			txt_SDT.requestFocus();
+			return;
+		}
 		hoaDonHangCho.setKhachHang(khThem);
 		if (hoaDonHangCho.getVoucher() == null)
 			hoaDonHangCho.setVoucher(dao_VoucherGiamGia.getTheoMaVouCher("VC0000"));
@@ -378,16 +382,13 @@ public class TrangHangCho extends JFrame implements ActionListener {
 	public boolean timSoDienThoaiTrungVoiHangCho() {
 		for (KhachHang khachHang : list_KhachHangCho) {
 			if (txt_SDT.getText().trim().equals(khachHang.getSoDienThoai())) {
-				JOptionPane.showMessageDialog(this, "Số điện thoại "+txt_SDT.getText().trim()+" đã được sử dụng cho 1 hàng chờ trước đó. nên không thể thêm!");
+				JOptionPane.showMessageDialog(this, "Số điện thoại " + txt_SDT.getText().trim()
+						+ " đã được sử dụng cho 1 hàng chờ trước đó. nên không thể thêm!");
 				txt_SDT.requestFocus();
 				return false;
 			}
 		}
 		return true;
-	}
-
-	public void thanhToanHangCho() {
-
 	}
 
 	public HoaDon timHoaDonDuocChon() {
