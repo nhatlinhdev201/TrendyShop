@@ -65,10 +65,102 @@ public class Dao_KhachHang {
 				kh.setDiemTichLuy(resultSet.getFloat("diemTichLuy"));
 			}
 
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return kh;
+	}
+	public KhachHang timkiemKhachHangByMa(String ma) throws SQLException {
+	    KhachHang dto = null;
+
+	    try {
+	    	connection = ConnectDataBase.getInstance().connection;
+	        String sql = "SELECT * FROM KhachHang WHERE maKhachHang LIKE ?";
+	        
+	        try (PreparedStatement preStm = connection.prepareStatement(sql)) {
+	            preStm.setString(1, "%" + ma + "%");
+	            
+	            try (ResultSet rs = preStm.executeQuery()) {
+                while (rs.next()) {
+	                    String maKH = rs.getString("maKhachHang");
+	                    String ten = rs.getString("tenKhachHang");
+	                    String diaChi = rs.getString("diaChi");
+	                    float diemTichLuy = rs.getFloat("diemTichLuy");
+	                    String email = rs.getString("email");
+	                    String soDT = rs.getString("soDienThoai");
+	                    boolean trangThai = rs.getBoolean("trangThai");
+	                    dto = new KhachHang(maKH, soDT, ten, email, diaChi, trangThai, diemTichLuy);
+	                }
+	            }
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        throw e; // Re-throw the exception after logging or handling as needed
+	    }
+
+	    return dto;
+	}
+	
+	public KhachHang timkiemKhachHangBySDT(String SDT) throws SQLException {
+	    KhachHang dto = null;
+
+	    try {
+	    	connection = ConnectDataBase.getInstance().connection;
+	        String sql = "SELECT * FROM KhachHang WHERE soDienThoai LIKE ?";
+	        
+	        try (PreparedStatement preStm = connection.prepareStatement(sql)) {
+	            preStm.setString(1, "%" + SDT + "%");
+	            
+	            try (ResultSet rs = preStm.executeQuery()) {
+                while (rs.next()) {
+	                    String maKH = rs.getString("maKhachHang");
+	                    String ten = rs.getString("tenKhachHang");
+	                    String diaChi = rs.getString("diaChi");
+	                    float diemTichLuy = rs.getFloat("diemTichLuy");
+	                    String email = rs.getString("email");
+	                    String soDT = rs.getString("soDienThoai");
+	                    boolean trangThai = rs.getBoolean("trangThai");
+	                    dto = new KhachHang(maKH, soDT, ten, email, diaChi, trangThai, diemTichLuy);
+	                }
+	            }
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        throw e; // Re-throw the exception after logging or handling as needed
+	    }
+
+	    return dto;
+	}
+	
+	public KhachHang timkiemKhachHangBytenKH(String tenkh) throws SQLException {
+	    KhachHang dto = null;
+
+	    try {
+	    	connection = ConnectDataBase.getInstance().connection;
+	        String sql = "SELECT * FROM KhachHang WHERE tenKhachHang LIKE ?";
+	        
+	        try (PreparedStatement preStm = connection.prepareStatement(sql)) {
+	            preStm.setString(1, "%" + tenkh + "%");
+	            
+	            try (ResultSet rs = preStm.executeQuery()) {
+                while (rs.next()) {
+	                    String maKH = rs.getString("maKhachHang");
+	                    String ten = rs.getString("tenKhachHang");
+	                    String diaChi = rs.getString("diaChi");
+	                    float diemTichLuy = rs.getFloat("diemTichLuy");
+	                    String email = rs.getString("email");
+	                    String soDT = rs.getString("soDienThoai");
+	                    boolean trangThai = rs.getBoolean("trangThai");
+	                    dto = new KhachHang(maKH, soDT, ten, email, diaChi, trangThai, diemTichLuy);
+	                }
+	            }
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        throw e; // Re-throw the exception after logging or handling as needed
+	    }
+
+	    return dto;
 	}
 
 	public KhachHang getKhachHangTheoSDT(String sdt) {
@@ -209,6 +301,21 @@ public class Dao_KhachHang {
 			e.printStackTrace();
 		}
 		return false;
+	}
+	
+	public boolean isEmployeeExists(String ten, String soDienThoai, String email) {
+	    String query = "SELECT * FROM ten_bang WHERE tenKhachHang = ? OR soDienThoai = ? OR email = ?";
+	    try {
+	        PreparedStatement preparedStatement = connection.prepareStatement(query);
+	        preparedStatement.setString(1, ten);
+	        preparedStatement.setString(2, soDienThoai);
+	        preparedStatement.setString(3, email);
+	        ResultSet resultSet = preparedStatement.executeQuery();
+	        return resultSet.next(); // Nếu có dữ liệu, tức là tên, số điện thoại hoặc email đã tồn tại
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        return false;
+	    }
 	}
 
 }

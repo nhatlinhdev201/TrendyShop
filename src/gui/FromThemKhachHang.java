@@ -1,18 +1,12 @@
 package gui;
 
-import java.awt.EventQueue;
-
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import connection.ConnectDataBase;
 import daos.Dao_KhachHang;
 import daos.KhachHangDAO;
 import entities.KhachHang;
 
-import javax.swing.JLabel;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
@@ -21,16 +15,29 @@ import java.awt.event.*;
 import java.sql.*;
 import java.util.Random;
 
-import javax.swing.JTextField;
-
 public class FromThemKhachHang extends JFrame {
 	static Dao_KhachHang dao_kh = new Dao_KhachHang();
+	public Connection connection = ConnectDataBase.getInstance().connection;;
+	private JLabel emailield;
+	private JRadioButton rdb_hoatdong;
 	private JPanel contentPane;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
-	private JTextField textField_4;
+	private JTextField txt_ten;
+	private JTextField txt_sdt;
+	private JTextField txt_email;
+	private JTextField txt_diaChi;
 	private JButton btn_save;
+	private JLabel nameField;
+	private JLabel fliedsdt;
+	private JLabel trangthaiField;
+	private JLabel phoneField;
+	private JRadioButton rdb_nghi;
+	private JLabel lblluCc;
+	private JLabel lblKhngc;
+	private JLabel lblKh;
+	private JLabel lblPhiLS;
+	private JLabel lblPhiLS_1;
+	private JLabel lbl_image;
+
 	/**
 	 * Launch the application.
 	 */
@@ -52,115 +59,222 @@ public class FromThemKhachHang extends JFrame {
 	 */
 	public FromThemKhachHang() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 695, 515);
+		setBounds(100, 100, 627, 404);
 		contentPane = new JPanel();
+		contentPane.setBackground(new Color(152, 251, 152));
+		contentPane.setForeground(new Color(152, 251, 152));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
-		JLabel nameField = new JLabel("Tên KH  :");
+
+		nameField = new JLabel("Tên KH  :");
 		nameField.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		nameField.setBounds(154, 79, 123, 21);
+		nameField.setBounds(290, 37, 84, 21);
 		contentPane.add(nameField);
-		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		textField_1.setBounds(279, 80, 177, 25);
-		contentPane.add(textField_1);
-		
-		textField_2 = new JTextField();
-		textField_2.setColumns(10);
-		textField_2.setBounds(279, 112, 177, 25);
-		contentPane.add(textField_2);
-		
-		textField_3 = new JTextField();
-		textField_3.setColumns(10);
-		textField_3.setBounds(279, 144, 177, 25);
-		contentPane.add(textField_3);
-		
-		textField_4 = new JTextField();
-		textField_4.setColumns(10);
-		textField_4.setBounds(279, 176, 177, 25);
-		contentPane.add(textField_4);
-		
-		JLabel trangthaiField = new JLabel("Trạng thái :");
+
+		txt_ten = new JTextField();
+		txt_ten.setColumns(10);
+		txt_ten.setBounds(380, 37, 177, 25);
+		contentPane.add(txt_ten);
+
+		txt_sdt = new JTextField();
+		txt_sdt.setColumns(10);
+		txt_sdt.setBounds(380, 92, 177, 25);
+		contentPane.add(txt_sdt);
+
+		txt_email = new JTextField();
+		txt_email.setColumns(10);
+		txt_email.setBounds(380, 141, 177, 25);
+		contentPane.add(txt_email);
+
+		txt_diaChi = new JTextField();
+		txt_diaChi.setColumns(10);
+		txt_diaChi.setBounds(380, 188, 177, 25);
+		contentPane.add(txt_diaChi);
+
+		trangthaiField = new JLabel("Trạng thái :");
 		trangthaiField.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		trangthaiField.setBounds(154, 208, 123, 21);
+		trangthaiField.setBounds(290, 232, 97, 21);
 		contentPane.add(trangthaiField);
-		
-		JLabel phoneField = new JLabel("Địa chỉ :");
+
+		phoneField = new JLabel("Địa chỉ :");
 		phoneField.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		phoneField.setBounds(154, 176, 123, 21);
+		phoneField.setBounds(290, 189, 69, 21);
 		contentPane.add(phoneField);
-		
-		JLabel emailield = new JLabel("Email :");
+
+		emailield = new JLabel("Email :");
 		emailield.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		emailield.setBounds(154, 144, 123, 21);
+		emailield.setBounds(290, 142, 69, 21);
 		contentPane.add(emailield);
-		
-		JLabel fliedsdt = new JLabel("SDT");
+
+		fliedsdt = new JLabel("SDT");
 		fliedsdt.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		fliedsdt.setBounds(154, 112, 123, 21);
+		fliedsdt.setBounds(290, 92, 69, 21);
 		contentPane.add(fliedsdt);
-		
-		JButton btn_save = new JButton("Save");
+
+		btn_save = new JButton("Save");
 		btn_save.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 17));
-		btn_save.setSize(177, 30);
-		btn_save.setLocation(261, 441);
+		btn_save.setSize(199, 42);
+		btn_save.setLocation(332, 270);
 		contentPane.add(btn_save);
-		
-		JRadioButton rdb_hoatdong = new JRadioButton("Hoạt động");
+
+		rdb_hoatdong = new JRadioButton("Hoạt động");
+		rdb_hoatdong.setBackground(new Color(152, 251, 152));
 		rdb_hoatdong.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		rdb_hoatdong.setBounds(279, 208, 109, 23);
+		rdb_hoatdong.setBounds(380, 231, 102, 23);
 		contentPane.add(rdb_hoatdong);
-		
-		JRadioButton rdb_nghi = new JRadioButton("Nghỉ");
+
+		rdb_nghi = new JRadioButton("Nghỉ");
+		rdb_nghi.setBackground(new Color(152, 251, 152));
 		rdb_nghi.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		rdb_nghi.setBounds(383, 208, 109, 23);
+		rdb_nghi.setBounds(484, 231, 75, 24);
 		contentPane.add(rdb_nghi);
+
+		lbl_image = new JLabel("");
+		lbl_image.setBounds(20, 22, 260, 250);
+
+		// Đặt ImageIcon vào JLabel
+		lbl_image.setIcon(new ImageIcon(FromThemKhachHang.class.getResource("/images/add_contact.png")));
+		contentPane.add(lbl_image);
+
+		lblluCc = new JLabel("*Lưu ý các trường\r\n");
+		lblluCc.setForeground(Color.RED);
+		lblluCc.setToolTipText("");
+		lblluCc.setVerticalAlignment(SwingConstants.TOP);
+		lblluCc.setHorizontalAlignment(SwingConstants.LEFT);
+		lblluCc.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblluCc.setBounds(44, 283, 199, 30);
+		contentPane.add(lblluCc);
+
+		lblKhngc = new JLabel("\r\n không được để trống.");
+		lblKhngc.setVerticalAlignment(SwingConstants.TOP);
+		lblKhngc.setToolTipText("");
+		lblKhngc.setHorizontalAlignment(SwingConstants.LEFT);
+		lblKhngc.setForeground(Color.RED);
+		lblKhngc.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblKhngc.setBounds(44, 308, 177, 21);
+		contentPane.add(lblKhngc);
+
+		lblKh = new JLabel("KH sau đó là 2 chữ số");
+		lblKh.setVerticalAlignment(SwingConstants.TOP);
+		lblKh.setToolTipText("");
+		lblKh.setHorizontalAlignment(SwingConstants.LEFT);
+		lblKh.setForeground(Color.RED);
+		lblKh.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblKh.setBounds(380, 60, 213, 21);
+		contentPane.add(lblKh);
+
+		lblPhiLS = new JLabel("Phải là 10 số ");
+		lblPhiLS.setVerticalAlignment(SwingConstants.TOP);
+		lblPhiLS.setToolTipText("");
+		lblPhiLS.setHorizontalAlignment(SwingConstants.LEFT);
+		lblPhiLS.setForeground(Color.RED);
+		lblPhiLS.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblPhiLS.setBounds(380, 116, 177, 21);
+		contentPane.add(lblPhiLS);
+
+		lblPhiLS_1 = new JLabel("Email kết thúc bằng @gmail.com");
+		lblPhiLS_1.setVerticalAlignment(SwingConstants.TOP);
+		lblPhiLS_1.setToolTipText("");
+		lblPhiLS_1.setHorizontalAlignment(SwingConstants.LEFT);
+		lblPhiLS_1.setForeground(Color.RED);
+		lblPhiLS_1.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblPhiLS_1.setBounds(380, 169, 213, 21);
+		contentPane.add(lblPhiLS_1);
 		btn_save.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-            	   // Lấy thông tin từ các trường dữ liệu trên giao diện
-            	Random random = new Random();
-                int randomNumber = random.nextInt(900) + 100;
-            	String makh = "KH" + randomNumber;
-                String tenKhachHang = textField_1.getText();
-                String soDienThoai = textField_2.getText();
-                String email = textField_3.getText();
-                String diaChi = textField_4.getText();
-                boolean trangThai = rdb_hoatdong.isSelected(); // true nếu hoạt động, ngược lại là false
+			public void actionPerformed(ActionEvent e) {
+				// Lấy thông tin từ các trường dữ liệu trên giao diện
+				Random random = new Random();
+				int randomNumber = random.nextInt(900) + 100;
+				String makh = "KH" + randomNumber;
+				String tenKhachHang = txt_ten.getText();
+				String soDienThoai = txt_sdt.getText();
+				String email = txt_email.getText();
+				String diaChi = txt_diaChi.getText();
+				boolean trangThai = rdb_hoatdong.isSelected(); // true nếu hoạt động, ngược lại là false
+				if(kiemTraHople())
+					// Kiểm tra và xử lý các điều kiện khác nếu cần thiết
+					if (!isEmployeeExists(tenKhachHang, soDienThoai, email)) {
+						// Tạo đối tượng KhachHang từ thông tin đã nhập
+						KhachHang khachHang = new KhachHang();
+						khachHang.setMaKhachHang(makh);
+						khachHang.setTenKhachHang(tenKhachHang);
+						khachHang.setSoDienThoai(soDienThoai);
+						khachHang.setEmail(email);
+						khachHang.setDiaChi(diaChi);
+						khachHang.setTrangThai(trangThai);
 
-                // Kiểm tra và xử lý các điều kiện khác nếu cần thiết
+						// Gọi hàm themKhachHang để lưu thông tin vào cơ sở dữ liệu
+						boolean result = dao_kh.themKhachHang(khachHang);
+						// Kiểm tra kết quả và thông báo cho người dùng
+						if (result) {
+							JOptionPane.showMessageDialog(contentPane, "Thêm khách hàng thành công!");
+							// Có thể thêm logic để làm mới giao diện hoặc thực hiện các tác vụ khác sau khi
+							// thêm
+							Window window = SwingUtilities.getWindowAncestor(contentPane);
+							if (window != null) {
+								window.dispose();
+							}
+						} else {
+							JOptionPane.showMessageDialog(contentPane, "Thêm khách hàng thất bại!");
+						}
 
-                // Tạo đối tượng KhachHang từ thông tin đã nhập
-                KhachHang khachHang = new KhachHang();
-                khachHang.setMaKhachHang(makh);
-                khachHang.setTenKhachHang(tenKhachHang);
-                khachHang.setSoDienThoai(soDienThoai);
-                khachHang.setEmail(email);
-                khachHang.setDiaChi(diaChi);
-                khachHang.setTrangThai(trangThai);
+					} else {
+						JOptionPane.showMessageDialog(contentPane, "Tên, số điện thoại hoặc email đã tồn tại.");
+					}
+				}
+		});
 
-                // Gọi hàm themKhachHang để lưu thông tin vào cơ sở dữ liệu
-                boolean result = dao_kh.themKhachHang(khachHang);
+		this.setLocationRelativeTo(null);
+		contentPane.setVisible(true);
+	}
 
-                // Kiểm tra kết quả và thông báo cho người dùng
-                if (result) {
-                    JOptionPane.showMessageDialog(contentPane, "Thêm khách hàng thành công!");
-                    // Có thể thêm logic để làm mới giao diện hoặc thực hiện các tác vụ khác sau khi thêm
-                    Window window = SwingUtilities.getWindowAncestor(contentPane);
-                    if (window != null) {
-                        window.dispose();
-                    }
-                } else {
-                    JOptionPane.showMessageDialog(contentPane, "Thêm khách hàng thất bại!");
-                }
-                
-            }
-        });
+	private boolean kiemTraHople() {
+		String sdt = txt_sdt.getText().trim();
+		String ten = txt_ten.getText().trim();
+		int lastSpace = ten.lastIndexOf(" ");
+		String fistName = ten.substring(lastSpace + 1);
+		if (!ten.matches("^[A-Z].*")) {
+			JOptionPane.showMessageDialog(contentPane, "Tên phải viết hoa ");
+			return false;
+		}
+		// Kiểm tra các trường không được để trống
+		if (txt_ten.getText().isEmpty() || txt_sdt.getText().isEmpty() || txt_email.getText().isEmpty()
+				|| txt_diaChi.getText().isEmpty()) {
+			JOptionPane.showMessageDialog(contentPane, "Vui lòng nhập đầy đủ thông tin!");
+			return false; // Dừng hàm nếu có trường trống
+		}
+		if (!sdt.matches("\\d{10}")) {
+			JOptionPane.showMessageDialog(contentPane, "Số điện thoại phải có đúng 10 số!");
+			return false;
+		}
+		
+		String email = txt_email.getText().trim();
+		if (!email.endsWith("@gmail.com")) {
+			JOptionPane.showMessageDialog(contentPane, "Email phải kết thúc bằng '@gmail.com'!");
+			return false;
+		}
+		// Kiểm tra JRadioButton đã được chọn chưa
+		if (!rdb_hoatdong.isSelected() && !rdb_nghi.isSelected()) {
+			JOptionPane.showMessageDialog(contentPane, "Vui lòng chọn trạng thái hoạt động hoặc nghỉ!");
+			return false; // Dừng hàm nếu không có JRadioButton nào được chọn
+		}
+		return true;
+	}
 
-
-        contentPane.setVisible(true);
+	public boolean isEmployeeExists(String ten, String soDienThoai, String email) {
+		String query = "SELECT * FROM KhachHang WHERE tenKhachHang = ? OR soDienThoai = ? OR email = ?";
+		try {
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, ten);
+			preparedStatement.setString(2, soDienThoai);
+			preparedStatement.setString(3, email);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			return resultSet.next(); // Nếu có dữ liệu, tức là tên, số điện thoại hoặc email đã tồn tại
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 }
