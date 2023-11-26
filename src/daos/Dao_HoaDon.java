@@ -61,7 +61,7 @@ public class Dao_HoaDon {
 				hoaDon.setThoiGianTao(resultSet.getDate("thoiGianTao").toLocalDate());
 				hoaDon.setTongThanhTien(resultSet.getDouble("tongThanhTien"));
 				hoaDon.setVoucher(new VoucherGiamGia(resultSet.getString("maVoucher").trim()));
-				hoaDon.setKhachHang(new KhachHang(resultSet.getString("maKhachHang")));
+				hoaDon.setKhachHang(new KhachHang(resultSet.getString("maKhachHang").trim()));
 				hoaDon.setNguoiLapHoaDon(new NhanVien(resultSet.getString("maNhanVien").trim()));
 				hoaDon.setTrangThaiThanhToan(resultSet.getBoolean("trangThaiThanhToan"));
 
@@ -86,9 +86,9 @@ public class Dao_HoaDon {
 				hoaDon.setMaHoaDon(resultSet.getString("maHoaDon").trim());
 				hoaDon.setThoiGianTao(resultSet.getDate("thoiGianTao").toLocalDate());
 				hoaDon.setTongThanhTien(resultSet.getDouble("tongThanhTien"));
-				hoaDon.setVoucher(new VoucherGiamGia(resultSet.getString("maVoucher")));
-				hoaDon.setKhachHang(new KhachHang(resultSet.getString("maKhachHang")));
-				hoaDon.setNguoiLapHoaDon(new NhanVien(resultSet.getString("maNhanVien")));
+				hoaDon.setVoucher(new VoucherGiamGia(resultSet.getString("maVoucher").trim()));
+				hoaDon.setKhachHang(new KhachHang(resultSet.getString("maKhachHang").trim()));
+				hoaDon.setNguoiLapHoaDon(new NhanVien(resultSet.getString("maNhanVien").trim()));
 				hoaDon.setTrangThaiThanhToan(resultSet.getBoolean("trangThaiThanhToan"));
 
 				dsHoaDon.add(hoaDon);
@@ -112,9 +112,9 @@ public class Dao_HoaDon {
 				hoaDon.setMaHoaDon(resultSet.getString("maHoaDon").trim());
 				hoaDon.setThoiGianTao(resultSet.getDate("thoiGianTao").toLocalDate());
 				hoaDon.setTongThanhTien(resultSet.getDouble("tongThanhTien"));
-				hoaDon.setVoucher(new VoucherGiamGia(resultSet.getString("maVoucher")));
-				hoaDon.setKhachHang(new KhachHang(resultSet.getString("maKhachHang")));
-				hoaDon.setNguoiLapHoaDon(new NhanVien(resultSet.getString("maNhanVien")));
+				hoaDon.setVoucher(new VoucherGiamGia(resultSet.getString("maVoucher").trim()));
+				hoaDon.setKhachHang(new KhachHang(resultSet.getString("maKhachHang").trim()));
+				hoaDon.setNguoiLapHoaDon(new NhanVien(resultSet.getString("maNhanVien").trim()));
 				hoaDon.setTrangThaiThanhToan(resultSet.getBoolean("trangThaiThanhToan"));
 
 				dsHoaDon.add(hoaDon);
@@ -138,9 +138,9 @@ public class Dao_HoaDon {
 				hoaDon.setMaHoaDon(resultSet.getString("maHoaDon").trim());
 				hoaDon.setThoiGianTao(resultSet.getDate("thoiGianTao").toLocalDate());
 				hoaDon.setTongThanhTien(resultSet.getDouble("tongThanhTien"));
-				hoaDon.setVoucher(new VoucherGiamGia(resultSet.getString("maVoucher")));
-				hoaDon.setKhachHang(new KhachHang(resultSet.getString("maKhachHang")));
-				hoaDon.setNguoiLapHoaDon(new NhanVien(resultSet.getString("maNhanVien")));
+				hoaDon.setVoucher(new VoucherGiamGia(resultSet.getString("maVoucher").trim()));
+				hoaDon.setKhachHang(new KhachHang(resultSet.getString("maKhachHang").trim()));
+				hoaDon.setNguoiLapHoaDon(new NhanVien(resultSet.getString("maNhanVien").trim()));
 				hoaDon.setTrangThaiThanhToan(resultSet.getBoolean("trangThaiThanhToan"));
 
 				dsHoaDon.add(hoaDon);
@@ -192,9 +192,9 @@ public class Dao_HoaDon {
 				hoaDon.setMaHoaDon(resultSet.getString("maHoaDon").trim());
 				hoaDon.setThoiGianTao(resultSet.getDate("thoiGianTao").toLocalDate());
 				hoaDon.setTongThanhTien(resultSet.getDouble("tongThanhTien"));
-				hoaDon.setVoucher(new VoucherGiamGia(resultSet.getString("maVoucher")));
-				hoaDon.setKhachHang(new KhachHang(resultSet.getString("maKhachHang")));
-				hoaDon.setNguoiLapHoaDon(new NhanVien(resultSet.getString("maNhanVien")));
+				hoaDon.setVoucher(new VoucherGiamGia(resultSet.getString("maVoucher").trim()));
+				hoaDon.setKhachHang(new KhachHang(resultSet.getString("maKhachHang").trim()));
+				hoaDon.setNguoiLapHoaDon(new NhanVien(resultSet.getString("maNhanVien").trim()));
 				hoaDon.setTrangThaiThanhToan(resultSet.getBoolean("trangThaiThanhToan"));
 
 				dsHoaDon.add(hoaDon);

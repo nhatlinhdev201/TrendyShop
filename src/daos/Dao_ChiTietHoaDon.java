@@ -32,7 +32,7 @@ public class Dao_ChiTietHoaDon {
 			while (resultSet.next()) {
 				ChiTietHoaDon chiTietHoaDon= new ChiTietHoaDon();
 				chiTietHoaDon.setHangHoa(new HangHoa(resultSet.getString("maHangHoa").trim()));
-				chiTietHoaDon.setHoaDon(new HoaDon(resultSet.getString("maHoaDon")));
+				chiTietHoaDon.setHoaDon(new HoaDon(resultSet.getString("maHoaDon").trim()));
 				chiTietHoaDon.setSoLuong(resultSet.getInt("soLuong"));
 				chiTietHoaDon.setGiaBan(resultSet.getDouble("giaBan"));
 				chiTietHoaDon.setThanhTien(resultSet.getDouble("thanhTien"));
@@ -56,7 +56,7 @@ public class Dao_ChiTietHoaDon {
 			while (resultSet.next()) {
 				ChiTietHoaDon chiTietHoaDon= new ChiTietHoaDon();
 				chiTietHoaDon.setHangHoa(new HangHoa(resultSet.getString("maHangHoa").trim()));
-				chiTietHoaDon.setHoaDon(new HoaDon(resultSet.getString("maHoaDon")));
+				chiTietHoaDon.setHoaDon(new HoaDon(resultSet.getString("maHoaDon").trim()));
 				chiTietHoaDon.setSoLuong(resultSet.getInt("soLuong"));
 				chiTietHoaDon.setGiaBan(resultSet.getDouble("giaBan"));
 				chiTietHoaDon.setThanhTien(resultSet.getDouble("thanhTien"));
