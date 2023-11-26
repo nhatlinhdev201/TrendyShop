@@ -231,7 +231,7 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener {
 		// TODO Auto-generated method stub
 		Object o = e.getSource();
 		if (o.equals(btn_LapHoaDon)) {
-			switchContent(new TrangBanHangJPanel(null));
+			switchContent(new TrangBanHangJPanel(null,null));
 		}else
 		if (o.equals(btn_Tim)) {
 			

@@ -137,7 +137,7 @@ public class TrangChuPanel extends JPanel implements ActionListener{
 		// TODO Auto-generated method stub
 		Object o = e.getSource();
 		if(o.equals(btn_QuanLyBanHang)) {
-			switchContent(new TrangBanHangJPanel(null));
+			switchContent(new TrangBanHangJPanel(null,null));
 		}else if(o.equals(btn_QuanLyHangHoa)) {
 			switchContent(new TrangQuanLyHangHoaJPanel());
 		}else if(o.equals(btn_QuanLyKhachHang)) {

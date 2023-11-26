@@ -13,10 +13,12 @@ import javax.swing.table.DefaultTableCellRenderer;
 import daos.Dao_ChiTietHoaDon;
 import daos.Dao_HoaDon;
 import daos.Dao_KhachHang;
+import daos.Dao_NhanVien;
 import daos.Dao_VoucherGiamGia;
 import entities.ChiTietHoaDon;
 import entities.HoaDon;
 import entities.KhachHang;
+import entities.NhanVien;
 
 import javax.swing.JTextField;
 import javax.swing.DefaultCellEditor;
@@ -46,26 +48,34 @@ public class TrangHangCho extends JFrame implements ActionListener {
 
 	private AbstractTableHangCho model;
 	private JTable table;
-	private Dao_HoaDon dao_HoaDon;
-	private Dao_KhachHang dao_KhachHang;
 	private List<KhachHang> list_KhachHangCho = new ArrayList<>();
 	private KhachHang khSelected = null;
 	private List<HoaDon> list_HoaDon;
+	private HoaDon hoaDonChoThem;
+	private ArrayList<ChiTietHoaDon> listDSChiTietHoaDonChoThem;
+
+	private Dao_HoaDon dao_HoaDon;
+	private Dao_KhachHang dao_KhachHang;
 	private Dao_VoucherGiamGia dao_VoucherGiamGia;
 	private Dao_ChiTietHoaDon dao_ChiTiet;
-	
+	private Dao_NhanVien dao_NhanVien;
+	private TrangBanHangJPanel trangBanHang;
 
 	/**
 	 * Create the panel.
 	 */
-	public TrangHangCho() {
+	public TrangHangCho(TrangBanHangJPanel trangBanHangJPanel, HoaDon hoaDonChoXuLy,
+			ArrayList<ChiTietHoaDon> danhSachChiTietHoaDonChoXuLy) {
 
 		dao_HoaDon = new Dao_HoaDon();
 		dao_KhachHang = new Dao_KhachHang();
 		dao_VoucherGiamGia = new Dao_VoucherGiamGia();
 		dao_ChiTiet = new Dao_ChiTietHoaDon();
+		dao_NhanVien = new Dao_NhanVien();
 
-//		hoaDonHangCho = hoaDonThem;
+		trangBanHang = trangBanHangJPanel;
+		hoaDonChoThem = hoaDonChoXuLy;
+		listDSChiTietHoaDonChoThem = danhSachChiTietHoaDonChoXuLy;
 
 		setSize(500, 444);
 		setLocationRelativeTo(null);
@@ -128,11 +138,10 @@ public class TrangHangCho extends JFrame implements ActionListener {
 		table.getColumnModel().getColumn(1).setPreferredWidth(270);
 		table.getColumnModel().getColumn(2).setPreferredWidth(30);
 		table.setShowGrid(false);
-		
 
 		table.getColumnModel().getColumn(2).setCellRenderer(new ButtonRenderer());
 		table.getColumnModel().getColumn(2).setCellEditor(new ButtonEditor());
-		panel.add(new JScrollPane(table),BorderLayout.CENTER);
+		panel.add(new JScrollPane(table), BorderLayout.CENTER);
 
 		list_HoaDon = dao_HoaDon.getHoaDonChuaThanhToan();
 		for (HoaDon hoaDon : list_HoaDon) {
@@ -142,11 +151,10 @@ public class TrangHangCho extends JFrame implements ActionListener {
 		for (KhachHang khachHang : list_KhachHangCho) {
 			model.addHangCho(khachHang);
 		}
+		if (hoaDonChoXuLy.getKhachHang() != null)
+			txt_SDT.setText(
+					dao_KhachHang.getKhachHangTheoMa(hoaDonChoXuLy.getKhachHang().getMaKhachHang()).getSoDienThoai());
 
-		
-		if(TrangBanHangJPanel.hoaDon.getKhachHang()!=null) {
-			txt_SDT.setText(TrangBanHangJPanel.hoaDon.getKhachHang().getSoDienThoai());
-		}
 //		
 		btn_Thoat.addActionListener(this);
 		btn_ThanhToan.addActionListener(this);
@@ -231,7 +239,7 @@ public class TrangHangCho extends JFrame implements ActionListener {
 				if (choice == JOptionPane.YES_OPTION) {
 					xoaHangCho(selectedRow);
 					model.removeHangCho(selectedRow);
-					
+
 				}
 
 			}
@@ -258,29 +266,19 @@ public class TrangHangCho extends JFrame implements ActionListener {
 		} else if (o.equals(btn_TimHangCho)) {
 			timHangCho();
 		} else if (o.equals(btn_ThemHangCho)) {
-			if(!timSoDienThoaiTrungVoiHangCho()) return;
+			if (!timSoDienThoaiTrungVoiHangCho())
+				return;
 			themHangCho();
-		}
-		else if(o.equals(btn_ThanhToan)) {
-			new TrangBanHangJPanel(timHoaDonDuocChon());
+		} else if (o.equals(btn_ThanhToan)) {
+			HoaDon hoaDon = timHoaDonDuocChon();
+			if (hoaDon == null)
+				return;
+			NhanVien nv = dao_NhanVien.getNhanVienTheoMa(hoaDon.getNguoiLapHoaDon().getMaNhanVien());
+			trangBanHang.switchContent(new TrangBanHangJPanel(nv, hoaDon));
+
 			this.dispose();
-			
+
 		}
-//		}else if() {
-////			Thực hiện thêm thông tin từ hàng chờ sang hóa đơn
-////			Hỏi có muốn thực hiện k
-//			if(true) {/*Biểu thức kiểm tra xem trang lập hóa đơn có trống kh*/
-//				int choice = JOptionPane.showConfirmDialog(null, "Bạn có muốn tiếp tục không? Nếu tiếp tục sẽ mất dữ liệu đã nhập", "Xác nhận", JOptionPane.YES_NO_OPTION);
-//
-//		        if (choice == JOptionPane.YES_OPTION) {
-//		        	/*Chọn yes thì làm rỗng trang lập hóa đơn và load dữ liệu lên*/
-//		        	
-//		        	this.dispose();
-//		        } 
-//			}else {
-//				
-//			}
-//		}
 	}
 
 	public void timHangCho() {
@@ -307,8 +305,16 @@ public class TrangHangCho extends JFrame implements ActionListener {
 	}
 
 	public boolean kiemTraSDT() {
-		if (!txt_SDT.getText().matches("^(\\+84|0)\\d{9,10}$")) {
-			JOptionPane.showMessageDialog(this, "Só điện thoại không hợp lệ");
+		if (!txt_SDT.getText().matches("^(\\+84)\\d{9}$") && !txt_SDT.getText().matches("^(0)\\d{9}$")) {
+			JOptionPane.showMessageDialog(this,
+					"Só điện thoại phải là số bắt đầu là +84XXXXXXXXX hoặc 0XXXXXXXXX. X là chữ số");
+			txt_SDT.requestFocus();
+			return false;
+		} if (!txt_SDT.getText().trim().equals(
+				dao_KhachHang.getKhachHangTheoMa(hoaDonChoThem.getKhachHang().getMaKhachHang()).getSoDienThoai())) {
+			JOptionPane.showMessageDialog(this,
+					"Do khách hàng đã là thành viên nên không được nhập số điện thoại khác");
+			txt_SDT.setText(dao_KhachHang.getKhachHangTheoMa(hoaDonChoThem.getKhachHang().getMaKhachHang()).getSoDienThoai());
 			txt_SDT.requestFocus();
 			return false;
 		}
@@ -318,17 +324,17 @@ public class TrangHangCho extends JFrame implements ActionListener {
 	public void themHangCho() {
 		String sdt = txt_SDT.getText().trim();
 		if (sdt.equals("")) {
-			JOptionPane.showMessageDialog(this, "Vui long nhap so dien thoai");
+			JOptionPane.showMessageDialog(this, "Vui lòng nhập số điện thoại");
 			txt_SDT.requestFocus();
 			return;
 		}
-		if(!kiemTraSDT()) {
+		if (!kiemTraSDT()) {
 			return;
 		}
 		KhachHang khThem = null;
 
-		List<ChiTietHoaDon> list_ChiTietHoaDonCho = TrangBanHangJPanel.listChiTietHD;
-		HoaDon hoaDonHangCho = TrangBanHangJPanel.hoaDon;
+		ArrayList<ChiTietHoaDon> list_ChiTietHoaDonCho = listDSChiTietHoaDonChoThem;
+		HoaDon hoaDonHangCho = hoaDonChoThem;
 		khThem = hoaDonHangCho.getKhachHang();
 		if (khThem == null) {
 			khThem = new KhachHang();
@@ -338,59 +344,55 @@ public class TrangHangCho extends JFrame implements ActionListener {
 			khThem.setEmail("");
 			khThem.setTenKhachHang("");
 			dao_KhachHang.themKhachHang(khThem);
-		}else {
-			if(!sdt.equals(khThem.getSoDienThoai())) {
-				JOptionPane.showMessageDialog(this, "Số điện thoại không tương ứng trên hóa đơn");
-				txt_SDT.requestFocus();
-				return;
-			}
 		}
-		
-		hoaDonHangCho.setKhachHang(khThem);
-		if(hoaDonHangCho.getVoucher()==null)hoaDonHangCho.setVoucher(dao_VoucherGiamGia.getTheoMaVouCher("VC0000")); 
 
-		boolean trangThaiThem =  dao_HoaDon.insertHoaDon(hoaDonHangCho);
+		hoaDonHangCho.setKhachHang(khThem);
+		if (hoaDonHangCho.getVoucher() == null)
+			hoaDonHangCho.setVoucher(dao_VoucherGiamGia.getTheoMaVouCher("VC0000"));
+
+		boolean trangThaiThem = dao_HoaDon.insertHoaDon(hoaDonHangCho);
 		for (ChiTietHoaDon chiTietHoaDon : list_ChiTietHoaDonCho) {
 			dao_ChiTiet.insertChiTietHoadon(chiTietHoaDon);
 		}
-		if(trangThaiThem)JOptionPane.showMessageDialog(this, "Thêm hàng chờ thành công");
+		if (trangThaiThem)
+			JOptionPane.showMessageDialog(this, "Thêm hàng chờ thành công");
 		list_HoaDon.add(hoaDonHangCho);
 		list_KhachHangCho.add(khThem);
 		model.addHangCho(khThem);
 	}
-	
+
 	public void xoaHangCho(int selected) {
 		HoaDon hoaDon = list_HoaDon.get(selected);
-		KhachHang khachHang= list_KhachHangCho.get(selected);
-		
-		
+		KhachHang khachHang = list_KhachHangCho.get(selected);
+
 		String maHD = hoaDon.getMaHoaDon();
 		dao_ChiTiet.deleteChiTietHoaDon(maHD);
 		dao_HoaDon.deleteHoaDon(maHD);
-		if(khachHang.getMaKhachHang().substring(0, 2).equals("KC")) dao_KhachHang.deleteKhachHang(khachHang.getMaKhachHang());
+		if (khachHang.getMaKhachHang().substring(0, 2).equals("KC"))
+			dao_KhachHang.deleteKhachHang(khachHang.getMaKhachHang());
 		list_HoaDon.remove(selected);
 		list_KhachHangCho.remove(selected);
-		
-		
+
 	}
+
 	public boolean timSoDienThoaiTrungVoiHangCho() {
-		for (KhachHang khachHang: list_KhachHangCho) {
-			if(txt_SDT.getText().trim().equals(khachHang.getSoDienThoai())) {
-				JOptionPane.showMessageDialog(this, "Số điện thoại bị trùng");
+		for (KhachHang khachHang : list_KhachHangCho) {
+			if (txt_SDT.getText().trim().equals(khachHang.getSoDienThoai())) {
+				JOptionPane.showMessageDialog(this, "Số điện thoại "+txt_SDT.getText().trim()+" đã được sử dụng cho 1 hàng chờ trước đó. nên không thể thêm!");
 				txt_SDT.requestFocus();
 				return false;
 			}
-		}return true;
+		}
+		return true;
 	}
-	
+
 	public void thanhToanHangCho() {
-		
+
 	}
-	
-	
+
 	public HoaDon timHoaDonDuocChon() {
-		if(table.getSelectedRow()>=0)
-		return list_HoaDon.get(table.getSelectedRow());
+		if (table.getSelectedRow() >= 0)
+			return list_HoaDon.get(table.getSelectedRow());
 		else {
 			JOptionPane.showMessageDialog(this, "Vui lòng chọn hàng chờ bạn muốn thanh toán");
 			return null;

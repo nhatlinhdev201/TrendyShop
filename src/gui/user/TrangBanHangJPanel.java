@@ -10,6 +10,7 @@ import daos.Dao_ChiTietHoaDon;
 import daos.Dao_HangHoa;
 import daos.Dao_HoaDon;
 import daos.Dao_KhachHang;
+import daos.Dao_NhanVien;
 import daos.Dao_VoucherGiamGia;
 import entities.ChiTietHoaDon;
 import entities.HangHoa;
@@ -98,9 +99,9 @@ public class TrangBanHangJPanel extends JPanel implements ActionListener, Action
 	private NhanVien nv;
 	private KhachHang kh = null;
 	private VoucherGiamGia vc = null;
-	static ArrayList<ChiTietHoaDon> listChiTietHD = new ArrayList<>();
+	private ArrayList<ChiTietHoaDon> listChiTietHD = new ArrayList<>();
 	private List<VoucherGiamGia> listVoucherGiamGia;
-	static HoaDon hoaDon;
+	private HoaDon hoaDon;
 	private JCheckBox chckx_DiemTichLuy;
 
 	private Dao_HangHoa dao_HangHoa;
@@ -108,21 +109,22 @@ public class TrangBanHangJPanel extends JPanel implements ActionListener, Action
 	private Dao_KhachHang dao_KhachHang;
 	private Dao_HoaDon dao_HoaDon;
 	private Dao_ChiTietHoaDon dao_ChiTietHoaDon;
+	private Dao_NhanVien dao_NhanVien;
 
 	/**
 	 * Create the panel.
 	 */
-	public TrangBanHangJPanel(HoaDon HD_TruyenVao) {
+	public TrangBanHangJPanel(NhanVien nhanVien, HoaDon HD_TruyenVao) {
 
 		dao_HangHoa = new Dao_HangHoa();
 		dao_VoucherGiamGia = new Dao_VoucherGiamGia();
 		dao_KhachHang = new Dao_KhachHang();
 		dao_HoaDon = new Dao_HoaDon();
 		dao_ChiTietHoaDon = new Dao_ChiTietHoaDon();
+		dao_NhanVien = new Dao_NhanVien();
 
 		nv = TrangChinhNVBanHang.nv;
-
-		taoHoaDon(HD_TruyenVao);
+		taoHoaDon(nhanVien, HD_TruyenVao);
 
 		setBackground(new Color(158, 226, 173));
 
@@ -342,8 +344,6 @@ public class TrangBanHangJPanel extends JPanel implements ActionListener, Action
 		table.getColumnModel().getColumn(6).setCellRenderer(new ButtonRenderer());
 		table.getColumnModel().getColumn(6).setCellEditor(new ButtonEditor());
 		panel_KhachHangVaTienNhan_1.add(new JScrollPane(table));
-		
-		
 
 //		Tạo panel Thông tin tổng tiền
 		JPanel panel_KhachHangVaTienNhan_2 = new JPanel();
@@ -458,11 +458,13 @@ public class TrangBanHangJPanel extends JPanel implements ActionListener, Action
 		btn_ThanhToan.setFont(new Font("Monospaced", Font.BOLD, 18));
 		btn_ThanhToan.setBounds(530, 587, 163, 50);
 		add(btn_ThanhToan);
+
 		
-		
-		if(listChiTietHD.size()>0) {
-			loadToanBoDuLieuTrongHoaDonCho();
-		}
+		if (listChiTietHD.size() > 0)
+			for (ChiTietHoaDon chiTietHoaDon : listChiTietHD) {
+				model.addHangHoa(chiTietHoaDon);
+				System.out.println(chiTietHoaDon);
+			}
 
 		trangTimKiemHoaDon = new TrangTimKiemHoaDon(nv);
 
@@ -481,10 +483,6 @@ public class TrangBanHangJPanel extends JPanel implements ActionListener, Action
 
 		chckx_DiemTichLuy.addItemListener(this);
 
-		
-		
-		
-		
 	}
 
 	@Override
@@ -499,7 +497,7 @@ public class TrangBanHangJPanel extends JPanel implements ActionListener, Action
 			timThongTinKhachHang(sdt, true);
 
 		} else if (o.equals(btn_HangCho)) {
-			new TrangHangCho().setVisible(true);
+			new TrangHangCho(TrangBanHangJPanel.this, hoaDon, listChiTietHD).setVisible(true);
 
 		} else if (o.equals(txt_SDTKhachHang)) {
 			String sdt = txt_SDTKhachHang.getText();
@@ -522,7 +520,7 @@ public class TrangBanHangJPanel extends JPanel implements ActionListener, Action
 					"Xác nhận", JOptionPane.YES_NO_OPTION);
 
 			if (choice == JOptionPane.YES_OPTION) {
-				switchContent(new TrangBanHangJPanel(null));
+				switchContent(new TrangBanHangJPanel(nv,null));
 			}
 
 		} else if (o.equals(btn_ThanhToan)) {
@@ -763,19 +761,19 @@ public class TrangBanHangJPanel extends JPanel implements ActionListener, Action
 	 * 
 	 * @return HoaDon
 	 */
-	public void taoHoaDon(HoaDon hoaDonTruyen) {
-		if(hoaDonTruyen!=null) {
+	public void taoHoaDon(NhanVien nhanVien, HoaDon hoaDonTruyen) {
+		if (hoaDonTruyen != null) {
+			nv = nhanVien;
 			hoaDon = hoaDonTruyen;
 			kh = dao_KhachHang.getKhachHangTheoMa(hoaDon.getKhachHang().getMaKhachHang());
-			for (ChiTietHoaDon chiTietHoaDon : dao_ChiTietHoaDon.getChiTietTheoMaHoaDon(hoaDon.getMaHoaDon())) {
-				listChiTietHD.add(chiTietHoaDon);
-			}
+			listChiTietHD = (ArrayList<ChiTietHoaDon>) dao_ChiTietHoaDon.getChiTietTheoMaHoaDon(hoaDon.getMaHoaDon());
 			vc = dao_VoucherGiamGia.getTheoMaVouCher(hoaDon.getVoucher().getMaVoucher());
 			for (ChiTietHoaDon chiTietHoaDon : listChiTietHD) {
-				HangHoa hh = dao_HangHoa
-						.getHangHoaByMaHangHao(chiTietHoaDon.getHangHoa().getMaHangHoa());
+				HangHoa hh = dao_HangHoa.getHangHoaByMaHangHao(chiTietHoaDon.getHangHoa().getMaHangHoa());
+				chiTietHoaDon.setHoaDon(hoaDon);
 				chiTietHoaDon.setHangHoa(hh);
 			}
+
 			return;
 		}
 		LocalDate ngayTao = LocalDate.now();
@@ -784,6 +782,7 @@ public class TrangBanHangJPanel extends JPanel implements ActionListener, Action
 		String maHD = "HD" + ngayTao.toString().replaceAll("-", "") + sttHoaDon;
 
 		hoaDon = new HoaDon(maHD, ngayTao, null, nv, null);
+
 	}
 
 //	Chua tìm dao của sđt
@@ -882,7 +881,7 @@ public class TrangBanHangJPanel extends JPanel implements ActionListener, Action
 		for (ChiTietHoaDon chiTietHoaDon : listChiTietHD) {
 			model.addHangHoa(chiTietHoaDon);
 		}
-		
+
 //		model.addHangHoa(ct);
 		tinhTongCacThanhTien();
 		comboBox_KichThuoc.removeAllItems();
@@ -946,7 +945,7 @@ public class TrangBanHangJPanel extends JPanel implements ActionListener, Action
 			if (!kh.getMaKhachHang().equals("KH0000")) {
 //				Trừ và thêm điểm thành viên
 				double diemTichLuy = 0;
-				double tongTienHang =0;
+				double tongTienHang = 0;
 				double tongTienThue = 0;
 				double tongTienGiamGia = 0;
 				// tổng tiền hàng
@@ -965,9 +964,10 @@ public class TrangBanHangJPanel extends JPanel implements ActionListener, Action
 					double tongTienTra = tongTienHang + tongTienThue - tongTienGiamGia;
 					if (diemTichLuy > (tongTienTra / 2)) {
 						diemTichLuy -= tongTienTra / 2;
-					}else diemTichLuy = 0;
+					} else
+						diemTichLuy = 0;
 				}
-				diemTichLuy+=(long) hoaDon.getTongThanhTien()*0.001;
+				diemTichLuy += (long) hoaDon.getTongThanhTien() * 0.001;
 				kh.setDiemTichLuy((float) diemTichLuy);
 				dao_KhachHang.updateKhachHang(kh);
 			}
@@ -1018,19 +1018,17 @@ public class TrangBanHangJPanel extends JPanel implements ActionListener, Action
 		}
 
 		JOptionPane.showMessageDialog(this, "Xác nhận đã xuất hóa đơn!");
-		switchContent(new TrangBanHangJPanel(null));
+		switchContent(new TrangBanHangJPanel(nv,null));
 	}
 
 	public void loadToanBoDuLieuTrongHoaDonCho() {
-		model.removeAllHoaDon();
-		ArrayList<ChiTietHoaDon> listChiTiet = new ArrayList<ChiTietHoaDon>();
-		for (ChiTietHoaDon ct : listChiTietHD) {
-			
-			listChiTiet.add(ct);
+//		model.removeAllHoaDon();
+		for (ChiTietHoaDon chiTietHoaDon : listChiTietHD) {
+			model.addHangHoa(chiTietHoaDon);
 		}
 //		txt_SDTKhachHang.setText(kh.getSoDienThoai());
 //		comboBox_MaGiamGia.setSelectedItem(vc.getMaVoucher().trim());
 //		tinhTongCacThanhTien();
 	}
-	
+
 }
