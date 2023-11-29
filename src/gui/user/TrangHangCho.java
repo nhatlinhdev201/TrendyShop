@@ -326,13 +326,20 @@ public class TrangHangCho extends JFrame implements ActionListener {
 		}
 		KhachHang khThem = null;
 
+		if (listDSChiTietHoaDonChoThem.size() <= 0) {
+			JOptionPane.showMessageDialog(this, "Hàng chờ được thêm phải có ít nhất 1 mặt hàng!");
+			return;
+		}
 		ArrayList<ChiTietHoaDon> list_ChiTietHoaDonCho = listDSChiTietHoaDonChoThem;
 		HoaDon hoaDonHangCho = hoaDonChoThem;
-		khThem = dao_KhachHang.getKhachHangTheoSDT(sdt);
-		if(khThem==null) {
-			khThem = hoaDonHangCho.getKhachHang();
+		khThem = hoaDonHangCho.getKhachHang();
+
+		if (khThem == null) {
+			khThem = dao_KhachHang.getKhachHangTheoSDT(sdt);
+			if (khThem.getMaKhachHang() == null)
+				khThem = null;
 		}
-		
+
 		if (khThem == null) {
 			khThem = new KhachHang();
 			khThem.setMaKhachHang("KC" + String.format("%04d", dao_KhachHang.getKhachHangChoGanNhat() + 1));
@@ -341,12 +348,10 @@ public class TrangHangCho extends JFrame implements ActionListener {
 			khThem.setEmail("");
 			khThem.setTenKhachHang("");
 			dao_KhachHang.themKhachHang(khThem);
-		}
-		if (!txt_SDT.getText().trim().equals(khThem.getSoDienThoai())) {
+		} else if (!txt_SDT.getText().trim().equals(khThem.getSoDienThoai())) {
 			JOptionPane.showMessageDialog(this,
 					"Do khách hàng đã là thành viên nên không được nhập số điện thoại khác");
-			txt_SDT.setText(
-					dao_KhachHang.getKhachHangTheoMa(hoaDonChoThem.getKhachHang().getMaKhachHang()).getSoDienThoai());
+			txt_SDT.setText(khThem.getSoDienThoai());
 			txt_SDT.requestFocus();
 			return;
 		}
@@ -363,6 +368,9 @@ public class TrangHangCho extends JFrame implements ActionListener {
 		list_HoaDon.add(hoaDonHangCho);
 		list_KhachHangCho.add(khThem);
 		model.addHangCho(khThem);
+		
+		trangBanHang.switchContent(new TrangBanHangJPanel(null, null));
+		
 	}
 
 	public void xoaHangCho(int selected) {
@@ -399,4 +407,6 @@ public class TrangHangCho extends JFrame implements ActionListener {
 			return null;
 		}
 	}
+
+	
 }
