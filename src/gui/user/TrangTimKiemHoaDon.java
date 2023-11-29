@@ -9,6 +9,7 @@ import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -16,8 +17,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.swing.AbstractAction;
+import javax.swing.ActionMap;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
+import javax.swing.InputMap;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -47,6 +51,7 @@ import javax.swing.border.TitledBorder;
 import com.toedter.calendar.JDateChooser;
 
 import javax.swing.JTextField;
+import javax.swing.KeyStroke;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 
@@ -87,16 +92,13 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener{
 
 		nv_DangNhap = nhanVienDangNhap;
 
-		/* Thiáº¿t láº­p jpanel cho trang bÃ¡n hÃ ng */
 		this.setBounds(SetBountJPanel.X, SetBountJPanel.Y, SetBountJPanel.WIDTH, SetBountJPanel.HEIGHT);
 		setLayout(null);
 
-		/* Táº¡o 2 button menu cho trang Quáº£n lÃ½ bÃ¡n hÃ ng */
 		JPanel menu = new JPanel();
 		menu.setBounds(0, 0, 1370, 43);
 		add(menu);
 		menu.setLayout(null);
-		/* Button láº­p hÃ³a Ä‘Æ¡n */
 		btn_LapHoaDon = new JButton("Lập hóa đơn");
 		btn_LapHoaDon.setFont(new Font("Arial", Font.BOLD, 20));
 		btn_LapHoaDon.setBackground(new Color(255, 255, 255));
@@ -205,21 +207,21 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener{
 
 		hienThiThongTinHoaDon(panel);
 
-		List<HoaDon> listAllHoaDon = dao_HoaDon.getAll();
+		List<HoaDon> listAllHoaDon = new ArrayList<HoaDon>();
+		for(HoaDon hoadon: dao_HoaDon.getAll()) {
+			if(hoadon.isTrangThaiThanhToan()) listAllHoaDon.add(hoadon);
+		}
+		
 		DanhSachHoaDon(listAllHoaDon);
-
-//		panel_2.setLayout(null);
-
-//		
-//		trangBanHang = new TrangBanHangJPanel();
-
-//		
+		
 		btn_LapHoaDon.addActionListener(this);
 		btn_Tim.addActionListener(this);
 		btn_LamMoi.addActionListener(this);
 		txt_MaHoaDon.addActionListener(this);
 		txt_SDT.addActionListener(this);
 		txt_maNV.addActionListener(this);
+		
+		suKienPhimTat();
 
 	}
 
@@ -244,8 +246,6 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener{
 		if (o.equals(btn_LapHoaDon)) {
 			switchContent(new TrangBanHangJPanel(null, null));
 		} else if (o.equals(btn_Tim)) {
-
-//			DanhSachHoaDon();
 			timKiemHoaDon();
 		} else if (o.equals(btn_LamMoi)) {
 			txt_MaHoaDon.setText("");
@@ -725,4 +725,32 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener{
 		DanhSachHoaDon(dsHD);
 
 	}
+	
+	public void suKienPhimTat() {
+		// Đăng ký sự kiện phím tắt
+        InputMap inputMap = this.getInputMap(JPanel.WHEN_IN_FOCUSED_WINDOW);
+        ActionMap actionMap = this.getActionMap();
+
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0), "F1");
+        actionMap.put("F1", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+    			timKiemHoaDon();
+            }
+        });
+
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_F2, 0), "F2");
+        actionMap.put("F2", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	txt_MaHoaDon.setText("");
+    			txt_maNV.setText("");
+    			txt_SDT.setText("");
+    			dateChooser_TuNgay.setDate(null);
+    			dateChooser_DenNgay.setDate(null);
+            }
+        });
+        
+	}
+	
 }
