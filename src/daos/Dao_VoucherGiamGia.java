@@ -90,7 +90,6 @@ public class Dao_VoucherGiamGia {
 		return voucher;
 	}
 	
-//<<<<<<< HEAD
 	
 	public List<String> getAllPhanTramGiamGia() {
 		List<String> dsPhanTramGiamGia = null;
@@ -142,7 +141,6 @@ public class Dao_VoucherGiamGia {
 		}
 		return dsTenVoucher;
 	}
-//=======
 	public boolean updateVoucher(VoucherGiamGia voucher) {
 		try {
 
@@ -153,7 +151,8 @@ public class Dao_VoucherGiamGia {
 			PreparedStatement preparedStatement = connection.prepareStatement(updateQuery);
 			preparedStatement.setString(1, voucher.getTenVoucher());
 			preparedStatement.setString(2,voucher.getMoTaChuongTrinh());
-			preparedStatement.setFloat(3, Float.valueOf(voucher.getPhanTramGiamTheoHoaDon()).shortValue());
+//			preparedStatement.setFloat(3, Float.valueOf(voucher.getPhanTramGiamTheoHoaDon()).shortValue());
+			preparedStatement.setFloat(3, voucher.getPhanTramGiamTheoHoaDon());
 			preparedStatement.setDate(4, java.sql.Date.valueOf(voucher.getNgayBatDau().toString()));
 			preparedStatement.setDate(5, java.sql.Date.valueOf(voucher.getNgayKetThuc().toString()));
 			preparedStatement.setBoolean(6, voucher.isTrangThai());
