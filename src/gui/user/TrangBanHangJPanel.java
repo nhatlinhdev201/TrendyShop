@@ -23,7 +23,9 @@ import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.AbstractAction;
 import javax.swing.Action;
+import javax.swing.ActionMap;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultCellEditor;
@@ -33,6 +35,7 @@ import javax.swing.Icon;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.KeyEvent;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -52,10 +55,12 @@ import java.awt.GridLayout;
 import java.awt.Image;
 
 import javax.swing.JTextField;
+import javax.swing.KeyStroke;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.JComboBox;
 import javax.swing.ImageIcon;
+import javax.swing.InputMap;
 import javax.swing.SwingConstants;
 import javax.swing.border.MatteBorder;
 import javax.swing.event.DocumentEvent;
@@ -514,6 +519,9 @@ public class TrangBanHangJPanel extends JPanel
 		txt_TienNhan.getDocument().addDocumentListener(this);
 
 		chckx_DiemTichLuy.addItemListener(this);
+		
+		
+		suKienPhimTat();
 
 	}
 
@@ -1156,4 +1164,43 @@ public class TrangBanHangJPanel extends JPanel
 		return true;
 	}
 
+	public void suKienPhimTat() {
+		// Đăng ký sự kiện phím tắt
+        InputMap inputMap = this.getInputMap(JPanel.WHEN_IN_FOCUSED_WINDOW);
+        ActionMap actionMap = this.getActionMap();
+
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0), "F1");
+        actionMap.put("F1", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	huyHoaDon();
+            }
+        });
+
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_F2, 0), "F2");
+        actionMap.put("F2", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	taoHangCho();
+            }
+        });
+        
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_F3, 0), "F3");
+        actionMap.put("F3", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	thanhToanHoaDon();
+            }
+        });
+        
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_F4, 0), "F4");
+        actionMap.put("F4", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	
+            }
+        });
+	}
+	
+	
 }
