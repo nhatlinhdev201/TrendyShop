@@ -246,8 +246,7 @@ public class TrangBanHangJPanel extends JPanel
 		spinner_SoLuong = new JSpinner(model_Spinner);
 		spinner_SoLuong.setBounds(236, 100, 243, 30);
 		panel_NhapThongTinMatHang.add(spinner_SoLuong);
-
-//		
+	
 
 //		2 nút thêm và refresh lại các jtextfield ở trên
 //		Tìm hiểu phần button icon để tạo các nút
@@ -939,7 +938,6 @@ public class TrangBanHangJPanel extends JPanel
 	}
 
 	public void thanhToanHoaDon() {
-//		boolean ktHoaDonTonTaiCSDL = dao_HoaDon.getHoaDonTheoMa(hoaDon.getMaHoaDon()).get(0)==null;
 
 		if (lbl_TenKhachHang.getText().equals("")) {
 			kh = null;
@@ -970,7 +968,7 @@ public class TrangBanHangJPanel extends JPanel
 		}
 		int choice = JOptionPane.showConfirmDialog(null,
 				"Xác nhận thanh toán: " + lbl_TongTienTra.getText() + " VNĐ \n Tiền thừa: "
-						+ (hoaDon.getTongThanhTien() - Double.parseDouble(txt_TienNhan.getText())) + " VNĐ",
+						+decimalFormat.format( (hoaDon.getTongThanhTien() - Double.parseDouble(txt_TienNhan.getText()))) + " VNĐ",
 				"Xác nhận", JOptionPane.YES_NO_OPTION);
 		if (choice == JOptionPane.YES_OPTION) {
 			hoaDon.setTrangThaiThanhToan(true);
@@ -1032,6 +1030,7 @@ public class TrangBanHangJPanel extends JPanel
 				}
 
 				diemTichLuy += Double.parseDouble(diemTichLuyTangThem);
+				if(!kh.isTrangThai())
 				kh.setDiemTichLuy((float) diemTichLuy);
 				dao_KhachHang.updateKhachHang(kh);
 			}
