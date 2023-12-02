@@ -52,6 +52,7 @@ public class TrangQLKhachHangPanel extends JPanel implements ActionListener, Mou
 	private JButton btn_timKiem;
 	private JButton btn_them;
 	private JButton btn_load;
+	private JButton btn_capNhat;
 	private static DefaultTableModel tableModel;
 	private JComboBox<String> comboBox;
 
@@ -73,7 +74,7 @@ public class TrangQLKhachHangPanel extends JPanel implements ActionListener, Mou
 		// Tạo ImageIcon mới từ ảnh đã chỉnh kích thước
 		ImageIcon resizedIcon = new ImageIcon(newImg);
 
-		JTable table = new JTable();
+		JTable table = new JTable(tableModel);
 		table.setFont(new Font("Tahoma", Font.PLAIN, 18));
 
 		// Tạo font mới với kích cỡ chữ là 20 cho tiêu đề cột
@@ -158,7 +159,6 @@ public class TrangQLKhachHangPanel extends JPanel implements ActionListener, Mou
 		add(lblTnKhchHng);
 
 		txt_ten = new JTextField();
-		txt_ten.setEditable(false);
 		txt_ten.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		txt_ten.setForeground(Color.BLACK);
 		txt_ten.setColumns(10);
@@ -173,7 +173,6 @@ public class TrangQLKhachHangPanel extends JPanel implements ActionListener, Mou
 		txt_sDT = new JTextField();
 		txt_sDT.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		txt_sDT.setForeground(Color.BLACK);
-		txt_sDT.setEnabled(false);
 		txt_sDT.setColumns(10);
 		txt_sDT.setBounds(217, 384, 146, 20);
 		add(txt_sDT);
@@ -186,7 +185,6 @@ public class TrangQLKhachHangPanel extends JPanel implements ActionListener, Mou
 		txt_email = new JTextField();
 		txt_email.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		txt_email.setForeground(Color.BLACK);
-		txt_email.setEnabled(false);
 		txt_email.setColumns(10);
 		txt_email.setBounds(217, 418, 146, 20);
 		add(txt_email);
@@ -199,7 +197,6 @@ public class TrangQLKhachHangPanel extends JPanel implements ActionListener, Mou
 		txt_diaChi = new JTextField();
 		txt_diaChi.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		txt_diaChi.setForeground(Color.BLACK);
-		txt_diaChi.setEnabled(false);
 		txt_diaChi.setColumns(10);
 		txt_diaChi.setBounds(217, 456, 146, 20);
 		add(txt_diaChi);
@@ -217,20 +214,17 @@ public class TrangQLKhachHangPanel extends JPanel implements ActionListener, Mou
 		txt_diemTichLuy = new JTextField();
 		txt_diemTichLuy.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		txt_diemTichLuy.setForeground(Color.BLACK);
-		txt_diemTichLuy.setEnabled(false);
 		txt_diemTichLuy.setColumns(10);
 		txt_diemTichLuy.setBounds(217, 526, 146, 20);
 		add(txt_diemTichLuy);
 
 		btn_hoatDong = new JRadioButton("Hoạt động");
-		btn_hoatDong.setEnabled(false);
 		btn_hoatDong.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btn_hoatDong.setBackground(Color.WHITE);
 		btn_hoatDong.setBounds(217, 487, 95, 23);
 		add(btn_hoatDong);
 
 		btn_nghi = new JRadioButton("Nghỉ");
-		btn_nghi.setEnabled(false);
 		btn_nghi.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btn_nghi.setBackground(Color.WHITE);
 		btn_nghi.setBounds(314, 487, 75, 23);
@@ -296,7 +290,7 @@ public class TrangQLKhachHangPanel extends JPanel implements ActionListener, Mou
 		Image scaledIconXoa = iconXoa.getImage().getScaledInstance(27, 27, Image.SCALE_SMOOTH); // Thiết lập kích thước
 		ImageIcon resizedIconXoa = new ImageIcon(scaledIconXoa);
 
-		JButton btn_capNhat = new JButton("Cập nhật");
+		btn_capNhat = new JButton("Cập nhật");
 		btn_capNhat.setBackground(Color.ORANGE);
 		btn_capNhat.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btn_capNhat.setBounds(189, 619, 123, 33);
@@ -340,7 +334,10 @@ public class TrangQLKhachHangPanel extends JPanel implements ActionListener, Mou
 				Object[] rowData = {
 
 						khachHang.getMaKhachHang(), khachHang.getTenKhachHang(), khachHang.getSoDienThoai(),
-						khachHang.getEmail(), khachHang.getDiaChi(), khachHang.isTrangThai() ? "Hoạt động" : "Nghỉ", // Chuyển boolean thành chuỗi
+						khachHang.getEmail(), khachHang.getDiaChi(), khachHang.isTrangThai() ? "Hoạt động" : "Nghỉ", // Chuyển
+																														// boolean
+																														// thành
+																														// chuỗi
 						khachHang.getDiemTichLuy() };
 				// Thêm dữ liệu vào model của bảng
 				tableModel.addRow(rowData);
@@ -428,6 +425,8 @@ public class TrangQLKhachHangPanel extends JPanel implements ActionListener, Mou
 		} else if (obj.equals(btn_load)) {
 			clearTable();
 			docDuLieu();
+		} else if (obj.equals(btn_capNhat)) {
+			capNhatKhachHang();
 		}
 	}
 
@@ -436,6 +435,64 @@ public class TrangQLKhachHangPanel extends JPanel implements ActionListener, Mou
 		for (int i = rowCount - 1; i >= 0; i--) {
 			tableModel.removeRow(i);
 		}
+	}
+
+	private void capNhatKhachHang() {
+		if (kiemTraHople()) {
+			KhachHang kh = layKhachHang();
+			if (khDao.updateKhachHang(kh)) {
+				JOptionPane.showMessageDialog(this, "Đã cập nhật thành công nhân viên: " + kh.getMaKhachHang());
+			} else {
+				JOptionPane.showMessageDialog(this, "Không thể cập nhật!!!");
+			}
+		}
+	}
+
+	public KhachHang layKhachHang() {
+		String maKH = txt_makh.getText().trim();
+		String tenKh = txt_ten.getText().trim();
+		String sdt = txt_ten.getText().trim();
+		String email = txt_ten.getText().trim();
+		String diachi = txt_ten.getText().trim();
+		boolean trangthai = false;
+		if (btn_hoatDong.isSelected() && !btn_nghi.isSelected())
+			trangthai = true;
+		float diemTichLuy = Float.parseFloat(txt_diemTichLuy.getText());
+		KhachHang khachHang = new KhachHang(maKH, sdt, tenKh, email, diachi, trangthai, diemTichLuy);
+		return khachHang;
+	}
+
+	private boolean kiemTraHople() {
+		String sdt = txt_sDT.getText().trim();
+		String ten = txt_ten.getText().trim();
+		int lastSpace = ten.lastIndexOf(" ");
+		String fistName = ten.substring(lastSpace + 1);
+		if (!ten.matches("^[A-Z].*")) {
+			JOptionPane.showMessageDialog(this, "Tên phải viết hoa ");
+			return false;
+		}
+		// Kiểm tra các trường không được để trống
+		if (txt_ten.getText().isEmpty() || txt_sDT.getText().isEmpty() || txt_email.getText().isEmpty()
+				|| txt_diaChi.getText().isEmpty()) {
+			JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin!");
+			return false; // Dừng hàm nếu có trường trống
+		}
+		if (!sdt.matches("\\d{10}")) {
+			JOptionPane.showMessageDialog(this, "Số điện thoại phải có đúng 10 số!");
+			return false;
+		}
+
+		String email = txt_email.getText().trim();
+		if (!email.endsWith("@gmail.com")) {
+			JOptionPane.showMessageDialog(this, "Email phải kết thúc bằng '@gmail.com'!");
+			return false;
+		}
+		// Kiểm tra JRadioButton đã được chọn chưa
+		if (!btn_hoatDong.isSelected() && !btn_nghi.isSelected()) {
+			JOptionPane.showMessageDialog(this, "Vui lòng chọn trạng thái hoạt động hoặc nghỉ!");
+			return false; // Dừng hàm nếu không có JRadioButton nào được chọn
+		}
+		return true;
 	}
 
 	private void loadDataIntoTable() {

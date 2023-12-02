@@ -38,6 +38,18 @@ public class NhanVien {
 		this.phanQuyen = phanQuyen;
 		this.anhDaiDien = anhDaiDien;
 	}
+	public NhanVien(String maNhanVien, String hoTen, Date ngaySinh, String soCCCD, String soDienThoai, String email,
+			String diaChi,  boolean trangThai) {
+		super();
+		this.maNhanVien = maNhanVien;
+		this.hoTen = hoTen;
+		this.ngaySinh = ngaySinh;
+		this.soCCCD = soCCCD;
+		this.soDienThoai = soDienThoai;
+		this.email = email;
+		this.diaChi = diaChi;
+		this.trangThai = trangThai;
+	}
 	
 	public NhanVien(String maNhanVien, String matKhau, boolean phanQuyen) {
 		super();
