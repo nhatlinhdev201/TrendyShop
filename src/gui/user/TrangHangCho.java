@@ -21,13 +21,18 @@ import entities.KhachHang;
 import entities.NhanVien;
 
 import javax.swing.JTextField;
+import javax.swing.KeyStroke;
+import javax.swing.AbstractAction;
+import javax.swing.ActionMap;
 import javax.swing.DefaultCellEditor;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.InputMap;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.awt.event.ActionEvent;
@@ -77,7 +82,7 @@ public class TrangHangCho extends JFrame implements ActionListener {
 		hoaDonChoThem = hoaDonChoXuLy;
 		listDSChiTietHoaDonChoThem = danhSachChiTietHoaDonChoXuLy;
 
-		setSize(500, 444);
+		setSize(511, 444);
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(null);
 		setResizable(false);
@@ -98,36 +103,36 @@ public class TrangHangCho extends JFrame implements ActionListener {
 		getContentPane().add(txt_SDT);
 		txt_SDT.setColumns(10);
 
-		btn_Thoat = new JButton("Thoát");
-		btn_Thoat.setFont(new Font("Monospaced", Font.PLAIN, 13));
+		btn_Thoat = new JButton("Thoát(F1)");
+		btn_Thoat.setFont(new Font("Monospaced", Font.PLAIN, 12));
 		btn_Thoat.setBackground(new Color(237, 140, 135));
 		btn_Thoat.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btn_Thoat.setBounds(10, 95, 89, 23);
+		btn_Thoat.setBounds(5, 95, 97, 23);
 		getContentPane().add(btn_Thoat);
 
-		btn_TimHangCho = new JButton("Tìm");
-		btn_TimHangCho.setFont(new Font("Monospaced", Font.PLAIN, 13));
+		btn_TimHangCho = new JButton("Tìm(F2)");
+		btn_TimHangCho.setFont(new Font("Monospaced", Font.PLAIN, 12));
 		btn_TimHangCho.setBackground(new Color(153, 188, 247));
-		btn_TimHangCho.setBounds(108, 95, 89, 23);
+		btn_TimHangCho.setBounds(108, 95, 83, 23);
 		getContentPane().add(btn_TimHangCho);
 
-		btn_ThemHangCho = new JButton("Thêm hàng chờ");
-		btn_ThemHangCho.setFont(new Font("Monospaced", Font.PLAIN, 13));
+		btn_ThemHangCho = new JButton("Thêm hàng chờ(F3)");
+		btn_ThemHangCho.setFont(new Font("Monospaced", Font.PLAIN, 12));
 		btn_ThemHangCho.setBackground(new Color(156, 228, 154));
-		btn_ThemHangCho.setBounds(206, 95, 139, 23);
+		btn_ThemHangCho.setBounds(196, 95, 153, 23);
 		getContentPane().add(btn_ThemHangCho);
 
-		btn_ThanhToan = new JButton("Thanh toán");
-		btn_ThanhToan.setFont(new Font("Monospaced", Font.PLAIN, 13));
+		btn_ThanhToan = new JButton("Thanh toán(F4)");
+		btn_ThanhToan.setFont(new Font("Monospaced", Font.PLAIN, 12));
 		btn_ThanhToan.setBackground(new Color(0, 210, 0));
-		btn_ThanhToan.setBounds(355, 95, 115, 23);
+		btn_ThanhToan.setBounds(355, 95, 132, 23);
 		getContentPane().add(btn_ThanhToan);
 
 		JPanel panel = new JPanel();
-		panel.setBounds(10, 140, 464, 254);
+		panel.setBounds(0, 140, 495, 254);
 		getContentPane().add(panel);
 
 		model = new AbstractTableHangCho();
@@ -161,6 +166,8 @@ public class TrangHangCho extends JFrame implements ActionListener {
 		btn_ThemHangCho.addActionListener(this);
 		btn_TimHangCho.addActionListener(this);
 
+		
+		suKienPhimTat();
 	}
 
 	private class ButtonRenderer extends DefaultTableCellRenderer {
@@ -326,13 +333,20 @@ public class TrangHangCho extends JFrame implements ActionListener {
 		}
 		KhachHang khThem = null;
 
+		if (listDSChiTietHoaDonChoThem.size() <= 0) {
+			JOptionPane.showMessageDialog(this, "Hàng chờ được thêm phải có ít nhất 1 mặt hàng!");
+			return;
+		}
 		ArrayList<ChiTietHoaDon> list_ChiTietHoaDonCho = listDSChiTietHoaDonChoThem;
 		HoaDon hoaDonHangCho = hoaDonChoThem;
-		khThem = dao_KhachHang.getKhachHangTheoSDT(sdt);
-		if(khThem==null) {
-			khThem = hoaDonHangCho.getKhachHang();
+		khThem = hoaDonHangCho.getKhachHang();
+
+		if (khThem == null) {
+			khThem = dao_KhachHang.getKhachHangTheoSDT(sdt);
+			if (khThem.getMaKhachHang() == null)
+				khThem = null;
 		}
-		
+
 		if (khThem == null) {
 			khThem = new KhachHang();
 			khThem.setMaKhachHang("KC" + String.format("%04d", dao_KhachHang.getKhachHangChoGanNhat() + 1));
@@ -341,12 +355,10 @@ public class TrangHangCho extends JFrame implements ActionListener {
 			khThem.setEmail("");
 			khThem.setTenKhachHang("");
 			dao_KhachHang.themKhachHang(khThem);
-		}
-		if (!txt_SDT.getText().trim().equals(khThem.getSoDienThoai())) {
+		} else if (!txt_SDT.getText().trim().equals(khThem.getSoDienThoai())) {
 			JOptionPane.showMessageDialog(this,
 					"Do khách hàng đã là thành viên nên không được nhập số điện thoại khác");
-			txt_SDT.setText(
-					dao_KhachHang.getKhachHangTheoMa(hoaDonChoThem.getKhachHang().getMaKhachHang()).getSoDienThoai());
+			txt_SDT.setText(khThem.getSoDienThoai());
 			txt_SDT.requestFocus();
 			return;
 		}
@@ -363,6 +375,9 @@ public class TrangHangCho extends JFrame implements ActionListener {
 		list_HoaDon.add(hoaDonHangCho);
 		list_KhachHangCho.add(khThem);
 		model.addHangCho(khThem);
+		
+		trangBanHang.switchContent(new TrangBanHangJPanel(null, null));
+		
 	}
 
 	public void xoaHangCho(int selected) {
@@ -399,4 +414,52 @@ public class TrangHangCho extends JFrame implements ActionListener {
 			return null;
 		}
 	}
+
+	
+	public void suKienPhimTat() {
+		// Đăng ký sự kiện phím tắt
+        InputMap inputMap = getRootPane().getInputMap(JPanel.WHEN_IN_FOCUSED_WINDOW);
+        ActionMap actionMap = getRootPane().getActionMap();
+
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0), "F1");
+        actionMap.put("F1", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	TrangHangCho.this.dispose();
+            }
+        });
+
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_F2, 0), "F2");
+        actionMap.put("F2", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	timHangCho();
+            }
+        });
+        
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_F3, 0), "F3");
+        actionMap.put("F3", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	if (!timSoDienThoaiTrungVoiHangCho())
+    				return;
+    			themHangCho();
+            }
+        });
+        
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_F4, 0), "F4");
+        actionMap.put("F4", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	HoaDon hoaDon = timHoaDonDuocChon();
+    			if (hoaDon == null)
+    				return;
+    			NhanVien nv = dao_NhanVien.getNhanVienTheoMa(hoaDon.getNguoiLapHoaDon().getMaNhanVien());
+    			trangBanHang.switchContent(new TrangBanHangJPanel(nv, hoaDon));
+
+    			TrangHangCho.this.dispose();
+            }
+        });
+	}
+	
 }
