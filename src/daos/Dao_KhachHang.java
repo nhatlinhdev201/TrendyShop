@@ -213,7 +213,7 @@ public class Dao_KhachHang {
 		}
 		return false;
 	}
-
+	
 	public List<KhachHang> getAllKhachHangCho() {
 		List<KhachHang> dsKhachHang = null;
 		try {
