@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 import connection.ConnectDataBase;
 import constance.ModelThongKeNVBanHang;
@@ -609,6 +610,34 @@ public class Dao_ThongKeDoanhThu {
 
 		return danhSachHoaDon;
 	}
+	public ArrayList<HoaDon> getHoaDonTheoNgay(LocalDate thoiGianTao) {
+		ArrayList<HoaDon> danhSachHoaDon = new ArrayList<>();
+
+		try {
+			String sql = "SELECT * FROM HoaDon WHERE CAST(thoiGianTao AS DATE) = ?";
+			try (PreparedStatement statement = connection.prepareStatement(sql)) {
+				statement.setDate(1, Date.valueOf(thoiGianTao));
+
+				try (ResultSet resultSet = statement.executeQuery()) {
+					while (resultSet.next()) {
+						HoaDon hoaDon = new HoaDon();
+						hoaDon.setMaHoaDon(resultSet.getString("maHoaDon"));
+						hoaDon.setThoiGianTao(resultSet.getDate("thoiGianTao").toLocalDate());
+						hoaDon.setTongThanhTien(resultSet.getDouble("tongThanhTien"));
+						hoaDon.setVoucher(new VoucherGiamGia(resultSet.getString("maVoucher")));
+						hoaDon.setKhachHang(new KhachHang(resultSet.getString("maKhachHang")));
+						hoaDon.setNguoiLapHoaDon(new NhanVien(resultSet.getString("maNhanVien")));
+						hoaDon.setTrangThaiThanhToan(resultSet.getBoolean("trangThaiThanhToan"));
+						danhSachHoaDon.add(hoaDon);
+					}
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return danhSachHoaDon;
+	}
 
 	public ModelThongKeNVBanHang layThongKeDoanhThuCaoNhatCuaNhanVien(int thangThongKe, int namCuaThangThongKe,
 			String maNhanVien) {
@@ -638,4 +667,36 @@ public class Dao_ThongKeDoanhThu {
 
 		return modelThongKe;
 	}
+	public ArrayList<NhanVien> layDanhSachNhanVien() {
+        ArrayList<NhanVien> lst = new ArrayList<>();
+
+        try {
+            String sql = "SELECT * FROM NhanVien WHERE phanQuyen = 0";
+
+            try (Statement statement = connection.createStatement();
+                 ResultSet resultSet = statement.executeQuery(sql)) {
+
+                while (resultSet.next()) {
+                	String maNV =resultSet.getString("maNhanVien");
+    				String ten = resultSet.getString("hoTen");
+    				Date ngaySinh = resultSet.getDate("ngaySinh");
+    				String soCCCD = resultSet.getString("soCCCD");
+    				String soDT = resultSet.getString("soDienThoai");
+    				String email = resultSet.getString("email");
+    				String diaChi = resultSet.getString("diaChi");
+    				String chucVu = resultSet.getString("chucVu");
+    				String matKhau = resultSet.getString("matKhau");
+    				Boolean phanquyen = resultSet.getBoolean("phanQuyen");
+    				Boolean trangThai = resultSet.getBoolean("trangThai");
+    				String anh = resultSet.getString("hinhAnh");
+                    NhanVien nv = new NhanVien(maNV, ten, ngaySinh, soCCCD, soDT, email, diaChi, chucVu, phanquyen, matKhau, trangThai, anh);
+                    lst.add(nv);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return lst;    }
+
 }
