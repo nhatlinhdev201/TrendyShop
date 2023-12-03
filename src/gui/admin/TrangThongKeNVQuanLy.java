@@ -29,7 +29,7 @@ public class TrangThongKeNVQuanLy extends JPanel implements ActionListener{
 
 	private TK_ThongKeMatHangBanChayNVQuanLyPanel panelThongKeBanHang;
 	private TK_ThongKeDoanhThuNVQuanLyJPanel panelThongKeDoanhThu;
-	
+	private TK_SaoKeHoaDon panelSaoKeHoaDon ;
 
 	/**
 	 * Create the panel.
@@ -39,6 +39,7 @@ public class TrangThongKeNVQuanLy extends JPanel implements ActionListener{
 		setLayout(null);
 		panelThongKeBanHang = new TK_ThongKeMatHangBanChayNVQuanLyPanel();
 		panelThongKeDoanhThu = new TK_ThongKeDoanhThuNVQuanLyJPanel();
+		panelSaoKeHoaDon = new TK_SaoKeHoaDon();
 		
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
@@ -59,6 +60,13 @@ public class TrangThongKeNVQuanLy extends JPanel implements ActionListener{
 		panelThongKeBanHang.setBorder(new LineBorder(Color.RED));
 		panelThongKeBanHang.setBounds(0, 11, 1350, 657);
 		panelCN_CNThongKeBanHang.add(panelThongKeBanHang);
+		
+		JPanel panelCN_SaoKeHoaDon = new JPanel();
+		panelCN_SaoKeHoaDon.setLayout(null);
+		tabbedPane.addTab("SAO KÊ HÓA ĐƠN", null, panelCN_SaoKeHoaDon, null);
+		panelSaoKeHoaDon.setBorder(new LineBorder(Color.RED));
+		panelSaoKeHoaDon.setBounds(0, 11, 1350, 657);
+		panelCN_SaoKeHoaDon.add(panelSaoKeHoaDon);
 	}
 
 	@Override
