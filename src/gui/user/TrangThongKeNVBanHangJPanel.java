@@ -165,7 +165,6 @@ public class TrangThongKeNVBanHangJPanel extends JPanel implements ActionListene
 		add(panelBieuDo);
 
 		btnLamMoi = new JButton("Làm mới ");
-		
 		btnLamMoi.setBackground(Color.ORANGE);
 		btnLamMoi.setFont(new Font("Tahoma", Font.PLAIN, 14));
         String iconPath_capnhat = "/images/updated.png";

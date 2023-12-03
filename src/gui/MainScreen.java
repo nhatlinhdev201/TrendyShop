@@ -17,10 +17,10 @@ public class MainScreen {
 				try {
 					TrangChinhNVBanHang trangChinhNVBanHang = new TrangChinhNVBanHang();
 					TrangChinhNVQuanLy screenMainAdmin = new TrangChinhNVQuanLy();
-					screenMainAdmin.setVisible(true);
-					screenMainAdmin.setIconImage(
+					trangChinhNVBanHang.setVisible(true);
+					trangChinhNVBanHang.setIconImage(
 							new ImageIcon(getClass().getResource("/images/logoShop.png")).getImage());
-					screenMainAdmin.setLocationRelativeTo(null);
+					trangChinhNVBanHang.setLocationRelativeTo(null);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
