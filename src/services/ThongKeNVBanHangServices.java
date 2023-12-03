@@ -82,4 +82,9 @@ public class ThongKeNVBanHangServices {
 		data = dao.getHoaDonTheoNhanVienVaNgay(nv.getMaNhanVien().trim(), ngay);
 		return data;
 	}
+	
+	public ModelThongKeNVBanHang layNgayCoDoanhThuCaoNhatCuaNhanVien(int thangThongKe, int namCuaThangThongKe, String maNhanVien) {
+		Dao_ThongKeDoanhThu dao = new Dao_ThongKeDoanhThu();
+		return dao.layThongKeDoanhThuCaoNhatCuaNhanVien(thangThongKe, namCuaThangThongKe, maNhanVien);
+	}
 }

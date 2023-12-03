@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 import connection.ConnectDataBase;
+import constance.ModelThongKeNVBanHang;
 import entities.HoaDon;
 import entities.KhachHang;
 import entities.NhanVien;
@@ -580,33 +581,61 @@ public class Dao_ThongKeDoanhThu {
 	}
 
 	public ArrayList<HoaDon> getHoaDonTheoNhanVienVaNgay(String maNhanVien, LocalDate thoiGianTao) {
-        ArrayList<HoaDon> danhSachHoaDon = new ArrayList<>();
+		ArrayList<HoaDon> danhSachHoaDon = new ArrayList<>();
 
-        try {
-            String sql = "SELECT * FROM HoaDon " +
-                         "WHERE maNhanVien = ? AND CAST(thoiGianTao AS DATE) = ?";
-            try (PreparedStatement statement = connection.prepareStatement(sql)) {
-                statement.setString(1, maNhanVien);
-                statement.setDate(2, Date.valueOf(thoiGianTao));
+		try {
+			String sql = "SELECT * FROM HoaDon " + "WHERE maNhanVien = ? AND CAST(thoiGianTao AS DATE) = ?";
+			try (PreparedStatement statement = connection.prepareStatement(sql)) {
+				statement.setString(1, maNhanVien);
+				statement.setDate(2, Date.valueOf(thoiGianTao));
 
-                try (ResultSet resultSet = statement.executeQuery()) {
-                    while (resultSet.next()) {
-                    	HoaDon hoaDon = new HoaDon();
-        				hoaDon.setMaHoaDon(resultSet.getString("maHoaDon").trim());
-        				hoaDon.setThoiGianTao(resultSet.getDate("thoiGianTao").toLocalDate());
-        				hoaDon.setTongThanhTien(resultSet.getDouble("tongThanhTien"));
-        				hoaDon.setVoucher(new VoucherGiamGia(resultSet.getString("maVoucher").trim()));
-        				hoaDon.setKhachHang(new KhachHang(resultSet.getString("maKhachHang").trim()));
-        				hoaDon.setNguoiLapHoaDon(new NhanVien(resultSet.getString("maNhanVien").trim()));
-        				hoaDon.setTrangThaiThanhToan(resultSet.getBoolean("trangThaiThanhToan"));
-                        danhSachHoaDon.add(hoaDon);
-                    }
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+				try (ResultSet resultSet = statement.executeQuery()) {
+					while (resultSet.next()) {
+						HoaDon hoaDon = new HoaDon();
+						hoaDon.setMaHoaDon(resultSet.getString("maHoaDon"));
+						hoaDon.setThoiGianTao(resultSet.getDate("thoiGianTao").toLocalDate());
+						hoaDon.setTongThanhTien(resultSet.getDouble("tongThanhTien"));
+						hoaDon.setVoucher(new VoucherGiamGia(resultSet.getString("maVoucher")));
+						hoaDon.setKhachHang(new KhachHang(resultSet.getString("maKhachHang")));
+						hoaDon.setNguoiLapHoaDon(new NhanVien(resultSet.getString("maNhanVien")));
+						hoaDon.setTrangThaiThanhToan(resultSet.getBoolean("trangThaiThanhToan"));
+						danhSachHoaDon.add(hoaDon);
+					}
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 
-        return danhSachHoaDon;
-    }
+		return danhSachHoaDon;
+	}
+
+	public ModelThongKeNVBanHang layThongKeDoanhThuCaoNhatCuaNhanVien(int thangThongKe, int namCuaThangThongKe,
+			String maNhanVien) {
+		ModelThongKeNVBanHang modelThongKe = null;
+		try {
+			String sql = "SELECT TOP 1 CAST(thoiGianTao AS DATE) AS ngay, SUM(tongThanhTien) AS tongDoanhThu "
+					+ "FROM HoaDon " + "WHERE MONTH(thoiGianTao) = ? AND YEAR(thoiGianTao) = ? AND maNhanVien = ? "
+					+ "GROUP BY CAST(thoiGianTao AS DATE) " + "ORDER BY tongDoanhThu DESC";
+
+			try (PreparedStatement statement = connection.prepareStatement(sql)) {
+				statement.setInt(1, thangThongKe);
+				statement.setInt(2, namCuaThangThongKe);
+				statement.setString(3, maNhanVien);
+
+				try (ResultSet resultSet = statement.executeQuery()) {
+					if (resultSet.next()) {
+						LocalDate ngayCaoNhat = resultSet.getDate("ngay").toLocalDate();
+						double tongDoanhThuCaoNhat = resultSet.getDouble("tongDoanhThu");
+
+						modelThongKe = new ModelThongKeNVBanHang(ngayCaoNhat, 0, 0, tongDoanhThuCaoNhat);
+					}
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return modelThongKe;
+	}
 }
