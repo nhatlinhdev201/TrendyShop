@@ -53,9 +53,29 @@ public class Dao_HangHoa {
 		}
 		return dsHangHoa;
 	}
+	
+	/**
+	 * Lấy tên Phân loại
+	 * @return
+	 */
+		public List<String> getAllPhanLoai() {
+			 List<String> dsPhanLoai = null;
+			try {
+				PreparedStatement statement = connection.prepareStatement("SELECT DISTINCT phanLoai FROM HangHoa");
+				ResultSet resultSet = statement.executeQuery();
+				dsPhanLoai = new ArrayList<String>();
+				while (resultSet.next()) {
+					dsPhanLoai.add(resultSet.getString("phanLoai"));
+				}
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return dsPhanLoai;
+		}
 
 	/**
-	 * Get tên các thương hiệu có trong db
+	 * Lấy những tên thương hiệu có trong db
 	 * @return
 	 */
 	public List<String> getAllThuongHieu() {
@@ -76,7 +96,7 @@ public class Dao_HangHoa {
 	}
 
 	/**
-	 * get tên các hàng hóa có trong db
+	 * Lấy những tên hàng hóa có trong db
 	 * @return
 	 */
 	public List<String> getAllTenHangHoa() {
@@ -97,7 +117,7 @@ public class Dao_HangHoa {
 	}
 
 	/**
-	 * get tên xuất xứ có trong db
+	 * Lấy những tên xuất xứ có trong db
 	 * @return
 	 */
 	public List<String> getAllXuatXu() {
@@ -118,7 +138,7 @@ public class Dao_HangHoa {
 	}
 
 	/**
-	 * Lấy các hàng hóa theo xuất xứ
+	 * Lấy danh sach hàng hóa theo tên xuất xứ muốn tìm
 	 * @param xuatXu
 	 * @return
 	 */
@@ -156,7 +176,7 @@ public class Dao_HangHoa {
 	}
 
 	/**
-	 * get danh sách các hàng hóa theo thương hiệu
+	 * Lấy danh sách các hàng hóa theo tên thương hiệu muốn tìm
 	 * @param thuongHieu
 	 * @return
 	 */
@@ -194,7 +214,7 @@ public class Dao_HangHoa {
 	}
 
 	/**
-	 * get danh sách các hàng hóa theo tên hàng hóa
+	 * Lấy danh sách các hàng hóa theo tên hàng hóa muốn tìm
 	 * @param ten
 	 * @return
 	 */
@@ -250,13 +270,8 @@ public class Dao_HangHoa {
 				hangHoa.setThuongHieu(resultSet.getString("thuongHieu").trim());
 				hangHoa.setXuatXu(resultSet.getString("xuatXu").trim());
 				hangHoa.setChatLieu(resultSet.getString("chatLieu").trim());
-//<<<<<<< HEAD
-//				hangHoa.setChiTietMoTa(resultSet.getString("chiTietMoTa"));
-//				hangHoa.setHinhAnh(resultSet.getString("hinhAnh").trim());
-//=======
-				hangHoa.setChiTietMoTa(resultSet.getString("chiTietMoTa").trim());
-				hangHoa.setHinhAnh(resultSet.getString("hinhAnh"));
-//>>>>>>> origin/main
+				hangHoa.setChiTietMoTa(resultSet.getString("chiTietMoTa"));
+				hangHoa.setHinhAnh(resultSet.getString("hinhAnh").trim());
 				hangHoa.setMaNhaCungCap(resultSet.getString("maNhaCungCap").trim());
 				hangHoa.setKichCo(resultSet.getString("kichCo").trim());
 				hangHoa.setMauSac(resultSet.getString("mauSac").trim());
@@ -272,49 +287,32 @@ public class Dao_HangHoa {
 		return hangHoa;
 
 	}
-//<<<<<<< HEAD
 	
 	/**
 	 * Tìm hàng hóa có mã lớn nhất
 	 * @return
 	 */
-	public int getMaHangHoaNew() {
-		int maHangHoa=0;
-//=======
-
-//	public String getMaHangHoaNew() {
-//		String maHangHoa = "";
-//>>>>>>> origin/main
+	public String getMaHangHoaNew() {
 		try {
 			PreparedStatement statement = connection
 					.prepareStatement("select top(1) maHangHoa from HangHoa order by maHangHoa desc");
 			ResultSet resultSet = statement.executeQuery();
 			if (resultSet.next()) {
-	            String maHangHoaString = resultSet.getString("maHangHoa");
-	            if (maHangHoaString != null && maHangHoaString.length() >= 9) {
-	                // Lấy phần số từ vị trí 2 đến 5 và chuyển đổi thành số nguyên
-	                maHangHoa = Integer.parseInt(maHangHoaString.substring(2, 6));
-	            }
-	        }
-			
-
+				return resultSet.getString("maHangHoa");
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return maHangHoa;
+		return "HH000";
 
 	}
-//<<<<<<< HEAD
 	
 	
 	/**
-	 * Xóa hàng hóa (chuyển trạng thái từ true về false
+	 * Xóa hàng hóa (chuyển trạng thái từ true về false)
 	 * @param mahh
 	 * @return
 	 */
-//=======
-
-//>>>>>>> origin/main
 	public boolean deleteHangHoa(String mahh) {
 		try {
 			PreparedStatement preparedStatement = connection
@@ -358,6 +356,44 @@ public class Dao_HangHoa {
 			preparedStatement.setDouble(14, hangHoa.getDonGiaNhap());
 			preparedStatement.setBoolean(15, hangHoa.isTrangThai());
 
+			int n = preparedStatement.executeUpdate();
+			if (n > 0) {
+				return true;
+			}
+			preparedStatement.close();
+			connection.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	public boolean updateHangHoa(HangHoa hangHoa, String mahh) {
+		try {
+
+			String updateQuery = "UPDATE HangHoa " + "SET tenHangHoa = ?, phanLoai = ?, thuongHieu = ?, xuatXu = ?, "
+					+ "chatLieu = ?, chiTietMoTa = ?, hinhAnh = ?, maNhaCungCap = ?, "
+					+ "kichCo = ?, mauSac = ?, soLuongTon = ?, soLuongDaBan = ?, "
+					+ "donGiaNhap = ?, trangThai = ?, maHangHoa = ? " + 
+					"WHERE maHangHoa = ?";
+
+			PreparedStatement preparedStatement = connection.prepareStatement(updateQuery);
+			preparedStatement.setString(1, hangHoa.getTenHangHoa());
+			preparedStatement.setString(2, hangHoa.getPhanLoai());
+			preparedStatement.setString(3, hangHoa.getThuongHieu());
+			preparedStatement.setString(4, hangHoa.getXuatXu());
+			preparedStatement.setString(5, hangHoa.getChatLieu());
+			preparedStatement.setString(6, hangHoa.getChiTietMoTa());
+			preparedStatement.setString(7, hangHoa.getHinhAnh());
+			preparedStatement.setString(8, hangHoa.getMaNhaCungCap());
+			preparedStatement.setString(9, hangHoa.getKichCo());
+			preparedStatement.setString(10, hangHoa.getMauSac());
+			preparedStatement.setInt(11, hangHoa.getSoLuongTon());
+			preparedStatement.setInt(12, hangHoa.getSoLuongDaBan());
+			preparedStatement.setDouble(13, hangHoa.getDonGiaNhap());
+			preparedStatement.setBoolean(14, hangHoa.isTrangThai());
+			preparedStatement.setString(15, mahh);
+			preparedStatement.setString(16, hangHoa.getMaHangHoa());
 			int n = preparedStatement.executeUpdate();
 			if (n > 0) {
 				return true;
@@ -427,7 +463,13 @@ public class Dao_HangHoa {
 		}
 		return dsKichThuoc;
 	}
-
+	
+	
+/**
+ * Lấy danh sách hàng hóa theo mã
+ * @param ma
+ * @return
+ */
 	public HangHoa getListHangHoaByMaHangHoa(String ma) {
 		HangHoa hangHoa = null;
 		try {
