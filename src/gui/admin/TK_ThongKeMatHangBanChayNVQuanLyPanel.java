@@ -20,6 +20,7 @@ import javax.swing.JOptionPane;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
@@ -47,6 +48,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 
 public class TK_ThongKeMatHangBanChayNVQuanLyPanel extends JPanel implements ActionListener {
@@ -166,6 +168,10 @@ public class TK_ThongKeMatHangBanChayNVQuanLyPanel extends JPanel implements Act
 
 		modelTableThongKeNgay = new DefaultTableModel(cols, 0);
 		tblThongKeMatHangNgay = new JTable(modelTableThongKeNgay);
+		JTableHeader header = tblThongKeMatHangNgay.getTableHeader();
+		header.setPreferredSize(new Dimension(header.getWidth(), 40));
+        header.setBackground(Color.cyan);
+        tblThongKeMatHangNgay.setRowHeight(40);
 		panelTbaleNgay.add(new JScrollPane(tblThongKeMatHangNgay), BorderLayout.CENTER);
 		for (int i = 3; i < cols.length; i++) {
 			TableColumn column = tblThongKeMatHangNgay.getColumnModel().getColumn(i);
