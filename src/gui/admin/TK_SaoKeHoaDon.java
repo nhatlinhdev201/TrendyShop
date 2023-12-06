@@ -6,6 +6,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.Color;
 import java.awt.Dimension;
 import com.toedter.calendar.JDateChooser;
@@ -14,6 +15,7 @@ import entities.HoaDon;
 import entities.NhanVien;
 import services.SaoKeHoaDonServices;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
@@ -56,13 +58,34 @@ public class TK_SaoKeHoaDon extends JPanel implements ActionListener {
 	 * Create the panel.
 	 */
 	public TK_SaoKeHoaDon() {
+		setBackground(new Color(245, 255, 250));
 		this.setBounds(0, 0, 1350, 640);
 		setLayout(null);
 
+		String iconPath_thongKe = "/images/pick-icon.png";
+		ImageIcon iconThongKe = new ImageIcon(this.getClass().getResource(iconPath_thongKe));
+		Image scaledIconThongKe = iconThongKe.getImage().getScaledInstance(27, 27, Image.SCALE_SMOOTH);
+		ImageIcon resizedIconThongKe = new ImageIcon(scaledIconThongKe);
+
+		String iconPath_capnhat = "/images/updated.png";
+		ImageIcon iconCapNhat = new ImageIcon(this.getClass().getResource(iconPath_capnhat));
+		Image scaledIconCapNhat = iconCapNhat.getImage().getScaledInstance(27, 27, Image.SCALE_SMOOTH);
+		ImageIcon resizedIconCapNhat = new ImageIcon(scaledIconCapNhat);
+
+		String iconPath_timKiem = "/images/icon-search.png";
+		ImageIcon iconTimKiem = new ImageIcon(this.getClass().getResource(iconPath_timKiem));
+		Image scaledIconTimKiem = iconTimKiem.getImage().getScaledInstance(27, 27, Image.SCALE_SMOOTH);
+		ImageIcon resizedIconTimKiem = new ImageIcon(scaledIconTimKiem);
+
+		String iconPath_excel = "/images/excel-icon.png";
+		ImageIcon iconExcel = new ImageIcon(this.getClass().getResource(iconPath_excel)); 
+		Image scaledIconExcel = iconExcel.getImage().getScaledInstance(27, 27, Image.SCALE_SMOOTH); 
+		ImageIcon resizedIconExcel = new ImageIcon(scaledIconExcel);
+		
 		JLabel lblNewLabel = new JLabel("THỐNG KÊ - SAO KÊ HÓA ĐƠN");
 		lblNewLabel.setForeground(Color.RED);
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
-		lblNewLabel.setBounds(475, 11, 288, 30);
+		lblNewLabel.setBounds(540, 11, 288, 30);
 		add(lblNewLabel);
 
 		JPanel panel = new JPanel();
@@ -71,6 +94,7 @@ public class TK_SaoKeHoaDon extends JPanel implements ActionListener {
 		add(panel);
 
 		JPanel panel_1 = new JPanel();
+		panel_1.setBackground(Color.WHITE);
 		panel_1.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panel_1.setBounds(20, 62, 380, 556);
 		add(panel_1);
@@ -86,12 +110,18 @@ public class TK_SaoKeHoaDon extends JPanel implements ActionListener {
 		panel_1.add(lblThongKeNgay);
 
 		btnThongKe = new JButton("Thống kê");
-		btnThongKe.setBounds(131, 135, 110, 35);
+		btnThongKe.setBackground(Color.GREEN);
+		btnThongKe.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnThongKe.setIcon(resizedIconThongKe);
+		btnThongKe.setBounds(131, 135, 212, 35);
 		btnThongKe.addActionListener(this);
 		panel_1.add(btnThongKe);
 
 		btnLamMoi = new JButton("Làm mới");
-		btnLamMoi.setBounds(131, 181, 110, 35);
+		btnLamMoi.setBackground(Color.ORANGE);
+		btnLamMoi.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnLamMoi.setIcon(resizedIconCapNhat);
+		btnLamMoi.setBounds(131, 181, 212, 35);
 		btnLamMoi.addActionListener(this);
 		panel_1.add(btnLamMoi);
 
@@ -102,57 +132,56 @@ public class TK_SaoKeHoaDon extends JPanel implements ActionListener {
 
 		JLabel lblSHan = new JLabel("Số hóa đơn được lập :");
 		lblSHan.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblSHan.setBounds(10, 311, 166, 30);
+		lblSHan.setBounds(10, 282, 166, 30);
 		panel_1.add(lblSHan);
 
 		txtSoHoaDonDuocLap = new JTextField();
-		txtSoHoaDonDuocLap.setBounds(176, 311, 75, 30);
+		txtSoHoaDonDuocLap.setBounds(176, 282, 75, 30);
 		panel_1.add(txtSoHoaDonDuocLap);
 		txtSoHoaDonDuocLap.setColumns(10);
 
 		JLabel lblHan = new JLabel("Hóa đơn");
 		lblHan.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblHan.setBounds(261, 311, 96, 30);
+		lblHan.setBounds(261, 282, 96, 30);
 		panel_1.add(lblHan);
 
 		txtSoHoaDonDaThanhToan = new JTextField();
 		txtSoHoaDonDaThanhToan.setColumns(10);
-		txtSoHoaDonDaThanhToan.setBounds(176, 366, 75, 30);
+		txtSoHoaDonDaThanhToan.setBounds(176, 337, 75, 30);
 		panel_1.add(txtSoHoaDonDaThanhToan);
 
 		JLabel lblThanhTon = new JLabel("Đã thanh toán :");
 		lblThanhTon.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblThanhTon.setBounds(10, 366, 166, 30);
+		lblThanhTon.setBounds(10, 337, 166, 30);
 		panel_1.add(lblThanhTon);
 
 		JLabel lblHan_1 = new JLabel("Hóa đơn");
 		lblHan_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblHan_1.setBounds(261, 366, 96, 30);
+		lblHan_1.setBounds(261, 337, 96, 30);
 		panel_1.add(lblHan_1);
 
 		txtSoHoaDonChuaThanhToan = new JTextField();
 		txtSoHoaDonChuaThanhToan.setColumns(10);
-		txtSoHoaDonChuaThanhToan.setBounds(176, 425, 75, 30);
+		txtSoHoaDonChuaThanhToan.setBounds(176, 396, 75, 30);
 		panel_1.add(txtSoHoaDonChuaThanhToan);
 
 		JLabel lblChaThanhTon = new JLabel("Chưa thanh toán :");
 		lblChaThanhTon.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblChaThanhTon.setBounds(10, 425, 166, 30);
+		lblChaThanhTon.setBounds(10, 396, 166, 30);
 		panel_1.add(lblChaThanhTon);
 
 		JLabel lblHan_2 = new JLabel("Hóa đơn");
 		lblHan_2.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblHan_2.setBounds(261, 425, 96, 30);
+		lblHan_2.setBounds(261, 396, 96, 30);
 		panel_1.add(lblHan_2);
 
 		btnXuatSaoKe = new JButton("Xuất sao kê ngày");
-		btnXuatSaoKe.setBounds(112, 505, 170, 40);
+		btnXuatSaoKe.setBackground(Color.ORANGE);
+		btnXuatSaoKe.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnXuatSaoKe.setIcon(resizedIconExcel);
+		btnXuatSaoKe.setBounds(89, 491, 200, 40);
 		btnXuatSaoKe.addActionListener(this);
 		panel_1.add(btnXuatSaoKe);
-
-		JPanel panel_3_1 = new JPanel();
-		panel_3_1.setBounds(10, 477, 347, 3);
-		panel_1.add(panel_3_1);
 
 		JLabel lblNhnVin = new JLabel("Nhân viên : ");
 		lblNhnVin.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -160,18 +189,21 @@ public class TK_SaoKeHoaDon extends JPanel implements ActionListener {
 		panel_1.add(lblNhnVin);
 
 		cbxNhanVien = new JComboBox();
+		cbxNhanVien.setBackground(Color.WHITE);
 		cbxNhanVien.setBounds(131, 79, 212, 30);
 		panel_1.add(cbxNhanVien);
 		cbxNhanVien.addActionListener(this);
 
 		JPanel panel_2 = new JPanel();
+		panel_2.setBackground(Color.WHITE);
 		panel_2.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panel_2.setBounds(410, 62, 930, 556);
 		add(panel_2);
 		panel_2.setLayout(null);
 
 		JLabel lblDanhSchHa = new JLabel("DANH SÁCH HÓA ĐƠN TRONG NGÀY");
-		lblDanhSchHa.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblDanhSchHa.setForeground(Color.RED);
+		lblDanhSchHa.setFont(new Font("Tahoma", Font.BOLD, 16));
 		lblDanhSchHa.setBounds(360, 11, 317, 30);
 		panel_2.add(lblDanhSchHa);
 
@@ -183,6 +215,7 @@ public class TK_SaoKeHoaDon extends JPanel implements ActionListener {
 
 		modelTable = new DefaultTableModel(cols, 0);
 		tblHoaDon = new JTable(modelTable);
+		
 		panelTableHoaDon.add(new JScrollPane(tblHoaDon), BorderLayout.CENTER);
 		JTableHeader header = tblHoaDon.getTableHeader();
 		header.setPreferredSize(new Dimension(header.getWidth(), 40));
@@ -210,6 +243,11 @@ public class TK_SaoKeHoaDon extends JPanel implements ActionListener {
 		lamMoiNgay(jdcChonNgayThongKe);
 		Dao_ThongKeDoanhThu dao = new Dao_ThongKeDoanhThu();
 		dataThongKe = dao.getHoaDonTheoNgay(layNgayDuocChon(jdcChonNgayThongKe));
+		
+		JPanel panel_3_1 = new JPanel();
+		panel_3_1.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panel_3_1.setBounds(10, 461, 347, 3);
+		panel_1.add(panel_3_1);
 		loadDuLieu(dataThongKe);
 		loadDataToTable(modelTable, dataThongKe);
 
