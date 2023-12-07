@@ -10,6 +10,7 @@ import gui.admin.FromThemNhanVien;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import java.awt.Color;
 import java.awt.Image;
@@ -137,117 +138,123 @@ public class TrangQLKhachHangPanel extends JPanel implements ActionListener, Mou
 		table.setModel(tableModel);
 
 		JScrollPane scrollPane = new JScrollPane(table);
-		scrollPane.setBounds(473, 65, 867, 625);
+		scrollPane.setBounds(473, 76, 867, 614);
 		add(scrollPane);
 
 		JLabel lbl_makh = new JLabel("Mã khách hàng :");
-		lbl_makh.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lbl_makh.setBounds(92, 312, 123, 21);
+		lbl_makh.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		lbl_makh.setBounds(50, 280, 146, 21);
 		add(lbl_makh);
 
 		txt_makh = new JTextField();
 		txt_makh.setEditable(false);
 		txt_makh.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		txt_makh.setForeground(Color.BLACK);
-		txt_makh.setBounds(217, 312, 146, 20);
+		txt_makh.setBounds(216, 280, 198, 25);
 		add(txt_makh);
 		txt_makh.setColumns(10);
 
 		JLabel lblTnKhchHng = new JLabel("Tên khách hàng :");
-		lblTnKhchHng.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblTnKhchHng.setBounds(92, 350, 123, 21);
+		lblTnKhchHng.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		lblTnKhchHng.setBounds(50, 332, 146, 21);
 		add(lblTnKhchHng);
 
 		txt_ten = new JTextField();
 		txt_ten.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		txt_ten.setForeground(Color.BLACK);
 		txt_ten.setColumns(10);
-		txt_ten.setBounds(217, 350, 146, 20);
+		txt_ten.setBounds(216, 328, 198, 25);
 		add(txt_ten);
 
 		JLabel lblSinThoai = new JLabel("Số điện thoai :");
-		lblSinThoai.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblSinThoai.setBounds(92, 384, 123, 21);
+		lblSinThoai.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		lblSinThoai.setBounds(50, 373, 123, 21);
 		add(lblSinThoai);
 
 		txt_sDT = new JTextField();
 		txt_sDT.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		txt_sDT.setForeground(Color.BLACK);
 		txt_sDT.setColumns(10);
-		txt_sDT.setBounds(217, 384, 146, 20);
+		txt_sDT.setBounds(216, 372, 198, 25);
 		add(txt_sDT);
 
 		JLabel lblEmail = new JLabel("Email :");
-		lblEmail.setFont(new Font("Sylfaen", Font.PLAIN, 15));
-		lblEmail.setBounds(92, 418, 123, 21);
+		lblEmail.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		lblEmail.setBounds(50, 416, 123, 21);
 		add(lblEmail);
 
 		txt_email = new JTextField();
 		txt_email.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		txt_email.setForeground(Color.BLACK);
 		txt_email.setColumns(10);
-		txt_email.setBounds(217, 418, 146, 20);
+		txt_email.setBounds(216, 416, 198, 25);
 		add(txt_email);
 
 		JLabel lblaCh = new JLabel("Địa chỉ :");
-		lblaCh.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblaCh.setBounds(92, 456, 123, 21);
+		lblaCh.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		lblaCh.setBounds(50, 456, 123, 21);
 		add(lblaCh);
 
 		txt_diaChi = new JTextField();
 		txt_diaChi.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		txt_diaChi.setForeground(Color.BLACK);
 		txt_diaChi.setColumns(10);
-		txt_diaChi.setBounds(217, 456, 146, 20);
+		txt_diaChi.setBounds(216, 456, 198, 25);
 		add(txt_diaChi);
 
 		JLabel lblTrngThi = new JLabel("Trạng thái  :");
-		lblTrngThi.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblTrngThi.setBounds(92, 488, 123, 21);
+		lblTrngThi.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		lblTrngThi.setBounds(50, 499, 123, 21);
 		add(lblTrngThi);
 
 		JLabel lblimTchLu = new JLabel("Điểm tích luỹ :");
-		lblimTchLu.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblimTchLu.setBounds(92, 526, 123, 21);
+		lblimTchLu.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		lblimTchLu.setBounds(50, 545, 123, 21);
 		add(lblimTchLu);
 
 		txt_diemTichLuy = new JTextField();
 		txt_diemTichLuy.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		txt_diemTichLuy.setForeground(Color.BLACK);
 		txt_diemTichLuy.setColumns(10);
-		txt_diemTichLuy.setBounds(217, 526, 146, 20);
+		txt_diemTichLuy.setBounds(216, 545, 198, 25);
 		add(txt_diemTichLuy);
 
 		btn_hoatDong = new JRadioButton("Hoạt động");
-		btn_hoatDong.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btn_hoatDong.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		btn_hoatDong.setBackground(Color.WHITE);
-		btn_hoatDong.setBounds(217, 487, 95, 23);
+		btn_hoatDong.setBounds(214, 499, 108, 23);
 		add(btn_hoatDong);
 
 		btn_nghi = new JRadioButton("Nghỉ");
-		btn_nghi.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btn_nghi.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		btn_nghi.setBackground(Color.WHITE);
-		btn_nghi.setBounds(314, 487, 75, 23);
+		btn_nghi.setBounds(324, 499, 75, 23);
 		add(btn_nghi);
+		
+		ButtonGroup buttonGroup = new ButtonGroup();
 
+		// Thêm nút vào nhóm
+		buttonGroup.add(btn_hoatDong);
+		buttonGroup.add(btn_nghi);
+		
 		JLabel lblNewLabel = new JLabel("Thông tin khách hàng");
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 30));
-		lblNewLabel.setBounds(50, 35, 353, 33);
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 27));
+		lblNewLabel.setBounds(75, 16, 352, 33);
 		add(lblNewLabel);
 
 		JLabel lblNewLabel_1 = new JLabel("");
-		lblNewLabel_1.setBounds(105, 65, 258, 236); // Set the size of the JLabel to 250x250
+		lblNewLabel_1.setBounds(117, 66, 245, 190); // Set the size of the JLabel to 250x250
 		add(lblNewLabel_1);
 
 		ImageIcon originalIcon1 = new ImageIcon(TrangQLKhachHangPanel.class.getResource("/images/man.png"));
 		Image originalImage = originalIcon1.getImage();
-		Image resizedImage = originalImage.getScaledInstance(230, 230, Image.SCALE_SMOOTH);
+		Image resizedImage = originalImage.getScaledInstance(210, 210, Image.SCALE_SMOOTH);
 		ImageIcon resizedIcon1 = new ImageIcon(resizedImage);
 		lblNewLabel_1.setIcon(resizedIcon1);
 
 		btn_timKiem = new JButton("Tìm kiếm");
 		btn_timKiem.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btn_timKiem.setBounds(595, 21, 123, 33);
+		btn_timKiem.setBounds(595, 21, 123, 44);
 
 		// Tạo nút tìm kiếm
 
@@ -263,20 +270,21 @@ public class TrangQLKhachHangPanel extends JPanel implements ActionListener, Mou
 		add(btn_timKiem);
 
 		txt_timKiem = new JTextField();
-		txt_timKiem.setBounds(717, 21, 280, 33);
+		txt_timKiem.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		txt_timKiem.setBounds(717, 21, 377, 44);
 		add(txt_timKiem);
 		txt_timKiem.setColumns(10);
 
 		btn_them = new JButton("Thêm");
 		btn_them.setBackground(Color.GREEN);
 		btn_them.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btn_them.setBounds(32, 619, 123, 33);
+		btn_them.setBounds(25, 609, 137, 56);
 		String iconPath_them = "/images/plus.png";
 		ImageIcon iconThem = new ImageIcon(this.getClass().getResource(iconPath_them)); // Sử dụng getResource để lấy
 																						// đường dẫn từ resources của
 																						// ứng dụng
 
-		Image scaledIconThem = iconThem.getImage().getScaledInstance(27, 27, Image.SCALE_SMOOTH); // Thiết lập kích
+		Image scaledIconThem = iconThem.getImage().getScaledInstance(33, 33, Image.SCALE_SMOOTH); // Thiết lập kích
 																									// thước
 		ImageIcon resizedIconThem = new ImageIcon(scaledIconThem);
 
@@ -293,14 +301,14 @@ public class TrangQLKhachHangPanel extends JPanel implements ActionListener, Mou
 		btn_capNhat = new JButton("Cập nhật");
 		btn_capNhat.setBackground(Color.ORANGE);
 		btn_capNhat.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btn_capNhat.setBounds(189, 619, 123, 33);
+		btn_capNhat.setBounds(172, 609, 137, 56);
 		String iconPath_capnhat = "/images/updated.png";
 		ImageIcon iconCapNhat = new ImageIcon(this.getClass().getResource(iconPath_capnhat)); // Sử dụng getResource để
 																								// lấy đường dẫn từ
 																								// resources của ứng
 																								// dụng
 
-		Image scaledIconCapNhat = iconCapNhat.getImage().getScaledInstance(27, 27, Image.SCALE_SMOOTH); // Thiết lập
+		Image scaledIconCapNhat = iconCapNhat.getImage().getScaledInstance(33, 33, Image.SCALE_SMOOTH); // Thiết lập
 																										// kích thước
 		ImageIcon resizedIconCapNhat = new ImageIcon(scaledIconCapNhat);
 
@@ -308,10 +316,21 @@ public class TrangQLKhachHangPanel extends JPanel implements ActionListener, Mou
 		add(btn_capNhat);
 		docDuLieu();
 
-		btn_load = new JButton("LOAD");
+		btn_load = new JButton("Làm mới");
 		btn_load.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btn_load.setBackground(Color.ORANGE);
-		btn_load.setBounds(340, 619, 123, 33);
+		btn_load.setBackground(new Color(135, 206, 235));
+		btn_load.setBounds(317, 611, 139, 53);
+		String iconPath_load = "/images/loading.png";
+		ImageIcon iconLoad = new ImageIcon(this.getClass().getResource(iconPath_load)); // Sử dụng getResource để
+																								// lấy đường dẫn từ
+																								// resources của ứng
+																								// dụng
+
+		Image scaledIconLoad = iconLoad.getImage().getScaledInstance(33, 33, Image.SCALE_SMOOTH); // Thiết lập
+																										// kích thước
+		ImageIcon resizedIconLoad = new ImageIcon(scaledIconLoad);
+
+		btn_load.setIcon(resizedIconLoad);
 		add(btn_load);
 
 		btn_capNhat.addActionListener(this);
@@ -321,7 +340,8 @@ public class TrangQLKhachHangPanel extends JPanel implements ActionListener, Mou
 
 		String[] items = { "Mã khách hàng", "Tên khách hàng", "Số điện thoại" };
 		comboBox = new JComboBox<>(items);
-		comboBox.setBounds(473, 21, 114, 33);
+		comboBox.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		comboBox.setBounds(473, 21, 123, 44);
 		add(comboBox);
 	}
 

@@ -31,6 +31,7 @@ import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.BorderFactory;
+import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -62,7 +63,7 @@ public class TrangQLNhanVienJPanel extends JPanel implements ActionListener, Mou
 	 * Create the panel.
 	 */
 	public TrangQLNhanVienJPanel() {
-		setBackground(new Color(127, 255, 212));
+		setBackground(new Color(152, 251, 152));
 		this.setBounds(SetBountJPanel.X, SetBountJPanel.Y, SetBountJPanel.WIDTH, SetBountJPanel.HEIGHT);
 		setLayout(null);
 		this.parentFrame = parentFrame;
@@ -151,7 +152,7 @@ public class TrangQLNhanVienJPanel extends JPanel implements ActionListener, Mou
 		txt_ma.setEditable(false);
 		txt_ma.setEnabled(false);
 		txt_ma.setColumns(10);
-		txt_ma.setBounds(589, 97, 177, 25);
+		txt_ma.setBounds(589, 97, 196, 27);
 		add(txt_ma);
 
 		JLabel lbl_tennv = new JLabel("Họ tên :");
@@ -161,7 +162,7 @@ public class TrangQLNhanVienJPanel extends JPanel implements ActionListener, Mou
 
 		textField_ten = new JTextField();
 		textField_ten.setColumns(10);
-		textField_ten.setBounds(589, 140, 177, 25);
+		textField_ten.setBounds(589, 140, 196, 27);
 		add(textField_ten);
 
 		JLabel lbl_Dfb = new JLabel("Ngày sinh :");
@@ -171,7 +172,7 @@ public class TrangQLNhanVienJPanel extends JPanel implements ActionListener, Mou
 
 		textField_ngaySinh = new JTextField();
 		textField_ngaySinh.setColumns(10);
-		textField_ngaySinh.setBounds(937, 140, 177, 25);
+		textField_ngaySinh.setBounds(937, 140, 196, 27);
 		add(textField_ngaySinh);
 
 		JLabel lbl_diachi = new JLabel("Đại chỉ :");
@@ -181,7 +182,7 @@ public class TrangQLNhanVienJPanel extends JPanel implements ActionListener, Mou
 
 		textField_diachi = new JTextField();
 		textField_diachi.setColumns(10);
-		textField_diachi.setBounds(937, 97, 177, 25);
+		textField_diachi.setBounds(937, 97, 196, 27);
 		add(textField_diachi);
 
 		JLabel lbl_makh_6 = new JLabel("Số CCCD :");
@@ -191,12 +192,12 @@ public class TrangQLNhanVienJPanel extends JPanel implements ActionListener, Mou
 
 		textField_cccd = new JTextField();
 		textField_cccd.setColumns(10);
-		textField_cccd.setBounds(937, 176, 177, 25);
+		textField_cccd.setBounds(937, 176, 196, 27);
 		add(textField_cccd);
 
 		JLabel lbl_trangThai = new JLabel("Trang thái :");
 		lbl_trangThai.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		lbl_trangThai.setBounds(812, 212, 123, 21);
+		lbl_trangThai.setBounds(812, 219, 123, 21);
 		add(lbl_trangThai);
 
 		JLabel lbl_sdt = new JLabel("Số điện thoại :");
@@ -206,17 +207,17 @@ public class TrangQLNhanVienJPanel extends JPanel implements ActionListener, Mou
 
 		textField_sdt = new JTextField();
 		textField_sdt.setColumns(10);
-		textField_sdt.setBounds(589, 176, 177, 25);
+		textField_sdt.setBounds(589, 176, 196, 27);
 		add(textField_sdt);
 
 		JLabel lbl_email = new JLabel("Email :");
 		lbl_email.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		lbl_email.setBounds(464, 212, 123, 21);
+		lbl_email.setBounds(464, 219, 321, 21);
 		add(lbl_email);
 
 		textField_email = new JTextField();
 		textField_email.setColumns(10);
-		textField_email.setBounds(589, 210, 177, 25);
+		textField_email.setBounds(589, 216, 196, 27);
 		add(textField_email);
 
 		btn_timKiem = new JButton("Tìm kiếm");
@@ -275,6 +276,7 @@ public class TrangQLNhanVienJPanel extends JPanel implements ActionListener, Mou
 		add(btn_capNhat);
 
 		txt_timkiem = new JTextField();
+		txt_timkiem.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		txt_timkiem.setColumns(10);
 		txt_timkiem.setBounds(593, 275, 222, 33);
 		add(txt_timkiem);
@@ -285,24 +287,30 @@ public class TrangQLNhanVienJPanel extends JPanel implements ActionListener, Mou
 		add(label_anh);
 
 		btn_hoatDong = new JRadioButton("Hoạt động");
-		btn_hoatDong.setBackground(new Color(127, 255, 212));
+		btn_hoatDong.setBackground(new Color(152, 251, 152));
 		btn_hoatDong.setFont(new Font("Tahoma", Font.BOLD, 15));
-		btn_hoatDong.setBounds(930, 210, 102, 23);
+		btn_hoatDong.setBounds(930, 218, 102, 23);
 		add(btn_hoatDong);
 
 		btn_nghi = new JRadioButton("Đã nghỉ");
-		btn_nghi.setBackground(new Color(127, 255, 212));
+		btn_nghi.setBackground(new Color(152, 251, 152));
 		btn_nghi.setFont(new Font("Tahoma", Font.BOLD, 15));
-		btn_nghi.setBounds(1034, 210, 83, 23);
+		btn_nghi.setBounds(1044, 219, 83, 23);
 		add(btn_nghi);
+		
+		ButtonGroup buttonGroup = new ButtonGroup();
 
+		// Thêm nút vào nhóm
+		buttonGroup.add(btn_hoatDong);
+		buttonGroup.add(btn_nghi);
+		
 		JLabel lblNewLabel_1 = new JLabel("Thông tin nhân viên\r\n");
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 34));
-		lblNewLabel_1.setBounds(517, 11, 497, 43);
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 40));
+		lblNewLabel_1.setBounds(478, 11, 457, 43);
 		add(lblNewLabel_1);
 		
 
-		btn_load = new JButton("Load");
+		btn_load = new JButton("Làm mới");
 		btn_load.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btn_load.setBackground(Color.WHITE);
 		btn_load.setBounds(1141, 275, 123, 33);
