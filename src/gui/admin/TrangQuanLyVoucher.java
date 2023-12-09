@@ -37,6 +37,8 @@ import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
 import javax.swing.border.TitledBorder;
@@ -92,7 +94,7 @@ public class TrangQuanLyVoucher extends JPanel implements ActionListener, MouseL
 			 *
 			 */
 			private static final long serialVersionUID = 1L;
-			String[] values = new String[] { "Mã Voucher", "Phần trăm giá bán", "Trạng thái" };
+			String[] values = new String[] { "Mã Voucher", "Phần trăm giá bán(%)", "Trạng thái" };
 
 			public int getSize() {
 				return values.length;
@@ -248,7 +250,7 @@ public class TrangQuanLyVoucher extends JPanel implements ActionListener, MouseL
 		JPanel pnl_TableVocuher = new JPanel();
 		pnl_TableVocuher.setForeground(new Color(128, 191, 191));
 		pnl_TableVocuher.setBackground(new Color(128, 191, 191));
-		pnl_TableVocuher.setBorder(new TitledBorder(new LineBorder(new Color(128, 191, 191), 2), "Danh Sách Voucher", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		pnl_TableVocuher.setBorder(new CompoundBorder(new LineBorder(new Color(128, 191, 191), 2),new CompoundBorder(new TitledBorder(new LineBorder(new Color(128, 191, 191), 2),"	Danh sách voucher", TitledBorder.LEADING,TitledBorder.TOP,new Font("Tahoma", Font.PLAIN, 17),new Color(0, 0, 0)),new EmptyBorder(5, 18, 18, 18))));
 		pnl_TableVocuher.setBounds(0, 89, 1350, 610);
 		add(pnl_TableVocuher);
 		pnl_TableVocuher.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
@@ -298,7 +300,7 @@ public class TrangQuanLyVoucher extends JPanel implements ActionListener, MouseL
 		tbl_Voucher.setFuenteHead(new Font("Tahoma", Font.BOLD, 13));
 		tbl_Voucher.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tbl_Voucher.setAltoHead(30);
-		dataDefault = new DefaultTableModel(new String[] { "Mã Voucher", "Tên Voucher", "Phần trăm giảm theo hóa đơn", "Ngày bắt đầu", "Ngày kết thúc",
+		dataDefault = new DefaultTableModel(new String[] { "Mã Voucher", "Tên Voucher", "Phần trăm Voucher", "Ngày bắt đầu", "Ngày kết thúc",
 				"Số lượt dùng", "Trạng Thái"}, 0) {
 			/**
 			 *
@@ -354,18 +356,13 @@ public class TrangQuanLyVoucher extends JPanel implements ActionListener, MouseL
 				if (!e.getValueIsAdjusting() && lst_ItemSearched.getSelectedValue() !=null) {
 					if (lst_TieuChi.getSelectedIndex() == 1) {
 						String textSearch = lst_ItemSearched.getSelectedValue();
-//						loadData(dao_Voucher.getHangHoaByVoucher(textSearch));
+						loadData(dao_Voucher.getVoucherByPhanTramGiamGia(textSearch));
 						scr_ListItemSearched.setVisible(false);
 					} else if (lst_TieuChi.getSelectedIndex() == 2) {
 						String item = lst_ItemSearched.getSelectedValue();
-						loadData(dao_Voucher.getHangHoaByPhanTramGiamGia(item));
+						loadData(dao_Voucher.getVoucherByTrangThai(item));
 						scr_ListItemSearched.setVisible(false);
-					} else if (lst_TieuChi.getSelectedIndex() == 3) {
-						String item = lst_ItemSearched.getSelectedValue();
-						loadData(dao_Voucher.getHangHoaByTrangThai(item));
-						scr_ListItemSearched.setVisible(false);
-
-					}
+					} 
 				}
 
 			}
@@ -388,18 +385,17 @@ public class TrangQuanLyVoucher extends JPanel implements ActionListener, MouseL
 		listPhanTramGiamGia = dao_Voucher.getAllPhanTramGiamGia();
 		listTrangThai = dao_Voucher.getAllTrangThai();
 		ds = dao_Voucher.getAll();
-//		listTenVoucher = dao_Voucher.getAllTenHangHoa();
 	}
 
 	
 	/**
-	 * Load ds Hàng hóa 
-	 * @param dsHangHoa
+	 * Load ds 
+	 * @param dsVoucher
 	 */
 	private void loadData(List<VoucherGiamGia> dsVoucher) {
 		dataDefault.setRowCount(0);
 		for (VoucherGiamGia voucher : dsVoucher) {
-			Object[] row = { voucher.getMaVoucher(), voucher.getTenVoucher(), voucher.getPhanTramGiamTheoHoaDon(), voucher.getNgayBatDau(), voucher.getNgayKetThuc(), voucher.getSoLuotDung(), voucher.isTrangThai()?"Còn hoạt động":"Đã ngưng"};
+			Object[] row = { voucher.getMaVoucher(), voucher.getTenVoucher(), voucher.getPhanTramGiamTheoHoaDon(), voucher.getNgayBatDau(), voucher.getNgayKetThuc(), voucher.getSoLuotDung(), voucher.isTrangThai()?"Đang hoạt động":"Đã ngưng"};
 			dataDefault.addRow(row);
 			
 		}
@@ -441,7 +437,7 @@ public class TrangQuanLyVoucher extends JPanel implements ActionListener, MouseL
 	}
 
 	/**
-	 * Thức hiện tìm kiếm các từ khóa nhập vào dựa trên các tiêu chí tìm kiếm
+	 * Thực hiện tìm kiếm các từ khóa nhập vào dựa trên các tiêu chí tìm kiếm
 	 */
 	public void renderSeatch() {
 		
@@ -473,29 +469,29 @@ public class TrangQuanLyVoucher extends JPanel implements ActionListener, MouseL
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(btn_add)) {
-			HangHoa hangHoa = new HangHoa();
+			VoucherGiamGia voucher = new VoucherGiamGia();
 			Object[] r = { "Thoát" };
-//			JOptionPane.showOptionDialog(this, new FormThongTinVoucher(hangHoa, "add"),"Thêm sản phẩm mới.",JOptionPane.DEFAULT_OPTION,JOptionPane.DEFAULT_OPTION,null,r,null);
+			JOptionPane.showOptionDialog(this, new FormThongTinVoucher(voucher, "add"),"Thêm voucher mới.",JOptionPane.DEFAULT_OPTION,JOptionPane.DEFAULT_OPTION,null,r,null);
 			ds = dao_Voucher.getAll();
 			loadData(ds);
 		} else if (e.getSource().equals(btn_delete)) {
 		    if (tbl_Voucher.getSelectedRow() == -1) {
-		        JOptionPane.showMessageDialog(this, "Vui lòng chọn sản phẩm mong muốn.");
+		        JOptionPane.showMessageDialog(this, "Vui lòng chọn Voucher mong muốn.");
 		    } else {
 		        int row = tbl_Voucher.getSelectedRow();
-		        String maHangHoa = tbl_Voucher.getValueAt(row, 0).toString();
+		        String maVoucher = tbl_Voucher.getValueAt(row, 0).toString();
 		        String trangThai = tbl_Voucher.getValueAt(row, 6).toString();
 
 		        // Kiểm tra trạng thái thay đổi của sản phẩm
-		        if (trangThai == "Ngừng bán") {
+		        if (trangThai == "Đã ngưng") {
 		            JOptionPane.showMessageDialog(this, "Voucher hiện đã ngưng hoạt động. Vui lòng chọn Voucher khác");
 		        } else {
 		            // Hiển thị hộp thoại xác nhận
-		            int option = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn tạm ngưng voucher này không?", "Xác nhận xóa", JOptionPane.YES_NO_OPTION);
+		            int option = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn dừng hoạt động voucher này không?", "Xác nhận ngưng", JOptionPane.YES_NO_OPTION);
 
 		            // Xác nhận nếu người dùng chọn "Yes"
 		            if (option == JOptionPane.YES_OPTION) {
-		                if (dao_Voucher.deleteHangHoa(maHangHoa)) {
+		                if (dao_Voucher.deleteVoucher(maVoucher)) {
 		                    JOptionPane.showMessageDialog(this, "Đã thay đổi cập nhật trạng thái");
 		                    ds = dao_Voucher.getAll();
 		                    loadData(ds);
@@ -505,12 +501,12 @@ public class TrangQuanLyVoucher extends JPanel implements ActionListener, MouseL
 		    }
 		} else if (e.getSource().equals(btn_edit)) {
 			if (tbl_Voucher.getSelectedRow() == -1) {
-				JOptionPane.showMessageDialog(this, "Vui lòng chọn sản phẩm muốn chỉnh sửa.");
+				JOptionPane.showMessageDialog(this, "Vui lòng chọn Voucher muốn chỉnh sửa.");
 			} else {
 				int row = tbl_Voucher.getSelectedRow();
-//				VoucherGiamGia voucher = dao_Voucher.getMaVouCher(tbl_Voucher.getValueAt(row, 0).toString());
+				VoucherGiamGia voucher = dao_Voucher.getMaVouCher(tbl_Voucher.getValueAt(row, 0).toString());
 				Object[] r = { "Thoát" };
-//				JOptionPane.showOptionDialog(this, new FormThongTinHangHoa(hangHoa, "edit"),"Chỉnh sửa thông tin sản phẩm "+hangHoa.getMaHangHoa(),JOptionPane.DEFAULT_OPTION,JOptionPane.DEFAULT_OPTION,null,r,null);
+				JOptionPane.showOptionDialog(this, new FormThongTinVoucher(voucher, "edit"),"Chỉnh sửa thông tin sản phẩm "+voucher.getMaVoucher(),JOptionPane.DEFAULT_OPTION,JOptionPane.DEFAULT_OPTION,null,r,null);
 				ds = dao_Voucher.getAll();
 				loadData(ds);
 			}

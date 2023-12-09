@@ -9,6 +9,9 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
@@ -30,9 +33,10 @@ import javax.swing.border.LineBorder;
 import daos.Dao_Voucher;
 import daos.Dao_NhaCungCap;
 import daos.Dao_Voucher;
-import entities.HangHoa;
 import entities.NhaCungCap;
 import entities.VoucherGiamGia;
+import com.toedter.calendar.JDateChooser;
+import java.awt.BorderLayout;
 
 public class FormThongTinVoucher extends JPanel implements ActionListener {
 	/**
@@ -40,310 +44,273 @@ public class FormThongTinVoucher extends JPanel implements ActionListener {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JTextField txt_Ten;
-	private JTextField txt_PhanTramGiamGia;
-	private JTextField txt_TrangThai;
-	private JTextField txt_PhanLoai;
-	private JTextField txt_ChatLieu;
-	private JTextField txt_MauSac;
-	private JSpinner spn_SoLuongTon;
-	private JSpinner spn_SoLuongBan;
-	private JSpinner spn_GiaNhap;
-	private JComboBox<NhaCungCap> cmb_NhaCungCap;
-	private JTextField txt_KichCo;
 	private JTextArea txtMoTa;
-	private JButton btn_ChonAnh;
 	private JButton btn_Save;
 	private JLabel lbl_CurentTrangThai;
-	private VoucherGiamGia hangHoa;
+	private VoucherGiamGia voucher;
 	private Dao_Voucher dao_Voucher;
-	private JCheckBox ckb_banlai;
-	private DefaultComboBoxModel<NhaCungCap> ncc;
+	private JCheckBox ckb_kichhoat;
 	private File sr;
-	private JLabel lbl_Image;
+	private JSpinner spn_PhanTramGiamGia;
+	private JSpinner spn_SoLuotDung;
 	private static File a;
+	private String newMa;
+	private VoucherGiamGia voucherOld;
+	private HashMap<String, Integer> listSize;
+	private JPanel pnl_NgayBatDau;
+	private JDateChooser dateBatDau;
+	private JLabel lblNgayKetThuc;
+	private JPanel pnl_NgayKetThuc;
+	private JDateChooser dateKetThuc;
+	private JLabel lblNgayBatDau;
 
-	public FormThongTinVoucher(VoucherGiamGia hh, String cvThucThi) {
+	public FormThongTinVoucher(VoucherGiamGia vc, String cvThucThi) {
+		listSize = new HashMap<String, Integer>();
 		setBackground(new Color(102, 205, 170));
 		setLayout(null);
+		voucherOld = vc;
 		dao_Voucher = new Dao_Voucher();
-		this.hangHoa = hh;
-		setPreferredSize(new Dimension(1020, 425));
-		JPanel pnl_Image = new JPanel();
-		pnl_Image.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
-		pnl_Image.setBounds(10, 10, 300, 370);
-		add(pnl_Image);
-		pnl_Image.setLayout(null);
+		this.voucher = vc;
+		setPreferredSize(new Dimension(761, 406));
 
-		lbl_Image = new JLabel("Image");
-		lbl_Image.setIconTextGap(0);
-		lbl_Image.setHorizontalAlignment(SwingConstants.CENTER);
-		lbl_Image.setBounds(1, 1, 298, 368);
-		pnl_Image.add(lbl_Image);
+		JPanel pnl_InfoVoucher = new JPanel();
+		pnl_InfoVoucher.setBackground(new Color(102, 205, 170));
+		pnl_InfoVoucher.setBounds(27, 28, 705, 338);
+		add(pnl_InfoVoucher);
+		pnl_InfoVoucher.setLayout(null);
 
-		JPanel pnl_InfoProduct = new JPanel();
-		pnl_InfoProduct.setBackground(new Color(102, 205, 170));
-		pnl_InfoProduct.setBounds(320, 11, 690, 370);
-		add(pnl_InfoProduct);
-		pnl_InfoProduct.setLayout(null);
-
-		JLabel lbl_Ten = new JLabel("Tên :");
+		JLabel lbl_Ten = new JLabel("Tên Voucher:");
 		lbl_Ten.setVerticalAlignment(SwingConstants.BOTTOM);
 		lbl_Ten.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lbl_Ten.setBounds(10, 10, 100, 20);
-		pnl_InfoProduct.add(lbl_Ten);
+		lbl_Ten.setBounds(10, 61, 100, 20);
+		pnl_InfoVoucher.add(lbl_Ten);
 
 		txt_Ten = new JTextField();
-		txt_Ten.setBounds(110, 5, 200, 25);
-		pnl_InfoProduct.add(txt_Ten);
+		txt_Ten.setBounds(144, 56, 187, 25);
+		pnl_InfoVoucher.add(txt_Ten);
 		txt_Ten.setColumns(10);
 
-		txt_PhanTramGiamGia = new JTextField();
-		txt_PhanTramGiamGia.setColumns(10);
-		txt_PhanTramGiamGia.setBounds(110, 41, 200, 25);
-		pnl_InfoProduct.add(txt_PhanTramGiamGia);
+		JLabel lbl_PhanTramGiamGia = new JLabel("Phần trăm giảm giá:");
+		lbl_PhanTramGiamGia.setVerticalAlignment(SwingConstants.BOTTOM);
+		lbl_PhanTramGiamGia.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lbl_PhanTramGiamGia.setBounds(10, 102, 120, 20);
+		pnl_InfoVoucher.add(lbl_PhanTramGiamGia);
 
-		JLabel lbl_ThuongHieu = new JLabel("Thương hiệu :");
-		lbl_ThuongHieu.setVerticalAlignment(SwingConstants.BOTTOM);
-		lbl_ThuongHieu.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lbl_ThuongHieu.setBounds(10, 46, 100, 20);
-		pnl_InfoProduct.add(lbl_ThuongHieu);
-
-		txt_TrangThai = new JTextField();
-		txt_TrangThai.setColumns(10);
-		txt_TrangThai.setBounds(110, 77, 200, 25);
-		pnl_InfoProduct.add(txt_TrangThai);
-
-		JLabel lbl_XuatXu = new JLabel("Xuất xứ");
-		lbl_XuatXu.setVerticalAlignment(SwingConstants.BOTTOM);
-		lbl_XuatXu.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lbl_XuatXu.setBounds(10, 82, 100, 20);
-		pnl_InfoProduct.add(lbl_XuatXu);
-
-		txt_PhanLoai = new JTextField();
-		txt_PhanLoai.setColumns(10);
-		txt_PhanLoai.setBounds(110, 113, 200, 25);
-		pnl_InfoProduct.add(txt_PhanLoai);
-
-		JLabel lbl_PhanLoai = new JLabel("Phân loại:");
-		lbl_PhanLoai.setVerticalAlignment(SwingConstants.BOTTOM);
-		lbl_PhanLoai.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lbl_PhanLoai.setBounds(10, 118, 100, 20);
-		pnl_InfoProduct.add(lbl_PhanLoai);
-
-		txt_ChatLieu = new JTextField();
-		txt_ChatLieu.setColumns(10);
-		txt_ChatLieu.setBounds(110, 149, 200, 25);
-		pnl_InfoProduct.add(txt_ChatLieu);
-
-		JLabel lbl_ChatLieu = new JLabel("Chất liệu:");
-		lbl_ChatLieu.setVerticalAlignment(SwingConstants.BOTTOM);
-		lbl_ChatLieu.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lbl_ChatLieu.setBounds(10, 154, 100, 20);
-		pnl_InfoProduct.add(lbl_ChatLieu);
-
-		txt_MauSac = new JTextField();
-		txt_MauSac.setColumns(10);
-		txt_MauSac.setBounds(110, 185, 200, 25);
-		pnl_InfoProduct.add(txt_MauSac);
-
-		JLabel lbl_MauSac = new JLabel("Màu sắc:");
-		lbl_MauSac.setVerticalAlignment(SwingConstants.BOTTOM);
-		lbl_MauSac.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lbl_MauSac.setBounds(10, 190, 100, 20);
-		pnl_InfoProduct.add(lbl_MauSac);
-
-		JLabel lbl_SoLuongTon = new JLabel("Số lượng tồn:");
-		lbl_SoLuongTon.setVerticalAlignment(SwingConstants.BOTTOM);
-		lbl_SoLuongTon.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lbl_SoLuongTon.setBounds(347, 80, 120, 20);
-		pnl_InfoProduct.add(lbl_SoLuongTon);
-
-		JLabel lbl_SoLuongBan = new JLabel("Số lượng đã bán:");
-		lbl_SoLuongBan.setVerticalAlignment(SwingConstants.BOTTOM);
-		lbl_SoLuongBan.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lbl_SoLuongBan.setBounds(347, 116, 120, 20);
-		pnl_InfoProduct.add(lbl_SoLuongBan);
-
-		JLabel lbl_GiaNhap = new JLabel("Giá nhập:");
-		lbl_GiaNhap.setVerticalAlignment(SwingConstants.BOTTOM);
-		lbl_GiaNhap.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lbl_GiaNhap.setBounds(347, 152, 120, 20);
-		pnl_InfoProduct.add(lbl_GiaNhap);
-
-		spn_SoLuongTon = new JSpinner();
-		spn_SoLuongTon.setModel(new SpinnerNumberModel(0, 0, null, 1));
-		spn_SoLuongTon.setBounds(467, 75, 200, 25);
-		pnl_InfoProduct.add(spn_SoLuongTon);
-
-		spn_SoLuongBan = new JSpinner();
-		spn_SoLuongBan.setModel(new SpinnerNumberModel(0, 0, null, 1));
-		spn_SoLuongBan.setBounds(467, 113, 200, 25);
-		pnl_InfoProduct.add(spn_SoLuongBan);
-
-		spn_GiaNhap = new JSpinner();
-		spn_GiaNhap.setModel(new SpinnerNumberModel(0d, 0d, null, 1.0));
-		spn_GiaNhap.setBounds(467, 149, 200, 25);
-		pnl_InfoProduct.add(spn_GiaNhap);
-
-		JLabel lbl_KichCo = new JLabel("Kích cỡ:");
-		lbl_KichCo.setVerticalAlignment(SwingConstants.BOTTOM);
-		lbl_KichCo.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lbl_KichCo.setBounds(347, 10, 120, 20);
-		pnl_InfoProduct.add(lbl_KichCo);
-
-		JLabel lbl_NhaCungCap = new JLabel("Nhà cung cấp:");
-		lbl_NhaCungCap.setVerticalAlignment(SwingConstants.BOTTOM);
-		lbl_NhaCungCap.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lbl_NhaCungCap.setBounds(347, 46, 120, 20);
-		pnl_InfoProduct.add(lbl_NhaCungCap);
+		JLabel lbl_SoLuotDung = new JLabel("Số lượt dùng");
+//		lbl_SoLuotDung.setVerticalAlignment(SwingConstants.BOTTOM);
+		lbl_SoLuotDung.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lbl_SoLuotDung.setBounds(10, 143, 100, 20);
+		pnl_InfoVoucher.add(lbl_SoLuotDung);
 
 		JLabel lbl_MoTa = new JLabel("Mô tả:");
 		lbl_MoTa.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lbl_MoTa.setBounds(10, 226, 100, 133);
-		pnl_InfoProduct.add(lbl_MoTa);
-
-		cmb_NhaCungCap = new JComboBox<NhaCungCap>();
-		cmb_NhaCungCap.setModel(ncc = new DefaultComboBoxModel<NhaCungCap>());
-		cmb_NhaCungCap.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
-		cmb_NhaCungCap.setFocusable(false);
-		cmb_NhaCungCap.setBounds(467, 42, 200, 25);
-		pnl_InfoProduct.add(cmb_NhaCungCap);
-		for (NhaCungCap item : new Dao_NhaCungCap().getAll()) {
-			ncc.addElement(item);
-		}
-
-		txt_KichCo = new JTextField();
-		txt_KichCo.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
-		txt_KichCo.setBounds(467, 5, 200, 25);
-		pnl_InfoProduct.add(txt_KichCo);
+		lbl_MoTa.setBounds(10, 207, 100, 109);
+		pnl_InfoVoucher.add(lbl_MoTa);
 
 		txtMoTa = new JTextArea();
 		txtMoTa.setBorder(new LineBorder(Color.LIGHT_GRAY));
 		txtMoTa.setLineWrap(true);
-		txtMoTa.setBounds(110, 221, 557, 138);
-		pnl_InfoProduct.add(txtMoTa);
+		txtMoTa.setBounds(111, 207, 557, 114);
+		pnl_InfoVoucher.add(txtMoTa);
 
 		JLabel lbl_TrangThai = new JLabel("Trạng Thái:");
 		lbl_TrangThai.setVerticalAlignment(SwingConstants.BOTTOM);
 		lbl_TrangThai.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lbl_TrangThai.setBounds(347, 185, 120, 20);
-		pnl_InfoProduct.add(lbl_TrangThai);
+		lbl_TrangThai.setBounds(10, 177, 120, 20);
+		pnl_InfoVoucher.add(lbl_TrangThai);
 
-		lbl_CurentTrangThai = new JLabel("Còn Bán");
+		lbl_CurentTrangThai = new JLabel("Đang hoạt động");
 		lbl_CurentTrangThai.setHorizontalAlignment(SwingConstants.LEFT);
 		lbl_CurentTrangThai.setForeground(Color.RED);
 		lbl_CurentTrangThai.setVerticalAlignment(SwingConstants.BOTTOM);
 		lbl_CurentTrangThai.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lbl_CurentTrangThai.setBounds(467, 185, 79, 20);
-		pnl_InfoProduct.add(lbl_CurentTrangThai);
-
-		ckb_banlai = new JCheckBox("Bán Lại.");
-		ckb_banlai.setBackground(new Color(102, 205, 170));
-		ckb_banlai.setFont(new Font("Tahoma", Font.BOLD, 12));
-		ckb_banlai.setBounds(570, 186, 97, 23);
-		if (!hh.isTrangThai() && hh != null) {
-			pnl_InfoProduct.add(ckb_banlai);
+		lbl_CurentTrangThai.setBounds(140, 177, 120, 20);
+		pnl_InfoVoucher.add(lbl_CurentTrangThai);
+		
+		ckb_kichhoat = new JCheckBox("Kích hoạt lại.");
+		ckb_kichhoat.setBackground(new Color(102, 205, 170));
+		ckb_kichhoat.setFont(new Font("Tahoma", Font.BOLD, 12));
+		ckb_kichhoat.setBounds(272,177,120,21);
+		pnl_InfoVoucher.add(ckb_kichhoat);
+		if (!vc.isTrangThai()) {
+			ckb_kichhoat.setVisible(false);
 		}
+		
+		spn_PhanTramGiamGia = new JSpinner();
+		spn_PhanTramGiamGia.setBounds(144, 97, 187, 25);
+		pnl_InfoVoucher.add(spn_PhanTramGiamGia);
+		
+		spn_SoLuotDung = new JSpinner();
+		spn_SoLuotDung.setBounds(144, 138, 187, 25);
+		pnl_InfoVoucher.add(spn_SoLuotDung);
+		
+		lblNgayBatDau = new JLabel("Ngày bắt đầu");
+		lblNgayBatDau.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblNgayBatDau.setBounds(412, 63, 100, 20);
+		pnl_InfoVoucher.add(lblNgayBatDau);
+		
+		pnl_NgayBatDau = new JPanel();
+		pnl_NgayBatDau.setBounds(522, 56, 155, 30);
+		pnl_InfoVoucher.add(pnl_NgayBatDau);
+		
+		dateBatDau = new JDateChooser();
+		pnl_NgayBatDau.add(dateBatDau);
+		BorderLayout bl_dateBatDau = (BorderLayout) dateBatDau.getLayout();
+		bl_dateBatDau.setVgap(25);
+		bl_dateBatDau.setHgap(40);
+		dateBatDau.setDateFormatString("dd/MM/yyyy");
+		
+		lblNgayKetThuc = new JLabel("Ngày kết thúc");
+		lblNgayKetThuc.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblNgayKetThuc.setBounds(412, 99, 100, 30);
+		pnl_InfoVoucher.add(lblNgayKetThuc);
+		
+		pnl_NgayKetThuc = new JPanel();
+		pnl_NgayKetThuc.setBounds(522, 102, 155, 30);
+		pnl_InfoVoucher.add(pnl_NgayKetThuc);
+		
+		dateKetThuc = new JDateChooser();
+		BorderLayout bl_dateKetThuc = (BorderLayout) dateKetThuc.getLayout();
+		bl_dateKetThuc.setVgap(25);
+		bl_dateKetThuc.setHgap(40);
+		dateKetThuc.setDateFormatString("dd/MM/yyyy");
+		pnl_NgayKetThuc.add(dateKetThuc);
+		
+		JLabel lblNewLabel = new JLabel("Nhập Thông Tin Voucher");
+		lblNewLabel.setForeground(new Color(193, 0, 0));
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 18));
+		lblNewLabel.setBounds(267, 0, 234, 46);
+		pnl_InfoVoucher.add(lblNewLabel);
 
-		btn_ChonAnh = new JButton("Chọn Ảnh");
-		btn_ChonAnh.setBackground(new Color(250, 250, 210));
-		btn_ChonAnh.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btn_ChonAnh.setFocusable(false);
-		btn_ChonAnh.setBounds(115, 390, 90, 25);
-		add(btn_ChonAnh);
+	
 
-		btn_Save = new JButton("Thêm Hàng Hoá");
+		btn_Save = new JButton("Thêm Voucher");
 		btn_Save.setBackground(new Color(250, 250, 210));
 		btn_Save.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btn_Save.setFocusable(false);
-		btn_Save.setBounds(634, 391, 150, 25);
+		btn_Save.setBounds(539, 371, 150, 25);
 		add(btn_Save);
-
-		btn_ChonAnh.addActionListener(this);
 		btn_Save.addActionListener(this);
 
 		if (cvThucThi.equals("edit")) {
-			setText(hangHoa);
+			setText(vc);
 			btn_Save.setText("Lưu Thay Đổi");
+			newMa = vc.getMaVoucher();
+		}
+		else {
+//			lbl_TrangThai.setVisible(false);
+			lbl_CurentTrangThai.setVisible(false);
+			ckb_kichhoat.setVisible(false);
 		}
 	}
 
+
 	/**
 	 * Lấy dữ liệu và chỉnh sửa thông tin hàng hóa
-	 * @param hangHoa2
+	 * 
+	 * @param vc
 	 */
-	public void setText(VoucherGiamGia hangHoa2) {
-		txt_Ten.setText(hangHoa2.getTenVoucher());
-		txt_PhanTramGiamGia.setText(hangHoa2.getMoTaChuongTrinh());
-		spn_GiaNhap.setValue(hangHoa2.getPhanTramGiamTheoHoaDon());
-		spn_SoLuongTon.setValue(hangHoa2.getSoLuotDung());
-		lbl_CurentTrangThai.setText(hangHoa2.isTrangThai() ? "Đang hoạt động" : "Đã Ngưng");
-		
+	public void setText(VoucherGiamGia vc) {
+		 txt_Ten.setText(vc.getTenVoucher());
+		    spn_PhanTramGiamGia.setValue(vc.getPhanTramGiamTheoHoaDon());
+		    txtMoTa.setText(vc.getMoTaChuongTrinh());
+		    spn_SoLuotDung.setValue(vc.getSoLuotDung());
+		    lbl_CurentTrangThai.setText(vc.isTrangThai() ? "Đang hoạt động" : "Đã ngưng");
 
+		    // Ẩn hoặc hiện checkbox dựa trên trạng thái
+		    ckb_kichhoat.setVisible(!vc.isTrangThai());
+		    ckb_kichhoat.setSelected(false);
+
+		    dateBatDau.setDate(vc.getNgayBatDau());
+		    dateKetThuc.setDate(vc.getNgayKetThuc());
 	}
-
+	
 	/**
 	 * Đặt lại các giá trị trong các texfiled
 	 */
 	public void reText() {
-		txt_Ten.setText("");
-		txt_PhanTramGiamGia.setText("");
-		txt_TrangThai.setText("");
-		txt_MauSac.setText("");
-		txt_ChatLieu.setText("");
-		txt_PhanLoai.setText("");
-		txtMoTa.setText("");
-		txt_KichCo.setText("");
-		cmb_NhaCungCap.setSelectedItem(0);
-		spn_GiaNhap.setValue(0);
-		spn_SoLuongTon.setValue(0);
-		spn_SoLuongBan.setValue(0);
+		 txt_Ten.setText("");
+	        spn_PhanTramGiamGia.setValue(0);
+	        txtMoTa.setText("");
+	        spn_SoLuotDung.setValue(0);
+	        dateBatDau.setDate(null);
+	        dateKetThuc.setDate(null);
+		
 	}
-
+	
 	/**
-	 * trả về chuỗi mã hàng hoa
+	 * trả về chuỗi mã voucher
 	 * @param ma
 	 * @return
 	 */
-	public String createMaHangHoa(String ma) {
+	public String createMaVoucher(String ma) {
 		System.out.println(ma);
 		
 		int id = Integer.parseInt(ma.substring(3));
 		if (id < 9) {
 			id++;
-			return "NCC000" + id ;
+			return "VC000" + id ;
 		} else if (id < 99) {
 			id++;
-			return "NCC00" + id ;
+			return "VC00" + id ;
 		} else if (id < 999) {
 			id++;
-			return "NCC0" + id ;
+			return "VC0" + id ;
 		}
 		id++;
-		return "NCC" + id ;
+		return "VC" + id ;
 	}
 	
-	
-
-	public void importImage() {
-		JFileChooser f = new JFileChooser();
-		f.showOpenDialog(null);
-		File fl = f.getSelectedFile();
-		if (f.getSelectedFile() != null) {
-			String fileName = fl.getAbsolutePath();
-			// kiểm tra thư mục image có tồn tại không nêu không thì tạo
-			File directory = new File("img\\");
-			if (!directory.exists()) {
-				directory.mkdirs();
-			}
-			sr = new File(fileName);
-			lbl_Image.setIcon(new ImageIcon(new ImageIcon(sr.getPath().toString()).getImage().getScaledInstance(305,
-					368, java.awt.Image.SCALE_SMOOTH)));
-		}
-	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-//	  
-	}
+	  if (e.getSource().equals(btn_Save)) {
+        saveVoucher();
+	  }
+    }
+	
+	private void saveVoucher() {
+        String ten = txt_Ten.getText().trim();
+        int phanTramGiamGia = (int) spn_PhanTramGiamGia.getValue();
+        String moTa = txtMoTa.getText().trim();
+        int soLuotDung = (int) spn_SoLuotDung.getValue();
+        boolean trangThai = ckb_kichhoat.isSelected();
+        String ngayBatDau = formatDate(dateBatDau.getDate());
+        String ngayKetThuc = formatDate(dateKetThuc.getDate());
+
+        if (ten.isEmpty() || moTa.isEmpty()) {
+            System.out.println("Vui lòng nhập đầy đủ thông tin Voucher.");
+        } else {
+            VoucherGiamGia newVoucher = new VoucherGiamGia();
+            newVoucher.setMaVoucher(createMaVoucher(newMa));
+            newVoucher.setTenVoucher(ten);
+            newVoucher.setPhanTramGiamTheoHoaDon(phanTramGiamGia);
+            newVoucher.setMoTaChuongTrinh(moTa);
+            newVoucher.setSoLuotDung(soLuotDung);
+            newVoucher.setTrangThai(trangThai);
+
+            // Kiểm tra và định dạng ngày bắt đầu
+            if (dateBatDau.getDate() != null) {
+                newVoucher.setNgayBatDau(dateBatDau.getDate());
+            }
+
+            // Kiểm tra và định dạng ngày kết thúc
+            if (dateKetThuc.getDate() != null) {
+                newVoucher.setNgayKetThuc(dateKetThuc.getDate());
+            }
+
+            if (dao_Voucher.saveOrUpdateVoucher(newVoucher)) {
+                System.out.println("Lưu Voucher thành công.");
+                reText();
+            } else {
+                System.out.println("Lưu Voucher thất bại.");
+            }
+        }
+    }
+
+
+    private String formatDate(java.util.Date date) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        return (date != null) ? sdf.format(date) : "";
+    }
 }
