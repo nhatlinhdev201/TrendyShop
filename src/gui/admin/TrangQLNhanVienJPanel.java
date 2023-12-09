@@ -60,6 +60,7 @@ public class TrangQLNhanVienJPanel extends JPanel implements ActionListener, Mou
 	private JButton btn_capNhat;
 	private JButton btn_timKiem;
 	private JButton btn_load;
+	static int rowCount;
 
 	/**
 	 * Create the panel.
@@ -77,7 +78,7 @@ public class TrangQLNhanVienJPanel extends JPanel implements ActionListener, Mou
 		Font headerFont = new Font("Tahoma", Font.BOLD, 15);
 
 		tableModel = new DefaultTableModel(new Object[][] {}, new String[] { "Mã NV", "Tên NV", "Ngày sinh", "Số CCCD",
-				"SDT", "Email", "Địa chỉ", "Trạng thái"}) {
+				"SDT", "Email", "Địa chỉ", "Trạng thái", "Images" }) {
 			// Override phương thức để set font cho dữ liệu trong bảng
 			@Override
 			public Class<?> getColumnClass(int columnIndex) {
@@ -271,9 +272,7 @@ public class TrangQLNhanVienJPanel extends JPanel implements ActionListener, Mou
 																								// dụng
 
 		Image scaledIconCapNhat = iconCapNhat.getImage().getScaledInstance(27, 27, Image.SCALE_SMOOTH); // Thiết lập
-																										// kích thước
 		ImageIcon resizedIconCapNhat = new ImageIcon(scaledIconCapNhat);
-
 		btn_capNhat.setIcon(resizedIconCapNhat);
 		add(btn_capNhat);
 
@@ -299,25 +298,31 @@ public class TrangQLNhanVienJPanel extends JPanel implements ActionListener, Mou
 		btn_nghi.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btn_nghi.setBounds(1044, 219, 83, 23);
 		add(btn_nghi);
-		
+
 		ButtonGroup buttonGroup = new ButtonGroup();
 
 		// Thêm nút vào nhóm
 		buttonGroup.add(btn_hoatDong);
 		buttonGroup.add(btn_nghi);
-		
+
 		JLabel lblNewLabel_1 = new JLabel("Thông tin nhân viên\r\n");
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 40));
 		lblNewLabel_1.setBounds(478, 11, 457, 43);
 		add(lblNewLabel_1);
-		
+
+		btn_load = new JButton("Làm mới");
 
 		btn_load = new JButton("Làm mới");
 		btn_load.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btn_load.setBackground(Color.WHITE);
 		btn_load.setBounds(1141, 275, 123, 33);
+		String iconPath_load = "/images/loading.png";
+		ImageIcon iconLoad = new ImageIcon(this.getClass().getResource(iconPath_load)); // Sử dụng getResource để lấy đường dẫn
+
+		Image scaledIconLoad = iconLoad.getImage().getScaledInstance(27, 27, Image.SCALE_SMOOTH); // Thiết lập
+		ImageIcon resizedIconLoad = new ImageIcon(scaledIconLoad);
+		btn_load.setIcon(resizedIconLoad);
 		add(btn_load);
-		
+
 		btn_timKiem.addActionListener(this);
 		btn_capNhat.addActionListener(this);
 		btn_load.addActionListener(this);
@@ -421,7 +426,7 @@ public class TrangQLNhanVienJPanel extends JPanel implements ActionListener, Mou
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-		}else if (obj.equals(btn_load)) {
+		} else if (obj.equals(btn_load)) {
 			loadDataIntoTable();
 		}
 	}
@@ -431,6 +436,10 @@ public class TrangQLNhanVienJPanel extends JPanel implements ActionListener, Mou
 		for (int i = rowCount - 1; i >= 0; i--) {
 			tableModel.removeRow(i);
 		}
+	}
+
+	public static int getRowCount() {
+		return rowCount = tableModel.getRowCount();
 	}
 
 	private void loadDataIntoTable() {
@@ -520,42 +529,42 @@ public class TrangQLNhanVienJPanel extends JPanel implements ActionListener, Mou
 	@Override
 	public void windowOpened(WindowEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void windowClosing(WindowEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void windowClosed(WindowEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void windowIconified(WindowEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void windowDeiconified(WindowEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void windowActivated(WindowEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void windowDeactivated(WindowEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

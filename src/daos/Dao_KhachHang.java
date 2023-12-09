@@ -199,7 +199,7 @@ public class Dao_KhachHang {
 			preparedStatement.setString(3, khachHang.getEmail());
 			preparedStatement.setString(4, khachHang.getDiaChi());
 			preparedStatement.setBoolean(5, khachHang.isTrangThai());
-			preparedStatement.setLong(6, (long) khachHang.getDiemTichLuy());
+			preparedStatement.setFloat(6, khachHang.getDiemTichLuy());
 			preparedStatement.setString(7, khachHang.getMaKhachHang());
 
 			int n = preparedStatement.executeUpdate();
