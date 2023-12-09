@@ -58,7 +58,7 @@ public class TrangQLKhachHangPanel extends JPanel implements ActionListener, Mou
 	private JButton btn_capNhat;
 	private static DefaultTableModel tableModel;
 	private JComboBox<String> comboBox;
-
+	static int rowCount ;
 	/**
 	 * Create the panel.
 	 */
@@ -454,7 +454,7 @@ public class TrangQLKhachHangPanel extends JPanel implements ActionListener, Mou
 	}
 
 	private void clearTable() {
-		int rowCount = tableModel.getRowCount();
+		rowCount = tableModel.getRowCount();
 		for (int i = rowCount - 1; i >= 0; i--) {
 			tableModel.removeRow(i);
 		}
@@ -464,7 +464,7 @@ public class TrangQLKhachHangPanel extends JPanel implements ActionListener, Mou
 		if (kiemTraHople()) {
 			KhachHang kh = layKhachHang();
 			if (khDao.updateKhachHang(kh)) {
-				JOptionPane.showMessageDialog(this, "Đã cập nhật thành công nhân viên: " + kh.getMaKhachHang());
+				JOptionPane.showMessageDialog(this, "Đã cập nhật thành công khách hàng: " + kh.getMaKhachHang());
 			} else {
 				JOptionPane.showMessageDialog(this, "Không thể cập nhật!!!");
 			}
@@ -474,9 +474,9 @@ public class TrangQLKhachHangPanel extends JPanel implements ActionListener, Mou
 	public KhachHang layKhachHang() {
 		String maKH = txt_makh.getText().trim();
 		String tenKh = txt_ten.getText().trim();
-		String sdt = txt_ten.getText().trim();
-		String email = txt_ten.getText().trim();
-		String diachi = txt_ten.getText().trim();
+		String sdt = txt_sDT.getText().trim();
+		String email = txt_email.getText().trim();
+		String diachi = txt_diaChi.getText().trim();
 		boolean trangthai = false;
 		if (btn_hoatDong.isSelected() && !btn_nghi.isSelected())
 			trangthai = true;
@@ -531,7 +531,9 @@ public class TrangQLKhachHangPanel extends JPanel implements ActionListener, Mou
 			ex.printStackTrace();
 		}
 	}
-
+	public static int getRowCount() {
+        return rowCount =tableModel.getRowCount();
+    }
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub

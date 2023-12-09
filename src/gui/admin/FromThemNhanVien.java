@@ -21,7 +21,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
 
-public class FromThemNhanVien extends JFrame implements WindowListener{
+public class FromThemNhanVien extends JFrame implements WindowListener {
 	static Dao_NhanVien nvDao = new Dao_NhanVien();
 	public Connection connection = ConnectDataBase.getInstance().connection;;
 	private JDateChooser txt_ngaysinh;
@@ -32,8 +32,6 @@ public class FromThemNhanVien extends JFrame implements WindowListener{
 	private JTextField txt_scccd;
 	private JTextField txt_sdt;
 	private JTextField txt_email;
-	private JTextField textField_6;
-	private JTextField txt_phanquyen;
 	private JTextField txt_matKhau;
 	private JTextField txt_diachi;
 	private String imagePath;
@@ -150,52 +148,32 @@ public class FromThemNhanVien extends JFrame implements WindowListener{
 
 		JLabel addressField = new JLabel("Đại chỉ :");
 		addressField.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		addressField.setBounds(367, 244, 123, 21);
+		addressField.setBounds(363, 276, 123, 21);
 		contentPane.add(addressField);
 
 		JLabel positionField = new JLabel("Chức vụ :");
 		positionField.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		positionField.setBounds(367, 277, 123, 21);
+		positionField.setBounds(363, 309, 123, 21);
 		contentPane.add(positionField);
 
 		JLabel lbl_trangThai = new JLabel("Trang thái :");
 		lbl_trangThai.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		lbl_trangThai.setBounds(367, 309, 123, 21);
+		lbl_trangThai.setBounds(363, 341, 123, 21);
 		contentPane.add(lbl_trangThai);
 
 		JLabel lbl_makh_5 = new JLabel("Mật khẩu  :");
 		lbl_makh_5.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		lbl_makh_5.setBounds(367, 341, 123, 21);
+		lbl_makh_5.setBounds(363, 373, 123, 21);
 		contentPane.add(lbl_makh_5);
-
-		JLabel lbl_makh_10 = new JLabel("Phân quyền :");
-		lbl_makh_10.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		lbl_makh_10.setBounds(367, 373, 123, 21);
-		contentPane.add(lbl_makh_10);
-
-		JLabel lbl_makh_11 = new JLabel("Hình ảnh :");
-		lbl_makh_11.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		lbl_makh_11.setBounds(367, 405, 123, 21);
-		contentPane.add(lbl_makh_11);
-
-		textField_6 = new JTextField();
-		textField_6.setColumns(10);
-		textField_6.setBounds(492, 405, 177, 25);
-		contentPane.add(textField_6);
-
-		txt_phanquyen = new JTextField();
-		txt_phanquyen.setColumns(10);
-		txt_phanquyen.setBounds(492, 373, 177, 25);
-		contentPane.add(txt_phanquyen);
 
 		txt_matKhau = new JTextField();
 		txt_matKhau.setColumns(10);
-		txt_matKhau.setBounds(492, 341, 177, 25);
+		txt_matKhau.setBounds(488, 373, 177, 25);
 		contentPane.add(txt_matKhau);
 
 		txt_diachi = new JTextField();
 		txt_diachi.setColumns(10);
-		txt_diachi.setBounds(492, 244, 177, 25);
+		txt_diachi.setBounds(488, 276, 177, 25);
 		contentPane.add(txt_diachi);
 
 		JButton saveButton = new JButton("Save");
@@ -209,53 +187,53 @@ public class FromThemNhanVien extends JFrame implements WindowListener{
 		imageLabel.setFont(new Font("Tahoma", Font.BOLD, 15));
 		imageLabel.setBackground(new Color(255, 250, 250));
 		imageLabel.setBounds(238, 11, 211, 175);
-		 Border border = BorderFactory.createLineBorder(Color.BLACK, 2);
+		Border border = BorderFactory.createLineBorder(Color.BLACK, 2);
 
-	     // Thiết lập Border cho JLabel
-	    imageLabel.setBorder(border);
-	     
+		// Thiết lập Border cho JLabel
+		imageLabel.setBorder(border);
+
 		JButton chooseImageButton = new JButton("Thêm ảnh");
 		chooseImageButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		chooseImageButton.setBounds(272, 197, 135, 36);
 		contentPane.add(chooseImageButton);
 		contentPane.add(imageLabel);
 		ButtonGroup buttonGroup1 = new ButtonGroup();
-		
+
 		cbox_quanli = new JRadioButton("Quản Lý");
 		cbox_quanli.setBackground(new Color(152, 251, 152));
 		cbox_quanli.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		cbox_quanli.setBounds(492, 279, 81, 23);
+		cbox_quanli.setBounds(488, 311, 81, 23);
 		contentPane.add(cbox_quanli);
 
 		cbox_nhanVien = new JRadioButton("Nhân viên");
 		cbox_nhanVien.setBackground(new Color(152, 251, 152));
 		cbox_nhanVien.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		cbox_nhanVien.setBounds(575, 279, 94, 23);
+		cbox_nhanVien.setBounds(571, 311, 94, 23);
 		contentPane.add(cbox_nhanVien);
-		
+
 		buttonGroup1.add(cbox_nhanVien);
 		buttonGroup1.add(cbox_quanli);
 		JRadioButton rdb_hoatdong = new JRadioButton("Hoạt động");
 		rdb_hoatdong.setBackground(new Color(152, 251, 152));
 		rdb_hoatdong.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		rdb_hoatdong.setBounds(492, 311, 94, 23);
+		rdb_hoatdong.setBounds(488, 343, 94, 23);
 		contentPane.add(rdb_hoatdong);
 		ButtonGroup buttonGroup = new ButtonGroup();
 
 		// Thêm nút vào nhóm
-		
+
 		rdbtnNgh = new JRadioButton("Đã nghỉ");
 		rdbtnNgh.setBackground(new Color(152, 251, 152));
 		rdbtnNgh.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		rdbtnNgh.setBounds(585, 311, 94, 23);
+		rdbtnNgh.setBounds(581, 343, 94, 23);
 		contentPane.add(rdbtnNgh);
 		buttonGroup.add(rdb_hoatdong);
 		buttonGroup.add(rdbtnNgh);
-		
+
 		JPanel panel = new JPanel();
 		panel.setBounds(222, 0, 238, 194);
 		contentPane.add(panel);
-		
+
 		JButton btn_troLai = new JButton("Trở lại");
 		btn_troLai.setBackground(new Color(255, 99, 71));
 		btn_troLai.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 17));
@@ -266,7 +244,7 @@ public class FromThemNhanVien extends JFrame implements WindowListener{
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				JFrame currentFrame = (JFrame) SwingUtilities.getRoot((Component) e.getSource());
-		        currentFrame.dispose();
+				currentFrame.dispose();
 
 //		        // Open the QL khách hàng window
 //		        JFrame qlKhachHangFrame = new JFrame("Quản lý khách hàng");
@@ -342,38 +320,38 @@ public class FromThemNhanVien extends JFrame implements WindowListener{
 					chucVu = "QL";
 				} else if (!cbox_quanli.isSelected() && cbox_nhanVien.isSelected()) {
 					chucVu = "NV";
-				}
-				String manv = chucVu + "";
-				
-				if (kiemTraHople()) {
+					String manv = chucVu + "00" + TrangQLNhanVienJPanel.getRowCount();
+
+					if (kiemTraHople()) {
 //					// Kiểm tra và xử lý các điều kiện khác nếu cần thiết
 //						// Tạo đối tượng KhachHang từ thông tin đã nhập
-					NhanVien nhanVien = new NhanVien();
-					nhanVien.setMaNhanVien(manv);
-					nhanVien.setHoTen(tenNhanVien);
-					nhanVien.setSoCCCD(soCCCD);
-					nhanVien.setNgaySinh(ngaySinh);
-					nhanVien.setSoDienThoai(soDienThoai);
-					nhanVien.setEmail(email);
-					nhanVien.setDiaChi(diaChi);
-					nhanVien.setChucVu(chucVu);
-					nhanVien.setAnhDaiDien(imagePath);
-					nhanVien.setTrangThai(trangThai);
-					nhanVien.setMatKhau(matKhau);
-					nhanVien.setPhanQuyen(true);
+						NhanVien nhanVien = new NhanVien();
+						nhanVien.setMaNhanVien(manv);
+						nhanVien.setHoTen(tenNhanVien);
+						nhanVien.setSoCCCD(soCCCD);
+						nhanVien.setNgaySinh(ngaySinh);
+						nhanVien.setSoDienThoai(soDienThoai);
+						nhanVien.setEmail(email);
+						nhanVien.setDiaChi(diaChi);
+						nhanVien.setChucVu(chucVu);
+						nhanVien.setAnhDaiDien(imagePath);
+						nhanVien.setTrangThai(trangThai);
+						nhanVien.setMatKhau(matKhau);
+						nhanVien.setPhanQuyen(true);
 //						// Gọi hàm themKhachHang để lưu thông tin vào cơ sở dữ liệu
-					boolean result = nvDao.themNhanVien(nhanVien);
-					// Kiểm tra kết quả và thông báo cho người dùng
-					if (result) {
-						JOptionPane.showMessageDialog(contentPane, "Thêm nhân viên thành công!");
-						// Có thể thêm logic để làm mới giao diện hoặc thực hiện các tác vụ khác sau khi
-						// thêm
-						Window window = SwingUtilities.getWindowAncestor(contentPane);
-						if (window != null) {
-							window.dispose();
+						boolean result = nvDao.themNhanVien(nhanVien);
+						// Kiểm tra kết quả và thông báo cho người dùng
+						if (result) {
+							JOptionPane.showMessageDialog(contentPane, "Thêm nhân viên thành công!");
+							// Có thể thêm logic để làm mới giao diện hoặc thực hiện các tác vụ khác sau khi
+							// thêm
+							Window window = SwingUtilities.getWindowAncestor(contentPane);
+							if (window != null) {
+								window.dispose();
+							}
+						} else {
+							JOptionPane.showMessageDialog(contentPane, "Thêm Nhân viên thất bại!");
 						}
-					} else {
-						JOptionPane.showMessageDialog(contentPane, "Thêm Nhân viên thất bại!");
 					}
 				}
 			}
@@ -388,7 +366,7 @@ public class FromThemNhanVien extends JFrame implements WindowListener{
 				|| txt_diachi.getText().isEmpty() || txt_scccd.getText().isEmpty() || txt_matKhau.getText().isEmpty()) {
 			JOptionPane.showMessageDialog(contentPane, "Vui lòng nhập đầy đủ thông tin!");
 			return false;
-		}else if (txt_ngaysinh.getDate() == null) {
+		} else if (txt_ngaysinh.getDate() == null) {
 			JOptionPane.showMessageDialog(null, "Vui lòng chọn ngày", "Error", JOptionPane.ERROR_MESSAGE);
 		}
 
@@ -400,42 +378,42 @@ public class FromThemNhanVien extends JFrame implements WindowListener{
 	@Override
 	public void windowOpened(WindowEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void windowClosing(WindowEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void windowClosed(WindowEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void windowIconified(WindowEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void windowDeiconified(WindowEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void windowActivated(WindowEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void windowDeactivated(WindowEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }
