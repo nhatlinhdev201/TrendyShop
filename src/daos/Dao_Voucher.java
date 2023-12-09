@@ -1,9 +1,12 @@
 package daos;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -97,7 +100,7 @@ public class Dao_Voucher {
 	 * @param xuatXu
 	 * @return
 	 */
-	public List<VoucherGiamGia> getHangHoaByTrangThai(String trangThai) {
+	public List<VoucherGiamGia> getVoucherByTrangThai(String trangThai) {
 		List<VoucherGiamGia> dsVoucher = null;
 		try {
 			PreparedStatement statement = connection
@@ -128,11 +131,11 @@ public class Dao_Voucher {
 	 * @param thuongHieu
 	 * @return
 	 */
-	public List<VoucherGiamGia> getHangHoaByPhanTramGiamGia(String phanTramTheoHoaDon) {
+	public List<VoucherGiamGia> getVoucherByPhanTramGiamGia(String phanTram) {
 		List<VoucherGiamGia> dsVoucher = null;
 		try {
 			PreparedStatement statement = connection
-					.prepareStatement("select * from VoucherGiamGia where phanTramGiamTheoHoaDon = N'" + phanTramTheoHoaDon + "'");
+					.prepareStatement("select * from VoucherGiamGia where phanTramGiamTheoHoaDon = N'" + phanTram + "'");
 			ResultSet resultSet = statement.executeQuery();
 			dsVoucher = new ArrayList<VoucherGiamGia>();
 			while (resultSet.next()) {
@@ -247,10 +250,10 @@ public class Dao_Voucher {
 	 * @param mahh
 	 * @return
 	 */
-	public boolean deleteHangHoa(String mahh) {
+	public boolean deleteVoucher(String mavc) {
 		try {
 			PreparedStatement preparedStatement = connection
-					.prepareStatement("update HangHoa set trangThai = 0 where maHangHoa = '" + mahh + "'");
+					.prepareStatement("update VoucherGiamGia set trangThai = 0 where maVoucher = '" + mavc + "'");
 			int n = preparedStatement.executeUpdate();
 			if (n > 0) {
 				return true;
@@ -348,5 +351,72 @@ public class Dao_Voucher {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	 public VoucherGiamGia getVoucherByMa(String maVoucher) {
+//	        try (Connection connection = // Lấy connection từ nguồn nào đó) {
+	            String sql = "SELECT * FROM VoucherGiamGia WHERE MaVoucher = ?";
+	            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+	                preparedStatement.setString(1, maVoucher);
+	                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+	                    if (resultSet.next()) {
+	                        VoucherGiamGia voucher = new VoucherGiamGia();
+	                        voucher.setMaVoucher(resultSet.getString("MaVoucher"));
+	                        voucher.setTenVoucher(resultSet.getString("TenVoucher"));
+	                        voucher.setPhanTramGiamTheoHoaDon(resultSet.getInt("PhanTramGiamTheoHoaDon"));
+	                        voucher.setMoTaChuongTrinh(resultSet.getString("MoTaChuongTrinh"));
+	                        voucher.setSoLuotDung(resultSet.getInt("SoLuotDung"));
+	                        voucher.setTrangThai(resultSet.getBoolean("TrangThai"));
+	                        voucher.setNgayBatDau(resultSet.getDate("NgayBatDau"));
+	                        voucher.setNgayKetThuc(resultSet.getDate("NgayKetThuc"));
+
+	                        return voucher;
+	                    }
+//	                }
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	            // Xử lý ngoại lệ, có thể logging hoặc ném ngoại lệ khác
+	        }
+
+	        return null; // Trả về null nếu không tìm thấy voucher
+	    }
+	 
+	 public boolean saveOrUpdateVoucher(VoucherGiamGia voucher) {
+	        try{
+	            String sql = "INSERT INTO VoucherGiamGia (MaVoucher, TenVoucher, PhanTramGiamTheoHoaDon, "
+	                    + "MoTaChuongTrinh, SoLuotDung, TrangThai, NgayBatDau, NgayKetThuc) "
+	                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?) "
+	                    + "ON DUPLICATE KEY UPDATE "
+	                    + "TenVoucher = VALUES(TenVoucher), PhanTramGiamTheoHoaDon = VALUES(PhanTramGiamTheoHoaDon), "
+	                    + "MoTaChuongTrinh = VALUES(MoTaChuongTrinh), SoLuotDung = VALUES(SoLuotDung), "
+	                    + "TrangThai = VALUES(TrangThai), NgayBatDau = VALUES(NgayBatDau), NgayKetThuc = VALUES(NgayKetThuc)";
+	            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+	                preparedStatement.setString(1, voucher.getMaVoucher());
+	                preparedStatement.setString(2, voucher.getTenVoucher());
+	                preparedStatement.setDouble(3, voucher.getPhanTramGiamTheoHoaDon());
+	                preparedStatement.setString(4, voucher.getMoTaChuongTrinh());
+	                preparedStatement.setInt(5, voucher.getSoLuotDung());
+	                preparedStatement.setBoolean(6, voucher.isTrangThai());
+
+	                // Chuyển đổi từ String sang java.sql.Date
+	                preparedStatement.setDate(7, convertUtilDateToSqlDate(voucher.getNgayBatDau()));
+	                preparedStatement.setDate(8, convertUtilDateToSqlDate(voucher.getNgayKetThuc()));
+
+	                return preparedStatement.executeUpdate() > 0;
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	            // Xử lý ngoại lệ, có thể logging hoặc ném ngoại lệ khác
+	        }
+
+	        return false; // Trả về false nếu có lỗi
+	    }
+
+	 private Date convertUtilDateToSqlDate(java.util.Date utilDate) {
+		    if (utilDate != null) {
+		        return new Date(utilDate.getTime());
+		    }
+		    return null;
+		}
 	
 }
