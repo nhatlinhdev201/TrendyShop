@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import connection.ConnectDataBase;
+import entities.HangHoa;
 import entities.HoaDon;
 import entities.KhachHang;
 import entities.NhanVien;
@@ -222,6 +223,33 @@ public class Dao_HoaDon {
 			}
 
 		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	public boolean updateHoaDon(HoaDon hoaDon) {
+		try {
+
+			String updateQuery = "UPDATE HoaDon " + "SET thoiGianTao = ?, tongThanhTien = ?, maVoucher = ?, "
+					+ "maKhachHang = ?, maNhanVien = ?, trangThaiThanhToan = ? "
+					+ "WHERE maHoaDon = ?";
+
+			PreparedStatement preparedStatement = connection.prepareStatement(updateQuery);
+			preparedStatement.setDate(1, Date.valueOf(hoaDon.getThoiGianTao()));
+			preparedStatement.setLong(2,(long)  hoaDon.getTongThanhTien());
+			preparedStatement.setString(3, hoaDon.getVoucher().getMaVoucher());
+			preparedStatement.setString(4, hoaDon.getKhachHang().getMaKhachHang());
+			preparedStatement.setString(5, hoaDon.getNguoiLapHoaDon().getMaNhanVien());
+			preparedStatement.setBoolean(6, hoaDon.isTrangThaiThanhToan());
+			preparedStatement.setString(7, hoaDon.getMaHoaDon());
+			int n = preparedStatement.executeUpdate();
+			if (n > 0) {
+				return true;
+			}
+			preparedStatement.close();
+			connection.close();
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return false;
