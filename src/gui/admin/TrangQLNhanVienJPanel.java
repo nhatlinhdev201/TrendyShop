@@ -8,6 +8,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -39,7 +41,7 @@ import javax.swing.JFrame;
 import javax.swing.JRadioButton;
 import com.jgoodies.forms.factories.DefaultComponentFactory;
 
-public class TrangQLNhanVienJPanel extends JPanel implements ActionListener, MouseListener {
+public class TrangQLNhanVienJPanel extends JPanel implements ActionListener, MouseListener, WindowListener {
 	private static final Font TABLE_FONT = new Font("Tahoma", Font.PLAIN, 15);
 	private static DefaultTableModel tableModel;
 	static Dao_NhanVien nvDao = new Dao_NhanVien();
@@ -75,7 +77,7 @@ public class TrangQLNhanVienJPanel extends JPanel implements ActionListener, Mou
 		Font headerFont = new Font("Tahoma", Font.BOLD, 15);
 
 		tableModel = new DefaultTableModel(new Object[][] {}, new String[] { "Mã NV", "Tên NV", "Ngày sinh", "Số CCCD",
-				"SDT", "Email", "Địa chỉ", "Trạng thái", "Images" }) {
+				"SDT", "Email", "Địa chỉ", "Trạng thái"}) {
 			// Override phương thức để set font cho dữ liệu trong bảng
 			@Override
 			public Class<?> getColumnClass(int columnIndex) {
@@ -513,5 +515,47 @@ public class TrangQLNhanVienJPanel extends JPanel implements ActionListener, Mou
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public void windowOpened(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowClosing(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowClosed(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowIconified(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowDeiconified(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowActivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowDeactivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -7,15 +7,13 @@ import daos.Dao_KhachHang;
 import daos.KhachHangDAO;
 import entities.KhachHang;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.*;
 import java.util.Random;
 
-public class FromThemKhachHang extends JFrame {
+public class FromThemKhachHang extends JFrame implements WindowListener{
 	static Dao_KhachHang dao_kh = new Dao_KhachHang();
 	public Connection connection = ConnectDataBase.getInstance().connection;;
 	private JLabel emailield;
@@ -33,11 +31,10 @@ public class FromThemKhachHang extends JFrame {
 	private JRadioButton rdb_nghi;
 	private JLabel lblluCc;
 	private JLabel lblKhngc;
-	private JLabel lblKh;
 	private JLabel lblPhiLS;
 	private JLabel lblPhiLS_1;
 	private JLabel lbl_image;
-
+	private JButton btn_troLai;
 	/**
 	 * Launch the application.
 	 */
@@ -113,10 +110,11 @@ public class FromThemKhachHang extends JFrame {
 		fliedsdt.setBounds(290, 92, 69, 21);
 		contentPane.add(fliedsdt);
 
-		btn_save = new JButton("Save");
+		btn_save = new JButton("Lưu");
+		btn_save.setBackground(Color.GREEN);
 		btn_save.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 17));
-		btn_save.setSize(199, 42);
-		btn_save.setLocation(332, 270);
+		btn_save.setSize(182, 42);
+		btn_save.setLocation(317, 270);
 		contentPane.add(btn_save);
 
 		rdb_hoatdong = new JRadioButton("Hoạt động");
@@ -155,16 +153,13 @@ public class FromThemKhachHang extends JFrame {
 		lblKhngc.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblKhngc.setBounds(44, 308, 177, 21);
 		contentPane.add(lblKhngc);
+		
+		ButtonGroup buttonGroup = new ButtonGroup();
 
-		lblKh = new JLabel("KH sau đó là 2 chữ số");
-		lblKh.setVerticalAlignment(SwingConstants.TOP);
-		lblKh.setToolTipText("");
-		lblKh.setHorizontalAlignment(SwingConstants.LEFT);
-		lblKh.setForeground(Color.RED);
-		lblKh.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lblKh.setBounds(380, 60, 213, 21);
-		contentPane.add(lblKh);
-
+		// Thêm nút vào nhóm
+		buttonGroup.add(rdb_hoatdong);
+		buttonGroup.add(rdb_nghi);
+		
 		lblPhiLS = new JLabel("Phải là 10 số ");
 		lblPhiLS.setVerticalAlignment(SwingConstants.TOP);
 		lblPhiLS.setToolTipText("");
@@ -182,6 +177,33 @@ public class FromThemKhachHang extends JFrame {
 		lblPhiLS_1.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblPhiLS_1.setBounds(380, 169, 213, 21);
 		contentPane.add(lblPhiLS_1);
+		
+		btn_troLai = new JButton("Trờ lại");
+		btn_troLai.setBackground(new Color(255, 99, 71));
+		btn_troLai.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 17));
+		btn_troLai.setBounds(509, 270, 92, 42);
+		contentPane.add(btn_troLai);
+		btn_troLai.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				JFrame currentFrame = (JFrame) SwingUtilities.getRoot((Component) e.getSource());
+		        currentFrame.dispose();
+
+//		        // Open the QL khách hàng window
+//		        JFrame qlKhachHangFrame = new JFrame("Quản lý khách hàng");
+//		        // Set up the content of the new window (you may need to customize this part)
+//		        // ...
+//
+//		        qlKhachHangFrame.setSize(600, 400);
+//		        qlKhachHangFrame.setLocationRelativeTo(null); // Center the new window
+//		        qlKhachHangFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//
+//		        // Make sure to set the visibility of the new window to true
+//		        qlKhachHangFrame.setVisible(true);
+			}
+		});
+		
 		btn_save.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// Lấy thông tin từ các trường dữ liệu trên giao diện
@@ -225,7 +247,7 @@ public class FromThemKhachHang extends JFrame {
 					}
 				}
 		});
-
+		addWindowListener(this);
 		this.setLocationRelativeTo(null);
 		contentPane.setVisible(true);
 	}
@@ -276,5 +298,47 @@ public class FromThemKhachHang extends JFrame {
 			e.printStackTrace();
 			return false;
 		}
+	}
+
+	@Override
+	public void windowOpened(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowClosing(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowClosed(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowIconified(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowDeiconified(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowActivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowDeactivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }

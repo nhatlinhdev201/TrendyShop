@@ -18,6 +18,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +39,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JSpinner;
 
-public class TrangQLKhachHangPanel extends JPanel implements ActionListener, MouseListener {
+public class TrangQLKhachHangPanel extends JPanel implements ActionListener, MouseListener,WindowListener {
 	private static final Font TABLE_FONT = new Font("Tahoma", Font.PLAIN, 15);
 	static Dao_KhachHang khDao = new Dao_KhachHang();
 	private JTable table;
@@ -343,6 +345,7 @@ public class TrangQLKhachHangPanel extends JPanel implements ActionListener, Mou
 		comboBox.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		comboBox.setBounds(473, 21, 123, 44);
 		add(comboBox);
+		
 	}
 
 	public static void docDuLieu() {
@@ -557,5 +560,47 @@ public class TrangQLKhachHangPanel extends JPanel implements ActionListener, Mou
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public void windowOpened(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowClosing(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowClosed(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowIconified(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowDeiconified(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowActivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowDeactivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }
