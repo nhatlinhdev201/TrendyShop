@@ -14,6 +14,8 @@ import entities.NhanVien;
 
 public class Dao_NhanVien {
 	public Connection connection;
+	PreparedStatement preStm;
+	ResultSet rs;
 
 	public Dao_NhanVien() {
 		connection = ConnectDataBase.getInstance().connection;
@@ -92,5 +94,54 @@ public class Dao_NhanVien {
 			e.printStackTrace();
 		}
 		return tenNhanVien;
+	}
+	
+	public boolean themNhanVien(NhanVien nv) {
+		int n = 0;
+		try {
+			connection = ConnectDataBase.getInstance().connection;
+			String sql = "insert into NhanVien values(?,?,?,?,?,?,?,?,?,?,?,?)";
+			preStm = connection.prepareStatement(sql);
+			preStm.setString(1, nv.getMaNhanVien());
+			preStm.setString(2, nv.getHoTen());
+			preStm.setDate(3, (nv.getNgaySinh()));
+			preStm.setString(4, nv.getSoCCCD());
+			preStm.setString(5, nv.getSoDienThoai());
+			preStm.setString(6, nv.getEmail());
+			preStm.setString(7, nv.getDiaChi());
+			preStm.setString(8, nv.getChucVu());
+			preStm.setBoolean(9, nv.isTrangThai());
+			preStm.setString(10, nv.getMatKhau());
+			preStm.setBoolean(11, nv.isPhanQuyen());
+			preStm.setString(12, nv.getAnhDaiDien());
+			n = preStm.executeUpdate();
+		} catch (Exception e) {
+		}
+		return n > 0;
+	}
+	public boolean updateNhanVien(NhanVien nhanVien) {
+	    try {
+	        String updateQuery = "UPDATE NhanVien "
+	                + "SET soDienThoai = ?, ngaySinh = ?, hoTen = ?, email = ?, diaChi = ?, trangThai = ?, soCCCD = ? "
+	                + "WHERE maNhanVien = ?";
+
+	        try (PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)) {
+	            preparedStatement.setString(1, nhanVien.getSoDienThoai());
+	            preparedStatement.setDate(2, nhanVien.getNgaySinh());
+	            preparedStatement.setString(3, nhanVien.getHoTen());
+	            preparedStatement.setString(4, nhanVien.getEmail());
+	            preparedStatement.setString(5, nhanVien.getDiaChi());
+	            preparedStatement.setBoolean(6, nhanVien.isTrangThai());
+	            preparedStatement.setString(7, nhanVien.getSoCCCD());
+	            preparedStatement.setString(8, nhanVien.getMaNhanVien());
+
+	            int n = preparedStatement.executeUpdate();
+	            return n > 0;
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        // Xử lý hoặc ghi log lỗi ở đây.
+	    }
+	    return false;
 	}
 }

@@ -146,7 +146,7 @@ public class TrangHangCho extends JFrame implements ActionListener {
 
 		table.getColumnModel().getColumn(2).setCellRenderer(new ButtonRenderer());
 		table.getColumnModel().getColumn(2).setCellEditor(new ButtonEditor());
-		panel.add(new JScrollPane(table), BorderLayout.CENTER);
+		panel.add(new JScrollPane(table), BorderLayout.NORTH);
 
 		list_HoaDon = dao_HoaDon.getHoaDonChuaThanhToan();
 		for (HoaDon hoaDon : list_HoaDon) {

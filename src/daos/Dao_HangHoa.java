@@ -285,14 +285,15 @@ public class Dao_HangHoa {
 			e.printStackTrace();
 		}
 		return hangHoa;
-
 	}
-	
+
 	/**
 	 * Tìm hàng hóa có mã lớn nhất
 	 * @return
 	 */
+
 	public String getMaHangHoaNew() {
+
 		try {
 			PreparedStatement statement = connection
 					.prepareStatement("select top(1) maHangHoa from HangHoa order by maHangHoa desc");

@@ -19,7 +19,6 @@ import entities.KhachHang;
 import entities.NhanVien;
 import entities.VoucherGiamGia;
 
-import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -27,7 +26,6 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.ActionMap;
 import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
 import javax.swing.DefaultCellEditor;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.Icon;
@@ -36,12 +34,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -49,7 +43,6 @@ import java.awt.event.ActionEvent;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
@@ -78,7 +71,7 @@ public class TrangBanHangJPanel extends JPanel
 	private JTextField txt_TienNhan;
 
 	private JButton btn_TimHoaDon;
-	private TrangTimKiemHoaDon trangTimKiemHoaDon;
+//	private TrangTimKiemHoaDon trangTimKiemHoaDon;
 	private JPanel currentContent;
 	private JButton btn_HangCho;
 	private JLabel lbl_NgayLapHD;
@@ -246,8 +239,7 @@ public class TrangBanHangJPanel extends JPanel
 		spinner_SoLuong = new JSpinner(model_Spinner);
 		spinner_SoLuong.setBounds(236, 100, 243, 30);
 		panel_NhapThongTinMatHang.add(spinner_SoLuong);
-
-//		
+	
 
 //		2 nút thêm và refresh lại các jtextfield ở trên
 //		Tìm hiểu phần button icon để tạo các nút
@@ -503,7 +495,7 @@ public class TrangBanHangJPanel extends JPanel
 			loadToanBoDuLieuTrongHoaDonCho();
 		}
 
-		trangTimKiemHoaDon = new TrangTimKiemHoaDon(nv);
+//		trangTimKiemHoaDon = new TrangTimKiemHoaDon(nv);
 //
 		btn_TimHoaDon.addActionListener(this);
 		btn_HangCho.addActionListener(this);
@@ -530,7 +522,7 @@ public class TrangBanHangJPanel extends JPanel
 		// TODO Auto-generated method stub
 		Object o = e.getSource();
 		if (o.equals(btn_TimHoaDon)) {
-			switchContent(trangTimKiemHoaDon);
+			switchContent(new TrangTimKiemHoaDon(nv));
 
 		} else if (o.equals(btn_HangCho)) {
 			taoHangCho();
@@ -732,6 +724,10 @@ public class TrangBanHangJPanel extends JPanel
 					tinhTongCacThanhTien();
 					tinhDiemTichLuy();
 					model.removeHangHoa(selectedRow);
+					txt_MaHangHoa.setText("");
+					comboBox_KichThuoc.removeAllItems();
+					spinner_SoLuong.setValue(1);
+
 				}
 
 			}
@@ -810,7 +806,9 @@ public class TrangBanHangJPanel extends JPanel
 				HangHoa hh = dao_HangHoa.getHangHoaByMaHangHao(chiTietHoaDon.getHangHoa().getMaHangHoa());
 				chiTietHoaDon.setHoaDon(hoaDon);
 				chiTietHoaDon.setHangHoa(hh);
+				
 			}
+			dao_ChiTietHoaDon.deleteChiTietHoaDon(hoaDonTruyen.getMaHoaDon());
 			if (kh.getMaKhachHang().equals("KH0000"))
 				kh = null;
 			if (kh.getMaKhachHang().startsWith("KC")) {
@@ -835,12 +833,16 @@ public class TrangBanHangJPanel extends JPanel
 
 //	Chua tìm dao của sđt
 	public void timThongTinKhachHang(String sdt) {
-		if (sdt.trim().equals("")) {
-			kh = null;
-			hoaDon.setKhachHang(kh);
-			JOptionPane.showMessageDialog(this, "Vui lòng nhật số điện thoại");
-			lbl_TenKhachHang.setText("");
-			return;
+//		if (sdt.trim().equals("")) {
+//			kh = null;
+//			hoaDon.setKhachHang(kh);
+//			JOptionPane.showMessageDialog(this, "Vui lòng nhật số điện thoại");
+//			lbl_TenKhachHang.setText("");
+//			return;
+//		}
+		if(!sdt.matches("^(0)\\d{9}$")) {
+			JOptionPane.showMessageDialog(this, "Số điện thoại phải là số!");
+			return ;
 		}
 		kh = dao_KhachHang.getKhachHangTheoSDT(sdt);
 		hoaDon.setKhachHang(kh);
@@ -868,6 +870,12 @@ public class TrangBanHangJPanel extends JPanel
 			txt_MaHangHoa.requestFocus();
 			return false;
 		} else {
+			if(!txt_MaHangHoa.getText().matches("^[a-zA-Z0-9]+$")) {
+				JOptionPane.showMessageDialog(this, "Mã hàng hóa phải là chữ và số");
+				txt_MaHangHoa.selectAll();
+				txt_MaHangHoa.requestFocus();
+				return false;
+			}else
 			if (txt_MaHangHoa.getText().length() < 6) {
 				JOptionPane.showMessageDialog(this, "Không tồn tại mã hàng hóa: " + ma);
 				txt_MaHangHoa.selectAll();
@@ -906,7 +914,7 @@ public class TrangBanHangJPanel extends JPanel
 
 //		Tạo ra arraylist chi tiết hóa đơn
 		int soLuong = (int) spinner_SoLuong.getValue();
-		ChiTietHoaDon ct = new ChiTietHoaDon(hh, hoaDon, soLuong, hh.getDonGiaNhap());
+		ChiTietHoaDon ct = new ChiTietHoaDon(hh, hoaDon, soLuong, hh.getDonGiaNhap()*(1+0.7));
 
 //		kiểm tra số lượng hàng tồn
 		if (!kiemTraSoLuongHangTon(ct))
@@ -939,7 +947,6 @@ public class TrangBanHangJPanel extends JPanel
 	}
 
 	public void thanhToanHoaDon() {
-//		boolean ktHoaDonTonTaiCSDL = dao_HoaDon.getHoaDonTheoMa(hoaDon.getMaHoaDon()).get(0)==null;
 
 		if (lbl_TenKhachHang.getText().equals("")) {
 			kh = null;
@@ -970,7 +977,7 @@ public class TrangBanHangJPanel extends JPanel
 		}
 		int choice = JOptionPane.showConfirmDialog(null,
 				"Xác nhận thanh toán: " + lbl_TongTienTra.getText() + " VNĐ \n Tiền thừa: "
-						+ (hoaDon.getTongThanhTien() - Double.parseDouble(txt_TienNhan.getText())) + " VNĐ",
+						+decimalFormat.format( (Double.parseDouble(txt_TienNhan.getText())-hoaDon.getTongThanhTien())) + " VNĐ",
 				"Xác nhận", JOptionPane.YES_NO_OPTION);
 		if (choice == JOptionPane.YES_OPTION) {
 			hoaDon.setTrangThaiThanhToan(true);
@@ -980,8 +987,13 @@ public class TrangBanHangJPanel extends JPanel
 				vc = dao_VoucherGiamGia.getTheoMaVouCher("VC0000");
 			hoaDon.setKhachHang(kh);
 			hoaDon.setVoucher(vc);
-
-			boolean themHoaDon = dao_HoaDon.insertHoaDon(hoaDon);
+			boolean themHoaDon;
+			if(dao_HoaDon.getHoaDonTheoMa(hoaDon.getMaHoaDon()).size()<=0) {
+				
+				themHoaDon = dao_HoaDon.insertHoaDon(hoaDon);
+			}else {
+				themHoaDon = dao_HoaDon.updateHoaDon(hoaDon);
+			}
 
 			int i = 0;
 			for (ChiTietHoaDon chiTietHoaDon : listChiTietHD) {
@@ -1023,16 +1035,19 @@ public class TrangBanHangJPanel extends JPanel
 					diemTichLuy = kh.getDiemTichLuy();
 					double tongTienTra = tongTienHang + tongTienThue - tongTienGiamGia;
 					if (diemTichLuy > (tongTienTra / 2)) {
-						diemTichLuy -= tongTienTra / 2;
+						diemTichLuy = tongTienTra / 2;
 					}
+					
 				}
+				
+				kh.setDiemTichLuy(kh.getDiemTichLuy()-(float) diemTichLuy);
 				String diemTichLuyTangThem = "" + hoaDon.getTongThanhTien() * 0.001;
 				if (diemTichLuyTangThem.contains(".")) {
 					diemTichLuyTangThem = diemTichLuyTangThem.split("\\.")[0];
 				}
-
-				diemTichLuy += Double.parseDouble(diemTichLuyTangThem);
-				kh.setDiemTichLuy((float) diemTichLuy);
+				diemTichLuy = Double.parseDouble(diemTichLuyTangThem);
+				if(kh.isTrangThai())
+					kh.setDiemTichLuy(kh.getDiemTichLuy()+(float) diemTichLuy);
 				dao_KhachHang.updateKhachHang(kh);
 			}
 			if (themHoaDon) {
@@ -1197,7 +1212,18 @@ public class TrangBanHangJPanel extends JPanel
         actionMap.put("F4", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            	
+            	tinhDiemTichLuy();
+    			themHangHoa();
+            }
+        });
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_F5, 0), "F5");
+        actionMap.put("F5", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	txt_MaHangHoa.setText("");
+    			comboBox_KichThuoc.removeAllItems();
+    			spinner_SoLuong.setValue(1);
+
             }
         });
 	}
