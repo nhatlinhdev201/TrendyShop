@@ -15,9 +15,9 @@ public class MainScreen {
 			@Override
 			public void run() {
 				try {
-					SplashScreen m = new SplashScreen();
-					m.setIconImage(
-							new ImageIcon(getClass().getResource("/images/logoShop.png")).getImage());
+//					SplashScreen m = new SplashScreen();
+//					m.setIconImage(
+//							new ImageIcon(getClass().getResource("/images/logoShop.png")).getImage());
 			         TrangDangNhap m1 = new TrangDangNhap();
 //			         m.setVisible(true);
 //			         m.iterate();
