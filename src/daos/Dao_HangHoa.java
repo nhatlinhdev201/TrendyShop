@@ -250,13 +250,8 @@ public class Dao_HangHoa {
 				hangHoa.setThuongHieu(resultSet.getString("thuongHieu").trim());
 				hangHoa.setXuatXu(resultSet.getString("xuatXu").trim());
 				hangHoa.setChatLieu(resultSet.getString("chatLieu").trim());
-//<<<<<<< HEAD
-//				hangHoa.setChiTietMoTa(resultSet.getString("chiTietMoTa"));
-//				hangHoa.setHinhAnh(resultSet.getString("hinhAnh").trim());
-//=======
 				hangHoa.setChiTietMoTa(resultSet.getString("chiTietMoTa").trim());
 				hangHoa.setHinhAnh(resultSet.getString("hinhAnh"));
-//>>>>>>> origin/main
 				hangHoa.setMaNhaCungCap(resultSet.getString("maNhaCungCap").trim());
 				hangHoa.setKichCo(resultSet.getString("kichCo").trim());
 				hangHoa.setMauSac(resultSet.getString("mauSac").trim());
@@ -271,20 +266,13 @@ public class Dao_HangHoa {
 		}
 		return hangHoa;
 
-	}
-//<<<<<<< HEAD
-	
+	}	
 	/**
 	 * Tìm hàng hóa có mã lớn nhất
 	 * @return
 	 */
 	public int getMaHangHoaNew() {
 		int maHangHoa=0;
-//=======
-
-//	public String getMaHangHoaNew() {
-//		String maHangHoa = "";
-//>>>>>>> origin/main
 		try {
 			PreparedStatement statement = connection
 					.prepareStatement("select top(1) maHangHoa from HangHoa order by maHangHoa desc");
@@ -304,7 +292,6 @@ public class Dao_HangHoa {
 		return maHangHoa;
 
 	}
-//<<<<<<< HEAD
 	
 	
 	/**
@@ -312,9 +299,6 @@ public class Dao_HangHoa {
 	 * @param mahh
 	 * @return
 	 */
-//=======
-
-//>>>>>>> origin/main
 	public boolean deleteHangHoa(String mahh) {
 		try {
 			PreparedStatement preparedStatement = connection
