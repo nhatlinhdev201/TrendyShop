@@ -19,7 +19,6 @@ import entities.KhachHang;
 import entities.NhanVien;
 import entities.VoucherGiamGia;
 
-import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -27,7 +26,6 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.ActionMap;
 import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
 import javax.swing.DefaultCellEditor;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.Icon;
@@ -36,12 +34,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -49,7 +43,6 @@ import java.awt.event.ActionEvent;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
@@ -840,13 +833,13 @@ public class TrangBanHangJPanel extends JPanel
 
 //	Chua tìm dao của sđt
 	public void timThongTinKhachHang(String sdt) {
-		if (sdt.trim().equals("")) {
-			kh = null;
-			hoaDon.setKhachHang(kh);
-			JOptionPane.showMessageDialog(this, "Vui lòng nhật số điện thoại");
-			lbl_TenKhachHang.setText("");
-			return;
-		}
+//		if (sdt.trim().equals("")) {
+//			kh = null;
+//			hoaDon.setKhachHang(kh);
+//			JOptionPane.showMessageDialog(this, "Vui lòng nhật số điện thoại");
+//			lbl_TenKhachHang.setText("");
+//			return;
+//		}
 		if(!sdt.matches("^(0)\\d{9}$")) {
 			JOptionPane.showMessageDialog(this, "Số điện thoại phải là số!");
 			return ;

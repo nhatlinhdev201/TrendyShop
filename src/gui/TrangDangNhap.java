@@ -44,18 +44,18 @@ public class TrangDangNhap extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					TrangDangNhap frame = new TrangDangNhap();
-//					frame.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					TrangDangNhap frame = new TrangDangNhap();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
 
 	/**
 	 * Create the frame.
@@ -141,6 +141,7 @@ public class TrangDangNhap extends JFrame {
 				String tentaiKhoan = txt_taiKhoan.getText();
 				String matKhau = new String(passwordField.getPassword());
 				taiKhoan = dao_NV.getNhanVienTheoMa(tentaiKhoan);
+				if(taiKhoan.getMaNhanVien()==null) taiKhoan=null;
 				if (tentaiKhoan.trim().equals("") && matKhau.trim().equals("")) {
 					JOptionPane.showMessageDialog(null, "Tài khoản mật khẩu không được để trống !", "Thông báo",
 							JOptionPane.ERROR_MESSAGE, new ImageIcon("images/warning.png"));
@@ -163,17 +164,14 @@ public class TrangDangNhap extends JFrame {
 	}
 
 	public boolean kiemTraDangNhap(String tenDangNhap, String matKhau) {
-		if (taiKhoan != null) {
+		if (taiKhoan != null && taiKhoan.getMatKhau().equals(matKhau)) {
 			if (!taiKhoan.isPhanQuyen()) {
-//			TrangThaiDangNhapNhanVien = true;
-
 				TrangChinhNVBanHang.nv = taiKhoan;
 				TrangChinhNVBanHang trangChinhNVBanHang = new TrangChinhNVBanHang();
 				this.dispose();
 				trangChinhNVBanHang.setVisible(true);
 				return true;
 			} else  {
-//			TrangThaiDangNhapQuanLy = true;
 				this.dispose();
 				TrangChinhNVQuanLy.nv = taiKhoan;
 				TrangChinhNVQuanLy trangChinhNVQuanLy2 = new TrangChinhNVQuanLy();
@@ -182,6 +180,7 @@ public class TrangDangNhap extends JFrame {
 				return true;
 			}
 		} else {
+			
 			JOptionPane.showMessageDialog(null, "Tài khoản mật khẩu không đúng !", "Thông báo",
 					JOptionPane.ERROR_MESSAGE, new ImageIcon("images/warning.png"));
 		}
@@ -199,27 +198,4 @@ public class TrangDangNhap extends JFrame {
 		} else
 			return true;
 	}
-
-//	public void loadTaiKhoan(String maNhanVien, String matKhau) {
-//		try {
-//			connection = ConnectDataBase.getInstance().connection;
-//			PreparedStatement stmt = null;
-//			String sql = "SELECT * FROM dbo.NhanVien WHERE maNhanVien=? AND matKhau=?";
-//
-//			stmt = connection.prepareStatement(sql);
-//			stmt.setString(1, maNhanVien);
-//			stmt.setString(2, matKhau);
-//			ResultSet rs = stmt.executeQuery();
-//			while (rs.next()) {
-//				String ten = rs.getString("maNhanVien").trim(); // Thay đổi chỉ số cột nếu cần thiết
-//				String mk = rs.getString("matKhau").trim();
-//				boolean loaiTk = rs.getBoolean("phanQuyen");
-//				taiKhoan = dao_NV.getNhanVienTheoMa(maNhanVien);
-//			}
-//		} catch (Exception e) {
-//			// Xử lý ngoại lệ (exception handling) nên được thực hiện cụ thể hơn để có thể
-//			// hiểu và xử lý lỗi một cách chính xác.
-//			e.printStackTrace();
-//		}
-//	}
 }

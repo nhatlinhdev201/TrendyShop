@@ -150,8 +150,7 @@ public class TrangChinhNVBanHang extends JFrame implements ActionListener {
 		mainMenu.add(btnMenuCnDangXuatTK);
 
 		btnMenuCnXemThongTinTK = new JButton("");
-		btnMenuCnXemThongTinTK.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/images/avt-nv1.jpg"))
-				.getImage().getScaledInstance(25, 20, Image.SCALE_SMOOTH)));
+		btnMenuCnXemThongTinTK= createButtonWithIcon(nv.getAnhDaiDien(), 30, 30);
 		btnMenuCnXemThongTinTK.setBounds(1272, 0, 30, 26);
 		mainMenu.add(btnMenuCnXemThongTinTK);
 		// <========================================================================================>
@@ -202,7 +201,7 @@ public class TrangChinhNVBanHang extends JFrame implements ActionListener {
 		} else if (o.equals(btnMenuCnQlyThongKe)) {
 			switchContent(trangThongKeNVBanHangJPanel);
 		} else if (o.equals(btnMenuCnXemThongTinTK)) {
-			new TrangThongTinDangNhap().setVisible(true);
+			new TrangThongTinDangNhap(nv).setVisible(true);
 		} else if (o.equals(btnMenuCnDangXuatTK)) {
 			this.setVisible(false);
 			JOptionPane.showMessageDialog(this, "Đăng xuất thành công");
@@ -210,5 +209,16 @@ public class TrangChinhNVBanHang extends JFrame implements ActionListener {
 		} else {
 			System.out.println("Chua co chuc nang");
 		}
+	}
+	
+//	Hàm thêm icon vào trong button
+	public static JButton createButtonWithIcon(String iconPath, int width, int height) {
+		ImageIcon originalIcon = new ImageIcon(iconPath);
+		Image scaledImage = originalIcon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
+		ImageIcon scaledIcon = new ImageIcon(scaledImage);
+
+		JButton button = new JButton(scaledIcon);
+
+		return button;
 	}
 }

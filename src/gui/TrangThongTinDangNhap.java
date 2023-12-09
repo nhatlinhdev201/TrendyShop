@@ -26,28 +26,11 @@ import java.awt.Color;
 public class TrangThongTinDangNhap extends JFrame {
 
 	private JPanel contentPane;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					TrangThongTinDangNhap frame = new TrangThongTinDangNhap();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
 	/**
 	 * Create the frame.
 	 */
-	public TrangThongTinDangNhap() {
-		NhanVien nv = TrangChinhNVBanHang.nv;
+	public TrangThongTinDangNhap(NhanVien nv) {
+//		NhanVien nv = TrangChinhNVBanHang.nv;
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		
 		setSize(542, 306);
@@ -86,7 +69,7 @@ public class TrangThongTinDangNhap extends JFrame {
 		
 		JLabel lbl_MaNhanVien = new JLabel(nv.getMaNhanVien());
 		lbl_MaNhanVien.setFont(new Font("Monospaced", Font.PLAIN, 13));
-		lbl_MaNhanVien.setBounds(328, 90, 147, 14);
+		lbl_MaNhanVien.setBounds(328, 90, 167, 14);
 		contentPane.add(lbl_MaNhanVien);
 		
 		JLabel lblNewLabel_3_2 = new JLabel("Họ tên:");
@@ -96,7 +79,7 @@ public class TrangThongTinDangNhap extends JFrame {
 		
 		JLabel lbl_HoTen = new JLabel(nv.getHoTen());
 		lbl_HoTen.setFont(new Font("Monospaced", Font.PLAIN, 13));
-		lbl_HoTen.setBounds(328, 115, 147, 14);
+		lbl_HoTen.setBounds(328, 115, 167, 14);
 		contentPane.add(lbl_HoTen);
 		
 		JLabel lblNewLabel_3_4 = new JLabel("CCCD:");
@@ -106,7 +89,7 @@ public class TrangThongTinDangNhap extends JFrame {
 		
 		JLabel lbl_CCCD = new JLabel(nv.getSoCCCD());
 		lbl_CCCD.setFont(new Font("Monospaced", Font.PLAIN, 13));
-		lbl_CCCD.setBounds(328, 140, 147, 14);
+		lbl_CCCD.setBounds(328, 140, 167, 14);
 		contentPane.add(lbl_CCCD);
 		
 		
@@ -118,7 +101,7 @@ public class TrangThongTinDangNhap extends JFrame {
 		
 		JLabel lbl_NgaySinh = new JLabel(dateFormat.format(nv.getNgaySinh()));
 		lbl_NgaySinh.setFont(new Font("Monospaced", Font.PLAIN, 13));
-		lbl_NgaySinh.setBounds(328, 165, 147, 14);
+		lbl_NgaySinh.setBounds(328, 165, 167, 14);
 		contentPane.add(lbl_NgaySinh);
 		
 		JLabel lblNewLabel_3_10 = new JLabel("SĐT:");
@@ -128,7 +111,7 @@ public class TrangThongTinDangNhap extends JFrame {
 		
 		JLabel lbl_SDT = new JLabel(nv.getSoDienThoai());
 		lbl_SDT.setFont(new Font("Monospaced", Font.PLAIN, 13));
-		lbl_SDT.setBounds(328, 190, 147, 14);
+		lbl_SDT.setBounds(328, 190, 167, 14);
 		contentPane.add(lbl_SDT);
 		
 		JLabel lblNewLabel_3_12 = new JLabel("Chức vụ:");
@@ -142,7 +125,7 @@ public class TrangThongTinDangNhap extends JFrame {
 		}else chucVu  ="Nhân viên bán hàng";
 		JLabel lbl_ChucVu = new JLabel(chucVu);
 		lbl_ChucVu.setFont(new Font("Monospaced", Font.PLAIN, 13));
-		lbl_ChucVu.setBounds(328, 215, 147, 14);
+		lbl_ChucVu.setBounds(328, 215, 167, 14);
 		contentPane.add(lbl_ChucVu);
 		
 		// Đọc hình ảnh từ file hoặc URL
