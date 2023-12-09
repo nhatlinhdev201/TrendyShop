@@ -18,7 +18,6 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import constance.SetBoundsJFrameMain;
-import constance.SetBountJPanel;
 import daos.Dao_NhanVien;
 import entities.NhanVien;
 import gui.TrangChuPanel;
@@ -26,9 +25,6 @@ import gui.TrangDangNhap;
 import gui.TrangHuongDanJPanel;
 import gui.TrangQLKhachHangPanel;
 import gui.TrangThongTinDangNhap;
-import gui.admin.TrangQLNhanVienJPanel;
-import gui.admin.TrangQuanLyHangHoaJPanel;
-import gui.admin.TrangThongKeNVQuanLyJPanel;
 
 public class TrangChinhNVBanHang extends JFrame implements ActionListener {
 

@@ -71,7 +71,8 @@ public class ThongKeDoanhThuServices {
 		tongDoanhThu = dao_ThongKeDoanhThu.TongDoanhThuTrongNgayCuaNhanVien(today, nhanVien.getMaNhanVien());
 		tongSoHoaDonDuocLap = dao_ThongKeDoanhThu.TongHoaDonDocNhanVienLapTrongNgay(today, nhanVien.getMaNhanVien());
 		tongKhyuenMai = dao_ThongKeDoanhThu.TongTienGiamGiaTrongNgayTheoNhanVien(today, nhanVien.getMaNhanVien());
-		tongThue = tongDoanhThu * 0.1f;
+		double gia = (tongTienNhapHang+0.7f*tongTienNhapHang)*0.1f;
+		tongThue = (tongTienNhapHang+0.7f*tongTienNhapHang)*0.1f;
 		tongTienLai = tongDoanhThu - tongTienNhapHang - tongKhyuenMai - tongThue;
 
 		model.setMaNhanVien(maNhanVien);
@@ -104,7 +105,7 @@ public class ThongKeDoanhThuServices {
 		tongDoanhThu = dao_ThongKeDoanhThu.TongDoanhThuTrongThangCuaNhanVien(thang, namCuaThang, maNhanVien);
 		tongSoHoaDonDuocLap = dao_ThongKeDoanhThu.TongHoaDonDuocNhanVienLapTrongThang(thang, namCuaThang, maNhanVien);
 		tongKhyuenMai = dao_ThongKeDoanhThu.TongTienGiamGiaTrongThangTheoNhanVien(thang, namCuaThang, maNhanVien);
-		tongThue = tongDoanhThu * 0.1f;
+		tongThue = (tongTienNhapHang+0.7f*tongTienNhapHang)*0.1f;
 		tongTienLai = tongDoanhThu - tongTienNhapHang - tongKhyuenMai - tongThue;
 
 		model.setMaNhanVien(maNhanVien);
@@ -137,7 +138,7 @@ public class ThongKeDoanhThuServices {
 		tongDoanhThu = dao_ThongKeDoanhThu.TongDoanhThuTrongNamCuaNhanVien(nam, maNhanVien);
 		tongSoHoaDonDuocLap = dao_ThongKeDoanhThu.TongHoaDonDuocNhanVienLapTrongNam(nam, maNhanVien);
 		tongKhyuenMai = dao_ThongKeDoanhThu.TongTienGiamGiaTrongNamTheoNhanVien(nam, maNhanVien);
-		tongThue = tongDoanhThu * 0.1f;
+		tongThue = (tongTienNhapHang+0.7f*tongTienNhapHang)*0.1f;
 		tongTienLai = tongDoanhThu - tongTienNhapHang - tongKhyuenMai - tongThue;
 
 		model.setMaNhanVien(maNhanVien);
@@ -171,7 +172,7 @@ public class ThongKeDoanhThuServices {
 		tongTienNhapHang = dao_ThongKeDoanhThu.TongVonNhapHangTrongNgay(ngayThongKe);
 		tongSoHoaDonDuocLap = dao_ThongKeDoanhThu.TongHoaDonTrongNgay(ngayThongKe);
 		tongKhyuenMai = dao_ThongKeDoanhThu.TongTienGiamGiaTrongNgay(ngayThongKe);
-		tongThue = tongDoanhThu * 0.1f;
+		tongThue = (tongTienNhapHang+0.7f*tongTienNhapHang)*0.1f;
 		tongTienLai = tongDoanhThu - tongTienNhapHang - tongKhyuenMai - tongThue;
 		model.setMaNhanVien(maNhanVien);
 		model.setTenNhanVien(tenNhanVien);
@@ -203,7 +204,7 @@ public class ThongKeDoanhThuServices {
 		tongTienNhapHang = dao_ThongKeDoanhThu.TongVonNhapHangTrongThang(thang, namCuaThang);
 		tongSoHoaDonDuocLap = dao_ThongKeDoanhThu.TongHoaDonTrongThang(thang, namCuaThang);
 		tongKhyuenMai = dao_ThongKeDoanhThu.TongTienGiamGiaTrongThang(thang, namCuaThang);
-		tongThue = tongDoanhThu * 0.1f;
+		tongThue = (tongTienNhapHang+0.7f*tongTienNhapHang)*0.1f;
 		tongTienLai = tongDoanhThu - tongTienNhapHang - tongKhyuenMai - tongThue;
 		model.setMaNhanVien(maNhanVien);
 		model.setTenNhanVien(tenNhanVien);
@@ -236,7 +237,7 @@ public class ThongKeDoanhThuServices {
 		tongTienNhapHang = dao_ThongKeDoanhThu.TongVonNhapHangTrongNam(nam);
 		tongSoHoaDonDuocLap = dao_ThongKeDoanhThu.TongHoaDonDuocLapTrongNam(nam);
 		tongKhyuenMai = dao_ThongKeDoanhThu.TongTienGiamGiaTrongNam(nam);
-		tongThue = tongDoanhThu * 0.1f;
+		tongThue = (tongTienNhapHang+0.7f*tongTienNhapHang)*0.1f;
 		tongTienLai = tongDoanhThu - tongTienNhapHang - tongKhyuenMai - tongThue;
 		model.setMaNhanVien(maNhanVien);
 		model.setTenNhanVien(tenNhanVien);

@@ -55,7 +55,7 @@ public class ThongKeMatHangServices {
 	
 	private JFreeChart veBieuDoThongKeMatHangTheoNgay(CategoryDataset dataset) {
         JFreeChart chart =  ChartFactory.createBarChart(
-                "Biểu đồ thống kê mặt hàng",
+                "Top mặt hàng bán chạy trong ngày",
                 "Mã hàng hóa",
                 "Số lượng",
                 dataset
@@ -91,7 +91,7 @@ public class ThongKeMatHangServices {
 	
 	private JFreeChart veBieuDoThongKeMatHangTheoThang(CategoryDataset dataset) {
         JFreeChart chart =  ChartFactory.createBarChart(
-                "Biểu đồ thống kê mặt hàng",
+                "TOP mặt hàng bán chạy trong tháng",
                 "Mã hàng hóa",
                 "Số lượng",
                 dataset
@@ -137,7 +137,7 @@ public class ThongKeMatHangServices {
 	
 	private JFreeChart veBieuDoThongKeMatHangTheoNam(CategoryDataset dataset) {
         JFreeChart chart =  ChartFactory.createBarChart(
-                "Biểu đồ thống kê mặt hàng",
+                "Top mặt hàng bán chạy trong năm",
                 "Mã hàng hóa",
                 "Số lượng",
                 dataset

@@ -45,7 +45,6 @@ public class TrangChinhNVQuanLy extends JFrame implements ActionListener{
 	private TrangQLKhachHangPanel trangQLKhachHangPanel;
 	private TrangQLNhanVienJPanel trangQLNhanVienJPanel;
 	private TrangQuanLyHangHoaJPanel trangQuanLyHangHoaJPanel;
-	private TrangThongKeNVQuanLyJPanel trangThongKeNVQuanLyJPanel;
 	private JButton btnMenuCnXemThongTinTK;
 	private JButton btnMenuCnDangXuatTK;
 	private TrangQuanLyVoucher trangQuanLyVoucher;
@@ -178,7 +177,6 @@ public class TrangChinhNVQuanLy extends JFrame implements ActionListener{
 		trangQLKhachHangPanel = new TrangQLKhachHangPanel();
 		trangQLNhanVienJPanel = new TrangQLNhanVienJPanel();
 		trangQuanLyHangHoaJPanel = new TrangQuanLyHangHoaJPanel();
-		trangThongKeNVQuanLyJPanel = new TrangThongKeNVQuanLyJPanel();
 		trangThongKeNVQuanLy = new TrangThongKeNVQuanLy();
 		trangQuanLyVoucher = new TrangQuanLyVoucher();
 		switchContent(trangChuPanel);

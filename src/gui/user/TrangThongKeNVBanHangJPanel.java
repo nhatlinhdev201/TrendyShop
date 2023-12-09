@@ -11,6 +11,7 @@ import entities.NhanVien;
 import services.ThongKeNVBanHangServices;
 
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -24,6 +25,7 @@ import javax.swing.table.TableColumn;
 import javax.swing.border.EtchedBorder;
 import javax.swing.JCheckBox;
 import javax.swing.JTextField;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.BorderLayout;
 import com.toedter.calendar.JDateChooser;
@@ -163,6 +165,13 @@ public class TrangThongKeNVBanHangJPanel extends JPanel implements ActionListene
 		add(panelBieuDo);
 
 		btnLamMoi = new JButton("Làm mới ");
+		btnLamMoi.setBackground(Color.ORANGE);
+		btnLamMoi.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        String iconPath_capnhat = "/images/updated.png";
+		ImageIcon iconCapNhat = new ImageIcon(this.getClass().getResource(iconPath_capnhat)); 
+		Image scaledIconCapNhat = iconCapNhat.getImage().getScaledInstance(27, 27, Image.SCALE_SMOOTH); 
+		ImageIcon resizedIconCapNhat = new ImageIcon(scaledIconCapNhat);
+		btnLamMoi.setIcon(resizedIconCapNhat);
 		btnLamMoi.setBounds(958, 633, 162, 33);
 		btnLamMoi.addActionListener(this);
 		add(btnLamMoi);
