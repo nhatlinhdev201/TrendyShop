@@ -323,16 +323,16 @@ public class TrangQLKhachHangPanel extends JPanel implements ActionListener, Mou
 		btn_load.setBackground(new Color(135, 206, 235));
 		btn_load.setBounds(317, 611, 139, 53);
 		String iconPath_load = "/images/loading.png";
-		ImageIcon iconLoad = new ImageIcon(this.getClass().getResource(iconPath_load)); // Sử dụng getResource để
-																								// lấy đường dẫn từ
-																								// resources của ứng
-																								// dụng
+//		ImageIcon iconLoad = new ImageIcon(this.getClass().getResource(iconPath_load)); // Sử dụng getResource để
+//																								// lấy đường dẫn từ
+//																								// resources của ứng
+//																								// dụng
+//
+//		Image scaledIconLoad = iconLoad.getImage().getScaledInstance(33, 33, Image.SCALE_SMOOTH); // Thiết lập
+//																										// kích thước
+//		ImageIcon resizedIconLoad = new ImageIcon(scaledIconLoad);
 
-		Image scaledIconLoad = iconLoad.getImage().getScaledInstance(33, 33, Image.SCALE_SMOOTH); // Thiết lập
-																										// kích thước
-		ImageIcon resizedIconLoad = new ImageIcon(scaledIconLoad);
-
-		btn_load.setIcon(resizedIconLoad);
+//		btn_load.setIcon(resizedIconLoad);
 		add(btn_load);
 
 		btn_capNhat.addActionListener(this);

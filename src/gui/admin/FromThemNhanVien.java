@@ -63,7 +63,6 @@ public class FromThemNhanVien extends JFrame implements WindowListener {
 	 * @param parentFrame
 	 */
 	public FromThemNhanVien() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 697, 557);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(152, 251, 152));
