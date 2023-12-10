@@ -55,7 +55,6 @@ public class FromThemKhachHang extends JFrame implements WindowListener{
 	 * Create the frame.
 	 */
 	public FromThemKhachHang() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 627, 404);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(152, 251, 152));

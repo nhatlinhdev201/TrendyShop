@@ -24,7 +24,6 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.InputMap;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import constance.SetBountJPanel;
@@ -48,12 +47,15 @@ import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.text.AbstractDocument;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DocumentFilter;
 
 import com.toedter.calendar.JDateChooser;
 
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
-import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 
 public class TrangTimKiemHoaDon extends JPanel implements ActionListener{
@@ -141,6 +143,7 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener{
 		panel_1.setLayout(null);
 
 		txt_MaHoaDon = new JTextField();
+		txt_MaHoaDon = createRestrictedTextField(txt_MaHoaDon, "(^[Hh]{0,1}$)|(^[Hh]{1}[Dd]{1})|(^[Hh]{1}[Dd]{1}\\d{0,4}$)");
 		txt_MaHoaDon.setForeground(new Color(0, 0, 0));
 		txt_MaHoaDon.setBounds(10, 14, 200, 25);
 		panel_1.add(txt_MaHoaDon);
@@ -153,6 +156,7 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener{
 		panel.add(panel_1_1);
 
 		txt_SDT = new JTextField();
+		txt_SDT = createRestrictedTextField(txt_SDT, "^(0){0,1}$|^(0)\\d{0,9}$");
 		txt_SDT.setForeground(Color.BLACK);
 		txt_SDT.setColumns(10);
 		txt_SDT.setBounds(10, 14, 200, 25);
@@ -165,6 +169,7 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener{
 		panel.add(panel_1_2);
 
 		txt_maNV = new JTextField();
+		txt_maNV = createRestrictedTextField(txt_maNV, "(^[Nn]{0,1}$)|(^[Nn]{1}[Vv]{1})|(^[Nn]{1}[Vv]{1}\\d{0,4}$)");
 		txt_maNV.setForeground(Color.BLACK);
 		txt_maNV.setColumns(10);
 		txt_maNV.setBounds(10, 14, 200, 25);
@@ -779,5 +784,22 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener{
         });
         
 	}
+	
+	private static JTextField createRestrictedTextField(JTextField textField ,String regex) {
+
+        // Sử dụng DocumentFilter để kiểm tra và ngăn chặn nhập ký tự "a"
+        ((AbstractDocument) textField.getDocument()).setDocumentFilter(new DocumentFilter() {
+            @Override
+            public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+            	String chuoinhap = textField.getText()+text;
+                // Kiểm tra mỗi ký tự trước khi thêm vào Document
+                if (chuoinhap.matches(regex)) {
+                    super.replace(fb, offset, length, text, attrs);
+                }
+            }
+        });
+
+        return textField;
+    }
 	
 }

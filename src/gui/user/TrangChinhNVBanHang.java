@@ -201,6 +201,7 @@ public class TrangChinhNVBanHang extends JFrame implements ActionListener {
 		} else if (o.equals(btnMenuCnDangXuatTK)) {
 			this.setVisible(false);
 			JOptionPane.showMessageDialog(this, "Đăng xuất thành công");
+			nv = null;
 			new TrangDangNhap().setVisible(true);
 		} else {
 			System.out.println("Chua co chuc nang");

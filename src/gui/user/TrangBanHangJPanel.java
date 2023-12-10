@@ -63,6 +63,11 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.JTable;
 
+import javax.swing.text.AbstractDocument;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DocumentFilter;
+
 public class TrangBanHangJPanel extends JPanel
 		implements ActionListener, Action, ListSelectionListener, ItemListener, DocumentListener {
 	private LocalDate ngayLapHD = LocalDate.now();
@@ -213,6 +218,7 @@ public class TrangBanHangJPanel extends JPanel
 		panel_NhapThongTinMatHang.add(lbl_MaHangHoa);
 
 		txt_MaHangHoa = new JTextField();
+		txt_MaHangHoa = createRestrictedTextField(txt_MaHangHoa, "(^[Hh]{0,1}$)|(^[Hh]{2}\\d{0,4}$)");
 		txt_MaHangHoa.setBounds(236, 20, 243, 31);
 		panel_NhapThongTinMatHang.add(txt_MaHangHoa);
 		txt_MaHangHoa.setColumns(10);
@@ -280,6 +286,7 @@ public class TrangBanHangJPanel extends JPanel
 		panel_KhachHangVaTienNhan.add(lblNewLabel_1);
 
 		txt_SDTKhachHang = new JTextField();
+		txt_SDTKhachHang = createRestrictedTextField(txt_SDTKhachHang, "^(0){0,1}$|^(0)\\d{0,9}$");
 		txt_SDTKhachHang.setBounds(241, 58, 219, 31);
 		panel_KhachHangVaTienNhan.add(txt_SDTKhachHang);
 		txt_SDTKhachHang.setColumns(10);
@@ -301,11 +308,13 @@ public class TrangBanHangJPanel extends JPanel
 		panel_KhachHangVaTienNhan.add(lblNewLabel_3);
 
 		txt_TienNhan = new JTextField();
+		txt_TienNhan = createRestrictedTextField(txt_TienNhan, "^\\d*$");
 		txt_TienNhan.setBounds(241, 280, 219, 31);
 		panel_KhachHangVaTienNhan.add(txt_TienNhan);
 		txt_TienNhan.setColumns(10);
 
 		txt_VoucherGiamGia = new JTextField();
+		txt_VoucherGiamGia = createRestrictedTextField(txt_VoucherGiamGia, "(^[Vv]{0,1}$)|(^[Vv]{1}[Cc]{1})|(^[Vv]{1}[Cc]{1}\\d{0,4}$)");
 		txt_VoucherGiamGia.setBounds(241, 155, 219, 31);
 		panel_KhachHangVaTienNhan.add(txt_VoucherGiamGia);
 		txt_VoucherGiamGia.setColumns(10);
@@ -508,11 +517,75 @@ public class TrangBanHangJPanel extends JPanel
 		table.getSelectionModel().addListSelectionListener(this);
 		txt_TienNhan.addActionListener(this);
 		txt_VoucherGiamGia.addActionListener(this);
+		
 		txt_TienNhan.getDocument().addDocumentListener(this);
 
 		chckx_DiemTichLuy.addItemListener(this);
 		
-		
+		// Thêm DocumentListener cho textField2
+        txt_MaHangHoa.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+            	if(txt_MaHangHoa.getText().length()>=6) {
+            		loadKichCoSanPham(txt_MaHangHoa.getText());
+            	}
+            }
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+            	if(txt_MaHangHoa.getText().length()<6) {
+            		comboBox_KichThuoc.removeAllItems();
+            	}
+            }
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                // không được sử dụng cho plain text components
+            }
+        });
+
+     // Thêm DocumentListener cho textField2
+        txt_SDTKhachHang.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                if(txt_SDTKhachHang.getText().length()==10)
+                	timThongTinKhachHang(txt_SDTKhachHang.getText());
+            }
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+            	if(txt_SDTKhachHang.getText().length()<=10)
+            		kh=null;
+                	lbl_TenKhachHang.setText("");
+            		lbl_DiemTichLuy.setText("");
+            }
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                // không được sử dụng cho plain text components
+            }
+        });
+
+     // Thêm DocumentListener cho textField2
+        txt_VoucherGiamGia.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                if(txt_VoucherGiamGia.getText().length()==6) {
+                	timThongTinVoucherGiamGia();
+                }
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+            	if(txt_VoucherGiamGia.getText().length()<6) {
+                	vc=null;
+                	lbl_TenVoucher.setText("");
+                	lbl_PhanTramGiamGia.setText("");
+                }
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                // không được sử dụng cho plain text components
+            }
+        });
+
 		suKienPhimTat();
 
 	}
@@ -527,12 +600,12 @@ public class TrangBanHangJPanel extends JPanel
 		} else if (o.equals(btn_HangCho)) {
 			taoHangCho();
 
-		} else if (o.equals(txt_SDTKhachHang)) {
-			String sdt = txt_SDTKhachHang.getText();
-			timThongTinKhachHang(sdt);
+//		} else if (o.equals(txt_SDTKhachHang)) {
+//			String sdt = txt_SDTKhachHang.getText();
+//			timThongTinKhachHang(sdt);
 
-		} else if (o.equals(txt_MaHangHoa)) {
-			loadKichCoSanPham(txt_MaHangHoa.getText().trim());
+//		} else if (o.equals(txt_MaHangHoa)) {
+//			loadKichCoSanPham(txt_MaHangHoa.getText().trim());
 
 		} else if (o.equals(btn_LamMoi)) {
 			txt_MaHangHoa.setText("");
@@ -553,8 +626,8 @@ public class TrangBanHangJPanel extends JPanel
 		} else if (o.equals(txt_TienNhan)) {
 			tinhTongCacThanhTien();
 
-		} else if (o.equals(txt_VoucherGiamGia)) {
-			timThongTinVoucherGiamGia();
+//		} else if (o.equals(txt_VoucherGiamGia)) {
+//			timThongTinVoucherGiamGia();
 		}
 	}
 
@@ -567,7 +640,6 @@ public class TrangBanHangJPanel extends JPanel
 			timThongTinKhachHang(txt_SDTKhachHang.getText());
 			tinhTongCacThanhTien();
 		}
-
 	}
 
 	@Override
@@ -833,17 +905,10 @@ public class TrangBanHangJPanel extends JPanel
 
 //	Chua tìm dao của sđt
 	public void timThongTinKhachHang(String sdt) {
-//		if (sdt.trim().equals("")) {
-//			kh = null;
-//			hoaDon.setKhachHang(kh);
-//			JOptionPane.showMessageDialog(this, "Vui lòng nhật số điện thoại");
-//			lbl_TenKhachHang.setText("");
-//			return;
+//		if(!sdt.matches("^(0)\\d{9}$")) {
+//			JOptionPane.showMessageDialog(this, "Số điện thoại phải là số!");
+//			return ;
 //		}
-		if(!sdt.matches("^(0)\\d{9}$")) {
-			JOptionPane.showMessageDialog(this, "Số điện thoại phải là số!");
-			return ;
-		}
 		kh = dao_KhachHang.getKhachHangTheoSDT(sdt);
 		hoaDon.setKhachHang(kh);
 		if (kh.getMaKhachHang() == null) {
@@ -870,18 +935,6 @@ public class TrangBanHangJPanel extends JPanel
 			txt_MaHangHoa.requestFocus();
 			return false;
 		} else {
-			if(!txt_MaHangHoa.getText().matches("^[a-zA-Z0-9]+$")) {
-				JOptionPane.showMessageDialog(this, "Mã hàng hóa phải là chữ và số");
-				txt_MaHangHoa.selectAll();
-				txt_MaHangHoa.requestFocus();
-				return false;
-			}else
-			if (txt_MaHangHoa.getText().length() < 6) {
-				JOptionPane.showMessageDialog(this, "Không tồn tại mã hàng hóa: " + ma);
-				txt_MaHangHoa.selectAll();
-				txt_MaHangHoa.requestFocus();
-				return false;
-			}
 
 			List<String> listHH = dao_HangHoa.getKichThuocCuaMotSanPham(ma);
 			if (listHH.size() == 0 && dao_HangHoa.getHangHoaByMaHangHao(ma).getMaHangHoa() == null) {
@@ -1085,12 +1138,12 @@ public class TrangBanHangJPanel extends JPanel
 		VoucherGiamGia voucher = dao_VoucherGiamGia.getTheoMaVouCher(maGiamGia);
 		if (maGiamGia.trim().equals(""))
 			return false;
-		if (voucher == null) {
-			JOptionPane.showMessageDialog(this, "Mã giảm giá không hợp lệ");
-			txt_VoucherGiamGia.requestFocus();
-			txt_VoucherGiamGia.selectAll();
-			return false;
-		}
+//		if (voucher == null) {
+//			JOptionPane.showMessageDialog(this, "Mã giảm giá không hợp lệ");
+//			txt_VoucherGiamGia.requestFocus();
+//			txt_VoucherGiamGia.selectAll();
+//			return false;
+//		}
 		if (voucher.getNgayBatDau().after(new Date())) {
 			JOptionPane.showMessageDialog(this, "Voucher này chỉ được sử dụng từ ngày: " + voucher.getNgayBatDau());
 			txt_VoucherGiamGia.requestFocus();
@@ -1228,5 +1281,19 @@ public class TrangBanHangJPanel extends JPanel
         });
 	}
 	
-	
+	private static JTextField createRestrictedTextField(JTextField textField ,String regex) {
+
+        ((AbstractDocument) textField.getDocument()).setDocumentFilter(new DocumentFilter() {
+            @Override
+            public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+            	String chuoinhap = textField.getText()+text;
+                // Kiểm tra mỗi ký tự trước khi thêm vào Document
+                if (chuoinhap.matches(regex)) {
+                    super.replace(fb, offset, length, text, attrs);
+                }
+            }
+        });
+
+        return textField;
+    }
 }
