@@ -275,13 +275,15 @@ public class TrangThongKeNVBanHangJPanel extends JPanel implements ActionListene
 		ModelThongKeNVBanHang caoNhat = new ModelThongKeNVBanHang();
 		homNay = services.layThongTinThongKe(LocalDate.now(), nv);
 		caoNhat = services.layNgayCoDoanhThuCaoNhatCuaNhanVien(LocalDate.now().getMonthValue(), LocalDate.now().getYear(), nv.getMaNhanVien().trim());
-		txtpNhanXet1.setText("");
-		txtpNhanXet2.setText("");
-		txtpNhanXet1.setText("Doanh thu cao nhất từng đạt được trong tháng "+LocalDate.now().getMonthValue()+" năm "+LocalDate.now().getYear()+" là "+ ChuyenThanhTien(caoNhat.getTongDoanhThuBanHang())+"vnđ.");
-		if(homNay.getTongDoanhThuBanHang()>=caoNhat.getTongDoanhThuBanHang()) {
-			txtpNhanXet2.setText("Doanh thu hôm nay của bạn đã đạt mức doanh thu cao nhất mới trong tháng "+LocalDate.now().getMonthValue()+" của năm "+LocalDate.now().getYear()+" là "+ChuyenThanhTien(homNay.getTongDoanhThuBanHang())+"vnđ, vượt mốc doanh thu cao nhất trước đó "+ChuyenThanhTien(homNay.getTongDoanhThuBanHang()-caoNhat.getTongDoanhThuBanHang())+"vnđ");
-		} else {
-			txtpNhanXet2.setText("Doanh thu hôm nay của bạn là "+ChuyenThanhTien(homNay.getTongDoanhThuBanHang())+"vnđ, bạn cần thêm "+ChuyenThanhTien(caoNhat.getTongDoanhThuBanHang()-homNay.getTongDoanhThuBanHang())+"vnđ để đạt mốc doanh thu cao nhất mới của tháng "+LocalDate.now().getMonthValue()+" năm "+LocalDate.now().getYear());
+		if(caoNhat != null || homNay != null) {
+			txtpNhanXet1.setText("");
+			txtpNhanXet2.setText("");
+			txtpNhanXet1.setText("Doanh thu cao nhất từng đạt được trong tháng "+LocalDate.now().getMonthValue()+" năm "+LocalDate.now().getYear()+" là "+ ChuyenThanhTien(caoNhat.getTongDoanhThuBanHang())+"vnđ.");
+			if(homNay.getTongDoanhThuBanHang()>=caoNhat.getTongDoanhThuBanHang()) {
+				txtpNhanXet2.setText("Doanh thu hôm nay của bạn đã đạt mức doanh thu cao nhất mới trong tháng "+LocalDate.now().getMonthValue()+" của năm "+LocalDate.now().getYear()+" là "+ChuyenThanhTien(homNay.getTongDoanhThuBanHang())+"vnđ, vượt mốc doanh thu cao nhất trước đó "+ChuyenThanhTien(homNay.getTongDoanhThuBanHang()-caoNhat.getTongDoanhThuBanHang())+"vnđ");
+			} else {
+				txtpNhanXet2.setText("Doanh thu hôm nay của bạn là "+ChuyenThanhTien(homNay.getTongDoanhThuBanHang())+"vnđ, bạn cần thêm "+ChuyenThanhTien(caoNhat.getTongDoanhThuBanHang()-homNay.getTongDoanhThuBanHang())+"vnđ để đạt mốc doanh thu cao nhất mới của tháng "+LocalDate.now().getMonthValue()+" năm "+LocalDate.now().getYear());
+			}
 		}
 	}
 

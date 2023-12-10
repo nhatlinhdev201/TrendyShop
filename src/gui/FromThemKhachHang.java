@@ -206,8 +206,8 @@ public class FromThemKhachHang extends JFrame implements WindowListener{
 		btn_save.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// Lấy thông tin từ các trường dữ liệu trên giao diện
-				Random random = new Random();
-				int randomNumber = random.nextInt(900) + 100;
+				
+				String randomNumber = "00" +TrangQLKhachHangPanel.getRowCount();
 				String makh = "KH" + randomNumber;
 				String tenKhachHang = txt_ten.getText();
 				String soDienThoai = txt_sdt.getText();
@@ -298,7 +298,7 @@ public class FromThemKhachHang extends JFrame implements WindowListener{
 			return false;
 		}
 	}
-
+	
 	@Override
 	public void windowOpened(WindowEvent e) {
 		// TODO Auto-generated method stub
