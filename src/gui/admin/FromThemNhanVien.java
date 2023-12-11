@@ -373,7 +373,7 @@ public class FromThemNhanVien extends JFrame implements WindowListener {
 		} else if (txt_ngaysinh.getDate() == null) {
 			JOptionPane.showMessageDialog(null, "Vui lòng chọn ngày", "Error", JOptionPane.ERROR_MESSAGE);
 		}
-		if (!sdt.matches("\\0d{9}")) {
+		if (!sdt.matches("0\\d{9}")) {
 			JOptionPane.showMessageDialog(contentPane, "Số điện thoại phải có đúng 10 số!");
 			return false;
 		}
