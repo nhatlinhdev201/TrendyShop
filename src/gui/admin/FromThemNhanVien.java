@@ -63,7 +63,7 @@ public class FromThemNhanVien extends JFrame implements WindowListener {
 	 * @param parentFrame
 	 */
 	public FromThemNhanVien() {
-		setBounds(100, 100, 697, 557);
+		setBounds(100, 100, 697, 550);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(152, 251, 152));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -185,7 +185,7 @@ public class FromThemNhanVien extends JFrame implements WindowListener {
 		JLabel imageLabel = new JLabel("                    Image");
 		imageLabel.setFont(new Font("Tahoma", Font.BOLD, 15));
 		imageLabel.setBackground(new Color(255, 250, 250));
-		imageLabel.setBounds(238, 11, 211, 175);
+		imageLabel.setBounds(238, 11, 211, 191);
 		Border border = BorderFactory.createLineBorder(Color.BLACK, 2);
 
 		// Thiết lập Border cho JLabel
@@ -193,7 +193,7 @@ public class FromThemNhanVien extends JFrame implements WindowListener {
 
 		JButton chooseImageButton = new JButton("Thêm ảnh");
 		chooseImageButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		chooseImageButton.setBounds(272, 197, 135, 36);
+		chooseImageButton.setBounds(283, 213, 135, 36);
 		contentPane.add(chooseImageButton);
 		contentPane.add(imageLabel);
 		ButtonGroup buttonGroup1 = new ButtonGroup();
@@ -233,7 +233,7 @@ public class FromThemNhanVien extends JFrame implements WindowListener {
 		buttonGroup.add(rdbtnNgh);
 
 		JPanel panel = new JPanel();
-		panel.setBounds(222, 0, 238, 194);
+		panel.setBounds(225, 0, 235, 209);
 		contentPane.add(panel);
 
 		JButton btn_troLai = new JButton("Trở lại");
