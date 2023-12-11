@@ -504,7 +504,7 @@ public class TrangQLKhachHangPanel extends JPanel implements ActionListener, Mou
 			return false; // Dừng hàm nếu có trường trống
 		}
 		if (!sdt.matches("0\\d{9}")) {
-			JOptionPane.showMessageDialog(this, "Số điện thoại phải có đúng 10 số!");
+			JOptionPane.showMessageDialog(this, "Số điện thoại phải có đúng 10 số bắt đầu là số 0!");
 			return false;
 		}
 		if (!diem.matches("\\d")) {

@@ -17,6 +17,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.*;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
@@ -322,38 +323,43 @@ public class FromThemNhanVien extends JFrame implements WindowListener {
 					chucVu = "QL";
 				} else if (!cbox_quanli.isSelected() && cbox_nhanVien.isSelected()) {
 					chucVu = "NV";
-					String manv = chucVu + "00" + TrangQLNhanVienJPanel.getRowCount();
+					String manv = chucVu + "000" + TrangQLNhanVienJPanel.getRowCount();
 
-					if (kiemTraHople()) {
+					try {
+						if (kiemTraHople()) {
 //					// Kiểm tra và xử lý các điều kiện khác nếu cần thiết
 //						// Tạo đối tượng KhachHang từ thông tin đã nhập
-						NhanVien nhanVien = new NhanVien();
-						nhanVien.setMaNhanVien(manv);
-						nhanVien.setHoTen(tenNhanVien);
-						nhanVien.setSoCCCD(soCCCD);
-						nhanVien.setNgaySinh(ngaySinh);
-						nhanVien.setSoDienThoai(soDienThoai);
-						nhanVien.setEmail(email);
-						nhanVien.setDiaChi(diaChi);
-						nhanVien.setChucVu(chucVu);
-						nhanVien.setAnhDaiDien(imagePath);
-						nhanVien.setTrangThai(trangThai);
-						nhanVien.setMatKhau(matKhau);
-						nhanVien.setPhanQuyen(true);
+							NhanVien nhanVien = new NhanVien();
+							nhanVien.setMaNhanVien(manv);
+							nhanVien.setHoTen(tenNhanVien);
+							nhanVien.setSoCCCD(soCCCD);
+							nhanVien.setNgaySinh(ngaySinh);
+							nhanVien.setSoDienThoai(soDienThoai);
+							nhanVien.setEmail(email);
+							nhanVien.setDiaChi(diaChi);
+							nhanVien.setChucVu(chucVu);
+							nhanVien.setAnhDaiDien(imagePath);
+							nhanVien.setTrangThai(trangThai);
+							nhanVien.setMatKhau(matKhau);
+							nhanVien.setPhanQuyen(true);
 //						// Gọi hàm themKhachHang để lưu thông tin vào cơ sở dữ liệu
-						boolean result = nvDao.themNhanVien(nhanVien);
-						// Kiểm tra kết quả và thông báo cho người dùng
-						if (result) {
-							JOptionPane.showMessageDialog(contentPane, "Thêm nhân viên thành công!");
-							// Có thể thêm logic để làm mới giao diện hoặc thực hiện các tác vụ khác sau khi
-							// thêm
-							Window window = SwingUtilities.getWindowAncestor(contentPane);
-							if (window != null) {
-								window.dispose();
+							boolean result = nvDao.themNhanVien(nhanVien);
+							// Kiểm tra kết quả và thông báo cho người dùng
+							if (result) {
+								JOptionPane.showMessageDialog(contentPane, "Thêm nhân viên thành công!");
+								// Có thể thêm logic để làm mới giao diện hoặc thực hiện các tác vụ khác sau khi
+								// thêm
+								Window window = SwingUtilities.getWindowAncestor(contentPane);
+								if (window != null) {
+									window.dispose();
+								}
+							} else {
+								JOptionPane.showMessageDialog(contentPane, "Thêm Nhân viên thất bại!");
 							}
-						} else {
-							JOptionPane.showMessageDialog(contentPane, "Thêm Nhân viên thất bại!");
 						}
+					} catch (HeadlessException | ParseException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
 					}
 				}
 			}
@@ -363,9 +369,12 @@ public class FromThemNhanVien extends JFrame implements WindowListener {
 		contentPane.setVisible(true);
 	}
 
-	public boolean kiemTraHople() {
+	public boolean kiemTraHople() throws ParseException {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Date date1 = sdf.parse("1-1-2005");
 		String sdt = txt_sdt.getText().trim();
 		String email = txt_email.getText().trim();
+		Date ngaysinh = txt_ngaysinh.getDate();
 		if (txt_hoten.getText().isEmpty() || txt_sdt.getText().isEmpty() || txt_email.getText().isEmpty()
 				|| txt_diachi.getText().isEmpty() || txt_scccd.getText().isEmpty() || txt_matKhau.getText().isEmpty()) {
 			JOptionPane.showMessageDialog(contentPane, "Vui lòng nhập đầy đủ thông tin!");
@@ -374,14 +383,17 @@ public class FromThemNhanVien extends JFrame implements WindowListener {
 			JOptionPane.showMessageDialog(null, "Vui lòng chọn ngày", "Error", JOptionPane.ERROR_MESSAGE);
 		}
 		if (!sdt.matches("0\\d{9}")) {
-			JOptionPane.showMessageDialog(contentPane, "Số điện thoại phải có đúng 10 số!");
+			JOptionPane.showMessageDialog(contentPane, "Số điện thoại phải có đúng 10 số bắt đầu từ số 0!");
 			return false;
 		}
 		if (!email.endsWith("@gmail.com")) {
 			JOptionPane.showMessageDialog(contentPane, "Email phải kết thúc bằng '@gmail.com'!");
 			return false;
 		}
-		// Các kiểm tra khác có thể thêm vào tùy theo yêu cầu
+		if (ngaysinh.after(date1)) {
+            JOptionPane.showMessageDialog(contentPane, "Nhân viên phải lớn hơn 18 tuổi", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
 
 		return true; // Tất cả các trường đều hợp lệ
 	}

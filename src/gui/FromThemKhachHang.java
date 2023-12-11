@@ -160,13 +160,13 @@ public class FromThemKhachHang extends JFrame implements WindowListener{
 		buttonGroup.add(rdb_hoatdong);
 		buttonGroup.add(rdb_nghi);
 		
-		lblPhiLS = new JLabel("Phải là 10 số ");
+		lblPhiLS = new JLabel("Phải là 10 số bắt đầu từ số 0");
 		lblPhiLS.setVerticalAlignment(SwingConstants.TOP);
 		lblPhiLS.setToolTipText("");
 		lblPhiLS.setHorizontalAlignment(SwingConstants.LEFT);
 		lblPhiLS.setForeground(Color.RED);
 		lblPhiLS.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lblPhiLS.setBounds(380, 116, 177, 21);
+		lblPhiLS.setBounds(380, 116, 213, 21);
 		contentPane.add(lblPhiLS);
 
 		lblPhiLS_1 = new JLabel("Email kết thúc bằng @gmail.com");
@@ -268,7 +268,7 @@ public class FromThemKhachHang extends JFrame implements WindowListener{
 			return false; // Dừng hàm nếu có trường trống
 		}
 		if (!sdt.matches("0\\d{9}")) {
-			JOptionPane.showMessageDialog(contentPane, "Số điện thoại phải có đúng 10 số!");
+			JOptionPane.showMessageDialog(contentPane, "Số điện thoại phải có đúng 10 số bắt đầu là số 0!");
 			return false;
 		}
 		
