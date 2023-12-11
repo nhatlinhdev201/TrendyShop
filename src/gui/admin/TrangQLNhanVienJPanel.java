@@ -482,13 +482,32 @@ public class TrangQLNhanVienJPanel extends JPanel implements ActionListener, Mou
 	}
 
 	public boolean kiemTraHople() {
+		String soCCCD = textField_cccd.getText().trim();
+		String email = textField_email.getText().trim();
+		String sdt = textField_sdt.getText().trim();
 		if (textField_ngaySinh.getText().isEmpty() || txt_ma.getText().isEmpty() || textField_ten.getText().isEmpty()
 				|| textField_diachi.getText().isEmpty() || textField_email.getText().isEmpty()
 				|| textField_cccd.getText().isEmpty() || textField_cccd.getText().isEmpty()) {
 			// Display an error message or handle the empty fields in some way
-			JOptionPane.showMessageDialog(null, "Please fill in all required fields.", "Error",
+			JOptionPane.showMessageDialog(null, "Vui lòng điền dầy đủ thông tin các trường", "Error",
 					JOptionPane.ERROR_MESSAGE);
 			return false;
+		}
+		if (!soCCCD.matches("\\d")) {
+			JOptionPane.showMessageDialog(this, "Số cccd phải là số!");
+			return false;
+		}
+		if (!email.endsWith("@gmail.com")) {
+			JOptionPane.showMessageDialog(this, "Email phải kết thúc bằng '@gmail.com'!");
+			return false;
+		}
+		if (!sdt.matches("0\\d{9}")) {
+			JOptionPane.showMessageDialog(this, "Số điện thoại phải có đúng 10 số!");
+			return false;
+		}
+		if (!btn_hoatDong.isSelected() && !btn_nghi.isSelected()) {
+			JOptionPane.showMessageDialog(this, "Vui lòng chọn trạng thái hoạt động hoặc nghỉ!");
+			return false; // Dừng hàm nếu không có JRadioButton nào được chọn
 		}
 		return true;
 	}
