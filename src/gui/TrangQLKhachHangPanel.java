@@ -138,6 +138,14 @@ public class TrangQLKhachHangPanel extends JPanel implements ActionListener, Mou
 		});
 		table.setFont(TABLE_FONT);
 		table.setModel(tableModel);
+		table.getColumnModel().getColumn(0).setPreferredWidth(15);
+	    table.getColumnModel().getColumn(1).setPreferredWidth(95); 
+	    table.getColumnModel().getColumn(2).setPreferredWidth(40);
+	    table.getColumnModel().getColumn(3).setPreferredWidth(100);
+		table.getColumnModel().getColumn(4).setPreferredWidth(10);
+		table.getColumnModel().getColumn(5).setPreferredWidth(10);
+		table.getColumnModel().getColumn(6).setPreferredWidth(10);
+		table.getColumnModel().getColumn(6).setMinWidth(10);
 
 		JScrollPane scrollPane = new JScrollPane(table);
 		scrollPane.setBounds(473, 76, 867, 614);
@@ -323,16 +331,10 @@ public class TrangQLKhachHangPanel extends JPanel implements ActionListener, Mou
 		btn_load.setBackground(new Color(135, 206, 235));
 		btn_load.setBounds(317, 611, 139, 53);
 		String iconPath_load = "/images/loading.png";
-//		ImageIcon iconLoad = new ImageIcon(this.getClass().getResource(iconPath_load)); // Sử dụng getResource để
-//																								// lấy đường dẫn từ
-//																								// resources của ứng
-//																								// dụng
-//
-//		Image scaledIconLoad = iconLoad.getImage().getScaledInstance(33, 33, Image.SCALE_SMOOTH); // Thiết lập
-//																										// kích thước
-//		ImageIcon resizedIconLoad = new ImageIcon(scaledIconLoad);
-
-//		btn_load.setIcon(resizedIconLoad);
+		ImageIcon iconLoad = new ImageIcon(this.getClass().getResource(iconPath_load)); 
+		Image scaledIconLoad = iconLoad.getImage().getScaledInstance(33, 33, Image.SCALE_SMOOTH);
+		ImageIcon resizedIconLoad = new ImageIcon(scaledIconLoad);
+		btn_load.setIcon(resizedIconLoad);
 		add(btn_load);
 
 		btn_capNhat.addActionListener(this);
