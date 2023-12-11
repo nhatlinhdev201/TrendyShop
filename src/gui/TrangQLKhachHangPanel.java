@@ -490,6 +490,7 @@ public class TrangQLKhachHangPanel extends JPanel implements ActionListener, Mou
 	private boolean kiemTraHople() {
 		String sdt = txt_sDT.getText().trim();
 		String ten = txt_ten.getText().trim();
+		String diem = txt_diemTichLuy.getText().trim();
 		int lastSpace = ten.lastIndexOf(" ");
 		String fistName = ten.substring(lastSpace + 1);
 		if (!ten.matches("^[A-Z].*")) {
@@ -502,11 +503,15 @@ public class TrangQLKhachHangPanel extends JPanel implements ActionListener, Mou
 			JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin!");
 			return false; // Dừng hàm nếu có trường trống
 		}
-		if (!sdt.matches("\\d{10}")) {
+		if (!sdt.matches("0\\d{9}")) {
 			JOptionPane.showMessageDialog(this, "Số điện thoại phải có đúng 10 số!");
 			return false;
 		}
-
+		if (!diem.matches("\\d")) {
+			JOptionPane.showMessageDialog(this, "Điểm tích luỹ phải là số!");
+			return false;
+		}
+		
 		String email = txt_email.getText().trim();
 		if (!email.endsWith("@gmail.com")) {
 			JOptionPane.showMessageDialog(this, "Email phải kết thúc bằng '@gmail.com'!");

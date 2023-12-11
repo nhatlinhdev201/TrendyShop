@@ -267,7 +267,7 @@ public class FromThemKhachHang extends JFrame implements WindowListener{
 			JOptionPane.showMessageDialog(contentPane, "Vui lòng nhập đầy đủ thông tin!");
 			return false; // Dừng hàm nếu có trường trống
 		}
-		if (!sdt.matches("\\0d{9}")) {
+		if (!sdt.matches("0\\d{9}")) {
 			JOptionPane.showMessageDialog(contentPane, "Số điện thoại phải có đúng 10 số!");
 			return false;
 		}
