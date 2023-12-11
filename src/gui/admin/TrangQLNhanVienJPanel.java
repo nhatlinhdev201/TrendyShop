@@ -502,7 +502,7 @@ public class TrangQLNhanVienJPanel extends JPanel implements ActionListener, Mou
 			return false;
 		}
 		if (!sdt.matches("0\\d{9}")) {
-			JOptionPane.showMessageDialog(this, "Số điện thoại phải có đúng 10 số!");
+			JOptionPane.showMessageDialog(this, "Số điện thoại phải có đúng 10 số bắt đầu từ số 0!");
 			return false;
 		}
 		if (!btn_hoatDong.isSelected() && !btn_nghi.isSelected()) {
