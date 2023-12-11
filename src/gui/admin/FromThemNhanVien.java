@@ -175,7 +175,7 @@ public class FromThemNhanVien extends JFrame implements WindowListener {
 		txt_diachi.setBounds(488, 276, 177, 25);
 		contentPane.add(txt_diachi);
 
-		JButton saveButton = new JButton("Save");
+		JButton saveButton = new JButton("Lưu");
 		saveButton.setBackground(new Color(127, 255, 0));
 		saveButton.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 17));
 		saveButton.setSize(177, 30);
@@ -205,14 +205,17 @@ public class FromThemNhanVien extends JFrame implements WindowListener {
 		contentPane.add(cbox_quanli);
 
 		cbox_nhanVien = new JRadioButton("Nhân viên");
+		cbox_nhanVien.setSelected(true);
 		cbox_nhanVien.setBackground(new Color(152, 251, 152));
 		cbox_nhanVien.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		cbox_nhanVien.setBounds(571, 311, 94, 23);
+		cbox_nhanVien.isSelected();
 		contentPane.add(cbox_nhanVien);
 
 		buttonGroup1.add(cbox_nhanVien);
 		buttonGroup1.add(cbox_quanli);
 		JRadioButton rdb_hoatdong = new JRadioButton("Hoạt động");
+		rdb_hoatdong.setSelected(true);
 		rdb_hoatdong.setBackground(new Color(152, 251, 152));
 		rdb_hoatdong.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		rdb_hoatdong.setBounds(488, 343, 94, 23);
@@ -361,6 +364,8 @@ public class FromThemNhanVien extends JFrame implements WindowListener {
 	}
 
 	public boolean kiemTraHople() {
+		String sdt = txt_sdt.getText().trim();
+		String email = txt_email.getText().trim();
 		if (txt_hoten.getText().isEmpty() || txt_sdt.getText().isEmpty() || txt_email.getText().isEmpty()
 				|| txt_diachi.getText().isEmpty() || txt_scccd.getText().isEmpty() || txt_matKhau.getText().isEmpty()) {
 			JOptionPane.showMessageDialog(contentPane, "Vui lòng nhập đầy đủ thông tin!");
@@ -368,12 +373,34 @@ public class FromThemNhanVien extends JFrame implements WindowListener {
 		} else if (txt_ngaysinh.getDate() == null) {
 			JOptionPane.showMessageDialog(null, "Vui lòng chọn ngày", "Error", JOptionPane.ERROR_MESSAGE);
 		}
-
+		if (!sdt.matches("\\0d{9}")) {
+			JOptionPane.showMessageDialog(contentPane, "Số điện thoại phải có đúng 10 số!");
+			return false;
+		}
+		if (!email.endsWith("@gmail.com")) {
+			JOptionPane.showMessageDialog(contentPane, "Email phải kết thúc bằng '@gmail.com'!");
+			return false;
+		}
 		// Các kiểm tra khác có thể thêm vào tùy theo yêu cầu
 
 		return true; // Tất cả các trường đều hợp lệ
 	}
-
+	
+	public boolean isEmployeeExists(String ten, String soCCCD, String soDienThoai, String email) {
+		String query = "SELECT * FROM NhanVien WHERE hoTen = ? OR soCCCD = ? OR soDienThoai = ? OR email = ?";
+		try {
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, ten);
+			preparedStatement.setString(2, soCCCD);
+			preparedStatement.setString(3, soDienThoai);
+			preparedStatement.setString(3, email);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			return resultSet.next(); // Nếu có dữ liệu, tức là tên, số điện thoại hoặc email đã tồn tại
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 	@Override
 	public void windowOpened(WindowEvent e) {
 		// TODO Auto-generated method stub

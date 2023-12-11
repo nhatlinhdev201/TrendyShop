@@ -141,7 +141,14 @@ public class TrangQLNhanVienJPanel extends JPanel implements ActionListener, Mou
 		});
 		table.setFont(TABLE_FONT);
 		table.setModel(tableModel);
-
+		table.getColumnModel().getColumn(0).setPreferredWidth(15);
+	    table.getColumnModel().getColumn(1).setPreferredWidth(95); 
+	    table.getColumnModel().getColumn(2).setPreferredWidth(30);
+	    table.getColumnModel().getColumn(3).setPreferredWidth(30);
+	    table.getColumnModel().getColumn(4).setPreferredWidth(30);
+	    table.getColumnModel().getColumn(5).setPreferredWidth(100);
+	    table.getColumnModel().getColumn(7).setPreferredWidth(20);
+	    table.getColumnModel().getColumn(8).setPreferredWidth(0);
 		JScrollPane scrollPane = new JScrollPane(table);
 		scrollPane.setBounds(10, 319, 1330, 371);
 		add(scrollPane);
@@ -174,6 +181,8 @@ public class TrangQLNhanVienJPanel extends JPanel implements ActionListener, Mou
 		add(lbl_Dfb);
 
 		textField_ngaySinh = new JTextField();
+		textField_ngaySinh.setEnabled(false);
+		textField_ngaySinh.setEditable(false);
 		textField_ngaySinh.setColumns(10);
 		textField_ngaySinh.setBounds(937, 140, 196, 27);
 		add(textField_ngaySinh);
@@ -223,34 +232,26 @@ public class TrangQLNhanVienJPanel extends JPanel implements ActionListener, Mou
 		textField_email.setBounds(589, 216, 196, 27);
 		add(textField_email);
 
-		btn_timKiem = new JButton("Tìm kiếm");
-		btn_timKiem.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btn_timKiem.setBounds(464, 275, 130, 33);
+		btn_timKiem = new JButton("Tìm kiếm theo mã");
+		btn_timKiem.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		btn_timKiem.setBounds(448, 275, 173, 33);
 
 		// Đường dẫn của hình ảnh icon
 		String iconPath = "/images/searchphuc.png";
-		ImageIcon icon = new ImageIcon(this.getClass().getResource(iconPath)); // Sử dụng getResource để lấy đường dẫn
-																				// từ resources của ứng dụng
-
+		ImageIcon icon = new ImageIcon(this.getClass().getResource(iconPath));
 		Image scaledIcon = icon.getImage().getScaledInstance(27, 27, Image.SCALE_SMOOTH); // Thiết lập kích thước
 		ImageIcon resizedIcon1 = new ImageIcon(scaledIcon);
-
 		btn_timKiem.setIcon(resizedIcon1);
 		add(btn_timKiem);
 
 		JButton btn_them = new JButton("Thêm");
 		btn_them.setBackground(Color.GREEN);
 		btn_them.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btn_them.setBounds(836, 275, 123, 33);
+		btn_them.setBounds(879, 275, 123, 33);
 		String iconPath_them = "/images/plus.png";
-		ImageIcon iconThem = new ImageIcon(this.getClass().getResource(iconPath_them)); // Sử dụng getResource để lấy
-																						// đường dẫn từ resources của
-																						// ứng dụng
-
+		ImageIcon iconThem = new ImageIcon(this.getClass().getResource(iconPath_them));
 		Image scaledIconThem = iconThem.getImage().getScaledInstance(27, 27, Image.SCALE_SMOOTH); // Thiết lập kích
-																									// thước
 		ImageIcon resizedIconThem = new ImageIcon(scaledIconThem);
-
 		btn_them.setIcon(resizedIconThem);
 		add(btn_them);
 		btn_them.addActionListener(new ActionListener() {
@@ -264,13 +265,9 @@ public class TrangQLNhanVienJPanel extends JPanel implements ActionListener, Mou
 		btn_capNhat = new JButton("Cập nhật");
 		btn_capNhat.setBackground(Color.ORANGE);
 		btn_capNhat.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btn_capNhat.setBounds(991, 275, 123, 33);
+		btn_capNhat.setBounds(1034, 275, 123, 33);
 		String iconPath_capnhat = "/images/updated.png";
-		ImageIcon iconCapNhat = new ImageIcon(this.getClass().getResource(iconPath_capnhat)); // Sử dụng getResource để
-																								// lấy đường dẫn từ
-																								// resources của ứng
-																								// dụng
-
+		ImageIcon iconCapNhat = new ImageIcon(this.getClass().getResource(iconPath_capnhat));
 		Image scaledIconCapNhat = iconCapNhat.getImage().getScaledInstance(27, 27, Image.SCALE_SMOOTH); // Thiết lập
 		ImageIcon resizedIconCapNhat = new ImageIcon(scaledIconCapNhat);
 		btn_capNhat.setIcon(resizedIconCapNhat);
@@ -279,7 +276,7 @@ public class TrangQLNhanVienJPanel extends JPanel implements ActionListener, Mou
 		txt_timkiem = new JTextField();
 		txt_timkiem.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		txt_timkiem.setColumns(10);
-		txt_timkiem.setBounds(593, 275, 222, 33);
+		txt_timkiem.setBounds(621, 275, 248, 33);
 		add(txt_timkiem);
 
 		label_anh = new JLabel("");
@@ -314,7 +311,7 @@ public class TrangQLNhanVienJPanel extends JPanel implements ActionListener, Mou
 
 		btn_load = new JButton("Làm mới");
 		btn_load.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btn_load.setBounds(1141, 275, 123, 33);
+		btn_load.setBounds(1184, 275, 123, 33);
 		String iconPath_load = "/images/loading.png";
 		ImageIcon iconLoad = new ImageIcon(this.getClass().getResource(iconPath_load)); // Sử dụng getResource để lấy đường dẫn
 
@@ -342,8 +339,8 @@ public class TrangQLNhanVienJPanel extends JPanel implements ActionListener, Mou
 				// Tạo một mảng dữ liệu để chứa thông tin của khách hàng
 				Object[] rowData = {
 
-						nv.getMaNhanVien(), nv.getHoTen(), ngaySinhFormatted, nv.getSoCCCD(), nv.getSoDienThoai(),
-						nv.getEmail(), nv.getDiaChi(), nv.isTrangThai() ? "Hoạt động" : "Nghỉ" // Chuyển boolean thành
+						nv.getMaNhanVien().trim(), nv.getHoTen().trim(), ngaySinhFormatted, nv.getSoCCCD().trim(), nv.getSoDienThoai().trim(),
+						nv.getEmail().trim(), nv.getDiaChi().trim(), nv.isTrangThai() ? "Hoạt động" : "Nghỉ" // Chuyển boolean thành
 																								// chuỗi
 						, nv.getAnhDaiDien() };
 				// Thêm dữ liệu vào model của bảng
@@ -468,7 +465,7 @@ public class TrangQLNhanVienJPanel extends JPanel implements ActionListener, Mou
 	}
 
 	public NhanVien layNhanVien() throws ParseException {
-		Date ngaySinh = null;
+		Date ngaySinh =  new Date(9, 11, 2003);
 		String ngaySinhText = textField_ngaySinh.getText();
 		String maNV = txt_ma.getText().trim();
 		String tenNV = textField_ten.getText().trim();
@@ -480,7 +477,7 @@ public class TrangQLNhanVienJPanel extends JPanel implements ActionListener, Mou
 		boolean trangthai = false;
 		if (btn_hoatDong.isSelected() && !btn_nghi.isSelected())
 			trangthai = true;
-		NhanVien nhanVien = new NhanVien(maNV, tenNV, new Date(9, 11, 2003), socccd, sdt, email, diachi, trangthai);
+		NhanVien nhanVien = new NhanVien(maNV, tenNV, ngaySinh, socccd, sdt, email, diachi, trangthai);
 		return nhanVien;
 	}
 

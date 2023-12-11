@@ -117,6 +117,7 @@ public class FromThemKhachHang extends JFrame implements WindowListener{
 		contentPane.add(btn_save);
 
 		rdb_hoatdong = new JRadioButton("Hoạt động");
+		rdb_hoatdong.setSelected(true);
 		rdb_hoatdong.setBackground(new Color(152, 251, 152));
 		rdb_hoatdong.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		rdb_hoatdong.setBounds(380, 231, 102, 23);
@@ -266,7 +267,7 @@ public class FromThemKhachHang extends JFrame implements WindowListener{
 			JOptionPane.showMessageDialog(contentPane, "Vui lòng nhập đầy đủ thông tin!");
 			return false; // Dừng hàm nếu có trường trống
 		}
-		if (!sdt.matches("\\d{10}")) {
+		if (!sdt.matches("\\0d{9}")) {
 			JOptionPane.showMessageDialog(contentPane, "Số điện thoại phải có đúng 10 số!");
 			return false;
 		}
