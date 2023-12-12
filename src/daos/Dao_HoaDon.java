@@ -254,4 +254,29 @@ public class Dao_HoaDon {
 		}
 		return false;
 	}
+	
+	public List<HoaDon> getTop5() {
+		List<HoaDon> dsHoaDon = null;
+		try {
+			PreparedStatement statement = connection.prepareStatement("select top 5 *from HoaDon where trangThaiThanhToan= 'True' order by thoiGianTao desc");
+			ResultSet resultSet = statement.executeQuery();
+			dsHoaDon = new ArrayList<HoaDon>();
+			while (resultSet.next()) {
+				HoaDon hoaDon = new HoaDon();
+				hoaDon.setMaHoaDon(resultSet.getString("maHoaDon").trim());
+				hoaDon.setThoiGianTao(resultSet.getDate("thoiGianTao").toLocalDate());
+				hoaDon.setTongThanhTien(resultSet.getDouble("tongThanhTien"));
+				hoaDon.setVoucher(new VoucherGiamGia(resultSet.getString("maVoucher").trim()));
+				hoaDon.setKhachHang(new KhachHang(resultSet.getString("maKhachHang").trim()));
+				hoaDon.setNguoiLapHoaDon(new NhanVien(resultSet.getString("maNhanVien").trim()));
+				hoaDon.setTrangThaiThanhToan(resultSet.getBoolean("trangThaiThanhToan"));
+
+				dsHoaDon.add(hoaDon);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dsHoaDon;
+	}
 }
