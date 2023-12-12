@@ -41,6 +41,7 @@ public class TrangDangNhap extends JFrame {
 	private Dao_NhanVien dao_NV;
 	public static boolean TrangThaiDangNhapNhanVien = false;
 	public static boolean TrangThaiDangNhapQuanLy = false;
+
 	/**
 	 * Launch the application.
 	 */
@@ -141,7 +142,8 @@ public class TrangDangNhap extends JFrame {
 				String tentaiKhoan = txt_taiKhoan.getText();
 				String matKhau = new String(passwordField.getPassword());
 				taiKhoan = dao_NV.getNhanVienTheoMa(tentaiKhoan);
-				if(taiKhoan.getMaNhanVien()==null) taiKhoan=null;
+				if (taiKhoan.getMaNhanVien() == null)
+					taiKhoan = null;
 				if (tentaiKhoan.trim().equals("") && matKhau.trim().equals("")) {
 					JOptionPane.showMessageDialog(null, "Tài khoản mật khẩu không được để trống !", "Thông báo",
 							JOptionPane.ERROR_MESSAGE, new ImageIcon("images/warning.png"));
@@ -171,16 +173,15 @@ public class TrangDangNhap extends JFrame {
 				this.dispose();
 				trangChinhNVBanHang.setVisible(true);
 				return true;
-			} else  {
+			} else {
 				this.dispose();
 				TrangChinhNVQuanLy.nv = taiKhoan;
 				TrangChinhNVQuanLy trangChinhNVQuanLy2 = new TrangChinhNVQuanLy();
 				trangChinhNVQuanLy2.setVisible(true);
-
 				return true;
 			}
 		} else {
-			
+
 			JOptionPane.showMessageDialog(null, "Tài khoản mật khẩu không đúng !", "Thông báo",
 					JOptionPane.ERROR_MESSAGE, new ImageIcon("images/warning.png"));
 		}
