@@ -31,6 +31,8 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.Icon;
 
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
@@ -52,6 +54,7 @@ import javax.swing.KeyStroke;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.ImageIcon;
 import javax.swing.InputMap;
 import javax.swing.SwingConstants;
@@ -66,7 +69,9 @@ import javax.swing.JTable;
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
+import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.DocumentFilter;
+import javax.swing.text.NumberFormatter;
 
 public class TrangBanHangJPanel extends JPanel
 		implements ActionListener, Action, ListSelectionListener, ItemListener, DocumentListener {
@@ -245,6 +250,35 @@ public class TrangBanHangJPanel extends JPanel
 		spinner_SoLuong = new JSpinner(model_Spinner);
 		spinner_SoLuong.setBounds(236, 100, 243, 30);
 		panel_NhapThongTinMatHang.add(spinner_SoLuong);
+		// Truy cập JFormattedTextField của JSpinner
+        JFormattedTextField formattedTextField = ((JSpinner.DefaultEditor) spinner_SoLuong.getEditor()).getTextField();
+        // Sử dụng NumberFormatter để chỉ cho phép nhập giá trị số
+        NumberFormatter formatter = new NumberFormatter();
+        formatter.setValueClass(Integer.class); // Đặt kiểu giá trị là Integer
+        formatter.setMinimum(0); // Giá trị tối thiểu
+        formatter.setMaximum(10000); // Giá trị tối đa
+        formatter.setAllowsInvalid(false);
+        formatter.setCommitsOnValidEdit(true);
+        formattedTextField.setFormatterFactory(new DefaultFormatterFactory(formatter));
+//        / Thêm FocusListener để theo dõi sự kiện focus
+        formattedTextField.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if(spinner_SoLuong.getValue().equals("1"))
+                	formattedTextField.selectAll();
+                // Đang ở trong trạng thái được chỉnh sửa
+            }
+            @Override
+            public void focusLost(FocusEvent e) {
+               
+            }
+        });
+
+//        JLabel label = new JLabel("Value: 0");
+//        spinner_SoLuong.addChangeListener(e -> {
+//            label.setText("Value: " + spinner_SoLuong.getValue());
+//        });
+		
 	
 
 //		2 nút thêm và refresh lại các jtextfield ở trên
