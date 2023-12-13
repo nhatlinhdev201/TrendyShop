@@ -39,7 +39,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JSpinner;
 
-public class TrangQLKhachHangPanel extends JPanel implements ActionListener, MouseListener,WindowListener {
+public class TrangQLKhachHangPanel extends JPanel implements ActionListener, MouseListener, WindowListener {
 	private static final Font TABLE_FONT = new Font("Tahoma", Font.PLAIN, 15);
 	static Dao_KhachHang khDao = new Dao_KhachHang();
 	private JTable table;
@@ -58,7 +58,8 @@ public class TrangQLKhachHangPanel extends JPanel implements ActionListener, Mou
 	private JButton btn_capNhat;
 	private static DefaultTableModel tableModel;
 	private JComboBox<String> comboBox;
-	static int rowCount ;
+	static int rowCount;
+
 	/**
 	 * Create the panel.
 	 */
@@ -139,9 +140,9 @@ public class TrangQLKhachHangPanel extends JPanel implements ActionListener, Mou
 		table.setFont(TABLE_FONT);
 		table.setModel(tableModel);
 		table.getColumnModel().getColumn(0).setPreferredWidth(15);
-	    table.getColumnModel().getColumn(1).setPreferredWidth(95); 
-	    table.getColumnModel().getColumn(2).setPreferredWidth(40);
-	    table.getColumnModel().getColumn(3).setPreferredWidth(100);
+		table.getColumnModel().getColumn(1).setPreferredWidth(95);
+		table.getColumnModel().getColumn(2).setPreferredWidth(40);
+		table.getColumnModel().getColumn(3).setPreferredWidth(100);
 		table.getColumnModel().getColumn(4).setPreferredWidth(10);
 		table.getColumnModel().getColumn(5).setPreferredWidth(10);
 		table.getColumnModel().getColumn(6).setPreferredWidth(10);
@@ -241,13 +242,13 @@ public class TrangQLKhachHangPanel extends JPanel implements ActionListener, Mou
 		btn_nghi.setBackground(Color.WHITE);
 		btn_nghi.setBounds(324, 499, 75, 23);
 		add(btn_nghi);
-		
+
 		ButtonGroup buttonGroup = new ButtonGroup();
 
 		// Thêm nút vào nhóm
 		buttonGroup.add(btn_hoatDong);
 		buttonGroup.add(btn_nghi);
-		
+
 		JLabel lblNewLabel = new JLabel("Thông tin khách hàng");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 27));
 		lblNewLabel.setBounds(75, 16, 352, 33);
@@ -292,35 +293,23 @@ public class TrangQLKhachHangPanel extends JPanel implements ActionListener, Mou
 		btn_them.setBounds(25, 609, 137, 56);
 		String iconPath_them = "/images/plus.png";
 		ImageIcon iconThem = new ImageIcon(this.getClass().getResource(iconPath_them)); // Sử dụng getResource để lấy
-																						// đường dẫn từ resources của
-																						// ứng dụng
-
 		Image scaledIconThem = iconThem.getImage().getScaledInstance(33, 33, Image.SCALE_SMOOTH); // Thiết lập kích
-																									// thước
 		ImageIcon resizedIconThem = new ImageIcon(scaledIconThem);
-
 		btn_them.setIcon(resizedIconThem);
 		add(btn_them);
+
 		String iconPath_xoa = "/images/delete.png";
 		ImageIcon iconXoa = new ImageIcon(this.getClass().getResource(iconPath_xoa)); // Sử dụng getResource để lấy
-																						// đường dẫn từ resources của
-																						// ứng dụng
-
 		Image scaledIconXoa = iconXoa.getImage().getScaledInstance(27, 27, Image.SCALE_SMOOTH); // Thiết lập kích thước
 		ImageIcon resizedIconXoa = new ImageIcon(scaledIconXoa);
-
 		btn_capNhat = new JButton("Cập nhật");
 		btn_capNhat.setBackground(Color.ORANGE);
 		btn_capNhat.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btn_capNhat.setBounds(172, 609, 137, 56);
 		String iconPath_capnhat = "/images/updated.png";
 		ImageIcon iconCapNhat = new ImageIcon(this.getClass().getResource(iconPath_capnhat)); // Sử dụng getResource để
-																								// lấy đường dẫn từ
-																								// resources của ứng
-																								// dụng
 
 		Image scaledIconCapNhat = iconCapNhat.getImage().getScaledInstance(33, 33, Image.SCALE_SMOOTH); // Thiết lập
-																										// kích thước
 		ImageIcon resizedIconCapNhat = new ImageIcon(scaledIconCapNhat);
 
 		btn_capNhat.setIcon(resizedIconCapNhat);
@@ -332,7 +321,7 @@ public class TrangQLKhachHangPanel extends JPanel implements ActionListener, Mou
 		btn_load.setBackground(new Color(135, 206, 235));
 		btn_load.setBounds(317, 611, 139, 53);
 		String iconPath_load = "/images/loading.png";
-		ImageIcon iconLoad = new ImageIcon(this.getClass().getResource(iconPath_load)); 
+		ImageIcon iconLoad = new ImageIcon(this.getClass().getResource(iconPath_load));
 		Image scaledIconLoad = iconLoad.getImage().getScaledInstance(33, 33, Image.SCALE_SMOOTH);
 		ImageIcon resizedIconLoad = new ImageIcon(scaledIconLoad);
 		btn_load.setIcon(resizedIconLoad);
@@ -348,7 +337,6 @@ public class TrangQLKhachHangPanel extends JPanel implements ActionListener, Mou
 		comboBox.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		comboBox.setBounds(473, 21, 123, 44);
 		add(comboBox);
-		
 	}
 
 	public static void docDuLieu() {
@@ -361,16 +349,23 @@ public class TrangQLKhachHangPanel extends JPanel implements ActionListener, Mou
 
 						khachHang.getMaKhachHang(), khachHang.getTenKhachHang(), khachHang.getSoDienThoai(),
 						khachHang.getEmail(), khachHang.getDiaChi(), khachHang.isTrangThai() ? "Hoạt động" : "Nghỉ", // Chuyển
-																														// boolean
-																														// thành
-																														// chuỗi
-						khachHang.getDiemTichLuy() };
+						(int) khachHang.getDiemTichLuy() };
 				// Thêm dữ liệu vào model của bảng
 				tableModel.addRow(rowData);
 
 				// Tăng chỉ số
 				i++;
 			}
+			for (int j = tableModel.getRowCount() - 1; j >= 0; j--) {
+				String cellValue = (String) tableModel.getValueAt(j, 0);
+				if (cellValue != null && cellValue.contains("KC")) {
+					tableModel.removeRow(j);
+				}
+			}
+			int rowIndexToHide = 0;
+			tableModel.removeRow(rowIndexToHide);
+			int rowIndexKH000 = 0;
+			tableModel.removeRow(rowIndexKH000);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -512,7 +507,7 @@ public class TrangQLKhachHangPanel extends JPanel implements ActionListener, Mou
 			JOptionPane.showMessageDialog(this, "Điểm tích luỹ phải là số!");
 			return false;
 		}
-		
+
 		String email = txt_email.getText().trim();
 		if (!email.endsWith("@gmail.com")) {
 			JOptionPane.showMessageDialog(this, "Email phải kết thúc bằng '@gmail.com'!");
@@ -528,20 +523,17 @@ public class TrangQLKhachHangPanel extends JPanel implements ActionListener, Mou
 
 	private void loadDataIntoTable() {
 		try {
-			// Clear existing data in the table
 			clearTable();
-
-			// Load data from the database into the table
 			docDuLieu();
-
-			// Additional logic if needed after loading data
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 	}
+
 	public static int getRowCount() {
-        return rowCount =tableModel.getRowCount();
-    }
+		return rowCount = tableModel.getRowCount();
+	}
+
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
@@ -575,42 +567,42 @@ public class TrangQLKhachHangPanel extends JPanel implements ActionListener, Mou
 	@Override
 	public void windowOpened(WindowEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void windowClosing(WindowEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void windowClosed(WindowEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void windowIconified(WindowEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void windowDeiconified(WindowEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void windowActivated(WindowEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void windowDeactivated(WindowEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

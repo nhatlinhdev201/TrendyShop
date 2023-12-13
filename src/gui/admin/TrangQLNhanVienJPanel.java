@@ -280,7 +280,7 @@ public class TrangQLNhanVienJPanel extends JPanel implements ActionListener, Mou
 		txt_timkiem = new JTextField();
 		txt_timkiem.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		txt_timkiem.setColumns(10);
-		txt_timkiem.setBounds(621, 275, 248, 33);
+		txt_timkiem.setBounds(631, 274, 248, 33);
 		add(txt_timkiem);
 
 		label_anh = new JLabel("");
@@ -289,15 +289,16 @@ public class TrangQLNhanVienJPanel extends JPanel implements ActionListener, Mou
 		add(label_anh);
 
 		btn_hoatDong = new JRadioButton("Hoạt động");
+		btn_hoatDong.setSelected(true);
 		btn_hoatDong.setBackground(new Color(152, 251, 152));
 		btn_hoatDong.setFont(new Font("Tahoma", Font.BOLD, 15));
-		btn_hoatDong.setBounds(930, 218, 102, 23);
+		btn_hoatDong.setBounds(930, 227, 102, 14);
 		add(btn_hoatDong);
 
 		btn_nghi = new JRadioButton("Đã nghỉ");
 		btn_nghi.setBackground(new Color(152, 251, 152));
 		btn_nghi.setFont(new Font("Tahoma", Font.BOLD, 15));
-		btn_nghi.setBounds(1044, 219, 83, 23);
+		btn_nghi.setBounds(1044, 223, 83, 23);
 		add(btn_nghi);
 		table.getColumnModel().getColumn(8).setPreferredWidth(0);
 		ButtonGroup buttonGroup = new ButtonGroup();
@@ -339,13 +340,10 @@ public class TrangQLNhanVienJPanel extends JPanel implements ActionListener, Mou
 				SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 				// Định dạng ngày tháng năm và lấy ngày sinh từ đối tượng NhanVien
 				String ngaySinhFormatted = dateFormat.format(nv.getNgaySinh());
-
 				// Tạo một mảng dữ liệu để chứa thông tin của khách hàng
 				Object[] rowData = {
-
 						nv.getMaNhanVien().trim(), nv.getHoTen().trim(), ngaySinhFormatted, nv.getSoCCCD().trim(), nv.getSoDienThoai().trim(),
-						nv.getEmail().trim(), nv.getDiaChi().trim(), nv.isTrangThai() ? "Hoạt động" : "Nghỉ" // Chuyển boolean thành
-																								// chuỗi
+						nv.getEmail().trim(), nv.getDiaChi().trim(), nv.isTrangThai() ? "Hoạt động" : "Nghỉ" // Chuyển boolean thành chuỗi
 						, nv.getAnhDaiDien() };
 				// Thêm dữ liệu vào model của bảng
 				tableModel.addRow(rowData);
