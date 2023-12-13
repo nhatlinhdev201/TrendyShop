@@ -467,8 +467,7 @@ public class TrangQLNhanVienJPanel extends JPanel implements ActionListener, Mou
 	}
 
 	public NhanVien layNhanVien() throws ParseException {
-		String sinh_nhat = "20-12-2002";
-		Date ngaySinh =  new Date(9, 11, 2003);
+		Date ngaySinh = new Date(102, 11, 22);
 		String ngaySinhText = textField_ngaySinh.getText();
 		String maNV = txt_ma.getText().trim();
 		String tenNV = textField_ten.getText().trim();
