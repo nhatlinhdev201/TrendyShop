@@ -407,7 +407,7 @@ public class TrangQLNhanVienJPanel extends JPanel implements ActionListener, Mou
 						Object[] rowData = { nhanVien.getMaNhanVien(), nhanVien.getHoTen(), ngaySinhString,
 								nhanVien.getSoCCCD(), nhanVien.getSoDienThoai(), nhanVien.getEmail(),
 								nhanVien.getDiaChi(), nhanVien.isTrangThai() ? "Nghỉ" : "Hoạt động",
-								nhanVien.getAnhDaiDien() };
+								nhanVien.getAnhDaiDien(), nhanVien.getMatKhau() };
 //		                    int rowIndex = tableModel.getRowCount() - 1;  // Lấy chỉ số của dòng vừa thêm vào bảng
 //		                    table.setRowSelectionInterval(rowIndex, rowIndex);
 						// Thêm dữ liệu vào model của bảng

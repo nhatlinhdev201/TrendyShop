@@ -214,12 +214,12 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener{
 		hienThiThongTinHoaDon(panel);
 
 		List<HoaDon> listAllHoaDon = new ArrayList<HoaDon>();
-		for(HoaDon hoadon: dao_HoaDon.getAll().stream().limit(5).collect(Collectors.toList())) {
-			if(hoadon.isTrangThaiThanhToan()) listAllHoaDon.add(hoadon);
-		}
-//		for(HoaDon hoadon: dao_HoaDon.getAll()) {
+//		for(HoaDon hoadon: dao_HoaDon.getAll().stream().limit(5).collect(Collectors.toList())) {
 //			if(hoadon.isTrangThaiThanhToan()) listAllHoaDon.add(hoadon);
 //		}
+		for(HoaDon hoadon: dao_HoaDon.getTop5()) {
+			if(hoadon.isTrangThaiThanhToan()) listAllHoaDon.add(hoadon);
+		}
 		
 		DanhSachHoaDon(listAllHoaDon);
 		
@@ -262,6 +262,15 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener{
 			txt_SDT.setText("");
 			dateChooser_TuNgay.setDate(null);
 			dateChooser_DenNgay.setDate(null);
+			List<HoaDon> listAllHoaDon = new ArrayList<HoaDon>();
+//			for(HoaDon hoadon: dao_HoaDon.getAll().stream().limit(5).collect(Collectors.toList())) {
+//				if(hoadon.isTrangThaiThanhToan()) listAllHoaDon.add(hoadon);
+//			}
+			for(HoaDon hoadon: dao_HoaDon.getTop5()) {
+				if(hoadon.isTrangThaiThanhToan()) listAllHoaDon.add(hoadon);
+			}
+			
+			DanhSachHoaDon(listAllHoaDon);
 		} else if (o.equals(txt_MaHoaDon)) {
 			txt_MaHoaDon.transferFocus();
 		} else if (o.equals(txt_SDT)) {
@@ -711,7 +720,7 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener{
 			}
 			List<HoaDon> ds = new ArrayList<>();
 			for (HoaDon hoaDon : dsHD) {
-				if (ma_NV.equals(hoaDon.getNguoiLapHoaDon().getMaNhanVien())) {
+				if (ma_NV.equalsIgnoreCase(hoaDon.getNguoiLapHoaDon().getMaNhanVien()) && hoaDon.isTrangThaiThanhToan()) {
 					ds.add(hoaDon);
 				}
 			}
