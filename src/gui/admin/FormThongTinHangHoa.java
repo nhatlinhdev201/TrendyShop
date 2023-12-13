@@ -416,6 +416,9 @@ public class FormThongTinHangHoa extends JPanel implements ActionListener {
 			txt_NewSize.setText(size);
 			spn_SoLuong.setValue(soLuong);
 		}
+//		if(btn_Save.getText().equals("Lưu Thay Đổi")) {
+//			txt_NewSize.setEditable(false);
+//		}
 		return pnl_AddSize;
 	}
 
@@ -577,6 +580,7 @@ public class FormThongTinHangHoa extends JPanel implements ActionListener {
 										.substring(sr.getAbsolutePath().lastIndexOf("."));
 								a = new File("img\\" + hh.getMaHangHoa() + tienToFile);
 								hh.setHinhAnh("img\\" + hh.getMaHangHoa() + tienToFile);
+								hh.setKichCo(i.getKey());
 								if (dao_HangHoa.insertHangHoa(hh)) {
 									listMaThanhCong += hh.getMaHangHoa() + "\n";
 									// Thực hiện copy hình ảnh vào thư mục img
@@ -598,6 +602,8 @@ public class FormThongTinHangHoa extends JPanel implements ActionListener {
 								JOptionPane.showMessageDialog(this,
 										"Thêm sản phẩm \n" + listMaThanhCong + " thành công.");
 								reText();
+								listSize = new HashMap<String, Integer>();
+								dtm_size.setRowCount(0);
 							} else if (checkADD || !listMaThemThatBai.equals("")) {
 								JOptionPane.showMessageDialog(this,
 										"Thêm thông tin sản phẩm \n" + listMaThemThatBai + " Thất Bại.");
