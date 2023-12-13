@@ -397,9 +397,11 @@ public class TrangQuanLyVoucher extends JPanel implements ActionListener, MouseL
 	private void loadData(List<VoucherGiamGia> dsVoucher) {
 		dataDefault.setRowCount(0);
 		for (VoucherGiamGia voucher : dsVoucher) {
-			int giamGia = (int) (voucher.getPhanTramGiamTheoHoaDon()*100);
-			Object[] row = { voucher.getMaVoucher(), voucher.getTenVoucher(), giamGia, voucher.getNgayBatDau(), voucher.getNgayKetThuc(), voucher.getSoLuotDung(), voucher.isTrangThai()?"Đang hoạt động":"Đã ngưng"};
-			dataDefault.addRow(row);
+			if(!voucher.getMaVoucher().trim().equals("VC0000")) {
+				int giamGia = (int) (voucher.getPhanTramGiamTheoHoaDon()*100);
+				Object[] row = { voucher.getMaVoucher(), voucher.getTenVoucher(), giamGia, voucher.getNgayBatDau(), voucher.getNgayKetThuc(), voucher.getSoLuotDung(), voucher.isTrangThai()?"Đang hoạt động":"Đã ngưng"};
+				dataDefault.addRow(row);
+			}
 			
 		}
 	}
