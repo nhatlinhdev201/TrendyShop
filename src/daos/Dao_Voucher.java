@@ -247,28 +247,7 @@ public class Dao_Voucher {
 	/**
 	 * Tìm voucher có mã lớn nhất
 	 * @return
-	 */
-	public int getMaHangHoaNew() {
-		int maHangHoa=0;
-		try {
-			PreparedStatement statement = connection
-					.prepareStatement("select top(1) maHangHoa from HangHoa order by maHangHoa desc");
-			ResultSet resultSet = statement.executeQuery();
-			if (resultSet.next()) {
-	            String maHangHoaString = resultSet.getString("maHangHoa");
-	            if (maHangHoaString != null && maHangHoaString.length() >= 9) {
-	                // Lấy phần số từ vị trí 2 đến 5 và chuyển đổi thành số nguyên
-	                maHangHoa = Integer.parseInt(maHangHoaString.substring(2, 6));
-	            }
-	        }
-			
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return maHangHoa;
-
-	}
+	 * */
 	
 	
 	/**
