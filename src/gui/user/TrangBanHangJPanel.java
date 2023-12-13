@@ -1087,7 +1087,7 @@ public class TrangBanHangJPanel extends JPanel
 			}
 
 			if (!vc.getMaVoucher().equals("VC0000")) {
-				vc.setSoLuotDung(vc.getSoLuotDung() + 1);
+				vc.setSoLuotDung(vc.getSoLuotDung() - 1);
 				dao_VoucherGiamGia.updateVoucher(vc);
 			}
 			if (!kh.getMaKhachHang().equals("KH0000")) {
@@ -1169,6 +1169,12 @@ public class TrangBanHangJPanel extends JPanel
 		}
 		if (voucher.getNgayKetThuc().before(new Date())) {
 			JOptionPane.showMessageDialog(this, "Voucher này đã kết thúc vào ngày: " + voucher.getNgayKetThuc());
+			txt_VoucherGiamGia.requestFocus();
+			txt_VoucherGiamGia.selectAll();
+			return false;
+		}
+		if(voucher.getSoLuotDung()<=0) {
+			JOptionPane.showMessageDialog(this, "Voucher đã hết lượt sử dụng");
 			txt_VoucherGiamGia.requestFocus();
 			txt_VoucherGiamGia.selectAll();
 			return false;
