@@ -467,6 +467,7 @@ public class TrangQLNhanVienJPanel extends JPanel implements ActionListener, Mou
 	}
 
 	public NhanVien layNhanVien() throws ParseException {
+		String sinh_nhat = "20-12-2002";
 		Date ngaySinh =  new Date(9, 11, 2003);
 		String ngaySinhText = textField_ngaySinh.getText();
 		String maNV = txt_ma.getText().trim();
@@ -495,7 +496,7 @@ public class TrangQLNhanVienJPanel extends JPanel implements ActionListener, Mou
 					JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
-		if (!soCCCD.matches("\\d")) {
+		if (!soCCCD.matches("\\d+")) {
 			JOptionPane.showMessageDialog(this, "Số cccd phải là số!");
 			return false;
 		}

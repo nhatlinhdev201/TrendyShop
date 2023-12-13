@@ -230,6 +230,7 @@ public class TrangQLKhachHangPanel extends JPanel implements ActionListener, Mou
 		add(txt_diemTichLuy);
 
 		btn_hoatDong = new JRadioButton("Hoạt động");
+		btn_hoatDong.setSelected(true);
 		btn_hoatDong.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		btn_hoatDong.setBackground(Color.WHITE);
 		btn_hoatDong.setBounds(214, 499, 108, 23);
@@ -507,7 +508,7 @@ public class TrangQLKhachHangPanel extends JPanel implements ActionListener, Mou
 			JOptionPane.showMessageDialog(this, "Số điện thoại phải có đúng 10 số bắt đầu là số 0!");
 			return false;
 		}
-		if (!diem.matches("\\d")) {
+		if (!diem.matches("\\d+")) {
 			JOptionPane.showMessageDialog(this, "Điểm tích luỹ phải là số!");
 			return false;
 		}
