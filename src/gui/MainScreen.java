@@ -15,12 +15,21 @@ public class MainScreen {
 			@Override
 			public void run() {
 				try {
-					TrangChinhNVBanHang trangChinhNVBanHang = new TrangChinhNVBanHang();
-					TrangChinhNVQuanLy screenMainAdmin = new TrangChinhNVQuanLy();
-					screenMainAdmin.setVisible(true);
-					screenMainAdmin.setIconImage(
-							new ImageIcon(getClass().getResource("/images/logoShop.png")).getImage());
-					screenMainAdmin.setLocationRelativeTo(null);
+//					SplashScreen m = new SplashScreen();
+//					m.setIconImage(
+//							new ImageIcon(getClass().getResource("/images/logoShop.png")).getImage());
+			         TrangDangNhap m1 = new TrangDangNhap();
+//			         m.setVisible(true);
+//			         m.iterate();
+//			         m.setVisible(false);
+//			         m1.setVisible(true);
+			         
+//					TrangChinhNVBanHang trangChinhNVBanHang = new TrangChinhNVBanHang();
+//					TrangChinhNVQuanLy screenMainAdmin = new TrangChinhNVQuanLy();
+//					trangChinhNVBanHang.setVisible(true);
+//					trangChinhNVBanHang.setIconImage(
+//							new ImageIcon(getClass().getResource("/images/logoShop.png")).getImage());
+//					trangChinhNVBanHang.setLocationRelativeTo(null);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

@@ -44,6 +44,11 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
+import javax.swing.text.AbstractDocument;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DocumentFilter;
+
 public class TrangHangCho extends JFrame implements ActionListener {
 	private JTextField txt_SDT;
 	private JButton btn_Thoat;
@@ -99,6 +104,17 @@ public class TrangHangCho extends JFrame implements ActionListener {
 		getContentPane().add(lblNewLabel_1);
 
 		txt_SDT = new JTextField();
+		// Sử dụng DocumentFilter để kiểm tra và ngăn chặn nhập ký tự "a"
+        ((AbstractDocument) txt_SDT.getDocument()).setDocumentFilter(new DocumentFilter() {
+            @Override
+            public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+            	String chuoinhap = txt_SDT.getText()+text;
+                // Kiểm tra mỗi ký tự trước khi thêm vào Document
+                if (chuoinhap.matches("^(0){0,1}$|^(0)\\d{0,9}$")) {
+                    super.replace(fb, offset, length, text, attrs);
+                }
+            }
+        });
 		txt_SDT.setBounds(208, 59, 229, 25);
 		getContentPane().add(txt_SDT);
 		txt_SDT.setColumns(10);
@@ -146,7 +162,7 @@ public class TrangHangCho extends JFrame implements ActionListener {
 
 		table.getColumnModel().getColumn(2).setCellRenderer(new ButtonRenderer());
 		table.getColumnModel().getColumn(2).setCellEditor(new ButtonEditor());
-		panel.add(new JScrollPane(table), BorderLayout.CENTER);
+		panel.add(new JScrollPane(table), BorderLayout.NORTH);
 
 		list_HoaDon = dao_HoaDon.getHoaDonChuaThanhToan();
 		for (HoaDon hoaDon : list_HoaDon) {

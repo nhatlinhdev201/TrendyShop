@@ -10,6 +10,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -20,7 +21,9 @@ import javax.swing.JOptionPane;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
@@ -47,6 +50,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 
 public class TK_ThongKeMatHangBanChayNVQuanLyPanel extends JPanel implements ActionListener {
@@ -124,7 +128,7 @@ public class TK_ThongKeMatHangBanChayNVQuanLyPanel extends JPanel implements Act
 		JPanel panelTabThongKeTheoNgay = new JPanel();
 		panelTabThongKeTheoNgay.setLayout(null);
 		panelTabThongKeTheoNgay.setBackground(new Color(102, 205, 170));
-		tabbedPane.addTab("Theo ngày", null, panelTabThongKeTheoNgay, null);
+		tabbedPane.addTab("Thống kê trong ngày", null, panelTabThongKeTheoNgay, null);
 
 		JPanel panel_1 = new JPanel();
 		panel_1.setBounds(10, 11, 740, 577);
@@ -132,27 +136,42 @@ public class TK_ThongKeMatHangBanChayNVQuanLyPanel extends JPanel implements Act
 		panel_1.setLayout(null);
 
 		JPanel panelBoLocTimKiem_2 = new JPanel();
+		panelBoLocTimKiem_2.setBackground(Color.WHITE);
 		panelBoLocTimKiem_2.setLayout(null);
 		panelBoLocTimKiem_2.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panelBoLocTimKiem_2.setBounds(10, 56, 720, 59);
 		panel_1.add(panelBoLocTimKiem_2);
 
 		btnThongKeNgay = new JButton("Thống kê");
-		btnThongKeNgay.setBounds(389, 11, 138, 30);
+		btnThongKeNgay.setBackground(Color.green);
+		btnThongKeNgay.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        String iconPath_thongKe = "/images/pick-icon.png";
+		ImageIcon iconThongKe = new ImageIcon(this.getClass().getResource(iconPath_thongKe)); 
+		Image scaledIconThongKe = iconThongKe.getImage().getScaledInstance(27, 27, Image.SCALE_SMOOTH); 
+		ImageIcon resizedIconThongKe = new ImageIcon(scaledIconThongKe);
+		btnThongKeNgay.setIcon(resizedIconThongKe);
+		btnThongKeNgay.setBounds(357, 11, 150, 37);
 		panelBoLocTimKiem_2.add(btnThongKeNgay);
 		btnThongKeNgay.addActionListener(this);
 
 		JLabel lblThiGianNgy = new JLabel("Thời gian ngày : ");
-		lblThiGianNgy.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblThiGianNgy.setBounds(31, 14, 108, 23);
+		lblThiGianNgy.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblThiGianNgy.setBounds(10, 14, 129, 34);
 		panelBoLocTimKiem_2.add(lblThiGianNgy);
 
 		jdcChonNgayThongKe = new JDateChooser();
-		jdcChonNgayThongKe.setBounds(159, 14, 178, 23);
+		jdcChonNgayThongKe.setBounds(138, 11, 178, 37);
 		panelBoLocTimKiem_2.add(jdcChonNgayThongKe);
 
 		btnLamMoiThongKeNgay = new JButton("Làm mới thống kê");
-		btnLamMoiThongKeNgay.setBounds(557, 11, 153, 30);
+		btnLamMoiThongKeNgay.setBackground(Color.ORANGE);
+		btnLamMoiThongKeNgay.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        String iconPath_capnhat = "/images/updated.png";
+		ImageIcon iconCapNhat = new ImageIcon(this.getClass().getResource(iconPath_capnhat)); 
+		Image scaledIconCapNhat = iconCapNhat.getImage().getScaledInstance(27, 27, Image.SCALE_SMOOTH); 
+		ImageIcon resizedIconCapNhat = new ImageIcon(scaledIconCapNhat);
+		btnLamMoiThongKeNgay.setIcon(resizedIconCapNhat);
+		btnLamMoiThongKeNgay.setBounds(517, 11, 193, 37);
 		panelBoLocTimKiem_2.add(btnLamMoiThongKeNgay);
 		btnLamMoiThongKeNgay.addActionListener(this);
 
@@ -160,12 +179,16 @@ public class TK_ThongKeMatHangBanChayNVQuanLyPanel extends JPanel implements Act
 		panelTbaleNgay.setBorder(new TitledBorder(
 				new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "",
 				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panelTbaleNgay.setBounds(10, 220, 720, 285);
+		panelTbaleNgay.setBounds(10, 249, 720, 285);
 		panel_1.add(panelTbaleNgay);
 		panelTbaleNgay.setLayout(new BorderLayout(0, 0));
 
 		modelTableThongKeNgay = new DefaultTableModel(cols, 0);
 		tblThongKeMatHangNgay = new JTable(modelTableThongKeNgay);
+		JTableHeader header = tblThongKeMatHangNgay.getTableHeader();
+		header.setPreferredSize(new Dimension(header.getWidth(), 40));
+        header.setBackground(Color.cyan);
+        tblThongKeMatHangNgay.setRowHeight(40);
 		panelTbaleNgay.add(new JScrollPane(tblThongKeMatHangNgay), BorderLayout.CENTER);
 		for (int i = 3; i < cols.length; i++) {
 			TableColumn column = tblThongKeMatHangNgay.getColumnModel().getColumn(i);
@@ -194,36 +217,52 @@ public class TK_ThongKeMatHangBanChayNVQuanLyPanel extends JPanel implements Act
 		panel_1.add(lblNewLabel_2);
 
 		JPanel panel = new JPanel();
+		panel.setBackground(Color.WHITE);
 		panel.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panel.setBounds(10, 141, 720, 51);
+		panel.setBounds(10, 141, 720, 105);
 		panel_1.add(panel);
 		panel.setLayout(null);
 
 		JLabel lblTmKimMt = new JLabel("Tìm kiếm Mặt hàng :");
 		lblTmKimMt.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblTmKimMt.setBounds(22, 6, 129, 38);
+		lblTmKimMt.setBounds(10, 56, 129, 38);
 		panel.add(lblTmKimMt);
 
 		txtTimKiemMatHangThongKeNgay = new JTextField();
-		txtTimKiemMatHangThongKeNgay.setBounds(161, 11, 186, 30);
+		txtTimKiemMatHangThongKeNgay.setBounds(132, 61, 186, 30);
 		panel.add(txtTimKiemMatHangThongKeNgay);
 		txtTimKiemMatHangThongKeNgay.setColumns(10);
 
 		btnTimKiemMatHangThongKeNgay = new JButton("Tìm kiếm");
-		btnTimKiemMatHangThongKeNgay.setBounds(393, 11, 129, 31);
+		btnTimKiemMatHangThongKeNgay.setBackground(Color.white);
+		btnTimKiemMatHangThongKeNgay.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        String iconPath_timKiem = "/images/icon-search.png";
+		ImageIcon iconTimKiem = new ImageIcon(this.getClass().getResource(iconPath_timKiem)); 
+		Image scaledIconTimKiem = iconTimKiem.getImage().getScaledInstance(27, 27, Image.SCALE_SMOOTH); 
+		ImageIcon resizedIconTimKiem = new ImageIcon(scaledIconTimKiem);
+		btnTimKiemMatHangThongKeNgay.setIcon(resizedIconTimKiem);
+		btnTimKiemMatHangThongKeNgay.setBounds(346, 56, 151, 36);
 		panel.add(btnTimKiemMatHangThongKeNgay);
 		btnTimKiemMatHangThongKeNgay.addActionListener(this);
 
 		btnLamMoiMatHangThongKeNgay = new JButton("Làm mới");
-		btnLamMoiMatHangThongKeNgay.setBounds(560, 11, 150, 31);
+		btnLamMoiMatHangThongKeNgay.setBackground(Color.ORANGE);
+		btnLamMoiMatHangThongKeNgay.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnLamMoiMatHangThongKeNgay.setIcon(resizedIconCapNhat);
+		btnLamMoiMatHangThongKeNgay.setBounds(518, 54, 192, 38);
 		panel.add(btnLamMoiMatHangThongKeNgay);
+		
+				JLabel lblDLiuThng = new JLabel("TOP MẶT HÀNG BÁN CHẠY");
+				lblDLiuThng.setBounds(257, 0, 216, 34);
+				panel.add(lblDLiuThng);
+				lblDLiuThng.setForeground(Color.RED);
+				lblDLiuThng.setFont(new Font("Tahoma", Font.BOLD, 14));
+				
+				JPanel panel_4 = new JPanel();
+				panel_4.setBorder(new LineBorder(new Color(0, 0, 0)));
+				panel_4.setBounds(10, 32, 700, 4);
+				panel.add(panel_4);
 		btnLamMoiMatHangThongKeNgay.addActionListener(this);
-
-		JLabel lblDLiuThng = new JLabel("DỮ LIỆU THỐNG KÊ MẶT HÀNG BÁN CHẠY TRONG NGÀY");
-		lblDLiuThng.setForeground(Color.RED);
-		lblDLiuThng.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblDLiuThng.setBounds(112, 11, 427, 34);
-		panel_1.add(lblDLiuThng);
 
 		JLabel lblNewLabel_2_1_2_1 = new JLabel("Mặc định dữ liệu sẽ lấy tối đa top 15 mặt hàng bán chạy nhất.");
 		lblNewLabel_2_1_2_1.setForeground(Color.RED);
@@ -246,12 +285,19 @@ public class TK_ThongKeMatHangBanChayNVQuanLyPanel extends JPanel implements Act
 		panel_3.setLayout(null);
 
 		panelBieuDoThongKeNgay = new JPanel();
-		panelBieuDoThongKeNgay.setBackground(SystemColor.control);
+		panelBieuDoThongKeNgay.setBackground(Color.WHITE);
 		panelBieuDoThongKeNgay.setBounds(10, 11, 555, 491);
 		panel_3.add(panelBieuDoThongKeNgay);
 
 		btnXuatDuLieuThongKeMatHangNgay = new JButton("Xuất dữ liệu thống kê");
-		btnXuatDuLieuThongKeMatHangNgay.setBounds(208, 513, 174, 42);
+		btnXuatDuLieuThongKeMatHangNgay.setBackground(Color.white);
+		btnXuatDuLieuThongKeMatHangNgay.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        String iconPath_excel = "/images/excel-icon.png";
+		ImageIcon iconExcel = new ImageIcon(this.getClass().getResource(iconPath_excel)); 
+		Image scaledIconExcel = iconExcel.getImage().getScaledInstance(27, 27, Image.SCALE_SMOOTH); 
+		ImageIcon resizedIconExcel = new ImageIcon(scaledIconExcel);
+		btnXuatDuLieuThongKeMatHangNgay.setIcon(resizedIconExcel);
+		btnXuatDuLieuThongKeMatHangNgay.setBounds(173, 513, 240, 42);
 		panel_3.add(btnXuatDuLieuThongKeMatHangNgay);
 		btnXuatDuLieuThongKeMatHangNgay.setFont(new Font("Tahoma", Font.BOLD, 10));
 		btnXuatDuLieuThongKeMatHangNgay.addActionListener(this);
@@ -259,7 +305,7 @@ public class TK_ThongKeMatHangBanChayNVQuanLyPanel extends JPanel implements Act
 		JPanel panelTabThongKeTheoThang = new JPanel();
 		panelTabThongKeTheoThang.setLayout(null);
 		panelTabThongKeTheoThang.setBackground(new Color(102, 205, 170));
-		tabbedPane.addTab("Theo tháng", null, panelTabThongKeTheoThang, null);
+		tabbedPane.addTab("Thống kê trong tháng", null, panelTabThongKeTheoThang, null);
 
 		JPanel panel_1_1 = new JPanel();
 		panel_1_1.setLayout(null);
@@ -267,51 +313,65 @@ public class TK_ThongKeMatHangBanChayNVQuanLyPanel extends JPanel implements Act
 		panelTabThongKeTheoThang.add(panel_1_1);
 
 		JPanel panelBoLocTimKiem_2_1 = new JPanel();
+		panelBoLocTimKiem_2_1.setBackground(Color.WHITE);
 		panelBoLocTimKiem_2_1.setLayout(null);
 		panelBoLocTimKiem_2_1.setBorder(new TitledBorder(
 				new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "",
 				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panelBoLocTimKiem_2_1.setBounds(10, 71, 720, 63);
+		panelBoLocTimKiem_2_1.setBounds(10, 56, 720, 63);
 		panel_1_1.add(panelBoLocTimKiem_2_1);
 
 		btnThongKeThang = new JButton("Thống kê");
-		btnThongKeThang.setBounds(363, 11, 138, 30);
+		btnThongKeThang.setBounds(326, 11, 153, 41);
+		btnThongKeThang.setIcon(resizedIconThongKe);
+		btnThongKeThang.setBackground(Color.green);
+		btnThongKeThang.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		panelBoLocTimKiem_2_1.add(btnThongKeThang);
 		btnThongKeThang.addActionListener(this);
 
 		JLabel lblThiGianThng = new JLabel("Thời gian tháng : ");
-		lblThiGianThng.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblThiGianThng.setBounds(10, 14, 108, 23);
+		lblThiGianThng.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblThiGianThng.setBounds(10, 14, 137, 38);
 		panelBoLocTimKiem_2_1.add(lblThiGianThng);
 
 		btnLamMoiThongKeThang = new JButton("Làm mới thống kê");
-		btnLamMoiThongKeThang.setBounds(557, 11, 153, 30);
+		btnLamMoiThongKeThang.setBounds(504, 11, 206, 41);
+		btnLamMoiThongKeThang.setIcon(resizedIconCapNhat);
+		btnLamMoiThongKeThang.setBackground(Color.ORANGE);
+		btnLamMoiThongKeThang.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		panelBoLocTimKiem_2_1.add(btnLamMoiThongKeThang);
 		btnLamMoiThongKeThang.addActionListener(this);
 
 		JLabel lblNewLabel_5 = new JLabel("Năm :");
-		lblNewLabel_5.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel_5.setBounds(177, 16, 46, 19);
+		lblNewLabel_5.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblNewLabel_5.setBounds(187, 13, 46, 36);
 		panelBoLocTimKiem_2_1.add(lblNewLabel_5);
 
 		cbxChonThangThongKe = new JComboBox(thang);
-		cbxChonThangThongKe.setBounds(128, 15, 39, 22);
+		cbxChonThangThongKe.setBackground(Color.WHITE);
+		cbxChonThangThongKe.setBounds(146, 15, 39, 37);
 		panelBoLocTimKiem_2_1.add(cbxChonThangThongKe);
 
 		cbxChonNamCuaThangThongKe = new JComboBox(nam);
-		cbxChonNamCuaThangThongKe.setBounds(219, 15, 59, 22);
+		cbxChonNamCuaThangThongKe.setBackground(Color.WHITE);
+		cbxChonNamCuaThangThongKe.setBounds(231, 15, 59, 37);
 		panelBoLocTimKiem_2_1.add(cbxChonNamCuaThangThongKe);
 
 		JPanel panelTbaleNgay_1 = new JPanel();
+		panelTbaleNgay_1.setBackground(Color.WHITE);
 		panelTbaleNgay_1.setBorder(new TitledBorder(
 				new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "",
 				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panelTbaleNgay_1.setBounds(10, 229, 720, 278);
+		panelTbaleNgay_1.setBounds(10, 249, 720, 272);
 		panel_1_1.add(panelTbaleNgay_1);
 		panelTbaleNgay_1.setLayout(new BorderLayout(0, 0));
 
 		modelTableThongKeThang = new DefaultTableModel(cols, 0);
 		tblThongKeThang = new JTable(modelTableThongKeThang);
+		JTableHeader header2 = tblThongKeThang.getTableHeader();
+		header2.setPreferredSize(new Dimension(header.getWidth(), 40));
+		header2.setBackground(Color.cyan);
+		tblThongKeThang.setRowHeight(40);
 		panelTbaleNgay_1.add(new JScrollPane(tblThongKeThang), BorderLayout.CENTER);
 		for (int i = 2; i < cols.length; i++) {
 			TableColumn column = tblThongKeThang.getColumnModel().getColumn(i);
@@ -340,36 +400,48 @@ public class TK_ThongKeMatHangBanChayNVQuanLyPanel extends JPanel implements Act
 		panel_1_1.add(lblNewLabel_2_1);
 
 		JPanel panel_2 = new JPanel();
+		panel_2.setBackground(Color.WHITE);
 		panel_2.setLayout(null);
 		panel_2.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panel_2.setBounds(10, 155, 720, 51);
+		panel_2.setBounds(10, 145, 720, 98);
 		panel_1_1.add(panel_2);
 
 		JLabel lblTmKimMt_1 = new JLabel("Tìm kiếm Mặt hàng :");
 		lblTmKimMt_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblTmKimMt_1.setBounds(10, 6, 129, 38);
+		lblTmKimMt_1.setBounds(10, 49, 129, 38);
 		panel_2.add(lblTmKimMt_1);
 
 		txtTimKiemMatHangThang = new JTextField();
 		txtTimKiemMatHangThang.setColumns(10);
-		txtTimKiemMatHangThang.setBounds(149, 11, 198, 30);
+		txtTimKiemMatHangThang.setBounds(131, 54, 186, 30);
 		panel_2.add(txtTimKiemMatHangThang);
 
 		btnTimKiemThang = new JButton("Tìm kiếm");
-		btnTimKiemThang.setBounds(367, 11, 129, 31);
+		btnTimKiemThang.setBounds(344, 49, 129, 38);
+		btnTimKiemThang.setBackground(Color.white);
+		btnTimKiemThang.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnTimKiemThang.setIcon(resizedIconTimKiem);
 		panel_2.add(btnTimKiemThang);
 		btnTimKiemThang.addActionListener(this);
 
 		btnLamMoiMatHangThongKeThang = new JButton("Làm mới");
-		btnLamMoiMatHangThongKeThang.setBounds(557, 6, 153, 31);
+		btnLamMoiMatHangThongKeThang.setBackground(Color.ORANGE);
+		btnLamMoiMatHangThongKeThang.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnLamMoiMatHangThongKeThang.setBounds(504, 49, 206, 38);
+		btnLamMoiMatHangThongKeThang.setIcon(resizedIconCapNhat);
 		panel_2.add(btnLamMoiMatHangThongKeThang);
+		
+		JLabel lblDLiuThng_1 = new JLabel("TOP MẶT HÀNG BÁN CHẠY");
+		lblDLiuThng_1.setForeground(Color.RED);
+		lblDLiuThng_1.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblDLiuThng_1.setBounds(257, 0, 216, 34);
+		panel_2.add(lblDLiuThng_1);
+		
+		JPanel panel_4_1 = new JPanel();
+		panel_4_1.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panel_4_1.setBounds(10, 32, 700, 4);
+		panel_2.add(panel_4_1);
 		btnLamMoiMatHangThongKeThang.addActionListener(this);
-
-		JLabel lblDLiuThng_2 = new JLabel("DỮ LIỆU THỐNG KÊ MẶT HÀNG BÁN CHẠY TRONG THÁNG");
-		lblDLiuThng_2.setForeground(Color.RED);
-		lblDLiuThng_2.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblDLiuThng_2.setBounds(188, 11, 441, 34);
-		panel_1_1.add(lblDLiuThng_2);
 
 		JLabel lblNewLabel_2_1_2 = new JLabel("Mặc định dữ liệu sẽ lấy tối đa top 15 mặt hàng bán chạy nhất.");
 		lblNewLabel_2_1_2.setForeground(Color.RED);
@@ -392,20 +464,23 @@ public class TK_ThongKeMatHangBanChayNVQuanLyPanel extends JPanel implements Act
 
 		panelBieuDoThongKeThang = new JPanel();
 		panelBieuDoThongKeThang.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panelBieuDoThongKeThang.setBackground(SystemColor.control);
+		panelBieuDoThongKeThang.setBackground(Color.WHITE);
 		panelBieuDoThongKeThang.setBounds(10, 11, 555, 491);
 		panel_3_1.add(panelBieuDoThongKeThang);
 
 		btnXuatDuLieuThongKeMatHangThang = new JButton("Xuất dữ liệu thống kê");
 		btnXuatDuLieuThongKeMatHangThang.setFont(new Font("Tahoma", Font.BOLD, 10));
-		btnXuatDuLieuThongKeMatHangThang.setBounds(208, 513, 174, 42);
+		btnXuatDuLieuThongKeMatHangThang.setBackground(Color.white);
+		btnXuatDuLieuThongKeMatHangThang.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnXuatDuLieuThongKeMatHangThang.setIcon(resizedIconExcel);
+		btnXuatDuLieuThongKeMatHangThang.setBounds(167, 513, 227, 42);
 		panel_3_1.add(btnXuatDuLieuThongKeMatHangThang);
 		btnXuatDuLieuThongKeMatHangThang.addActionListener(this);
 
 		JPanel panelTabThongKeTheoNam = new JPanel();
 		panelTabThongKeTheoNam.setLayout(null);
 		panelTabThongKeTheoNam.setBackground(new Color(102, 205, 170));
-		tabbedPane.addTab("Theo năm", null, panelTabThongKeTheoNam, null);
+		tabbedPane.addTab("Thống kê trong năm", null, panelTabThongKeTheoNam, null);
 
 		JPanel panel_1_1_1 = new JPanel();
 		panel_1_1_1.setLayout(null);
@@ -413,33 +488,42 @@ public class TK_ThongKeMatHangBanChayNVQuanLyPanel extends JPanel implements Act
 		panelTabThongKeTheoNam.add(panel_1_1_1);
 
 		JPanel panelBoLocTimKiem_2_1_1 = new JPanel();
+		panelBoLocTimKiem_2_1_1.setBackground(Color.WHITE);
 		panelBoLocTimKiem_2_1_1.setLayout(null);
 		panelBoLocTimKiem_2_1_1.setBorder(new TitledBorder(
 				new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "",
 				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panelBoLocTimKiem_2_1_1.setBounds(10, 71, 720, 61);
+		panelBoLocTimKiem_2_1_1.setBounds(10, 56, 720, 61);
 		panel_1_1_1.add(panelBoLocTimKiem_2_1_1);
 
 		btnThongKeNam = new JButton("Thống kê");
-		btnThongKeNam.setBounds(350, 11, 138, 30);
+		btnThongKeNam.setBackground(Color.green);
+		btnThongKeNam.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnThongKeNam.setIcon(resizedIconThongKe);
+		btnThongKeNam.setBounds(350, 11, 138, 39);
 		panelBoLocTimKiem_2_1_1.add(btnThongKeNam);
 		btnThongKeNam.addActionListener(this);
 
 		JLabel lblThiGianNm = new JLabel("Thời gian năm : ");
-		lblThiGianNm.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblThiGianNm.setBounds(59, 18, 108, 23);
+		lblThiGianNm.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblThiGianNm.setBounds(26, 12, 125, 33);
 		panelBoLocTimKiem_2_1_1.add(lblThiGianNm);
 
 		btnLamMoiThongKeNam = new JButton("Làm mới thống kê");
-		btnLamMoiThongKeNam.setBounds(557, 11, 153, 30);
+		btnLamMoiThongKeNam.setBackground(Color.ORANGE);
+		btnLamMoiThongKeNam.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnLamMoiThongKeNam.setIcon(resizedIconCapNhat);
+		btnLamMoiThongKeNam.setBounds(517, 11, 193, 39);
 		panelBoLocTimKiem_2_1_1.add(btnLamMoiThongKeNam);
 		btnLamMoiThongKeNam.addActionListener(this);
 
 		cbxChonNamThongKe = new JComboBox(nam);
-		cbxChonNamThongKe.setBounds(170, 16, 59, 25);
+		cbxChonNamThongKe.setBackground(Color.WHITE);
+		cbxChonNamThongKe.setBounds(143, 13, 59, 34);
 		panelBoLocTimKiem_2_1_1.add(cbxChonNamThongKe);
 
 		JPanel panelTbaleNgay_1_1 = new JPanel();
+		panelTbaleNgay_1_1.setBackground(Color.WHITE);
 		panelTbaleNgay_1_1.setBorder(new TitledBorder(
 				new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "",
 				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
@@ -470,36 +554,48 @@ public class TK_ThongKeMatHangBanChayNVQuanLyPanel extends JPanel implements Act
 		});
 
 		JPanel panel_2_1 = new JPanel();
+		panel_2_1.setBackground(Color.WHITE);
 		panel_2_1.setLayout(null);
 		panel_2_1.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panel_2_1.setBounds(10, 160, 720, 51);
+		panel_2_1.setBounds(10, 128, 720, 107);
 		panel_1_1_1.add(panel_2_1);
 
 		JLabel lblTmKimMt_1_1 = new JLabel("Tìm kiếm Mặt hàng :");
 		lblTmKimMt_1_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblTmKimMt_1_1.setBounds(10, 6, 129, 38);
+		lblTmKimMt_1_1.setBounds(10, 58, 129, 38);
 		panel_2_1.add(lblTmKimMt_1_1);
 
 		txtTimKiemMatHangNam = new JTextField();
 		txtTimKiemMatHangNam.setColumns(10);
-		txtTimKiemMatHangNam.setBounds(149, 11, 180, 30);
+		txtTimKiemMatHangNam.setBounds(149, 63, 180, 30);
 		panel_2_1.add(txtTimKiemMatHangNam);
 
 		btnTimKiemMatHangThongKeNam = new JButton("Tìm kiếm");
-		btnTimKiemMatHangThongKeNam.setBounds(348, 11, 140, 31);
+		btnTimKiemMatHangThongKeNam.setBackground(Color.white);
+		btnTimKiemMatHangThongKeNam.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnTimKiemMatHangThongKeNam.setIcon(resizedIconTimKiem);
+		btnTimKiemMatHangThongKeNam.setBounds(348, 58, 140, 36);
 		panel_2_1.add(btnTimKiemMatHangThongKeNam);
 		btnTimKiemMatHangThongKeNam.addActionListener(this);
 
 		btnLamMoiMatHangThongKeNam = new JButton("Làm mới");
-		btnLamMoiMatHangThongKeNam.setBounds(555, 11, 115, 31);
+		btnLamMoiMatHangThongKeNam.setBackground(Color.ORANGE);
+		btnLamMoiMatHangThongKeNam.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnLamMoiMatHangThongKeNam.setIcon(resizedIconCapNhat);
+		btnLamMoiMatHangThongKeNam.setBounds(527, 55, 183, 38);
 		panel_2_1.add(btnLamMoiMatHangThongKeNam);
+		
+		JLabel lblDLiuThng_1_1 = new JLabel("TOP MẶT HÀNG BÁN CHẠY");
+		lblDLiuThng_1_1.setForeground(Color.RED);
+		lblDLiuThng_1_1.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblDLiuThng_1_1.setBounds(257, 0, 216, 34);
+		panel_2_1.add(lblDLiuThng_1_1);
+		
+		JPanel panel_4_1_1 = new JPanel();
+		panel_4_1_1.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panel_4_1_1.setBounds(10, 32, 700, 4);
+		panel_2_1.add(panel_4_1_1);
 		btnLamMoiMatHangThongKeNam.addActionListener(this);
-
-		JLabel lblDLiuThng_2_1 = new JLabel("DỮ LIỆU THỐNG KÊ MẶT HÀNG BÁN CHẠY TRONG NĂM");
-		lblDLiuThng_2_1.setForeground(Color.RED);
-		lblDLiuThng_2_1.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblDLiuThng_2_1.setBounds(169, 26, 425, 34);
-		panel_1_1_1.add(lblDLiuThng_2_1);
 
 		JLabel lblNewLabel_2_2 = new JLabel(
 				"Chọn thông tin và thực hiện thống kê trước khi xuất dữ liệu - Dữ liệu thống kê sẽ là dữ liệu trên từng nhân viên và cả cửa hàng");
@@ -524,21 +620,42 @@ public class TK_ThongKeMatHangBanChayNVQuanLyPanel extends JPanel implements Act
 
 		panelBieuDoThongKeNam = new JPanel();
 		panelBieuDoThongKeNam.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panelBieuDoThongKeNam.setBackground(SystemColor.control);
+		panelBieuDoThongKeNam.setBackground(Color.WHITE);
 		panelBieuDoThongKeNam.setBounds(10, 11, 555, 491);
 		panel_3_1_1.add(panelBieuDoThongKeNam);
 
 		btnXuatDuLieuThongKeMatHangNam = new JButton("Xuất dữ liệu thống kê");
+		btnXuatDuLieuThongKeMatHangNam.setBackground(Color.white);
+		btnXuatDuLieuThongKeMatHangNam.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnXuatDuLieuThongKeMatHangNam.setFont(new Font("Tahoma", Font.BOLD, 10));
-		btnXuatDuLieuThongKeMatHangNam.setBounds(208, 513, 174, 42);
+		btnXuatDuLieuThongKeMatHangNam.setIcon(resizedIconExcel);
+		btnXuatDuLieuThongKeMatHangNam.setBounds(208, 513, 203, 42);
 		panel_3_1_1.add(btnXuatDuLieuThongKeMatHangNam);
 		btnXuatDuLieuThongKeMatHangNam.addActionListener(this);
 
 		lamMoiNgay(jdcChonNgayThongKe);
+		
+		JLabel lblThngKMt = new JLabel("THỐNG KÊ MẶT HÀNG BÁN CHẠY NGÀY");
+		lblThngKMt.setForeground(Color.RED);
+		lblThngKMt.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblThngKMt.setBounds(245, 11, 301, 34);
+		panel_1.add(lblThngKMt);
 		thongKeNgay();
 		lamMoiThangDuocChon(cbxChonThangThongKe, cbxChonNamCuaThangThongKe);
+		
+		JLabel lblThngKMt_2 = new JLabel("THỐNG KÊ MẶT HÀNG BÁN CHẠY TRONG THÁNG");
+		lblThngKMt_2.setForeground(Color.RED);
+		lblThngKMt_2.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblThngKMt_2.setBounds(200, 11, 384, 34);
+		panel_1_1.add(lblThngKMt_2);
 		thongKeThang();
 		lamMoiNamDuocChon(cbxChonNamThongKe);
+		
+		JLabel lblThngKMt_2_1 = new JLabel("THỐNG KÊ MẶT HÀNG BÁN CHẠY TRONG NĂM");
+		lblThngKMt_2_1.setForeground(Color.RED);
+		lblThngKMt_2_1.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblThngKMt_2_1.setBounds(200, 11, 384, 34);
+		panel_1_1_1.add(lblThngKMt_2_1);
 		thongKeNam();
 	}
 

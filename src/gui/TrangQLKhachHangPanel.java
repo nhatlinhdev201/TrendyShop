@@ -10,6 +10,7 @@ import gui.admin.FromThemNhanVien;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import java.awt.Color;
 import java.awt.Image;
@@ -17,6 +18,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +39,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JSpinner;
 
-public class TrangQLKhachHangPanel extends JPanel implements ActionListener, MouseListener {
+public class TrangQLKhachHangPanel extends JPanel implements ActionListener, MouseListener,WindowListener {
 	private static final Font TABLE_FONT = new Font("Tahoma", Font.PLAIN, 15);
 	static Dao_KhachHang khDao = new Dao_KhachHang();
 	private JTable table;
@@ -52,9 +55,10 @@ public class TrangQLKhachHangPanel extends JPanel implements ActionListener, Mou
 	private JButton btn_timKiem;
 	private JButton btn_them;
 	private JButton btn_load;
+	private JButton btn_capNhat;
 	private static DefaultTableModel tableModel;
 	private JComboBox<String> comboBox;
-
+	static int rowCount ;
 	/**
 	 * Create the panel.
 	 */
@@ -73,7 +77,7 @@ public class TrangQLKhachHangPanel extends JPanel implements ActionListener, Mou
 		// Tạo ImageIcon mới từ ảnh đã chỉnh kích thước
 		ImageIcon resizedIcon = new ImageIcon(newImg);
 
-		JTable table = new JTable();
+		JTable table = new JTable(tableModel);
 		table.setFont(new Font("Tahoma", Font.PLAIN, 18));
 
 		// Tạo font mới với kích cỡ chữ là 20 cho tiêu đề cột
@@ -134,126 +138,133 @@ public class TrangQLKhachHangPanel extends JPanel implements ActionListener, Mou
 		});
 		table.setFont(TABLE_FONT);
 		table.setModel(tableModel);
+		table.getColumnModel().getColumn(0).setPreferredWidth(15);
+	    table.getColumnModel().getColumn(1).setPreferredWidth(95); 
+	    table.getColumnModel().getColumn(2).setPreferredWidth(40);
+	    table.getColumnModel().getColumn(3).setPreferredWidth(100);
+		table.getColumnModel().getColumn(4).setPreferredWidth(10);
+		table.getColumnModel().getColumn(5).setPreferredWidth(10);
+		table.getColumnModel().getColumn(6).setPreferredWidth(10);
+		table.getColumnModel().getColumn(6).setMinWidth(10);
 
 		JScrollPane scrollPane = new JScrollPane(table);
-		scrollPane.setBounds(473, 65, 867, 625);
+		scrollPane.setBounds(473, 76, 867, 614);
 		add(scrollPane);
 
 		JLabel lbl_makh = new JLabel("Mã khách hàng :");
-		lbl_makh.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lbl_makh.setBounds(92, 312, 123, 21);
+		lbl_makh.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		lbl_makh.setBounds(50, 280, 146, 21);
 		add(lbl_makh);
 
 		txt_makh = new JTextField();
 		txt_makh.setEditable(false);
 		txt_makh.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		txt_makh.setForeground(Color.BLACK);
-		txt_makh.setBounds(217, 312, 146, 20);
+		txt_makh.setBounds(216, 280, 198, 25);
 		add(txt_makh);
 		txt_makh.setColumns(10);
 
 		JLabel lblTnKhchHng = new JLabel("Tên khách hàng :");
-		lblTnKhchHng.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblTnKhchHng.setBounds(92, 350, 123, 21);
+		lblTnKhchHng.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		lblTnKhchHng.setBounds(50, 332, 146, 21);
 		add(lblTnKhchHng);
 
 		txt_ten = new JTextField();
-		txt_ten.setEditable(false);
 		txt_ten.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		txt_ten.setForeground(Color.BLACK);
 		txt_ten.setColumns(10);
-		txt_ten.setBounds(217, 350, 146, 20);
+		txt_ten.setBounds(216, 328, 198, 25);
 		add(txt_ten);
 
 		JLabel lblSinThoai = new JLabel("Số điện thoai :");
-		lblSinThoai.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblSinThoai.setBounds(92, 384, 123, 21);
+		lblSinThoai.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		lblSinThoai.setBounds(50, 373, 123, 21);
 		add(lblSinThoai);
 
 		txt_sDT = new JTextField();
 		txt_sDT.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		txt_sDT.setForeground(Color.BLACK);
-		txt_sDT.setEnabled(false);
 		txt_sDT.setColumns(10);
-		txt_sDT.setBounds(217, 384, 146, 20);
+		txt_sDT.setBounds(216, 372, 198, 25);
 		add(txt_sDT);
 
 		JLabel lblEmail = new JLabel("Email :");
-		lblEmail.setFont(new Font("Sylfaen", Font.PLAIN, 15));
-		lblEmail.setBounds(92, 418, 123, 21);
+		lblEmail.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		lblEmail.setBounds(50, 416, 123, 21);
 		add(lblEmail);
 
 		txt_email = new JTextField();
 		txt_email.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		txt_email.setForeground(Color.BLACK);
-		txt_email.setEnabled(false);
 		txt_email.setColumns(10);
-		txt_email.setBounds(217, 418, 146, 20);
+		txt_email.setBounds(216, 416, 198, 25);
 		add(txt_email);
 
 		JLabel lblaCh = new JLabel("Địa chỉ :");
-		lblaCh.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblaCh.setBounds(92, 456, 123, 21);
+		lblaCh.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		lblaCh.setBounds(50, 456, 123, 21);
 		add(lblaCh);
 
 		txt_diaChi = new JTextField();
 		txt_diaChi.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		txt_diaChi.setForeground(Color.BLACK);
-		txt_diaChi.setEnabled(false);
 		txt_diaChi.setColumns(10);
-		txt_diaChi.setBounds(217, 456, 146, 20);
+		txt_diaChi.setBounds(216, 456, 198, 25);
 		add(txt_diaChi);
 
 		JLabel lblTrngThi = new JLabel("Trạng thái  :");
-		lblTrngThi.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblTrngThi.setBounds(92, 488, 123, 21);
+		lblTrngThi.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		lblTrngThi.setBounds(50, 499, 123, 21);
 		add(lblTrngThi);
 
 		JLabel lblimTchLu = new JLabel("Điểm tích luỹ :");
-		lblimTchLu.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblimTchLu.setBounds(92, 526, 123, 21);
+		lblimTchLu.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		lblimTchLu.setBounds(50, 545, 123, 21);
 		add(lblimTchLu);
 
 		txt_diemTichLuy = new JTextField();
 		txt_diemTichLuy.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		txt_diemTichLuy.setForeground(Color.BLACK);
-		txt_diemTichLuy.setEnabled(false);
 		txt_diemTichLuy.setColumns(10);
-		txt_diemTichLuy.setBounds(217, 526, 146, 20);
+		txt_diemTichLuy.setBounds(216, 545, 198, 25);
 		add(txt_diemTichLuy);
 
 		btn_hoatDong = new JRadioButton("Hoạt động");
-		btn_hoatDong.setEnabled(false);
-		btn_hoatDong.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btn_hoatDong.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		btn_hoatDong.setBackground(Color.WHITE);
-		btn_hoatDong.setBounds(217, 487, 95, 23);
+		btn_hoatDong.setBounds(214, 499, 108, 23);
 		add(btn_hoatDong);
 
 		btn_nghi = new JRadioButton("Nghỉ");
-		btn_nghi.setEnabled(false);
-		btn_nghi.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btn_nghi.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		btn_nghi.setBackground(Color.WHITE);
-		btn_nghi.setBounds(314, 487, 75, 23);
+		btn_nghi.setBounds(324, 499, 75, 23);
 		add(btn_nghi);
+		
+		ButtonGroup buttonGroup = new ButtonGroup();
 
+		// Thêm nút vào nhóm
+		buttonGroup.add(btn_hoatDong);
+		buttonGroup.add(btn_nghi);
+		
 		JLabel lblNewLabel = new JLabel("Thông tin khách hàng");
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 30));
-		lblNewLabel.setBounds(50, 35, 353, 33);
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 27));
+		lblNewLabel.setBounds(75, 16, 352, 33);
 		add(lblNewLabel);
 
 		JLabel lblNewLabel_1 = new JLabel("");
-		lblNewLabel_1.setBounds(105, 65, 258, 236); // Set the size of the JLabel to 250x250
+		lblNewLabel_1.setBounds(117, 66, 245, 190); // Set the size of the JLabel to 250x250
 		add(lblNewLabel_1);
 
 		ImageIcon originalIcon1 = new ImageIcon(TrangQLKhachHangPanel.class.getResource("/images/man.png"));
 		Image originalImage = originalIcon1.getImage();
-		Image resizedImage = originalImage.getScaledInstance(230, 230, Image.SCALE_SMOOTH);
+		Image resizedImage = originalImage.getScaledInstance(210, 210, Image.SCALE_SMOOTH);
 		ImageIcon resizedIcon1 = new ImageIcon(resizedImage);
 		lblNewLabel_1.setIcon(resizedIcon1);
 
 		btn_timKiem = new JButton("Tìm kiếm");
 		btn_timKiem.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btn_timKiem.setBounds(595, 21, 123, 33);
+		btn_timKiem.setBounds(595, 21, 123, 44);
 
 		// Tạo nút tìm kiếm
 
@@ -269,20 +280,21 @@ public class TrangQLKhachHangPanel extends JPanel implements ActionListener, Mou
 		add(btn_timKiem);
 
 		txt_timKiem = new JTextField();
-		txt_timKiem.setBounds(717, 21, 280, 33);
+		txt_timKiem.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		txt_timKiem.setBounds(717, 21, 377, 44);
 		add(txt_timKiem);
 		txt_timKiem.setColumns(10);
 
 		btn_them = new JButton("Thêm");
 		btn_them.setBackground(Color.GREEN);
 		btn_them.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btn_them.setBounds(32, 619, 123, 33);
+		btn_them.setBounds(25, 609, 137, 56);
 		String iconPath_them = "/images/plus.png";
 		ImageIcon iconThem = new ImageIcon(this.getClass().getResource(iconPath_them)); // Sử dụng getResource để lấy
 																						// đường dẫn từ resources của
 																						// ứng dụng
 
-		Image scaledIconThem = iconThem.getImage().getScaledInstance(27, 27, Image.SCALE_SMOOTH); // Thiết lập kích
+		Image scaledIconThem = iconThem.getImage().getScaledInstance(33, 33, Image.SCALE_SMOOTH); // Thiết lập kích
 																									// thước
 		ImageIcon resizedIconThem = new ImageIcon(scaledIconThem);
 
@@ -296,17 +308,17 @@ public class TrangQLKhachHangPanel extends JPanel implements ActionListener, Mou
 		Image scaledIconXoa = iconXoa.getImage().getScaledInstance(27, 27, Image.SCALE_SMOOTH); // Thiết lập kích thước
 		ImageIcon resizedIconXoa = new ImageIcon(scaledIconXoa);
 
-		JButton btn_capNhat = new JButton("Cập nhật");
+		btn_capNhat = new JButton("Cập nhật");
 		btn_capNhat.setBackground(Color.ORANGE);
 		btn_capNhat.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btn_capNhat.setBounds(189, 619, 123, 33);
+		btn_capNhat.setBounds(172, 609, 137, 56);
 		String iconPath_capnhat = "/images/updated.png";
 		ImageIcon iconCapNhat = new ImageIcon(this.getClass().getResource(iconPath_capnhat)); // Sử dụng getResource để
 																								// lấy đường dẫn từ
 																								// resources của ứng
 																								// dụng
 
-		Image scaledIconCapNhat = iconCapNhat.getImage().getScaledInstance(27, 27, Image.SCALE_SMOOTH); // Thiết lập
+		Image scaledIconCapNhat = iconCapNhat.getImage().getScaledInstance(33, 33, Image.SCALE_SMOOTH); // Thiết lập
 																										// kích thước
 		ImageIcon resizedIconCapNhat = new ImageIcon(scaledIconCapNhat);
 
@@ -314,10 +326,15 @@ public class TrangQLKhachHangPanel extends JPanel implements ActionListener, Mou
 		add(btn_capNhat);
 		docDuLieu();
 
-		btn_load = new JButton("LOAD");
+		btn_load = new JButton("Làm mới");
 		btn_load.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btn_load.setBackground(Color.ORANGE);
-		btn_load.setBounds(340, 619, 123, 33);
+		btn_load.setBackground(new Color(135, 206, 235));
+		btn_load.setBounds(317, 611, 139, 53);
+		String iconPath_load = "/images/loading.png";
+		ImageIcon iconLoad = new ImageIcon(this.getClass().getResource(iconPath_load)); 
+		Image scaledIconLoad = iconLoad.getImage().getScaledInstance(33, 33, Image.SCALE_SMOOTH);
+		ImageIcon resizedIconLoad = new ImageIcon(scaledIconLoad);
+		btn_load.setIcon(resizedIconLoad);
 		add(btn_load);
 
 		btn_capNhat.addActionListener(this);
@@ -327,8 +344,10 @@ public class TrangQLKhachHangPanel extends JPanel implements ActionListener, Mou
 
 		String[] items = { "Mã khách hàng", "Tên khách hàng", "Số điện thoại" };
 		comboBox = new JComboBox<>(items);
-		comboBox.setBounds(473, 21, 114, 33);
+		comboBox.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		comboBox.setBounds(473, 21, 123, 44);
 		add(comboBox);
+		
 	}
 
 	public static void docDuLieu() {
@@ -340,7 +359,10 @@ public class TrangQLKhachHangPanel extends JPanel implements ActionListener, Mou
 				Object[] rowData = {
 
 						khachHang.getMaKhachHang(), khachHang.getTenKhachHang(), khachHang.getSoDienThoai(),
-						khachHang.getEmail(), khachHang.getDiaChi(), khachHang.isTrangThai() ? "Hoạt động" : "Nghỉ", // Chuyển boolean thành chuỗi
+						khachHang.getEmail(), khachHang.getDiaChi(), khachHang.isTrangThai() ? "Hoạt động" : "Nghỉ", // Chuyển
+																														// boolean
+																														// thành
+																														// chuỗi
 						khachHang.getDiemTichLuy() };
 				// Thêm dữ liệu vào model của bảng
 				tableModel.addRow(rowData);
@@ -428,14 +450,79 @@ public class TrangQLKhachHangPanel extends JPanel implements ActionListener, Mou
 		} else if (obj.equals(btn_load)) {
 			clearTable();
 			docDuLieu();
+		} else if (obj.equals(btn_capNhat)) {
+			capNhatKhachHang();
 		}
 	}
 
 	private void clearTable() {
-		int rowCount = tableModel.getRowCount();
+		rowCount = tableModel.getRowCount();
 		for (int i = rowCount - 1; i >= 0; i--) {
 			tableModel.removeRow(i);
 		}
+	}
+
+	private void capNhatKhachHang() {
+		if (kiemTraHople()) {
+			KhachHang kh = layKhachHang();
+			if (khDao.updateKhachHang(kh)) {
+				JOptionPane.showMessageDialog(this, "Đã cập nhật thành công khách hàng: " + kh.getMaKhachHang());
+			} else {
+				JOptionPane.showMessageDialog(this, "Không thể cập nhật!!!");
+			}
+		}
+	}
+
+	public KhachHang layKhachHang() {
+		String maKH = txt_makh.getText().trim();
+		String tenKh = txt_ten.getText().trim();
+		String sdt = txt_sDT.getText().trim();
+		String email = txt_email.getText().trim();
+		String diachi = txt_diaChi.getText().trim();
+		boolean trangthai = false;
+		if (btn_hoatDong.isSelected() && !btn_nghi.isSelected())
+			trangthai = true;
+		float diemTichLuy = Float.parseFloat(txt_diemTichLuy.getText());
+		KhachHang khachHang = new KhachHang(maKH, sdt, tenKh, email, diachi, trangthai, diemTichLuy);
+		return khachHang;
+	}
+
+	private boolean kiemTraHople() {
+		String sdt = txt_sDT.getText().trim();
+		String ten = txt_ten.getText().trim();
+		String diem = txt_diemTichLuy.getText().trim();
+		int lastSpace = ten.lastIndexOf(" ");
+		String fistName = ten.substring(lastSpace + 1);
+		if (!ten.matches("^[A-Z].*")) {
+			JOptionPane.showMessageDialog(this, "Tên phải viết hoa ");
+			return false;
+		}
+		// Kiểm tra các trường không được để trống
+		if (txt_ten.getText().isEmpty() || txt_sDT.getText().isEmpty() || txt_email.getText().isEmpty()
+				|| txt_diaChi.getText().isEmpty()) {
+			JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin!");
+			return false; // Dừng hàm nếu có trường trống
+		}
+		if (!sdt.matches("0\\d{9}")) {
+			JOptionPane.showMessageDialog(this, "Số điện thoại phải có đúng 10 số bắt đầu là số 0!");
+			return false;
+		}
+		if (!diem.matches("\\d")) {
+			JOptionPane.showMessageDialog(this, "Điểm tích luỹ phải là số!");
+			return false;
+		}
+		
+		String email = txt_email.getText().trim();
+		if (!email.endsWith("@gmail.com")) {
+			JOptionPane.showMessageDialog(this, "Email phải kết thúc bằng '@gmail.com'!");
+			return false;
+		}
+		// Kiểm tra JRadioButton đã được chọn chưa
+		if (!btn_hoatDong.isSelected() && !btn_nghi.isSelected()) {
+			JOptionPane.showMessageDialog(this, "Vui lòng chọn trạng thái hoạt động hoặc nghỉ!");
+			return false; // Dừng hàm nếu không có JRadioButton nào được chọn
+		}
+		return true;
 	}
 
 	private void loadDataIntoTable() {
@@ -451,7 +538,9 @@ public class TrangQLKhachHangPanel extends JPanel implements ActionListener, Mou
 			ex.printStackTrace();
 		}
 	}
-
+	public static int getRowCount() {
+        return rowCount =tableModel.getRowCount();
+    }
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
@@ -480,5 +569,47 @@ public class TrangQLKhachHangPanel extends JPanel implements ActionListener, Mou
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public void windowOpened(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowClosing(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowClosed(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowIconified(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowDeiconified(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowActivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowDeactivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }

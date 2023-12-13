@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import connection.ConnectDataBase;
+import entities.HangHoa;
 import entities.HoaDon;
 import entities.KhachHang;
 import entities.NhanVien;
@@ -225,5 +226,57 @@ public class Dao_HoaDon {
 			e.printStackTrace();
 		}
 		return false;
+	}
+
+	public boolean updateHoaDon(HoaDon hoaDon) {
+		try {
+
+			String updateQuery = "UPDATE HoaDon " + "SET thoiGianTao = ?, tongThanhTien = ?, maVoucher = ?, "
+					+ "maKhachHang = ?, maNhanVien = ?, trangThaiThanhToan = ? "
+					+ "WHERE maHoaDon = ?";
+
+			PreparedStatement preparedStatement = connection.prepareStatement(updateQuery);
+			preparedStatement.setDate(1, Date.valueOf(hoaDon.getThoiGianTao()));
+			preparedStatement.setLong(2,(long)  hoaDon.getTongThanhTien());
+			preparedStatement.setString(3, hoaDon.getVoucher().getMaVoucher());
+			preparedStatement.setString(4, hoaDon.getKhachHang().getMaKhachHang());
+			preparedStatement.setString(5, hoaDon.getNguoiLapHoaDon().getMaNhanVien());
+			preparedStatement.setBoolean(6, hoaDon.isTrangThaiThanhToan());
+			preparedStatement.setString(7, hoaDon.getMaHoaDon());
+			int n = preparedStatement.executeUpdate();
+			if (n > 0) {
+				return true;
+			}
+			preparedStatement.close();
+			connection.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	public List<HoaDon> getTop5() {
+		List<HoaDon> dsHoaDon = null;
+		try {
+			PreparedStatement statement = connection.prepareStatement("select top 5 *from HoaDon where trangThaiThanhToan= 'True' order by thoiGianTao desc");
+			ResultSet resultSet = statement.executeQuery();
+			dsHoaDon = new ArrayList<HoaDon>();
+			while (resultSet.next()) {
+				HoaDon hoaDon = new HoaDon();
+				hoaDon.setMaHoaDon(resultSet.getString("maHoaDon").trim());
+				hoaDon.setThoiGianTao(resultSet.getDate("thoiGianTao").toLocalDate());
+				hoaDon.setTongThanhTien(resultSet.getDouble("tongThanhTien"));
+				hoaDon.setVoucher(new VoucherGiamGia(resultSet.getString("maVoucher").trim()));
+				hoaDon.setKhachHang(new KhachHang(resultSet.getString("maKhachHang").trim()));
+				hoaDon.setNguoiLapHoaDon(new NhanVien(resultSet.getString("maNhanVien").trim()));
+				hoaDon.setTrangThaiThanhToan(resultSet.getBoolean("trangThaiThanhToan"));
+
+				dsHoaDon.add(hoaDon);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dsHoaDon;
 	}
 }

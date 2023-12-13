@@ -16,6 +16,7 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
@@ -23,7 +24,6 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.InputMap;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import constance.SetBountJPanel;
@@ -47,12 +47,15 @@ import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.text.AbstractDocument;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DocumentFilter;
 
 import com.toedter.calendar.JDateChooser;
 
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
-import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 
 public class TrangTimKiemHoaDon extends JPanel implements ActionListener{
@@ -61,7 +64,7 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener{
 	private JTextField txt_maNV;
 	private JPanel currentContent;
 	private JButton btn_LapHoaDon;
-	private TrangBanHangJPanel trangBanHang;
+//	private TrangBanHangJPanel trangBanHang;
 	private JButton btn_Tim;
 	private JPanel panel_2;
 	private Dao_HoaDon dao_HoaDon;
@@ -140,6 +143,7 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener{
 		panel_1.setLayout(null);
 
 		txt_MaHoaDon = new JTextField();
+		txt_MaHoaDon = createRestrictedTextField(txt_MaHoaDon, "(^[Hh]{0,1}$)|(^[Hh]{1}[Dd]{1})|(^[Hh]{1}[Dd]{1}\\d{0,4}$)");
 		txt_MaHoaDon.setForeground(new Color(0, 0, 0));
 		txt_MaHoaDon.setBounds(10, 14, 200, 25);
 		panel_1.add(txt_MaHoaDon);
@@ -152,6 +156,7 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener{
 		panel.add(panel_1_1);
 
 		txt_SDT = new JTextField();
+		txt_SDT = createRestrictedTextField(txt_SDT, "^(0){0,1}$|^(0)\\d{0,9}$");
 		txt_SDT.setForeground(Color.BLACK);
 		txt_SDT.setColumns(10);
 		txt_SDT.setBounds(10, 14, 200, 25);
@@ -164,6 +169,7 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener{
 		panel.add(panel_1_2);
 
 		txt_maNV = new JTextField();
+		txt_maNV = createRestrictedTextField(txt_maNV, "(^[Nn]{0,1}$)|(^[Nn]{1}[Vv]{1})|(^[Nn]{1}[Vv]{1}\\d{0,4}$)");
 		txt_maNV.setForeground(Color.BLACK);
 		txt_maNV.setColumns(10);
 		txt_maNV.setBounds(10, 14, 200, 25);
@@ -208,7 +214,10 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener{
 		hienThiThongTinHoaDon(panel);
 
 		List<HoaDon> listAllHoaDon = new ArrayList<HoaDon>();
-		for(HoaDon hoadon: dao_HoaDon.getAll()) {
+//		for(HoaDon hoadon: dao_HoaDon.getAll().stream().limit(5).collect(Collectors.toList())) {
+//			if(hoadon.isTrangThaiThanhToan()) listAllHoaDon.add(hoadon);
+//		}
+		for(HoaDon hoadon: dao_HoaDon.getTop5()) {
 			if(hoadon.isTrangThaiThanhToan()) listAllHoaDon.add(hoadon);
 		}
 		
@@ -253,6 +262,15 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener{
 			txt_SDT.setText("");
 			dateChooser_TuNgay.setDate(null);
 			dateChooser_DenNgay.setDate(null);
+			List<HoaDon> listAllHoaDon = new ArrayList<HoaDon>();
+//			for(HoaDon hoadon: dao_HoaDon.getAll().stream().limit(5).collect(Collectors.toList())) {
+//				if(hoadon.isTrangThaiThanhToan()) listAllHoaDon.add(hoadon);
+//			}
+			for(HoaDon hoadon: dao_HoaDon.getTop5()) {
+				if(hoadon.isTrangThaiThanhToan()) listAllHoaDon.add(hoadon);
+			}
+			
+			DanhSachHoaDon(listAllHoaDon);
 		} else if (o.equals(txt_MaHoaDon)) {
 			txt_MaHoaDon.transferFocus();
 		} else if (o.equals(txt_SDT)) {
@@ -287,11 +305,11 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener{
 			c.gridx = 0;
 			c.gridy = j;
 			p.add(panel, c);
-
-			if (!listHoaDon.get(j).isTrangThaiThanhToan())
+			HoaDon hd = listHoaDon.get(j);
+			if (!hd.isTrangThaiThanhToan())
 				continue;
-			KhachHang kh = dao_KhachHang.getKhachHangTheoMa(listHoaDon.get(j).getKhachHang().getMaKhachHang());
-			VoucherGiamGia voucher = dao_Voucher.getTheoMaVouCher(listHoaDon.get(j).getVoucher().getMaVoucher());
+			KhachHang kh = dao_KhachHang.getKhachHangTheoMa(hd.getKhachHang().getMaKhachHang());
+			VoucherGiamGia voucher = dao_Voucher.getTheoMaVouCher(hd.getVoucher().getMaVoucher());
 
 			JPanel panel_3 = new JPanel();
 			panel_3.setBackground(new Color(255, 228, 202));
@@ -306,7 +324,7 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener{
 			panel_3.add(lblNewLabel);
 
 			JLabel lbl_MaHoaDon = new JLabel("");
-			lbl_MaHoaDon.setText(listHoaDon.get(j).getMaHoaDon());
+			lbl_MaHoaDon.setText(hd.getMaHoaDon());
 			lbl_MaHoaDon.setFont(new Font("Monospaced", Font.BOLD, 17));
 			lbl_MaHoaDon.setBounds(178, 11, 190, 27);
 			panel_3.add(lbl_MaHoaDon);
@@ -318,7 +336,7 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener{
 
 			JLabel lbl_NhanVien = new JLabel("");
 			lbl_NhanVien
-					.setText(dao_NhanVien.getTenNhanVienTheoMa(listHoaDon.get(j).getNguoiLapHoaDon().getMaNhanVien()));
+					.setText(dao_NhanVien.getTenNhanVienTheoMa(hd.getNguoiLapHoaDon().getMaNhanVien()));
 			lbl_NhanVien.setFont(new Font("Monospaced", Font.PLAIN, 13));
 			lbl_NhanVien.setBounds(120, 49, 163, 20);
 			panel_3.add(lbl_NhanVien);
@@ -367,7 +385,7 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener{
 			panel_3.add(lblLblngaylap);
 
 			JLabel lbl_NgayLap = new JLabel("");
-			LocalDate ngayLap = listHoaDon.get(j).getThoiGianTao();
+			LocalDate ngayLap = hd.getThoiGianTao();
 			lbl_NgayLap.setText(ngayLap.getDayOfMonth() + "-" + ngayLap.getMonthValue() + "-" + ngayLap.getYear());
 			lbl_NgayLap.setFont(new Font("Monospaced", Font.PLAIN, 13));
 			lbl_NgayLap.setBounds(1112, 10, 109, 20);
@@ -384,12 +402,12 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener{
 			panel.add(panel_3, c2);
 
 			List<ChiTietHoaDon> listChiTietHoaDon = dao_ChiTietHoaDon
-					.getChiTietTheoMaHoaDon(listHoaDon.get(j).getMaHoaDon());
+					.getChiTietTheoMaHoaDon(hd.getMaHoaDon());
 			double tongTienHang = 0;
 
 			for (int i = 0; i < listChiTietHoaDon.size(); i++) {
-
-				HangHoa hh = dao_HangHoa.getHangHoaByMaHangHao(listChiTietHoaDon.get(i).getHangHoa().getMaHangHoa());
+				ChiTietHoaDon ct = listChiTietHoaDon.get(i);
+				HangHoa hh = dao_HangHoa.getHangHoaByMaHangHao(ct.getHangHoa().getMaHangHoa());
 
 				JPanel panel_4 = new JPanel();
 				panel_4.setBorder(new LineBorder(Color.LIGHT_GRAY, 1, true));
@@ -424,7 +442,7 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener{
 
 				panel_4.add(panel_5);
 
-				JLabel lblNewLabel_2 = new JLabel("Tên sản phẩm");
+				JLabel lblNewLabel_2 = new JLabel(hh.getTenHangHoa());
 				lblNewLabel_2.setFont(new Font("Monospaced", Font.BOLD, 17));
 				lblNewLabel_2.setBounds(128, 0, 271, 30);
 				panel_4.add(lblNewLabel_2);
@@ -464,7 +482,7 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener{
 				lbl_XuatXu.setBounds(248, 95, 116, 20);
 				panel_4.add(lbl_XuatXu);
 
-				JLabel lbl_SoLuong = new JLabel("" + listChiTietHoaDon.get(i).getSoLuong());
+				JLabel lbl_SoLuong = new JLabel("" + ct.getSoLuong());
 				lbl_SoLuong.setFont(new Font("Monospaced", Font.PLAIN, 13));
 				lbl_SoLuong.setBounds(568, 30, 116, 20);
 				panel_4.add(lbl_SoLuong);
@@ -499,7 +517,7 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener{
 				lbl_ChatLieu.setBounds(872, 65, 139, 20);
 				panel_4.add(lbl_ChatLieu);
 
-				JLabel lbl_GiaBan = new JLabel(decimalFormat.format(listChiTietHoaDon.get(i).getGiaBan()));
+				JLabel lbl_GiaBan = new JLabel(decimalFormat.format(ct.getGiaBan()));
 				lbl_GiaBan.setHorizontalAlignment(SwingConstants.RIGHT);
 				lbl_GiaBan.setFont(new Font("Monospaced", Font.PLAIN, 13));
 				lbl_GiaBan.setBounds(872, 95, 139, 20);
@@ -525,7 +543,7 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener{
 				c2.gridy = i + 1;
 				panel.add(panel_4, c2);
 
-				tongTienHang += listChiTietHoaDon.get(i).getGiaBan() * listChiTietHoaDon.get(i).getSoLuong();
+				tongTienHang += ct.getGiaBan() * ct.getSoLuong();
 			}
 
 			JPanel panel_6 = new JPanel();
@@ -589,7 +607,7 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener{
 			lblNewLabel_4_14.setBounds(28, 91, 225, 20);
 			panel_6.add(lblNewLabel_4_14);
 
-			JLabel lbl_TongTienThanhToan = new JLabel(decimalFormat.format(listHoaDon.get(j).getTongThanhTien()));
+			JLabel lbl_TongTienThanhToan = new JLabel(decimalFormat.format(hd.getTongThanhTien()));
 			lbl_TongTienThanhToan.setHorizontalAlignment(SwingConstants.RIGHT);
 			lbl_TongTienThanhToan.setForeground(new Color(236, 109, 91));
 			lbl_TongTienThanhToan.setFont(new Font("Monospaced", Font.BOLD, 20));
@@ -613,7 +631,9 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener{
 			panel.add(panel_6, c2);
 		}
 		panel_2.setLayout(new BorderLayout());
-		panel_2.add(new JScrollPane(p));
+		JScrollPane jsc = new JScrollPane(p);
+		jsc.getVerticalScrollBar().setUnitIncrement(20);
+		panel_2.add(jsc);
 	}
 
 	public JPanel hienThiThongTinHoaDon(JPanel panel) {
@@ -640,13 +660,22 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener{
 		String ma_NV = txt_maNV.getText().trim();
 		Date tuNgay = dateChooser_TuNgay.getDate();
 		Date denNgay = dateChooser_DenNgay.getDate();
+		
+		
 
 		List<HoaDon> dsHD = null;
 		if (!maHD.trim().equals("")) {
+			if(!maHD.trim().matches("^[a-zA-Z0-9]+$")) {
+				JOptionPane.showMessageDialog(this, "Mã hóa dơn chỉ có thể là các kí tự chữ và số");
+				txt_MaHoaDon.selectAll();
+				txt_MaHoaDon.requestFocus();
+				return;
+			}
 //			
 			List<HoaDon> dsHoaDon = dao_HoaDon.getHoaDonTheoMa(maHD);
 			if (dsHoaDon.size() == 0) {
 				JOptionPane.showMessageDialog(this, "Không tìm thấy hóa đơn có mã: " + maHD);
+				
 			}
 			DanhSachHoaDon(dsHoaDon);
 			return;
@@ -658,6 +687,12 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener{
 			return;
 		}
 		if (!soDienThoai.equals("")) {
+			if(!soDienThoai.matches("^(0)\\d{9}$")) {
+				JOptionPane.showMessageDialog(this, "Số điện thoại phải là số");
+				txt_SDT.selectAll();
+				txt_SDT.requestFocus();
+				return;
+			}
 			KhachHang kh = dao_KhachHang.getKhachHangTheoSDT(soDienThoai);
 
 			List<HoaDon> ds = new ArrayList<>();
@@ -677,9 +712,15 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener{
 		}
 
 		if (!ma_NV.equals("")) {
+			if(!ma_NV.matches("^[a-zA-Z0-9]+$")) {
+				JOptionPane.showMessageDialog(this, "Mã nhân viên chỉ có thể là các kí tự chữ và số");
+				txt_maNV.selectAll();
+				txt_maNV.requestFocus();
+				return;
+			}
 			List<HoaDon> ds = new ArrayList<>();
 			for (HoaDon hoaDon : dsHD) {
-				if (ma_NV.equals(hoaDon.getNguoiLapHoaDon().getMaNhanVien())) {
+				if (ma_NV.equalsIgnoreCase(hoaDon.getNguoiLapHoaDon().getMaNhanVien()) && hoaDon.isTrangThaiThanhToan()) {
 					ds.add(hoaDon);
 				}
 			}
@@ -752,5 +793,22 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener{
         });
         
 	}
+	
+	private static JTextField createRestrictedTextField(JTextField textField ,String regex) {
+
+        // Sử dụng DocumentFilter để kiểm tra và ngăn chặn nhập ký tự "a"
+        ((AbstractDocument) textField.getDocument()).setDocumentFilter(new DocumentFilter() {
+            @Override
+            public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+            	String chuoinhap = textField.getText()+text;
+                // Kiểm tra mỗi ký tự trước khi thêm vào Document
+                if (chuoinhap.matches(regex)) {
+                    super.replace(fb, offset, length, text, attrs);
+                }
+            }
+        });
+
+        return textField;
+    }
 	
 }

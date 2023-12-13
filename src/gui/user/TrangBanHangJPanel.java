@@ -19,7 +19,6 @@ import entities.KhachHang;
 import entities.NhanVien;
 import entities.VoucherGiamGia;
 
-import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -27,21 +26,18 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.ActionMap;
 import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
 import javax.swing.DefaultCellEditor;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.Icon;
 
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -49,7 +45,6 @@ import java.awt.event.ActionEvent;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
@@ -59,6 +54,7 @@ import javax.swing.KeyStroke;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.ImageIcon;
 import javax.swing.InputMap;
 import javax.swing.SwingConstants;
@@ -70,6 +66,13 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.JTable;
 
+import javax.swing.text.AbstractDocument;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DefaultFormatterFactory;
+import javax.swing.text.DocumentFilter;
+import javax.swing.text.NumberFormatter;
+
 public class TrangBanHangJPanel extends JPanel
 		implements ActionListener, Action, ListSelectionListener, ItemListener, DocumentListener {
 	private LocalDate ngayLapHD = LocalDate.now();
@@ -78,7 +81,7 @@ public class TrangBanHangJPanel extends JPanel
 	private JTextField txt_TienNhan;
 
 	private JButton btn_TimHoaDon;
-	private TrangTimKiemHoaDon trangTimKiemHoaDon;
+//	private TrangTimKiemHoaDon trangTimKiemHoaDon;
 	private JPanel currentContent;
 	private JButton btn_HangCho;
 	private JLabel lbl_NgayLapHD;
@@ -220,6 +223,7 @@ public class TrangBanHangJPanel extends JPanel
 		panel_NhapThongTinMatHang.add(lbl_MaHangHoa);
 
 		txt_MaHangHoa = new JTextField();
+		txt_MaHangHoa = createRestrictedTextField(txt_MaHangHoa, "(^[Hh]{0,1}$)|(^[Hh]{2}\\d{0,4}$)");
 		txt_MaHangHoa.setBounds(236, 20, 243, 31);
 		panel_NhapThongTinMatHang.add(txt_MaHangHoa);
 		txt_MaHangHoa.setColumns(10);
@@ -246,8 +250,36 @@ public class TrangBanHangJPanel extends JPanel
 		spinner_SoLuong = new JSpinner(model_Spinner);
 		spinner_SoLuong.setBounds(236, 100, 243, 30);
 		panel_NhapThongTinMatHang.add(spinner_SoLuong);
+		// Truy cập JFormattedTextField của JSpinner
+        JFormattedTextField formattedTextField = ((JSpinner.DefaultEditor) spinner_SoLuong.getEditor()).getTextField();
+        // Sử dụng NumberFormatter để chỉ cho phép nhập giá trị số
+        NumberFormatter formatter = new NumberFormatter();
+        formatter.setValueClass(Integer.class); // Đặt kiểu giá trị là Integer
+        formatter.setMinimum(0); // Giá trị tối thiểu
+        formatter.setMaximum(10000); // Giá trị tối đa
+        formatter.setAllowsInvalid(false);
+        formatter.setCommitsOnValidEdit(true);
+        formattedTextField.setFormatterFactory(new DefaultFormatterFactory(formatter));
+//        / Thêm FocusListener để theo dõi sự kiện focus
+        formattedTextField.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if(spinner_SoLuong.getValue().equals("1"))
+                	formattedTextField.selectAll();
+                // Đang ở trong trạng thái được chỉnh sửa
+            }
+            @Override
+            public void focusLost(FocusEvent e) {
+               
+            }
+        });
 
-//		
+//        JLabel label = new JLabel("Value: 0");
+//        spinner_SoLuong.addChangeListener(e -> {
+//            label.setText("Value: " + spinner_SoLuong.getValue());
+//        });
+		
+	
 
 //		2 nút thêm và refresh lại các jtextfield ở trên
 //		Tìm hiểu phần button icon để tạo các nút
@@ -288,6 +320,7 @@ public class TrangBanHangJPanel extends JPanel
 		panel_KhachHangVaTienNhan.add(lblNewLabel_1);
 
 		txt_SDTKhachHang = new JTextField();
+		txt_SDTKhachHang = createRestrictedTextField(txt_SDTKhachHang, "^(0){0,1}$|^(0)\\d{0,9}$");
 		txt_SDTKhachHang.setBounds(241, 58, 219, 31);
 		panel_KhachHangVaTienNhan.add(txt_SDTKhachHang);
 		txt_SDTKhachHang.setColumns(10);
@@ -309,11 +342,13 @@ public class TrangBanHangJPanel extends JPanel
 		panel_KhachHangVaTienNhan.add(lblNewLabel_3);
 
 		txt_TienNhan = new JTextField();
+		txt_TienNhan = createRestrictedTextField(txt_TienNhan, "^\\d*$");
 		txt_TienNhan.setBounds(241, 280, 219, 31);
 		panel_KhachHangVaTienNhan.add(txt_TienNhan);
 		txt_TienNhan.setColumns(10);
 
 		txt_VoucherGiamGia = new JTextField();
+		txt_VoucherGiamGia = createRestrictedTextField(txt_VoucherGiamGia, "(^[Vv]{0,1}$)|(^[Vv]{1}[Cc]{1})|(^[Vv]{1}[Cc]{1}\\d{0,4}$)");
 		txt_VoucherGiamGia.setBounds(241, 155, 219, 31);
 		panel_KhachHangVaTienNhan.add(txt_VoucherGiamGia);
 		txt_VoucherGiamGia.setColumns(10);
@@ -503,7 +538,7 @@ public class TrangBanHangJPanel extends JPanel
 			loadToanBoDuLieuTrongHoaDonCho();
 		}
 
-		trangTimKiemHoaDon = new TrangTimKiemHoaDon(nv);
+//		trangTimKiemHoaDon = new TrangTimKiemHoaDon(nv);
 //
 		btn_TimHoaDon.addActionListener(this);
 		btn_HangCho.addActionListener(this);
@@ -516,11 +551,75 @@ public class TrangBanHangJPanel extends JPanel
 		table.getSelectionModel().addListSelectionListener(this);
 		txt_TienNhan.addActionListener(this);
 		txt_VoucherGiamGia.addActionListener(this);
+		
 		txt_TienNhan.getDocument().addDocumentListener(this);
 
 		chckx_DiemTichLuy.addItemListener(this);
 		
-		
+		// Thêm DocumentListener cho textField2
+        txt_MaHangHoa.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+            	if(txt_MaHangHoa.getText().length()>=6) {
+            		loadKichCoSanPham(txt_MaHangHoa.getText());
+            	}
+            }
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+            	if(txt_MaHangHoa.getText().length()<6) {
+            		comboBox_KichThuoc.removeAllItems();
+            	}
+            }
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                // không được sử dụng cho plain text components
+            }
+        });
+
+     // Thêm DocumentListener cho textField2
+        txt_SDTKhachHang.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                if(txt_SDTKhachHang.getText().length()==10)
+                	timThongTinKhachHang(txt_SDTKhachHang.getText());
+            }
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+            	if(txt_SDTKhachHang.getText().length()<=10)
+            		kh=null;
+                	lbl_TenKhachHang.setText("");
+            		lbl_DiemTichLuy.setText("");
+            }
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                // không được sử dụng cho plain text components
+            }
+        });
+
+     // Thêm DocumentListener cho textField2
+        txt_VoucherGiamGia.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                if(txt_VoucherGiamGia.getText().length()==6) {
+                	timThongTinVoucherGiamGia();
+                }
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+            	if(txt_VoucherGiamGia.getText().length()<6) {
+                	vc=null;
+                	lbl_TenVoucher.setText("");
+                	lbl_PhanTramGiamGia.setText("");
+                }
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                // không được sử dụng cho plain text components
+            }
+        });
+
 		suKienPhimTat();
 
 	}
@@ -530,17 +629,17 @@ public class TrangBanHangJPanel extends JPanel
 		// TODO Auto-generated method stub
 		Object o = e.getSource();
 		if (o.equals(btn_TimHoaDon)) {
-			switchContent(trangTimKiemHoaDon);
+			switchContent(new TrangTimKiemHoaDon(nv));
 
 		} else if (o.equals(btn_HangCho)) {
 			taoHangCho();
 
-		} else if (o.equals(txt_SDTKhachHang)) {
-			String sdt = txt_SDTKhachHang.getText();
-			timThongTinKhachHang(sdt);
+//		} else if (o.equals(txt_SDTKhachHang)) {
+//			String sdt = txt_SDTKhachHang.getText();
+//			timThongTinKhachHang(sdt);
 
-		} else if (o.equals(txt_MaHangHoa)) {
-			loadKichCoSanPham(txt_MaHangHoa.getText().trim());
+//		} else if (o.equals(txt_MaHangHoa)) {
+//			loadKichCoSanPham(txt_MaHangHoa.getText().trim());
 
 		} else if (o.equals(btn_LamMoi)) {
 			txt_MaHangHoa.setText("");
@@ -561,8 +660,8 @@ public class TrangBanHangJPanel extends JPanel
 		} else if (o.equals(txt_TienNhan)) {
 			tinhTongCacThanhTien();
 
-		} else if (o.equals(txt_VoucherGiamGia)) {
-			timThongTinVoucherGiamGia();
+//		} else if (o.equals(txt_VoucherGiamGia)) {
+//			timThongTinVoucherGiamGia();
 		}
 	}
 
@@ -575,7 +674,6 @@ public class TrangBanHangJPanel extends JPanel
 			timThongTinKhachHang(txt_SDTKhachHang.getText());
 			tinhTongCacThanhTien();
 		}
-
 	}
 
 	@Override
@@ -732,6 +830,10 @@ public class TrangBanHangJPanel extends JPanel
 					tinhTongCacThanhTien();
 					tinhDiemTichLuy();
 					model.removeHangHoa(selectedRow);
+					txt_MaHangHoa.setText("");
+					comboBox_KichThuoc.removeAllItems();
+					spinner_SoLuong.setValue(1);
+
 				}
 
 			}
@@ -810,7 +912,9 @@ public class TrangBanHangJPanel extends JPanel
 				HangHoa hh = dao_HangHoa.getHangHoaByMaHangHao(chiTietHoaDon.getHangHoa().getMaHangHoa());
 				chiTietHoaDon.setHoaDon(hoaDon);
 				chiTietHoaDon.setHangHoa(hh);
+				
 			}
+			dao_ChiTietHoaDon.deleteChiTietHoaDon(hoaDonTruyen.getMaHoaDon());
 			if (kh.getMaKhachHang().equals("KH0000"))
 				kh = null;
 			if (kh.getMaKhachHang().startsWith("KC")) {
@@ -835,13 +939,10 @@ public class TrangBanHangJPanel extends JPanel
 
 //	Chua tìm dao của sđt
 	public void timThongTinKhachHang(String sdt) {
-		if (sdt.trim().equals("")) {
-			kh = null;
-			hoaDon.setKhachHang(kh);
-			JOptionPane.showMessageDialog(this, "Vui lòng nhật số điện thoại");
-			lbl_TenKhachHang.setText("");
-			return;
-		}
+//		if(!sdt.matches("^(0)\\d{9}$")) {
+//			JOptionPane.showMessageDialog(this, "Số điện thoại phải là số!");
+//			return ;
+//		}
 		kh = dao_KhachHang.getKhachHangTheoSDT(sdt);
 		hoaDon.setKhachHang(kh);
 		if (kh.getMaKhachHang() == null) {
@@ -868,12 +969,6 @@ public class TrangBanHangJPanel extends JPanel
 			txt_MaHangHoa.requestFocus();
 			return false;
 		} else {
-			if (txt_MaHangHoa.getText().length() < 6) {
-				JOptionPane.showMessageDialog(this, "Không tồn tại mã hàng hóa: " + ma);
-				txt_MaHangHoa.selectAll();
-				txt_MaHangHoa.requestFocus();
-				return false;
-			}
 
 			List<String> listHH = dao_HangHoa.getKichThuocCuaMotSanPham(ma);
 			if (listHH.size() == 0 && dao_HangHoa.getHangHoaByMaHangHao(ma).getMaHangHoa() == null) {
@@ -906,7 +1001,7 @@ public class TrangBanHangJPanel extends JPanel
 
 //		Tạo ra arraylist chi tiết hóa đơn
 		int soLuong = (int) spinner_SoLuong.getValue();
-		ChiTietHoaDon ct = new ChiTietHoaDon(hh, hoaDon, soLuong, hh.getDonGiaNhap());
+		ChiTietHoaDon ct = new ChiTietHoaDon(hh, hoaDon, soLuong, hh.getDonGiaNhap()*(1+0.7));
 
 //		kiểm tra số lượng hàng tồn
 		if (!kiemTraSoLuongHangTon(ct))
@@ -939,7 +1034,6 @@ public class TrangBanHangJPanel extends JPanel
 	}
 
 	public void thanhToanHoaDon() {
-//		boolean ktHoaDonTonTaiCSDL = dao_HoaDon.getHoaDonTheoMa(hoaDon.getMaHoaDon()).get(0)==null;
 
 		if (lbl_TenKhachHang.getText().equals("")) {
 			kh = null;
@@ -970,7 +1064,7 @@ public class TrangBanHangJPanel extends JPanel
 		}
 		int choice = JOptionPane.showConfirmDialog(null,
 				"Xác nhận thanh toán: " + lbl_TongTienTra.getText() + " VNĐ \n Tiền thừa: "
-						+ (hoaDon.getTongThanhTien() - Double.parseDouble(txt_TienNhan.getText())) + " VNĐ",
+						+decimalFormat.format( (Double.parseDouble(txt_TienNhan.getText())-hoaDon.getTongThanhTien())) + " VNĐ",
 				"Xác nhận", JOptionPane.YES_NO_OPTION);
 		if (choice == JOptionPane.YES_OPTION) {
 			hoaDon.setTrangThaiThanhToan(true);
@@ -980,8 +1074,13 @@ public class TrangBanHangJPanel extends JPanel
 				vc = dao_VoucherGiamGia.getTheoMaVouCher("VC0000");
 			hoaDon.setKhachHang(kh);
 			hoaDon.setVoucher(vc);
-
-			boolean themHoaDon = dao_HoaDon.insertHoaDon(hoaDon);
+			boolean themHoaDon;
+			if(dao_HoaDon.getHoaDonTheoMa(hoaDon.getMaHoaDon()).size()<=0) {
+				
+				themHoaDon = dao_HoaDon.insertHoaDon(hoaDon);
+			}else {
+				themHoaDon = dao_HoaDon.updateHoaDon(hoaDon);
+			}
 
 			int i = 0;
 			for (ChiTietHoaDon chiTietHoaDon : listChiTietHD) {
@@ -1023,16 +1122,19 @@ public class TrangBanHangJPanel extends JPanel
 					diemTichLuy = kh.getDiemTichLuy();
 					double tongTienTra = tongTienHang + tongTienThue - tongTienGiamGia;
 					if (diemTichLuy > (tongTienTra / 2)) {
-						diemTichLuy -= tongTienTra / 2;
+						diemTichLuy = tongTienTra / 2;
 					}
+					
 				}
+				
+				kh.setDiemTichLuy(kh.getDiemTichLuy()-(float) diemTichLuy);
 				String diemTichLuyTangThem = "" + hoaDon.getTongThanhTien() * 0.001;
 				if (diemTichLuyTangThem.contains(".")) {
 					diemTichLuyTangThem = diemTichLuyTangThem.split("\\.")[0];
 				}
-
-				diemTichLuy += Double.parseDouble(diemTichLuyTangThem);
-				kh.setDiemTichLuy((float) diemTichLuy);
+				diemTichLuy = Double.parseDouble(diemTichLuyTangThem);
+				if(kh.isTrangThai())
+					kh.setDiemTichLuy(kh.getDiemTichLuy()+(float) diemTichLuy);
 				dao_KhachHang.updateKhachHang(kh);
 			}
 			if (themHoaDon) {
@@ -1070,12 +1172,12 @@ public class TrangBanHangJPanel extends JPanel
 		VoucherGiamGia voucher = dao_VoucherGiamGia.getTheoMaVouCher(maGiamGia);
 		if (maGiamGia.trim().equals(""))
 			return false;
-		if (voucher == null) {
-			JOptionPane.showMessageDialog(this, "Mã giảm giá không hợp lệ");
-			txt_VoucherGiamGia.requestFocus();
-			txt_VoucherGiamGia.selectAll();
-			return false;
-		}
+//		if (voucher == null) {
+//			JOptionPane.showMessageDialog(this, "Mã giảm giá không hợp lệ");
+//			txt_VoucherGiamGia.requestFocus();
+//			txt_VoucherGiamGia.selectAll();
+//			return false;
+//		}
 		if (voucher.getNgayBatDau().after(new Date())) {
 			JOptionPane.showMessageDialog(this, "Voucher này chỉ được sử dụng từ ngày: " + voucher.getNgayBatDau());
 			txt_VoucherGiamGia.requestFocus();
@@ -1197,10 +1299,35 @@ public class TrangBanHangJPanel extends JPanel
         actionMap.put("F4", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            	
+            	tinhDiemTichLuy();
+    			themHangHoa();
+            }
+        });
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_F5, 0), "F5");
+        actionMap.put("F5", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	txt_MaHangHoa.setText("");
+    			comboBox_KichThuoc.removeAllItems();
+    			spinner_SoLuong.setValue(1);
+
             }
         });
 	}
 	
-	
+	private static JTextField createRestrictedTextField(JTextField textField ,String regex) {
+
+        ((AbstractDocument) textField.getDocument()).setDocumentFilter(new DocumentFilter() {
+            @Override
+            public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+            	String chuoinhap = textField.getText()+text;
+                // Kiểm tra mỗi ký tự trước khi thêm vào Document
+                if (chuoinhap.matches(regex)) {
+                    super.replace(fb, offset, length, text, attrs);
+                }
+            }
+        });
+
+        return textField;
+    }
 }

@@ -1,39 +1,46 @@
 package gui.admin;
 
-import java.awt.EventQueue;
-
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
-import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.File;
 
+import com.toedter.calendar.JDateChooser;
+
+import connection.ConnectDataBase;
+import daos.Dao_KhachHang;
+import daos.Dao_NhanVien;
+import entities.KhachHang;
+import entities.NhanVien;
+import java.io.File;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.*;
-import javax.swing.JTextField;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Date;
+import java.util.Random;
 
-public class FromThemNhanVien extends JFrame {
-
+public class FromThemNhanVien extends JFrame implements WindowListener {
+	static Dao_NhanVien nvDao = new Dao_NhanVien();
+	public Connection connection = ConnectDataBase.getInstance().connection;;
+	private JDateChooser txt_ngaysinh;
 	private JPanel contentPane;
-	private JTextField textField;
-	private JTextField textField_1;
+	private JTextField txt_manv;
+	private JTextField txt_hoten;
 	private JTextField textField_2;
-	private JTextField textField_3;
-	private JTextField textField_4;
-	private JTextField textField_5;
-	private JTextField textField_6;
-	private JTextField textField_7;
-	private JTextField textField_8;
-	private JTextField textField_9;
-	private JTextField textField_10;
-	private JTextField textField_11;
-	String duongDanAnh = "/images/picture.png";
+	private JTextField txt_scccd;
+	private JTextField txt_sdt;
+	private JTextField txt_email;
+	private JTextField txt_matKhau;
+	private JTextField txt_diachi;
+	private String imagePath;
+	private JRadioButton cbox_quanli;
+	private JRadioButton cbox_nhanVien;
+	private String chucVu;
+	private String ngaySinhtxt;
+	private JRadioButton rdbtnNgh;
+
 	/**
 	 * Launch the application.
 	 */
@@ -52,163 +59,229 @@ public class FromThemNhanVien extends JFrame {
 
 	/**
 	 * Create the frame.
-	 * @param parentFrame 
+	 * 
+	 * @param parentFrame
 	 */
 	public FromThemNhanVien() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 695, 515);
+		setBounds(100, 100, 697, 550);
 		contentPane = new JPanel();
+		contentPane.setBackground(new Color(152, 251, 152));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
-		JLabel lbl_manv = new JLabel("Mã nhân viên :");
-		lbl_manv.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		lbl_manv.setBounds(10, 244, 123, 21);
-		contentPane.add(lbl_manv);
-		
+
+//		JLabel lbl_manv = new JLabel("Mã nhân viên :");
+//		lbl_manv.setFont(new Font("Tahoma", Font.PLAIN, 17));
+//		lbl_manv.setBounds(10, 244, 123, 21);
+//		contentPane.add(lbl_manv);
+
 		JLabel nameField = new JLabel("Họ tên :");
 		nameField.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		nameField.setBounds(10, 276, 123, 21);
 		contentPane.add(nameField);
-		
-		textField = new JTextField();
-		textField.setColumns(10);
-		textField.setBounds(135, 244, 177, 25);
-		contentPane.add(textField);
-		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		textField_1.setBounds(135, 277, 177, 25);
-		contentPane.add(textField_1);
-		
-		textField_2 = new JTextField();
-		textField_2.setColumns(10);
-		textField_2.setBounds(135, 309, 177, 25);
-		contentPane.add(textField_2);
-		
-		textField_3 = new JTextField();
-		textField_3.setColumns(10);
-		textField_3.setBounds(135, 341, 177, 25);
-		contentPane.add(textField_3);
-		
-		textField_4 = new JTextField();
-		textField_4.setColumns(10);
-		textField_4.setBounds(135, 373, 177, 25);
-		contentPane.add(textField_4);
-		
-		textField_5 = new JTextField();
-		textField_5.setColumns(10);
-		textField_5.setBounds(135, 405, 177, 25);
-		contentPane.add(textField_5);
-		
+
+//		txt_manv = new JTextField();
+//		txt_manv.setColumns(10);
+//		txt_manv.setBounds(135, 244, 177, 25);
+//		contentPane.add(txt_manv);
+
+		txt_hoten = new JTextField();
+		txt_hoten.setColumns(10);
+		txt_hoten.setBounds(135, 277, 177, 25);
+		contentPane.add(txt_hoten);
+
+//		textField_2 = new JTextField();
+//		textField_2.setColumns(10);
+//		textField_2.setBounds(135, 309, 177, 25);
+//		contentPane.add(textField_2);
+
+		txt_scccd = new JTextField();
+		txt_scccd.setColumns(10);
+		txt_scccd.setBounds(135, 341, 177, 25);
+		contentPane.add(txt_scccd);
+
+		txt_sdt = new JTextField();
+		txt_sdt.setColumns(10);
+		txt_sdt.setBounds(135, 373, 177, 25);
+		contentPane.add(txt_sdt);
+
+		txt_email = new JTextField();
+		txt_email.setColumns(10);
+		txt_email.setBounds(135, 405, 177, 30);
+		contentPane.add(txt_email);
+
+		txt_ngaysinh = new JDateChooser();
+		txt_ngaysinh.setDateFormatString("dd/MM/yyyy");
+//		txt_ngaysinh.getCalendarButton().addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//				// Kiểm tra xem ngày đã được chọn hay chưa
+//				if (txt_ngaysinh.getDate() == null) {
+//					// Ngày đã được chọn
+//					JOptionPane.showMessageDialog(null, "Vui lòng chọn ngày", "Error", JOptionPane.ERROR_MESSAGE);
+//				}
+//			}
+//		});
+		txt_ngaysinh.setBounds(135, 309, 177, 25);
+		contentPane.add(txt_ngaysinh);
+
 		JLabel emailField = new JLabel("Email :");
 		emailField.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		emailField.setBounds(10, 405, 123, 21);
 		contentPane.add(emailField);
-		
+
 		JLabel phoneField = new JLabel("Số điện thoại :");
 		phoneField.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		phoneField.setBounds(10, 373, 123, 21);
 		contentPane.add(phoneField);
-		
+
 		JLabel cccdField = new JLabel("Số CCCD :");
 		cccdField.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		cccdField.setBounds(10, 341, 123, 21);
 		contentPane.add(cccdField);
-		
+
 		JLabel dobField = new JLabel("Ngày sinh :");
 		dobField.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		dobField.setBounds(10, 309, 123, 21);
 		contentPane.add(dobField);
-		
+
 		JLabel addressField = new JLabel("Đại chỉ :");
 		addressField.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		addressField.setBounds(367, 244, 123, 21);
+		addressField.setBounds(363, 276, 123, 21);
 		contentPane.add(addressField);
-		
+
 		JLabel positionField = new JLabel("Chức vụ :");
 		positionField.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		positionField.setBounds(367, 277, 123, 21);
+		positionField.setBounds(363, 309, 123, 21);
 		contentPane.add(positionField);
-		
+
 		JLabel lbl_trangThai = new JLabel("Trang thái :");
 		lbl_trangThai.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		lbl_trangThai.setBounds(367, 309, 123, 21);
+		lbl_trangThai.setBounds(363, 341, 123, 21);
 		contentPane.add(lbl_trangThai);
-		
+
 		JLabel lbl_makh_5 = new JLabel("Mật khẩu  :");
 		lbl_makh_5.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		lbl_makh_5.setBounds(367, 341, 123, 21);
+		lbl_makh_5.setBounds(363, 373, 123, 21);
 		contentPane.add(lbl_makh_5);
-		
-		JLabel lbl_makh_10 = new JLabel("Phân quyền :");
-		lbl_makh_10.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		lbl_makh_10.setBounds(367, 373, 123, 21);
-		contentPane.add(lbl_makh_10);
-		
-		JLabel lbl_makh_11 = new JLabel("Hình ảnh :");
-		lbl_makh_11.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		lbl_makh_11.setBounds(367, 405, 123, 21);
-		contentPane.add(lbl_makh_11);
-		
-		textField_6 = new JTextField();
-		textField_6.setColumns(10);
-		textField_6.setBounds(492, 405, 177, 25);
-		contentPane.add(textField_6);
-		
-		textField_7 = new JTextField();
-		textField_7.setColumns(10);
-		textField_7.setBounds(492, 373, 177, 25);
-		contentPane.add(textField_7);
-		
-		textField_8 = new JTextField();
-		textField_8.setColumns(10);
-		textField_8.setBounds(492, 341, 177, 25);
-		contentPane.add(textField_8);
-		
-		textField_9 = new JTextField();
-		textField_9.setColumns(10);
-		textField_9.setBounds(492, 309, 177, 25);
-		contentPane.add(textField_9);
-		
-		textField_10 = new JTextField();
-		textField_10.setColumns(10);
-		textField_10.setBounds(492, 277, 177, 25);
-		contentPane.add(textField_10);
-		
-		textField_11 = new JTextField();
-		textField_11.setColumns(10);
-		textField_11.setBounds(492, 244, 177, 25);
-		contentPane.add(textField_11);
-		
-		JButton saveButton = new JButton("Save");
+
+		txt_matKhau = new JTextField();
+		txt_matKhau.setColumns(10);
+		txt_matKhau.setBounds(488, 373, 177, 25);
+		contentPane.add(txt_matKhau);
+
+		txt_diachi = new JTextField();
+		txt_diachi.setColumns(10);
+		txt_diachi.setBounds(488, 276, 177, 25);
+		contentPane.add(txt_diachi);
+
+		JButton saveButton = new JButton("Lưu");
+		saveButton.setBackground(new Color(127, 255, 0));
 		saveButton.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 17));
 		saveButton.setSize(177, 30);
-		saveButton.setLocation(261, 441);
+		saveButton.setLocation(272, 455);
 		contentPane.add(saveButton);
-		
-		JLabel imageLabel = new JLabel("");
-		imageLabel.setBounds(238, 11, 200, 175);
-        JButton chooseImageButton = new JButton("Thêm ảnh");
-        chooseImageButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
-        chooseImageButton.setBounds(272, 197, 135, 36);
-        contentPane.add(chooseImageButton);
-        contentPane.add(imageLabel);
-        
-        chooseImageButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                // Hành động chọn ảnh, ví dụ sử dụng JFileChooser
-                JFileChooser fileChooser = new JFileChooser();
-                int result = fileChooser.showOpenDialog(null);
-                if (result == JFileChooser.APPROVE_OPTION) {
-                    // Lấy đường dẫn của ảnh đã chọn và xử lý nó ở đây
-                    String imagePath = fileChooser.getSelectedFile().getAbsolutePath();
-                    ImageIcon imageIcon = new ImageIcon(imagePath);
-                    imageLabel.setIcon(imageIcon);
-                    // Lưu đường dẫn ảnh vào cơ sở dữ liệu sau khi nhấn nút lưu
-                }
+
+		JLabel imageLabel = new JLabel("                    Image");
+		imageLabel.setFont(new Font("Tahoma", Font.BOLD, 15));
+		imageLabel.setBackground(new Color(255, 250, 250));
+		imageLabel.setBounds(238, 11, 211, 191);
+		Border border = BorderFactory.createLineBorder(Color.BLACK, 2);
+
+		// Thiết lập Border cho JLabel
+		imageLabel.setBorder(border);
+
+		JButton chooseImageButton = new JButton("Thêm ảnh");
+		chooseImageButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		chooseImageButton.setBounds(283, 213, 135, 36);
+		contentPane.add(chooseImageButton);
+		contentPane.add(imageLabel);
+		ButtonGroup buttonGroup1 = new ButtonGroup();
+
+		cbox_quanli = new JRadioButton("Quản Lý");
+		cbox_quanli.setBackground(new Color(152, 251, 152));
+		cbox_quanli.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		cbox_quanli.setBounds(488, 311, 81, 23);
+		contentPane.add(cbox_quanli);
+
+		cbox_nhanVien = new JRadioButton("Nhân viên");
+		cbox_nhanVien.setSelected(true);
+		cbox_nhanVien.setBackground(new Color(152, 251, 152));
+		cbox_nhanVien.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		cbox_nhanVien.setBounds(571, 311, 94, 23);
+		cbox_nhanVien.isSelected();
+		contentPane.add(cbox_nhanVien);
+
+		buttonGroup1.add(cbox_nhanVien);
+		buttonGroup1.add(cbox_quanli);
+		JRadioButton rdb_hoatdong = new JRadioButton("Hoạt động");
+		rdb_hoatdong.setSelected(true);
+		rdb_hoatdong.setBackground(new Color(152, 251, 152));
+		rdb_hoatdong.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		rdb_hoatdong.setBounds(488, 343, 94, 23);
+		contentPane.add(rdb_hoatdong);
+		ButtonGroup buttonGroup = new ButtonGroup();
+
+		// Thêm nút vào nhóm
+
+		rdbtnNgh = new JRadioButton("Đã nghỉ");
+		rdbtnNgh.setBackground(new Color(152, 251, 152));
+		rdbtnNgh.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		rdbtnNgh.setBounds(581, 343, 94, 23);
+		contentPane.add(rdbtnNgh);
+		buttonGroup.add(rdb_hoatdong);
+		buttonGroup.add(rdbtnNgh);
+
+		JPanel panel = new JPanel();
+		panel.setBounds(225, 0, 235, 209);
+		contentPane.add(panel);
+
+		JButton btn_troLai = new JButton("Trở lại");
+		btn_troLai.setBackground(new Color(255, 99, 71));
+		btn_troLai.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 17));
+		btn_troLai.setBounds(534, 455, 135, 30);
+		contentPane.add(btn_troLai);
+		btn_troLai.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				JFrame currentFrame = (JFrame) SwingUtilities.getRoot((Component) e.getSource());
+				currentFrame.dispose();
+
+//		        // Open the QL khách hàng window
+//		        JFrame qlKhachHangFrame = new JFrame("Quản lý khách hàng");
+//		        // Set up the content of the new window (you may need to customize this part)
+//		        // ...
+//
+//		        qlKhachHangFrame.setSize(600, 400);
+//		        qlKhachHangFrame.setLocationRelativeTo(null); // Center the new window
+//		        qlKhachHangFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//
+//		        // Make sure to set the visibility of the new window to true
+//		        qlKhachHangFrame.setVisible(true);
+			}
+		});
+		chooseImageButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// Hành động chọn ảnh, ví dụ sử dụng JFileChooser
+				JFileChooser fileChooser = new JFileChooser("D:/");
+				int result = fileChooser.showOpenDialog(null);
+				if (result == JFileChooser.APPROVE_OPTION) {
+					imagePath = fileChooser.getSelectedFile().getAbsolutePath();
+
+					if (imagePath != null && !imagePath.isEmpty()) {
+						ImageIcon icon = new ImageIcon(imagePath); // Sử dụng getResource để lấy đường dẫn từ resources
+																	// của ứng dụng
+						Image scaledIcon = icon.getImage().getScaledInstance(260, 240, Image.SCALE_SMOOTH); // Thiết lập
+																											// kích
+																											// thước
+						ImageIcon resizedIcon1 = new ImageIcon(scaledIcon);
+						imageLabel.setIcon(resizedIcon1);
+						// Lưu đường dẫn ảnh vào cơ sở dữ liệu sau khi nhấn nút lưu
+					} else {
+						JOptionPane.showMessageDialog(null, "Chosen image is null or empty!", "Error",
+								JOptionPane.ERROR_MESSAGE);
+					}
 //            	try {
 //					JFileChooser f = new JFileChooser();
 //					f.setDialogTitle("Chọn Ảnh");
@@ -222,27 +295,158 @@ public class FromThemNhanVien extends JFrame {
 //				} catch (Exception e2) {
 //					// TODO: handle exception
 //				}
-            }
-        });
-//        saveButton.addActionListener(new ActionListener() {
-//            public void actionPerformed(ActionEvent e) {
-//                // Lưu thông tin vào cơ sở dữ liệu khi nhấn nút "Lưu"
-//                saveEmployeeInfo(
-//                    nameField.getText(),
-//                    dobField.getText(),
-//                    cccdField.getText(),
-//                    phoneField.getText(),
-//                    emailField.getText(),
-//                    addressField.getText(),
-//                    positionField.getText(),
-//                    statusField.getText(),
-//                    passwordField.getPassword(), 
-//                    permissionField.getText()
-//                    // Thêm đường dẫn ảnh vào hàm lưu thông tin
-//                );
-//            }
-//        });
+				}
+			}
+		});
+		saveButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// Lưu thông tin vào cơ sở dữ liệu khi nhấn nút "Lưu"
+				// Lấy thông tin từ các trường dữ liệu trên giao diện
+				String tenNhanVien = txt_hoten.getText().trim();
+				String soDienThoai = txt_sdt.getText().trim();
+				String email = txt_email.getText().trim();
+				String diaChi = txt_diachi.getText().trim();
+				java.sql.Date ngaySinh = null;
+				try {
+					SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+					ngaySinhtxt = dateFormat.format(txt_ngaysinh.getDate());
+					java.util.Date ngaysinh = dateFormat.parse(ngaySinhtxt);
+					ngaySinh = new java.sql.Date(ngaysinh.getTime());
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+				String soCCCD = txt_scccd.getText().trim();
+				String matKhau = txt_matKhau.getText().trim();
+				boolean trangThai = rdb_hoatdong.isSelected();
+				if (cbox_quanli.isSelected() && !cbox_nhanVien.isSelected()) {
+					chucVu = "QL";
+				} else if (!cbox_quanli.isSelected() && cbox_nhanVien.isSelected()) {
+					chucVu = "NV";
+				}
+				String manv = chucVu + "000" + TrangQLNhanVienJPanel.getRowCount();
+				if (kiemTraHople()) {
+//					// Kiểm tra và xử lý các điều kiện khác nếu cần thiết
+//						// Tạo đối tượng KhachHang từ thông tin đã nhập
+					NhanVien nhanVien1 = new NhanVien();
+					nhanVien1.setMaNhanVien(manv);
+					nhanVien1.setHoTen(tenNhanVien);
+					nhanVien1.setSoCCCD(soCCCD);
+					nhanVien1.setNgaySinh(ngaySinh);
+					nhanVien1.setSoDienThoai(soDienThoai);
+					nhanVien1.setEmail(email);
+					nhanVien1.setDiaChi(diaChi);
+					nhanVien1.setChucVu(chucVu);
+					nhanVien1.setAnhDaiDien(imagePath);
+					nhanVien1.setTrangThai(trangThai);
+					nhanVien1.setMatKhau(matKhau);
+					nhanVien1.setPhanQuyen(true);
+//						// Gọi hàm themKhachHang để lưu thông tin vào cơ sở dữ liệu
+					boolean result = nvDao.themNhanVien(nhanVien1);
+					// Kiểm tra kết quả và thông báo cho người dùng
+					if (result) {
+						JOptionPane.showMessageDialog(null, "Thêm nhân viên thành công!");
+						// Có thể thêm logic để làm mới giao diện hoặc thực hiện các tác vụ khác sau khi
+						// thêm
+						Window window = SwingUtilities.getWindowAncestor(contentPane);
+						if (window != null) {
+							window.dispose();
+						}
+					} else {
+						JOptionPane.showMessageDialog(contentPane, "Thêm Nhân viên thất bại!");
+					}
+				}
+			}
+		});
+		this.addWindowListener(this);
+		this.setLocationRelativeTo(null);
+		contentPane.setVisible(true);
+	}
 
-        contentPane.setVisible(true);
+	public boolean kiemTraHople(){
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String sdt = txt_sdt.getText().trim();
+		String email = txt_email.getText().trim();
+		Date ngaysinh = txt_ngaysinh.getDate();
+		Date date1 = new Date(105, 0, 1);
+		if (txt_hoten.getText().isEmpty() || txt_sdt.getText().isEmpty() || txt_email.getText().isEmpty()
+				|| txt_diachi.getText().isEmpty() || txt_scccd.getText().isEmpty() || txt_matKhau.getText().isEmpty()) {
+			JOptionPane.showMessageDialog(contentPane, "Vui lòng nhập đầy đủ thông tin!");
+			return false;
+		} else if (txt_ngaysinh.getDate() == null) {
+			JOptionPane.showMessageDialog(null, "Vui lòng chọn ngày", "Error", JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+		if (!sdt.matches("0\\d{9}")) {
+			JOptionPane.showMessageDialog(contentPane, "Số điện thoại phải có đúng 10 số bắt đầu từ số 0!");
+			return false;
+		}
+		if (!email.endsWith("@gmail.com")) {
+			JOptionPane.showMessageDialog(contentPane, "Email phải kết thúc bằng '@gmail.com'!");
+			return false;
+		}
+		if (ngaysinh.after(date1)) {
+			JOptionPane.showMessageDialog(contentPane, "Nhân viên phải lớn hơn 18 tuổi", "Lỗi",
+					JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+		return true; // Tất cả các trường đều hợp lệ
+	}
+
+	public boolean isEmployeeExists(String ten, String soCCCD, String soDienThoai, String email) {
+		String query = "SELECT * FROM NhanVien WHERE hoTen = ? OR soCCCD = ? OR soDienThoai = ? OR email = ?";
+		try {
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, ten);
+			preparedStatement.setString(2, soCCCD);
+			preparedStatement.setString(3, soDienThoai);
+			preparedStatement.setString(3, email);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			return resultSet.next(); // Nếu có dữ liệu, tức là tên, số điện thoại hoặc email đã tồn tại
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	@Override
+	public void windowOpened(WindowEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void windowClosing(WindowEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void windowClosed(WindowEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void windowIconified(WindowEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void windowDeiconified(WindowEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void windowActivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void windowDeactivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+
 	}
 }

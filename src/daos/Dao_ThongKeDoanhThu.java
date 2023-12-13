@@ -8,9 +8,14 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 import connection.ConnectDataBase;
+import constance.ModelThongKeNVBanHang;
+import entities.HoaDon;
+import entities.KhachHang;
 import entities.NhanVien;
+import entities.VoucherGiamGia;
 
 public class Dao_ThongKeDoanhThu {
 	public Connection connection;
@@ -20,35 +25,37 @@ public class Dao_ThongKeDoanhThu {
 	}
 
 	public ArrayList<NhanVien> layDanhSachNhanVienBanHang() {
-        ArrayList<NhanVien> employees = new ArrayList<>();
+		ArrayList<NhanVien> employees = new ArrayList<>();
 
-        try {
-            String sql = "SELECT * FROM NhanVien nv where nv.phanQuyen=0";
-            try (Statement statement = connection.createStatement(); ResultSet resultSet = statement.executeQuery(sql)) {
-                while (resultSet.next()) {
-                    NhanVien employee = new NhanVien();
-                    employee.setMaNhanVien(resultSet.getString("maNhanVien"));
-                    employee.setHoTen(resultSet.getString("hoTen"));
-                    employee.setNgaySinh(resultSet.getDate("ngaySinh"));
-                    employee.setSoCCCD(resultSet.getString("soCCCD"));
-                    employee.setSoDienThoai(resultSet.getString("soDienThoai"));
-                    employee.setEmail(resultSet.getString("email"));
-                    employee.setDiaChi(resultSet.getString("diaChi"));
-                    employee.setChucVu(resultSet.getString("chucVu"));
-                    employee.setTrangThai(resultSet.getBoolean("trangThai"));
-                    employee.setMatKhau(resultSet.getString("matKhau"));
-                    employee.setPhanQuyen(resultSet.getBoolean("phanQuyen"));
-                    employee.setAnhDaiDien(resultSet.getString("hinhAnh"));
+		try {
+			String sql = "SELECT * FROM NhanVien nv where nv.phanQuyen=0";
+			try (Statement statement = connection.createStatement();
+					ResultSet resultSet = statement.executeQuery(sql)) {
+				while (resultSet.next()) {
+					NhanVien employee = new NhanVien();
+					employee.setMaNhanVien(resultSet.getString("maNhanVien"));
+					employee.setHoTen(resultSet.getString("hoTen"));
+					employee.setNgaySinh(resultSet.getDate("ngaySinh"));
+					employee.setSoCCCD(resultSet.getString("soCCCD"));
+					employee.setSoDienThoai(resultSet.getString("soDienThoai"));
+					employee.setEmail(resultSet.getString("email"));
+					employee.setDiaChi(resultSet.getString("diaChi"));
+					employee.setChucVu(resultSet.getString("chucVu"));
+					employee.setTrangThai(resultSet.getBoolean("trangThai"));
+					employee.setMatKhau(resultSet.getString("matKhau"));
+					employee.setPhanQuyen(resultSet.getBoolean("phanQuyen"));
+					employee.setAnhDaiDien(resultSet.getString("hinhAnh"));
 
-                    employees.add(employee);
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+					employees.add(employee);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 
-        return employees;
-    }
+		return employees;
+	}
+
 	public int TongHoaDonDocNhanVienLapTrongNgay(LocalDate ngayThongKe, String maNhanVien) {
 		int totalOrders = 0;
 		String query = "SELECT COUNT(*) AS TotalOrders " + "FROM HoaDon "
@@ -157,7 +164,7 @@ public class Dao_ThongKeDoanhThu {
 		}
 		return totalItemsSold;
 	}
-	
+
 	public double TongDoanhThuTrongNgayCuaNhanVien(LocalDate ngayThongKe, String maNhanVien) {
 		float totalRevenue = 0;
 		String query = "SELECT SUM(tongThanhTien) AS TotalRevenue " + "FROM HoaDon "
@@ -175,6 +182,7 @@ public class Dao_ThongKeDoanhThu {
 		}
 		return totalRevenue;
 	}
+
 	public double TongDoanhThuTrongThangCuaNhanVien(int thangThongKe, int namCuaThangThongKe, String maNhanVien) {
 		float totalRevenue = 0;
 		String query = "SELECT SUM(tongThanhTien) AS TotalRevenue " + "FROM HoaDon "
@@ -192,6 +200,7 @@ public class Dao_ThongKeDoanhThu {
 		}
 		return totalRevenue;
 	}
+
 	public double TongDoanhThuTrongNamCuaNhanVien(int namThongKe, String maNhanVien) {
 		float totalRevenue = 0;
 		String query = "SELECT SUM(tongThanhTien) AS TotalRevenue " + "FROM HoaDon "
@@ -208,7 +217,7 @@ public class Dao_ThongKeDoanhThu {
 		}
 		return totalRevenue;
 	}
-	
+
 	public double TongVonNhapHangTrongNgayNhanVienBan(LocalDate ngayThongKe, String maNhanVien) {
 		float totalCostPrice = 0;
 		String query = "SELECT SUM(hh.donGiaNhap * cthd.soLuong) AS TotalCostPrice " + "FROM ChiTietHoaDon cthd "
@@ -227,7 +236,7 @@ public class Dao_ThongKeDoanhThu {
 		}
 		return totalCostPrice;
 	}
-	
+
 	public double TongVonNhapHangTrongThangNhanVienBan(int thangThongKe, int namCuaThangThongKe, String maNhanVien) {
 		float totalCostPrice = 0;
 		String query = "SELECT SUM(hh.donGiaNhap * cthd.soLuong) AS TotalCostPrice " + "FROM ChiTietHoaDon cthd "
@@ -246,6 +255,7 @@ public class Dao_ThongKeDoanhThu {
 		}
 		return totalCostPrice;
 	}
+
 	public double TongVonNhapHangTrongNamNhanVienBan(int namThongKe, String maNhanVien) {
 		float totalCostPrice = 0;
 		String query = "SELECT SUM(hh.donGiaNhap * cthd.soLuong) AS TotalCostPrice " + "FROM ChiTietHoaDon cthd "
@@ -263,6 +273,7 @@ public class Dao_ThongKeDoanhThu {
 		}
 		return totalCostPrice;
 	}
+
 	public double TongTienGiamGiaTrongNgayTheoNhanVien(LocalDate ngayThongKe, String maNhanVien) {
 		float totalDiscountAmount = 0;
 		String query = "SELECT SUM(hd.tongThanhTien * vg.phanTramGiamTheoHoaDon / 100) AS TotalDiscountAmount "
@@ -280,6 +291,7 @@ public class Dao_ThongKeDoanhThu {
 		}
 		return totalDiscountAmount;
 	}
+
 	public double TongTienGiamGiaTrongThangTheoNhanVien(int thangThongKe, int namCuaThangThongKe, String maNhanVien) {
 		float totalDiscountAmount = 0;
 		String query = "SELECT SUM(hd.tongThanhTien * vg.phanTramGiamTheoHoaDon / 100) AS TotalDiscountAmount "
@@ -298,7 +310,7 @@ public class Dao_ThongKeDoanhThu {
 		}
 		return totalDiscountAmount;
 	}
-	
+
 	public double TongTienGiamGiaTrongNamTheoNhanVien(int namThongKe, String maNhanVien) {
 		float totalDiscountAmount = 0;
 		String query = "SELECT SUM(hd.tongThanhTien * vg.phanTramGiamTheoHoaDon / 100) AS TotalDiscountAmount "
@@ -316,6 +328,7 @@ public class Dao_ThongKeDoanhThu {
 		}
 		return totalDiscountAmount;
 	}
+
 	public int TongHoaDonTrongNgay(LocalDate ngayThongKe) {
 		int totalOrders = 0;
 		String query = "SELECT COUNT(*) AS TotalOrders " + "FROM HoaDon " + "WHERE CONVERT(DATE, thoiGianTao) = ?";
@@ -330,6 +343,7 @@ public class Dao_ThongKeDoanhThu {
 		}
 		return totalOrders;
 	}
+
 	public int TongHoaDonTrongThang(int thangThongKe, int namCuaThangThongKe) {
 		int totalOrders = 0;
 		String query = "SELECT COUNT(*) AS TotalOrders " + "FROM HoaDon "
@@ -346,6 +360,7 @@ public class Dao_ThongKeDoanhThu {
 		}
 		return totalOrders;
 	}
+
 	public int TongHoaDonDuocLapTrongNam(int namThongKe) {
 		int totalOrders = 0;
 		String query = "SELECT COUNT(*) AS TotalOrders " + "FROM HoaDon " + "WHERE YEAR(thoiGianTao) = ?";
@@ -360,6 +375,7 @@ public class Dao_ThongKeDoanhThu {
 		}
 		return totalOrders;
 	}
+
 	public int TongSoLuongMatHangBanRaTrongNgay(LocalDate ngayThongKe) {
 		int totalItemsSold = 0;
 		String query = "SELECT SUM(soLuong) AS TotalItemsSold " + "FROM ChiTietHoaDon "
@@ -376,6 +392,7 @@ public class Dao_ThongKeDoanhThu {
 		}
 		return totalItemsSold;
 	}
+
 	public int TongSoLuongMatHangBanRaTrongThang(int thangDuocThongKe, int namCuaThangDuocThongKe) {
 		int totalItemsSold = 0;
 		String query = "SELECT SUM(soLuong) AS TotalItemsSold " + "FROM ChiTietHoaDon "
@@ -393,6 +410,7 @@ public class Dao_ThongKeDoanhThu {
 		}
 		return totalItemsSold;
 	}
+
 	public int TongSoLuongMatHangBanRaTrongNam(int namThongKe) {
 		int totalItemsSold = 0;
 		String query = "SELECT SUM(soLuong) AS TotalItemsSold " + "FROM ChiTietHoaDon "
@@ -408,6 +426,7 @@ public class Dao_ThongKeDoanhThu {
 		}
 		return totalItemsSold;
 	}
+
 	public float TongDoanhThuTrongNgay(LocalDate ngayThongKe) {
 		float totalRevenue = 0;
 		String query = "SELECT SUM(tongThanhTien) AS TotalRevenue " + "FROM HoaDon "
@@ -424,6 +443,7 @@ public class Dao_ThongKeDoanhThu {
 		}
 		return totalRevenue;
 	}
+
 	public float TongDoanhThuTrongThang(int thangThongKe, int namCuaThangThongKe) {
 		float totalRevenue = 0;
 		String query = "SELECT SUM(tongThanhTien) AS TotalRevenue " + "FROM HoaDon "
@@ -440,6 +460,7 @@ public class Dao_ThongKeDoanhThu {
 		}
 		return totalRevenue;
 	}
+
 	public float TongDoanhThuTrongNam(int namThongKe) {
 		float totalRevenue = 0;
 		String query = "SELECT SUM(tongThanhTien) AS TotalRevenue " + "FROM HoaDon " + "WHERE YEAR(thoiGianTao) = ?";
@@ -454,6 +475,7 @@ public class Dao_ThongKeDoanhThu {
 		}
 		return totalRevenue;
 	}
+
 	public float TongVonNhapHangTrongNgay(LocalDate ngayThongKe) {
 		float totalCostPrice = 0;
 		String query = "SELECT SUM(hh.donGiaNhap * cthd.soLuong) AS TotalCostPrice " + "FROM ChiTietHoaDon cthd "
@@ -471,6 +493,7 @@ public class Dao_ThongKeDoanhThu {
 		}
 		return totalCostPrice;
 	}
+
 	public float TongVonNhapHangTrongThang(int thangThongKe, int namCuaThangThongKe) {
 		float totalCostPrice = 0;
 		String query = "SELECT SUM(hh.donGiaNhap * cthd.soLuong) AS TotalCostPrice " + "FROM ChiTietHoaDon cthd "
@@ -488,6 +511,7 @@ public class Dao_ThongKeDoanhThu {
 		}
 		return totalCostPrice;
 	}
+
 	public float TongVonNhapHangTrongNam(int namThongKe) {
 		float totalCostPrice = 0;
 		String query = "SELECT SUM(hh.donGiaNhap * cthd.soLuong) AS TotalCostPrice " + "FROM ChiTietHoaDon cthd "
@@ -504,6 +528,7 @@ public class Dao_ThongKeDoanhThu {
 		}
 		return totalCostPrice;
 	}
+
 	public float TongTienGiamGiaTrongNgay(LocalDate ngayThongKe) {
 		float totalDiscountAmount = 0;
 		String query = "SELECT SUM(hd.tongThanhTien * vg.phanTramGiamTheoHoaDon / 100) AS TotalDiscountAmount "
@@ -520,6 +545,7 @@ public class Dao_ThongKeDoanhThu {
 		}
 		return totalDiscountAmount;
 	}
+
 	public float TongTienGiamGiaTrongThang(int thangThongKe, int namCuaThangThongKe) {
 		float totalDiscountAmount = 0;
 		String query = "SELECT SUM(hd.tongThanhTien * vg.phanTramGiamTheoHoaDon / 100) AS TotalDiscountAmount "
@@ -537,6 +563,7 @@ public class Dao_ThongKeDoanhThu {
 		}
 		return totalDiscountAmount;
 	}
+
 	public float TongTienGiamGiaTrongNam(int namThongKe) {
 		float totalDiscountAmount = 0;
 		String query = "SELECT SUM(hd.tongThanhTien * vg.phanTramGiamTheoHoaDon / 100) AS TotalDiscountAmount "
@@ -553,4 +580,123 @@ public class Dao_ThongKeDoanhThu {
 		}
 		return totalDiscountAmount;
 	}
+
+	public ArrayList<HoaDon> getHoaDonTheoNhanVienVaNgay(String maNhanVien, LocalDate thoiGianTao) {
+		ArrayList<HoaDon> danhSachHoaDon = new ArrayList<>();
+
+		try {
+			String sql = "SELECT * FROM HoaDon " + "WHERE maNhanVien = ? AND CAST(thoiGianTao AS DATE) = ?";
+			try (PreparedStatement statement = connection.prepareStatement(sql)) {
+				statement.setString(1, maNhanVien);
+				statement.setDate(2, Date.valueOf(thoiGianTao));
+
+				try (ResultSet resultSet = statement.executeQuery()) {
+					while (resultSet.next()) {
+						HoaDon hoaDon = new HoaDon();
+						hoaDon.setMaHoaDon(resultSet.getString("maHoaDon"));
+						hoaDon.setThoiGianTao(resultSet.getDate("thoiGianTao").toLocalDate());
+						hoaDon.setTongThanhTien(resultSet.getDouble("tongThanhTien"));
+						hoaDon.setVoucher(new VoucherGiamGia(resultSet.getString("maVoucher")));
+						hoaDon.setKhachHang(new KhachHang(resultSet.getString("maKhachHang")));
+						hoaDon.setNguoiLapHoaDon(new NhanVien(resultSet.getString("maNhanVien")));
+						hoaDon.setTrangThaiThanhToan(resultSet.getBoolean("trangThaiThanhToan"));
+						danhSachHoaDon.add(hoaDon);
+					}
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return danhSachHoaDon;
+	}
+	public ArrayList<HoaDon> getHoaDonTheoNgay(LocalDate thoiGianTao) {
+		ArrayList<HoaDon> danhSachHoaDon = new ArrayList<>();
+
+		try {
+			String sql = "SELECT * FROM HoaDon WHERE CAST(thoiGianTao AS DATE) = ?";
+			try (PreparedStatement statement = connection.prepareStatement(sql)) {
+				statement.setDate(1, Date.valueOf(thoiGianTao));
+
+				try (ResultSet resultSet = statement.executeQuery()) {
+					while (resultSet.next()) {
+						HoaDon hoaDon = new HoaDon();
+						hoaDon.setMaHoaDon(resultSet.getString("maHoaDon"));
+						hoaDon.setThoiGianTao(resultSet.getDate("thoiGianTao").toLocalDate());
+						hoaDon.setTongThanhTien(resultSet.getDouble("tongThanhTien"));
+						hoaDon.setVoucher(new VoucherGiamGia(resultSet.getString("maVoucher")));
+						hoaDon.setKhachHang(new KhachHang(resultSet.getString("maKhachHang")));
+						hoaDon.setNguoiLapHoaDon(new NhanVien(resultSet.getString("maNhanVien")));
+						hoaDon.setTrangThaiThanhToan(resultSet.getBoolean("trangThaiThanhToan"));
+						danhSachHoaDon.add(hoaDon);
+					}
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return danhSachHoaDon;
+	}
+
+	public ModelThongKeNVBanHang layThongKeDoanhThuCaoNhatCuaNhanVien(int thangThongKe, int namCuaThangThongKe,
+			String maNhanVien) {
+		ModelThongKeNVBanHang modelThongKe = null;
+		try {
+			String sql = "SELECT TOP 1 CAST(thoiGianTao AS DATE) AS ngay, SUM(tongThanhTien) AS tongDoanhThu "
+					+ "FROM HoaDon " + "WHERE MONTH(thoiGianTao) = ? AND YEAR(thoiGianTao) = ? AND maNhanVien = ? "
+					+ "GROUP BY CAST(thoiGianTao AS DATE) " + "ORDER BY tongDoanhThu DESC";
+
+			try (PreparedStatement statement = connection.prepareStatement(sql)) {
+				statement.setInt(1, thangThongKe);
+				statement.setInt(2, namCuaThangThongKe);
+				statement.setString(3, maNhanVien);
+
+				try (ResultSet resultSet = statement.executeQuery()) {
+					if (resultSet.next()) {
+						LocalDate ngayCaoNhat = resultSet.getDate("ngay").toLocalDate();
+						double tongDoanhThuCaoNhat = resultSet.getDouble("tongDoanhThu");
+
+						modelThongKe = new ModelThongKeNVBanHang(ngayCaoNhat, 0, 0, tongDoanhThuCaoNhat);
+					}
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return modelThongKe;
+	}
+	public ArrayList<NhanVien> layDanhSachNhanVien() {
+        ArrayList<NhanVien> lst = new ArrayList<>();
+
+        try {
+            String sql = "SELECT * FROM NhanVien WHERE phanQuyen = 0";
+
+            try (Statement statement = connection.createStatement();
+                 ResultSet resultSet = statement.executeQuery(sql)) {
+
+                while (resultSet.next()) {
+                	String maNV =resultSet.getString("maNhanVien");
+    				String ten = resultSet.getString("hoTen");
+    				Date ngaySinh = resultSet.getDate("ngaySinh");
+    				String soCCCD = resultSet.getString("soCCCD");
+    				String soDT = resultSet.getString("soDienThoai");
+    				String email = resultSet.getString("email");
+    				String diaChi = resultSet.getString("diaChi");
+    				String chucVu = resultSet.getString("chucVu");
+    				String matKhau = resultSet.getString("matKhau");
+    				Boolean phanquyen = resultSet.getBoolean("phanQuyen");
+    				Boolean trangThai = resultSet.getBoolean("trangThai");
+    				String anh = resultSet.getString("hinhAnh");
+                    NhanVien nv = new NhanVien(maNV, ten, ngaySinh, soCCCD, soDT, email, diaChi, chucVu, phanquyen, matKhau, trangThai, anh);
+                    lst.add(nv);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return lst;    }
+
 }
