@@ -25,7 +25,6 @@ import daos.Dao_NhanVien;
 import entities.NhanVien;
 import gui.TrangChuPanel;
 import gui.TrangDangNhap;
-import gui.TrangHuongDanJPanel;
 import gui.TrangQLKhachHangPanel;
 import gui.TrangThongTinDangNhap;
 
@@ -40,7 +39,6 @@ public class TrangChinhNVBanHang extends JFrame implements ActionListener {
 	private AbstractButton btnMenuCnXemThongTinTK;
 	private JButton btnMenuCnDangXuatTK;
 	private TrangChuPanel trangChuPanel;
-	private TrangHuongDanJPanel trangHuongDanJPanel;
 	private TrangQLKhachHangPanel trangQLKhachHangPanel;
 	private TrangBanHangJPanel trangBanHangJPanel;
 	private TrangThongKeNVBanHangJPanel trangThongKeNVBanHangJPanel;
@@ -155,7 +153,6 @@ public class TrangChinhNVBanHang extends JFrame implements ActionListener {
 		// <========================================================================================>
 
 		trangChuPanel = new TrangChuPanel();
-		trangHuongDanJPanel = new TrangHuongDanJPanel();
 		trangQLKhachHangPanel = new TrangQLKhachHangPanel();
 		trangBanHangJPanel = new TrangBanHangJPanel(null, null);
 		trangThongKeNVBanHangJPanel = new TrangThongKeNVBanHangJPanel();
