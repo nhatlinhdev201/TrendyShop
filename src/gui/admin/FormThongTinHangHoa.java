@@ -179,12 +179,13 @@ public class FormThongTinHangHoa extends JPanel implements ActionListener {
 		pnl_InfoProduct.add(lbl_GiaNhap);
 
 		spn_SoLuongBan = new JSpinner();
+		spn_SoLuongBan.setEnabled(false);
 		spn_SoLuongBan.setModel(new SpinnerNumberModel(0, 0, null, 1));
 		spn_SoLuongBan.setBounds(467, 41, 200, 25);
 		pnl_InfoProduct.add(spn_SoLuongBan);
 
 		spn_GiaNhap = new JSpinner();
-		spn_GiaNhap.setModel(new SpinnerNumberModel(0d, 0d, null, 1.0));
+		spn_GiaNhap.setModel(new SpinnerNumberModel(Double.valueOf(1), Double.valueOf(1), null, Double.valueOf(1)));
 		spn_GiaNhap.setBounds(467, 77, 200, 25);
 		pnl_InfoProduct.add(spn_GiaNhap);
 
@@ -416,6 +417,9 @@ public class FormThongTinHangHoa extends JPanel implements ActionListener {
 			txt_NewSize.setText(size);
 			spn_SoLuong.setValue(soLuong);
 		}
+//		if(btn_Save.getText().equals("Lưu Thay Đổi")) {
+//			txt_NewSize.setEditable(false);
+//		}
 		return pnl_AddSize;
 	}
 
@@ -497,8 +501,9 @@ public class FormThongTinHangHoa extends JPanel implements ActionListener {
 			
 			String moTa = txtMoTa.getText().trim();
 			String nhaCungCap = ((NhaCungCap) cmb_NhaCungCap.getSelectedItem()).getMaNhaCungCap();
-			Object giaNhapObject = spn_GiaNhap.getValue();
-			double giaNhap = giaNhapObject instanceof Number ? ((Number) giaNhapObject).doubleValue() : 0.0;
+			double giaNhap = Double.parseDouble(spn_GiaNhap.getValue().toString());
+			System.out.println(spn_GiaNhap.getValue().toString());
+			System.out.println(giaNhap);
 			int soLuongBan = (int) spn_SoLuongBan.getValue();
 			int soSize = listSize.size();
 			// Kiểm tra các trường dữ liệu
@@ -577,6 +582,8 @@ public class FormThongTinHangHoa extends JPanel implements ActionListener {
 										.substring(sr.getAbsolutePath().lastIndexOf("."));
 								a = new File("img\\" + hh.getMaHangHoa() + tienToFile);
 								hh.setHinhAnh("img\\" + hh.getMaHangHoa() + tienToFile);
+								hh.setKichCo(i.getKey());
+								hh.setSoLuongTon(i.getValue());
 								if (dao_HangHoa.insertHangHoa(hh)) {
 									listMaThanhCong += hh.getMaHangHoa() + "\n";
 									// Thực hiện copy hình ảnh vào thư mục img
@@ -598,6 +605,8 @@ public class FormThongTinHangHoa extends JPanel implements ActionListener {
 								JOptionPane.showMessageDialog(this,
 										"Thêm sản phẩm \n" + listMaThanhCong + " thành công.");
 								reText();
+								listSize = new HashMap<String, Integer>();
+								dtm_size.setRowCount(0);
 							} else if (checkADD || !listMaThemThatBai.equals("")) {
 								JOptionPane.showMessageDialog(this,
 										"Thêm thông tin sản phẩm \n" + listMaThemThatBai + " Thất Bại.");

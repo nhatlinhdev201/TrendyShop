@@ -45,6 +45,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 
 import constance.SetBountJPanel;
 import daos.Dao_Voucher;
@@ -105,13 +106,13 @@ public class TrangQuanLyVoucher extends JPanel implements ActionListener, MouseL
 			}
 		});
 		lst_TieuChi.setSelectedIndex(0);
-		lst_TieuChi.setBounds(130, 75, 120, 70);
+		lst_TieuChi.setBounds(130, 75, 172, 70);
 		lst_TieuChi.setVisible(false);
 		add(lst_TieuChi);
 
 		scr_ListItemSearched = new JScrollPane();
 		scr_ListItemSearched.setBorder(null);
-		scr_ListItemSearched.setBounds(257, 75, 295, 100);
+		scr_ListItemSearched.setBounds(305, 75, 265, 100);
 		scr_ListItemSearched.setVisible(false);
 		add(scr_ListItemSearched);
 
@@ -148,7 +149,7 @@ public class TrangQuanLyVoucher extends JPanel implements ActionListener, MouseL
 		};
 		pnl_Search.setOpaque(false);
 		pnl_Search.setBackground(Color.WHITE);
-		pnl_Search.setBounds(127, 10, 468, 30);
+		pnl_Search.setBounds(127, 10, 479, 30);
 		pnl_Header.add(pnl_Search);
 		pnl_Search.setLayout(null);
 
@@ -167,13 +168,13 @@ public class TrangQuanLyVoucher extends JPanel implements ActionListener, MouseL
 		});
 		txt_Search.setFont(new Font("Tahoma", Font.BOLD, 12));
 		txt_Search.setBorder(null);
-		txt_Search.setBounds(130, 2, 293, 26);
+		txt_Search.setBounds(180, 2, 263, 26);
 		pnl_Search.add(txt_Search);
 		txt_Search.setColumns(10);
 
 		pnl_tieuchi = new JPanel();
 		pnl_tieuchi.setBackground(Color.WHITE);
-		pnl_tieuchi.setBounds(2, 2, 123, 26);
+		pnl_tieuchi.setBounds(2, 2, 175, 26);
 		pnl_Search.add(pnl_tieuchi);
 		pnl_tieuchi.setLayout(null);
 
@@ -181,20 +182,20 @@ public class TrangQuanLyVoucher extends JPanel implements ActionListener, MouseL
 		lbl_TieuChiSearch.setIconTextGap(5);
 		lbl_TieuChiSearch.setHorizontalAlignment(SwingConstants.CENTER);
 		lbl_TieuChiSearch.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lbl_TieuChiSearch.setBounds(0, 1, 92, 24);
+		lbl_TieuChiSearch.setBounds(0, 1, 138, 24);
 		pnl_tieuchi.add(lbl_TieuChiSearch);
 
 		JLabel lbl_IconDropDown = new JLabel("");
 		lbl_IconDropDown.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/images/icon_down_chevron.png"))
 				.getImage().getScaledInstance(12, 12, Image.SCALE_SMOOTH)));
 		lbl_IconDropDown.setBorder(new MatteBorder(0, 0, 0, 1, (Color) new Color(119, 136, 153)));
-		lbl_IconDropDown.setBounds(100, 1, 26, 24);
+		lbl_IconDropDown.setBounds(149, 1, 26, 24);
 		pnl_tieuchi.add(lbl_IconDropDown);
 
 		JLabel lbl_iconSearch = new JLabel("");
 		lbl_iconSearch.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/images/icon_search.png"))
 				.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH)));
-		lbl_iconSearch.setBounds(433, 2, 26, 26);
+		lbl_iconSearch.setBounds(453, 2, 26, 26);
 		pnl_Search.add(lbl_iconSearch);
 
 		btn_add = new JButton("Thêm");
@@ -260,7 +261,6 @@ public class TrangQuanLyVoucher extends JPanel implements ActionListener, MouseL
 		scr_voucher.setBorder(null);
 		scr_voucher.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		scr_voucher.setForeground(new Color(192, 192, 192));
-		scr_voucher.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 		scr_voucher.setBackground(new Color(107, 182, 182));
 		scr_voucher.setEnabled(false);
 
@@ -279,7 +279,9 @@ public class TrangQuanLyVoucher extends JPanel implements ActionListener, MouseL
 				return columnEditables[column];
 			}
 		};
+		tbl_Voucher.setRowHeight(25);
 		tbl_Voucher.setFuenteFilas(new Font("Tahoma", Font.PLAIN, 14));
+		tbl_Voucher.getTableHeader().setPreferredSize(new Dimension(tbl_Voucher.getTableHeader().getWidth(), 30));
 		tbl_Voucher.setBorder(null);
 		tbl_Voucher.setIntercellSpacing(new Dimension(0, 0));
 		tbl_Voucher.setAlignmentY(Component.TOP_ALIGNMENT);
@@ -395,7 +397,8 @@ public class TrangQuanLyVoucher extends JPanel implements ActionListener, MouseL
 	private void loadData(List<VoucherGiamGia> dsVoucher) {
 		dataDefault.setRowCount(0);
 		for (VoucherGiamGia voucher : dsVoucher) {
-			Object[] row = { voucher.getMaVoucher(), voucher.getTenVoucher(), voucher.getPhanTramGiamTheoHoaDon(), voucher.getNgayBatDau(), voucher.getNgayKetThuc(), voucher.getSoLuotDung(), voucher.isTrangThai()?"Đang hoạt động":"Đã ngưng"};
+			int giamGia = (int) (voucher.getPhanTramGiamTheoHoaDon()*100);
+			Object[] row = { voucher.getMaVoucher(), voucher.getTenVoucher(), giamGia, voucher.getNgayBatDau(), voucher.getNgayKetThuc(), voucher.getSoLuotDung(), voucher.isTrangThai()?"Đang hoạt động":"Đã ngưng"};
 			dataDefault.addRow(row);
 			
 		}

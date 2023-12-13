@@ -96,7 +96,7 @@ public class Dao_Voucher {
 	}
 
 	/**
-	 * Lấy các hàng hóa theo trạng Thái
+	 * Lấy các voucher theo trạng Thái
 	 * @param xuatXu
 	 * @return
 	 */
@@ -127,8 +127,8 @@ public class Dao_Voucher {
 	}
 
 	/**
-	 * get danh sách các hàng hóa theo thương hiệu
-	 * @param thuongHieu
+	 * get danh sách các voucher theo phần trăm giảm giá
+	 * @param phanTram
 	 * @return
 	 */
 	public List<VoucherGiamGia> getVoucherByPhanTramGiamGia(String phanTram) {
@@ -158,7 +158,7 @@ public class Dao_Voucher {
 	}
 
 	/**
-	 * get danh sách các hàng hóa theo phần tram giá bán
+	 * get danh sách các voucher theo tên
 	 * @param ten
 	 * @return
 	 */
@@ -218,35 +218,30 @@ public class Dao_Voucher {
 
 	}
 	
+
 	/**
-	 * Tìm hàng hóa có mã lớn nhất
+	 * Tìm voucher có mã lớn nhất
 	 * @return
 	 */
-	public int getMaHangHoaNew() {
-		int maHangHoa=0;
+	public String getMaHangHoaNew() {
 		try {
 			PreparedStatement statement = connection
-					.prepareStatement("select top(1) maHangHoa from HangHoa order by maHangHoa desc");
+					.prepareStatement("select top(1) maVoucher from VoucherGiamGia order by maVoucher desc");
 			ResultSet resultSet = statement.executeQuery();
 			if (resultSet.next()) {
-	            String maHangHoaString = resultSet.getString("maHangHoa");
-	            if (maHangHoaString != null && maHangHoaString.length() >= 9) {
-	                // Lấy phần số từ vị trí 2 đến 5 và chuyển đổi thành số nguyên
-	                maHangHoa = Integer.parseInt(maHangHoaString.substring(2, 6));
-	            }
+				return resultSet.getString("maVoucher").toString().trim();
 	        }
-			
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return maHangHoa;
+		return "";
 
 	}
 	
 	
 	/**
-	 * Xóa hàng hóa (chuyển trạng thái từ true về false
+	 * Xóa voucher (chuyển trạng thái từ true về false
 	 * @param mahh
 	 * @return
 	 */
@@ -266,91 +261,78 @@ public class Dao_Voucher {
 	}
 
 	/**
-	 * Thêm hàng hóa vào database
+	 * Thêm voucher vào database
 	 * @param hangHoa
 	 * @return
 	 */
-	public boolean insertHangHoa(HangHoa hangHoa) {
-		try {
-
-			String insertQuery = "INSERT INTO HangHoa (maHangHoa, tenHangHoa, phanLoai, thuongHieu, xuatXu, chatLieu, chiTietMoTa, hinhAnh, maNhaCungCap, kichCo, mauSac, soLuongTon, soLuongDaBan, donGiaNhap, trangThai) "
-					+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
-			PreparedStatement preparedStatement = connection.prepareStatement(insertQuery);
-			preparedStatement.setString(1, hangHoa.getMaHangHoa());
-			preparedStatement.setString(2, hangHoa.getTenHangHoa());
-			preparedStatement.setString(3, hangHoa.getPhanLoai());
-			preparedStatement.setString(4, hangHoa.getThuongHieu());
-			preparedStatement.setString(5, hangHoa.getXuatXu());
-			preparedStatement.setString(6, hangHoa.getChatLieu());
-			preparedStatement.setString(7, hangHoa.getChiTietMoTa());
-			preparedStatement.setString(8, hangHoa.getHinhAnh());
-			preparedStatement.setString(9, hangHoa.getMaNhaCungCap());
-			preparedStatement.setString(10, hangHoa.getKichCo());
-			preparedStatement.setString(11, hangHoa.getMauSac());
-			preparedStatement.setInt(12, hangHoa.getSoLuongTon());
-			preparedStatement.setInt(13, hangHoa.getSoLuongDaBan());
-			preparedStatement.setDouble(14, hangHoa.getDonGiaNhap());
-			preparedStatement.setBoolean(15, hangHoa.isTrangThai());
-
-			int n = preparedStatement.executeUpdate();
-			if (n > 0) {
-				return true;
-			}
-			preparedStatement.close();
-			connection.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return false;
+	public boolean insertVoucher(VoucherGiamGia voucher) {
+	    try {
+	    
+	    	Date dateStart = new Date(voucher.getNgayBatDau().getTime());
+	        Date dateEnd = new Date(voucher.getNgayKetThuc().getTime());
+	        String insertQuery = "INSERT INTO [dbo].[VoucherGiamGia] " +
+                    "([maVoucher], [tenVoucher], [moTaChuongTrinh], [phanTramGiamTheoHoaDon], " +
+                    "[ngayBatDau], [ngayKetThuc], [trangThai], [soLuotDung]) " +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+	        
+	        System.out.println(insertQuery);
+	        PreparedStatement preparedStatement = connection.prepareStatement(insertQuery);
+	        preparedStatement.setString(1, voucher.getMaVoucher());
+            preparedStatement.setString(2, voucher.getTenVoucher());
+            preparedStatement.setString(3, voucher.getMoTaChuongTrinh());
+            preparedStatement.setFloat(4, voucher.getPhanTramGiamTheoHoaDon());
+            preparedStatement.setDate(5, dateStart);
+            preparedStatement.setDate(6, dateEnd);
+            preparedStatement.setBoolean(7, voucher.isTrangThai());
+            preparedStatement.setInt(8, voucher.getSoLuotDung());
+	        int n = preparedStatement.executeUpdate();
+	        if (n > 0) {
+	            return true;
+	        }
+	        preparedStatement.close();
+	        connection.close();
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return false;
 	}
+	
 
 	/**
-	 * Cập nhật thông tin của hàng hóa
+	 * Cập nhật thông tin của voucher
 	 * @param hangHoa
 	 * @return
 	 */
-	public boolean updateHangHoa(HangHoa hangHoa) {
-		try {
+	public boolean updateVoucher(VoucherGiamGia voucher) {
+	    try {
+	        String updateQuery = "UPDATE VoucherGiamGia "
+	                + "SET tenVoucher = ?, phanTramGiamTheoHoaDon = ?, moTaChuongTrinh = ?, soLuotDung = ?, "
+	                + "trangThai = ?, ngayBatDau = ?, ngayKetThuc = ? "
+	                + "WHERE maVoucher = ?";
 
-			String updateQuery = "UPDATE HangHoa " + "SET tenHangHoa = ?, phanLoai = ?, thuongHieu = ?, xuatXu = ?, "
-					+ "chatLieu = ?, chiTietMoTa = ?, hinhAnh = ?, maNhaCungCap = ?, "
-					+ "kichCo = ?, mauSac = ?, soLuongTon = ?, soLuongDaBan = ?, donGiaNhap = ?, " + "trangThai = ? "
-					+ "WHERE maHangHoa = ?";
+	        PreparedStatement preparedStatement = connection.prepareStatement(updateQuery);
+	        preparedStatement.setString(1, voucher.getTenVoucher());
+	        preparedStatement.setFloat(2, voucher.getPhanTramGiamTheoHoaDon());
+	        preparedStatement.setString(3, voucher.getMoTaChuongTrinh());
+	        preparedStatement.setInt(4, voucher.getSoLuotDung());
+	        preparedStatement.setBoolean(5, voucher.isTrangThai());
+	        preparedStatement.setDate(6, new java.sql.Date(voucher.getNgayBatDau().getTime()));
+	        preparedStatement.setDate(7, new java.sql.Date(voucher.getNgayKetThuc().getTime()));
+	        preparedStatement.setString(8, voucher.getMaVoucher());
 
-			PreparedStatement preparedStatement = connection.prepareStatement(updateQuery);
-			preparedStatement.setString(1, hangHoa.getTenHangHoa());
-			preparedStatement.setString(2, hangHoa.getPhanLoai());
-			preparedStatement.setString(3, hangHoa.getThuongHieu());
-			preparedStatement.setString(4, hangHoa.getXuatXu());
-			preparedStatement.setString(5, hangHoa.getChatLieu());
-			preparedStatement.setString(6, hangHoa.getChiTietMoTa());
-			preparedStatement.setString(7, hangHoa.getHinhAnh());
-			preparedStatement.setString(8, hangHoa.getMaNhaCungCap());
-			preparedStatement.setString(9, hangHoa.getKichCo());
-			preparedStatement.setString(10, hangHoa.getMauSac());
-			preparedStatement.setInt(11, hangHoa.getSoLuongTon());
-			preparedStatement.setInt(12, hangHoa.getSoLuongDaBan());
-			preparedStatement.setDouble(13, hangHoa.getDonGiaNhap());
-			preparedStatement.setBoolean(14, hangHoa.isTrangThai());
-			preparedStatement.setString(15, hangHoa.getMaHangHoa());
-
-			int n = preparedStatement.executeUpdate();
-			if (n > 0) {
-				return true;
-			}
-			preparedStatement.close();
-			connection.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return false;
+	        int n = preparedStatement.executeUpdate();
+	        if (n > 0) {
+	            return true;
+	        }
+	        preparedStatement.close();
+	        connection.close();
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return false;
 	}
 
-	public List<String> getKichThuocCuaMotSanPham(String ma) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 	
 	 public VoucherGiamGia getVoucherByMa(String maVoucher) {
 //	        try (Connection connection = // Lấy connection từ nguồn nào đó) {
@@ -371,52 +353,14 @@ public class Dao_Voucher {
 
 	                        return voucher;
 	                    }
-//	                }
 	            }
 	        } catch (SQLException e) {
 	            e.printStackTrace();
-	            // Xử lý ngoại lệ, có thể logging hoặc ném ngoại lệ khác
 	        }
 
-	        return null; // Trả về null nếu không tìm thấy voucher
+	        return null; 
 	    }
 	 
-	 public boolean saveOrUpdateVoucher(VoucherGiamGia voucher) {
-	        try{
-	            String sql = "INSERT INTO VoucherGiamGia (MaVoucher, TenVoucher, PhanTramGiamTheoHoaDon, "
-	                    + "MoTaChuongTrinh, SoLuotDung, TrangThai, NgayBatDau, NgayKetThuc) "
-	                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?) "
-	                    + "ON DUPLICATE KEY UPDATE "
-	                    + "TenVoucher = VALUES(TenVoucher), PhanTramGiamTheoHoaDon = VALUES(PhanTramGiamTheoHoaDon), "
-	                    + "MoTaChuongTrinh = VALUES(MoTaChuongTrinh), SoLuotDung = VALUES(SoLuotDung), "
-	                    + "TrangThai = VALUES(TrangThai), NgayBatDau = VALUES(NgayBatDau), NgayKetThuc = VALUES(NgayKetThuc)";
-	            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-	                preparedStatement.setString(1, voucher.getMaVoucher());
-	                preparedStatement.setString(2, voucher.getTenVoucher());
-	                preparedStatement.setDouble(3, voucher.getPhanTramGiamTheoHoaDon());
-	                preparedStatement.setString(4, voucher.getMoTaChuongTrinh());
-	                preparedStatement.setInt(5, voucher.getSoLuotDung());
-	                preparedStatement.setBoolean(6, voucher.isTrangThai());
 
-	                // Chuyển đổi từ String sang java.sql.Date
-	                preparedStatement.setDate(7, convertUtilDateToSqlDate(voucher.getNgayBatDau()));
-	                preparedStatement.setDate(8, convertUtilDateToSqlDate(voucher.getNgayKetThuc()));
-
-	                return preparedStatement.executeUpdate() > 0;
-	            }
-	        } catch (SQLException e) {
-	            e.printStackTrace();
-	            // Xử lý ngoại lệ, có thể logging hoặc ném ngoại lệ khác
-	        }
-
-	        return false; // Trả về false nếu có lỗi
-	    }
-
-	 private Date convertUtilDateToSqlDate(java.util.Date utilDate) {
-		    if (utilDate != null) {
-		        return new Date(utilDate.getTime());
-		    }
-		    return null;
-		}
 	
 }
