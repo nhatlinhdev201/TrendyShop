@@ -8,6 +8,11 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+<<<<<<< HEAD
+=======
+import java.util.HashMap;
+import java.util.Map.Entry;
+>>>>>>> 85d8d62c212f20e0ae21502bb302e8213f647d1e
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -23,6 +28,13 @@ import javax.swing.border.LineBorder;
 import com.toedter.calendar.JDateChooser;
 
 import daos.Dao_Voucher;
+<<<<<<< HEAD
+=======
+import daos.Dao_NhaCungCap;
+import daos.Dao_Voucher;
+import entities.HangHoa;
+import entities.NhaCungCap;
+>>>>>>> 85d8d62c212f20e0ae21502bb302e8213f647d1e
 import entities.VoucherGiamGia;
 import javax.swing.SpinnerNumberModel;
 
@@ -44,16 +56,26 @@ public class FormThongTinVoucher extends JPanel implements ActionListener {
 	private static File a;
 	private String newMa;
 	private VoucherGiamGia voucherOld;
+<<<<<<< HEAD
+=======
+//	private HashMap<String, Integer> listSize;
+	private JPanel pnl_NgayBatDau;
+	private JDateChooser dateBatDau;
+>>>>>>> 85d8d62c212f20e0ae21502bb302e8213f647d1e
 	private JLabel lblNgayKetThuc;
 	private JLabel lblNgayBatDau;
 	private JDateChooser dateBatDau;
 	private JDateChooser dateKetThuc;
 
 	public FormThongTinVoucher(VoucherGiamGia vc, String cvThucThi) {
+<<<<<<< HEAD
 		if (cvThucThi.equals("edit")) {
 			System.out.println(vc);
 			voucher = vc;
 		}
+=======
+//		listSize = new HashMap<String, Integer>();
+>>>>>>> 85d8d62c212f20e0ae21502bb302e8213f647d1e
 		setBackground(new Color(102, 205, 170));
 		setLayout(null);
 		voucherOld = vc;
@@ -234,19 +256,36 @@ public class FormThongTinVoucher extends JPanel implements ActionListener {
 		return "VC" + id ;
 	}
 
+<<<<<<< HEAD
+=======
+	
+	  private String formatDate(java.util.Date date) {
+	        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+	        return (date != null) ? sdf.format(date) : "";
+	    }
+
+>>>>>>> 85d8d62c212f20e0ae21502bb302e8213f647d1e
 	  @Override
 	  public void actionPerformed(ActionEvent e) {
 	      if (e.getSource().equals(btn_Save)) {
 	          String tenVoucher = txt_Ten.getText().trim();
+<<<<<<< HEAD
 	          System.out.println(Float.parseFloat(spn_PhanTramGiamGia.getValue().toString()));
 	          float phanTramGiamGia = (float)Float.parseFloat(spn_PhanTramGiamGia.getValue().toString()) /100;
 	          System.out.println(phanTramGiamGia);
+=======
+	          int phanTramGiamGia = (int) spn_PhanTramGiamGia.getValue();
+>>>>>>> 85d8d62c212f20e0ae21502bb302e8213f647d1e
 	          String moTa = txtMoTa.getText().trim();
 	          int soLuotDung = (int) spn_SoLuotDung.getValue();
 	          boolean trangThai = ckb_kichhoat.isSelected();
 	          Date ngayBatDau = dateBatDau.getDate();
 	          Date ngayKetThuc = dateKetThuc.getDate();
+<<<<<<< HEAD
 		          
+=======
+
+>>>>>>> 85d8d62c212f20e0ae21502bb302e8213f647d1e
 	          if (tenVoucher.isEmpty()) {
 	              JOptionPane.showMessageDialog(this, "Vui lòng nhập tên voucher.");
 	          } else if (phanTramGiamGia <= 0 && phanTramGiamGia>1) {
@@ -258,6 +297,7 @@ public class FormThongTinVoucher extends JPanel implements ActionListener {
 	          } else if (moTa.isEmpty()) {
 	              JOptionPane.showMessageDialog(this, "Vui lòng nhập mô tả voucher.");
 	          } else {
+<<<<<<< HEAD
 	        	  if (voucher != null) {
 	        		  voucher.setTenVoucher(tenVoucher);
 	        		  voucher.setPhanTramGiamTheoHoaDon(phanTramGiamGia);
@@ -279,22 +319,43 @@ public class FormThongTinVoucher extends JPanel implements ActionListener {
 		              saveVoucher(newVoucher);
 				}
 	              
+=======
+	              VoucherGiamGia newVoucher = new VoucherGiamGia();
+	              newVoucher.setTenVoucher(tenVoucher);
+	              newVoucher.setPhanTramGiamTheoHoaDon(phanTramGiamGia);
+	              newVoucher.setMoTaChuongTrinh(moTa);
+	              newVoucher.setSoLuotDung(soLuotDung);
+	              newVoucher.setTrangThai(trangThai);
+	              newVoucher.setNgayBatDau(ngayBatDau);
+	              newVoucher.setNgayKetThuc(ngayKetThuc);
+	              saveVoucher(newVoucher);
+>>>>>>> 85d8d62c212f20e0ae21502bb302e8213f647d1e
 	          }
 	      } 
 	  }
 
 	  private void saveVoucher(VoucherGiamGia voucher) {
 		    boolean kichHoatLai = ckb_kichhoat.isSelected();
+<<<<<<< HEAD
 		    if (btn_Save.getText().equals("Lưu Thay Đổi")) {
+=======
+
+		    if (btn_Save.getText().equals("Lưu Thay Đổi")) {
+		        voucher.setTrangThai(kichHoatLai); 
+
+>>>>>>> 85d8d62c212f20e0ae21502bb302e8213f647d1e
 		        if (dao_Voucher.updateVoucher(voucher)) {
 		            JOptionPane.showMessageDialog(this, "Cập nhật voucher thành công.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
 		        } else {
 		            JOptionPane.showMessageDialog(this, "Cập nhật voucher thất bại. Vui lòng kiểm tra lại.", "Lỗi", JOptionPane.ERROR_MESSAGE);
 		        }
 		    } else {
+<<<<<<< HEAD
 		    	 voucher.setTrangThai(kichHoatLai); 
 			     System.out.println(createMaVoucher(dao_Voucher.getMaHangHoaNew()));
 			     voucher.setMaVoucher(createMaVoucher(dao_Voucher.getMaHangHoaNew()));
+=======
+>>>>>>> 85d8d62c212f20e0ae21502bb302e8213f647d1e
 		        if (dao_Voucher.insertVoucher(voucher)) {
 		            JOptionPane.showMessageDialog(this, "Thêm voucher mới thành công.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
 		            reText(); 
@@ -303,4 +364,8 @@ public class FormThongTinVoucher extends JPanel implements ActionListener {
 		        }
 		    }
 		}
+<<<<<<< HEAD
+=======
+
+>>>>>>> 85d8d62c212f20e0ae21502bb302e8213f647d1e
 }
