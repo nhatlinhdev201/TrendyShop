@@ -221,35 +221,6 @@ public class Dao_Voucher {
 
 	/**
 	 * Tìm voucher có mã lớn nhất
-<<<<<<< HEAD
-=======
-	 * @return
-	 */
-	public int getMaHangHoaNew() {
-		int maHangHoa=0;
-		try {
-			PreparedStatement statement = connection
-					.prepareStatement("select top(1) maHangHoa from HangHoa order by maHangHoa desc");
-			ResultSet resultSet = statement.executeQuery();
-			if (resultSet.next()) {
-	            String maHangHoaString = resultSet.getString("maHangHoa");
-	            if (maHangHoaString != null && maHangHoaString.length() >= 9) {
-	                // Lấy phần số từ vị trí 2 đến 5 và chuyển đổi thành số nguyên
-	                maHangHoa = Integer.parseInt(maHangHoaString.substring(2, 6));
-	            }
-	        }
-			
-	
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return maHangHoa;
-	
-	}
-
-	/**
-	 * Tìm voucher có mã lớn nhất
->>>>>>> 85d8d62c212f20e0ae21502bb302e8213f647d1e
 	 * @return
 	 */
 	public String getMaHangHoaNew() {
@@ -296,8 +267,6 @@ public class Dao_Voucher {
 	 */
 	public boolean insertVoucher(VoucherGiamGia voucher) {
 	    try {
-<<<<<<< HEAD
-	    
 	    	Date dateStart = new Date(voucher.getNgayBatDau().getTime());
 	        Date dateEnd = new Date(voucher.getNgayKetThuc().getTime());
 	        String insertQuery = "INSERT INTO [dbo].[VoucherGiamGia] " +
@@ -315,41 +284,22 @@ public class Dao_Voucher {
             preparedStatement.setDate(6, dateEnd);
             preparedStatement.setBoolean(7, voucher.isTrangThai());
             preparedStatement.setInt(8, voucher.getSoLuotDung());
-=======
-	        String insertQuery = "INSERT INTO VoucherGiamGia (maVoucher, tenVoucher,  moTaChuongTrinh, phanTramGiamTheoHoaDon"
-	                + " ngayBatDau, ngayKetThuc, trangThai,soLuotDung) "
-	                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-
-	        PreparedStatement preparedStatement = connection.prepareStatement(insertQuery);
-	        preparedStatement.setString(1, voucher.getMaVoucher());
-	        preparedStatement.setString(2, voucher.getTenVoucher());
-	        preparedStatement.setFloat(3, voucher.getPhanTramGiamTheoHoaDon());
-	        preparedStatement.setString(4, voucher.getMoTaChuongTrinh());
-	        preparedStatement.setInt(5, voucher.getSoLuotDung());
-	        preparedStatement.setBoolean(6, voucher.isTrangThai());
-	        preparedStatement.setDate(7, convertUtilDateToSqlDate(voucher.getNgayBatDau()));
-	        preparedStatement.setDate(8, convertUtilDateToSqlDate(voucher.getNgayKetThuc()));
-
->>>>>>> 85d8d62c212f20e0ae21502bb302e8213f647d1e
+	        
 	        int n = preparedStatement.executeUpdate();
 	        if (n > 0) {
 	            return true;
 	        }
 	        preparedStatement.close();
-	        connection.close();
 	    } catch (SQLException e) {
 	        e.printStackTrace();
 	    }
 	    return false;
-<<<<<<< HEAD
-=======
 	}
 	private java.sql.Date convertUtilDateToSqlDate(java.util.Date utilDate) {
 	    if (utilDate != null) {
 	        return new java.sql.Date(utilDate.getTime());
 	    }
 	    return null;
->>>>>>> 85d8d62c212f20e0ae21502bb302e8213f647d1e
 	}
 	
 

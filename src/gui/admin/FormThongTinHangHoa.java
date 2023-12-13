@@ -583,10 +583,7 @@ public class FormThongTinHangHoa extends JPanel implements ActionListener {
 								a = new File("img\\" + hh.getMaHangHoa() + tienToFile);
 								hh.setHinhAnh("img\\" + hh.getMaHangHoa() + tienToFile);
 								hh.setKichCo(i.getKey());
-<<<<<<< HEAD
 								hh.setSoLuongTon(i.getValue());
-=======
->>>>>>> 85d8d62c212f20e0ae21502bb302e8213f647d1e
 								if (dao_HangHoa.insertHangHoa(hh)) {
 									listMaThanhCong += hh.getMaHangHoa() + "\n";
 									// Thực hiện copy hình ảnh vào thư mục img
