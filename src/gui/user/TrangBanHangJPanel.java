@@ -964,7 +964,8 @@ public class TrangBanHangJPanel extends JPanel
 				txt_MaHangHoa.selectAll();
 				txt_MaHangHoa.requestFocus();
 				return false;
-			} else {
+			}
+			else {
 				if (comboBox_KichThuoc.getSelectedItem() != null)
 					return true;
 				modelCombobox.removeAllElements();
@@ -986,7 +987,11 @@ public class TrangBanHangJPanel extends JPanel
 			return;
 		HangHoa hh = dao_HangHoa
 				.getHangHoaByMaHangHao(txt_MaHangHoa.getText().trim() + (String) comboBox_KichThuoc.getSelectedItem());
-
+		if(!hh.isTrangThai()) {
+			JOptionPane.showMessageDialog(this, "Mặt hàng này hiện đã dừng bán!");
+			txt_MaHangHoa.requestFocus();
+			return;
+		}
 //		Tạo ra arraylist chi tiết hóa đơn
 		int soLuong = (int) spinner_SoLuong.getValue();
 		ChiTietHoaDon ct = new ChiTietHoaDon(hh, hoaDon, soLuong, hh.getDonGiaNhap()*(1+0.7));

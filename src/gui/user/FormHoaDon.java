@@ -199,8 +199,8 @@ public class FormHoaDon extends JFrame implements WindowListener{
         double tongTienHang = 0;
         double tongThanhTien = hoaDonDuocIn.getTongThanhTien();
         double tienGiamGia = hoaDonDuocIn.getVoucher().getPhanTramGiamTheoHoaDon();
-        
         for(int i=1; i<=listChiTiet.size(); i++) {
+        	
         	ChiTietHoaDon chiTiet = listChiTiet.get(i-1);
         	HangHoa hangHoa = daoHangHoa.getHangHoaByMaHangHao(chiTiet.getHangHoa().getMaHangHoa());
         	
@@ -331,7 +331,7 @@ public class FormHoaDon extends JFrame implements WindowListener{
         c.ipady = 243;
         c.gridwidth = 1;
         c.gridx = 1;
-        c.gridy = 6;
+        c.gridy =listChiTiet.size()+1 ;
         p.add(panel_TinhTong, c);
         
         
