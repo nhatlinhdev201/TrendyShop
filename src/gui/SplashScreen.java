@@ -119,9 +119,11 @@ public class SplashScreen extends javax.swing.JFrame {
 	public static void main(String args[]) {
 		SplashScreen m = new SplashScreen();
 		TrangDangNhap m1 = new TrangDangNhap();
+		m.setIconImage(new ImageIcon("img\\logoShop.png").getImage());
 		m.setVisible(true);
 		m.iterate();
 		m.setVisible(false);
+		m1.setIconImage(new ImageIcon("img\\logoShop.png").getImage());
 		m1.setVisible(true);
 
 	}

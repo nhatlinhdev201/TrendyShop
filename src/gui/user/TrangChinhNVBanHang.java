@@ -57,7 +57,7 @@ public class TrangChinhNVBanHang extends JFrame implements ActionListener {
 				try {
 					TrangChinhNVBanHang frame = new TrangChinhNVBanHang();
 					frame.setVisible(true);
-					frame.setIconImage(new ImageIcon(getClass().getResource("/images/logoShop.png")).getImage());
+					frame.setIconImage(new ImageIcon("img\\logoShop.png").getImage());
 					frame.setLocationRelativeTo(null);
 				} catch (Exception e) {
 					e.printStackTrace();

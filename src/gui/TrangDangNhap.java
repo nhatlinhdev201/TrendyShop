@@ -170,6 +170,7 @@ public class TrangDangNhap extends JFrame {
 			if (!taiKhoan.isPhanQuyen()) {
 				TrangChinhNVBanHang.nv = taiKhoan;
 				TrangChinhNVBanHang trangChinhNVBanHang = new TrangChinhNVBanHang();
+				trangChinhNVBanHang.setIconImage(new ImageIcon("img\\logoShop.png").getImage());
 				this.dispose();
 				trangChinhNVBanHang.setVisible(true);
 				return true;
@@ -177,6 +178,7 @@ public class TrangDangNhap extends JFrame {
 				this.dispose();
 				TrangChinhNVQuanLy.nv = taiKhoan;
 				TrangChinhNVQuanLy trangChinhNVQuanLy2 = new TrangChinhNVQuanLy();
+				trangChinhNVQuanLy2.setIconImage(new ImageIcon("img\\logoShop.png").getImage());
 				trangChinhNVQuanLy2.setVisible(true);
 				return true;
 			}
