@@ -12,6 +12,7 @@ import java.nio.file.StandardCopyOption;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map.Entry;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
@@ -33,6 +34,7 @@ import javax.swing.border.LineBorder;
 import daos.Dao_Voucher;
 import daos.Dao_NhaCungCap;
 import daos.Dao_Voucher;
+import entities.HangHoa;
 import entities.NhaCungCap;
 import entities.VoucherGiamGia;
 import com.toedter.calendar.JDateChooser;
@@ -56,7 +58,7 @@ public class FormThongTinVoucher extends JPanel implements ActionListener {
 	private static File a;
 	private String newMa;
 	private VoucherGiamGia voucherOld;
-	private HashMap<String, Integer> listSize;
+//	private HashMap<String, Integer> listSize;
 	private JPanel pnl_NgayBatDau;
 	private JDateChooser dateBatDau;
 	private JLabel lblNgayKetThuc;
@@ -65,7 +67,7 @@ public class FormThongTinVoucher extends JPanel implements ActionListener {
 	private JLabel lblNgayBatDau;
 
 	public FormThongTinVoucher(VoucherGiamGia vc, String cvThucThi) {
-		listSize = new HashMap<String, Integer>();
+//		listSize = new HashMap<String, Integer>();
 		setBackground(new Color(102, 205, 170));
 		setLayout(null);
 		voucherOld = vc;
@@ -217,7 +219,6 @@ public class FormThongTinVoucher extends JPanel implements ActionListener {
 		    spn_SoLuotDung.setValue(vc.getSoLuotDung());
 		    lbl_CurentTrangThai.setText(vc.isTrangThai() ? "Đang hoạt động" : "Đã ngưng");
 
-		    // Ẩn hoặc hiện checkbox dựa trên trạng thái
 		    ckb_kichhoat.setVisible(!vc.isTrangThai());
 		    ckb_kichhoat.setSelected(false);
 
@@ -246,7 +247,7 @@ public class FormThongTinVoucher extends JPanel implements ActionListener {
 	public String createMaVoucher(String ma) {
 		System.out.println(ma);
 		
-		int id = Integer.parseInt(ma.substring(3));
+		int id = Integer.parseInt(ma.substring(2));
 		if (id < 9) {
 			id++;
 			return "VC000" + id ;
@@ -260,57 +261,67 @@ public class FormThongTinVoucher extends JPanel implements ActionListener {
 		id++;
 		return "VC" + id ;
 	}
-	
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-	  if (e.getSource().equals(btn_Save)) {
-        saveVoucher();
+	
+	  private String formatDate(java.util.Date date) {
+	        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+	        return (date != null) ? sdf.format(date) : "";
+	    }
+
+	  @Override
+	  public void actionPerformed(ActionEvent e) {
+	      if (e.getSource().equals(btn_Save)) {
+	          String tenVoucher = txt_Ten.getText().trim();
+	          int phanTramGiamGia = (int) spn_PhanTramGiamGia.getValue();
+	          String moTa = txtMoTa.getText().trim();
+	          int soLuotDung = (int) spn_SoLuotDung.getValue();
+	          boolean trangThai = ckb_kichhoat.isSelected();
+	          Date ngayBatDau = dateBatDau.getDate();
+	          Date ngayKetThuc = dateKetThuc.getDate();
+
+	          if (tenVoucher.isEmpty()) {
+	              JOptionPane.showMessageDialog(this, "Vui lòng nhập tên voucher.");
+	          } else if (phanTramGiamGia <= 0 && phanTramGiamGia>1) {
+	              JOptionPane.showMessageDialog(this, "Phần trăm giảm giá phải lớn hơn 0 và không được lớn hơn 1.");
+	          } else if (ngayBatDau == null || ngayBatDau.before(new Date())) {
+	              JOptionPane.showMessageDialog(this, "Ngày bắt đầu phải từ ngày hiện tại trở về sau.");
+	          } else if (ngayKetThuc == null || ngayKetThuc.before(new Date())) {
+	              JOptionPane.showMessageDialog(this, "Ngày kết thúc phải từ ngày hiện tại trở về sau.");
+	          } else if (moTa.isEmpty()) {
+	              JOptionPane.showMessageDialog(this, "Vui lòng nhập mô tả voucher.");
+	          } else {
+	              VoucherGiamGia newVoucher = new VoucherGiamGia();
+	              newVoucher.setTenVoucher(tenVoucher);
+	              newVoucher.setPhanTramGiamTheoHoaDon(phanTramGiamGia);
+	              newVoucher.setMoTaChuongTrinh(moTa);
+	              newVoucher.setSoLuotDung(soLuotDung);
+	              newVoucher.setTrangThai(trangThai);
+	              newVoucher.setNgayBatDau(ngayBatDau);
+	              newVoucher.setNgayKetThuc(ngayKetThuc);
+	              saveVoucher(newVoucher);
+	          }
+	      } 
 	  }
-    }
-	
-	private void saveVoucher() {
-        String ten = txt_Ten.getText().trim();
-        int phanTramGiamGia = (int) spn_PhanTramGiamGia.getValue();
-        String moTa = txtMoTa.getText().trim();
-        int soLuotDung = (int) spn_SoLuotDung.getValue();
-        boolean trangThai = ckb_kichhoat.isSelected();
-        String ngayBatDau = formatDate(dateBatDau.getDate());
-        String ngayKetThuc = formatDate(dateKetThuc.getDate());
 
-        if (ten.isEmpty() || moTa.isEmpty()) {
-            System.out.println("Vui lòng nhập đầy đủ thông tin Voucher.");
-        } else {
-            VoucherGiamGia newVoucher = new VoucherGiamGia();
-            newVoucher.setMaVoucher(createMaVoucher(newMa));
-            newVoucher.setTenVoucher(ten);
-            newVoucher.setPhanTramGiamTheoHoaDon(phanTramGiamGia);
-            newVoucher.setMoTaChuongTrinh(moTa);
-            newVoucher.setSoLuotDung(soLuotDung);
-            newVoucher.setTrangThai(trangThai);
+	  private void saveVoucher(VoucherGiamGia voucher) {
+		    boolean kichHoatLai = ckb_kichhoat.isSelected();
 
-            // Kiểm tra và định dạng ngày bắt đầu
-            if (dateBatDau.getDate() != null) {
-                newVoucher.setNgayBatDau(dateBatDau.getDate());
-            }
+		    if (btn_Save.getText().equals("Lưu Thay Đổi")) {
+		        voucher.setTrangThai(kichHoatLai); 
 
-            // Kiểm tra và định dạng ngày kết thúc
-            if (dateKetThuc.getDate() != null) {
-                newVoucher.setNgayKetThuc(dateKetThuc.getDate());
-            }
+		        if (dao_Voucher.updateVoucher(voucher)) {
+		            JOptionPane.showMessageDialog(this, "Cập nhật voucher thành công.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+		        } else {
+		            JOptionPane.showMessageDialog(this, "Cập nhật voucher thất bại. Vui lòng kiểm tra lại.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+		        }
+		    } else {
+		        if (dao_Voucher.insertVoucher(voucher)) {
+		            JOptionPane.showMessageDialog(this, "Thêm voucher mới thành công.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+		            reText(); 
+		        } else {
+		            JOptionPane.showMessageDialog(this, "Thêm voucher mới thất bại. Vui lòng kiểm tra lại.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+		        }
+		    }
+		}
 
-            if (dao_Voucher.saveOrUpdateVoucher(newVoucher)) {
-                System.out.println("Lưu Voucher thành công.");
-                reText();
-            } else {
-                System.out.println("Lưu Voucher thất bại.");
-            }
-        }
-    }
-
-
-    private String formatDate(java.util.Date date) {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        return (date != null) ? sdf.format(date) : "";
-    }
 }
