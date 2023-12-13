@@ -41,7 +41,6 @@ public class TrangChinhNVBanHang extends JFrame implements ActionListener {
 	private TrangChuPanel trangChuPanel;
 	private TrangQLKhachHangPanel trangQLKhachHangPanel;
 	private TrangBanHangJPanel trangBanHangJPanel;
-	private TrangThongKeNVBanHangJPanel trangThongKeNVBanHangJPanel;
 	private JPanel currentContent;
 
 	private Dao_NhanVien dao_nhanVien;
@@ -155,7 +154,7 @@ public class TrangChinhNVBanHang extends JFrame implements ActionListener {
 		trangChuPanel = new TrangChuPanel();
 		trangQLKhachHangPanel = new TrangQLKhachHangPanel();
 		trangBanHangJPanel = new TrangBanHangJPanel(null, null);
-		trangThongKeNVBanHangJPanel = new TrangThongKeNVBanHangJPanel();
+		
 
 		switchContent(trangChuPanel);
 		// <<=====================Add action listener============================>>
@@ -201,7 +200,7 @@ public class TrangChinhNVBanHang extends JFrame implements ActionListener {
 		} else if (o.equals(btnMenuCnBanHang)) {
 			switchContent(trangBanHangJPanel);
 		} else if (o.equals(btnMenuCnQlyThongKe)) {
-			switchContent(trangThongKeNVBanHangJPanel);
+			switchContent( new TrangThongKeNVBanHangJPanel());
 		} else if (o.equals(btnMenuCnXemThongTinTK)) {
 			new TrangThongTinDangNhap(nv).setVisible(true);
 		} else if (o.equals(btnMenuCnDangXuatTK)) {

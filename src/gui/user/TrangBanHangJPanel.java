@@ -964,7 +964,8 @@ public class TrangBanHangJPanel extends JPanel
 				txt_MaHangHoa.selectAll();
 				txt_MaHangHoa.requestFocus();
 				return false;
-			} else {
+			}
+			else {
 				if (comboBox_KichThuoc.getSelectedItem() != null)
 					return true;
 				modelCombobox.removeAllElements();
@@ -986,7 +987,11 @@ public class TrangBanHangJPanel extends JPanel
 			return;
 		HangHoa hh = dao_HangHoa
 				.getHangHoaByMaHangHao(txt_MaHangHoa.getText().trim() + (String) comboBox_KichThuoc.getSelectedItem());
-
+		if(!hh.isTrangThai()) {
+			JOptionPane.showMessageDialog(this, "Mặt hàng này hiện đã dừng bán!");
+			txt_MaHangHoa.requestFocus();
+			return;
+		}
 //		Tạo ra arraylist chi tiết hóa đơn
 		int soLuong = (int) spinner_SoLuong.getValue();
 		ChiTietHoaDon ct = new ChiTietHoaDon(hh, hoaDon, soLuong, hh.getDonGiaNhap()*(1+0.7));
@@ -1087,7 +1092,7 @@ public class TrangBanHangJPanel extends JPanel
 			}
 
 			if (!vc.getMaVoucher().equals("VC0000")) {
-				vc.setSoLuotDung(vc.getSoLuotDung() + 1);
+				vc.setSoLuotDung(vc.getSoLuotDung() - 1);
 				dao_VoucherGiamGia.updateVoucher(vc);
 			}
 			if (!kh.getMaKhachHang().equals("KH0000")) {
@@ -1169,6 +1174,12 @@ public class TrangBanHangJPanel extends JPanel
 		}
 		if (voucher.getNgayKetThuc().before(new Date())) {
 			JOptionPane.showMessageDialog(this, "Voucher này đã kết thúc vào ngày: " + voucher.getNgayKetThuc());
+			txt_VoucherGiamGia.requestFocus();
+			txt_VoucherGiamGia.selectAll();
+			return false;
+		}
+		if(voucher.getSoLuotDung()<=0) {
+			JOptionPane.showMessageDialog(this, "Voucher đã hết lượt sử dụng");
 			txt_VoucherGiamGia.requestFocus();
 			txt_VoucherGiamGia.selectAll();
 			return false;

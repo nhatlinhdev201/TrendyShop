@@ -161,8 +161,9 @@ public class TrangDangNhap extends JFrame {
 		btn_dangNhap.setBounds(81, 294, 161, 39);
 		setLocationRelativeTo(null);
 		panel.add(btn_dangNhap);
-		;
-
+		
+		txt_taiKhoan.setText("NV0001");
+		passwordField.setText("1111");
 	}
 
 	public boolean kiemTraDangNhap(String tenDangNhap, String matKhau) {
