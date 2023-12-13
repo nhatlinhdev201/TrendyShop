@@ -37,7 +37,7 @@ public class FromThemKhachHang extends JFrame implements WindowListener{
 	private JLabel lblPhiLS_1;
 	private JLabel lbl_image;
 	private JButton btn_troLai;
-	private int ma = 20;
+	private int ma = 0;
 	/**
 	 * Launch the application.
 	 */
@@ -210,10 +210,7 @@ public class FromThemKhachHang extends JFrame implements WindowListener{
 		btn_save.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// Lấy thông tin từ các trường dữ liệu trên giao diện
-				ma++;
-				String m=String.valueOf(ma);
-				String randomNumber = "00" +m;
-				String makh = "KH" + randomNumber;
+				String makh = "KH" + String.format("%04d", dao_kh.getKhachHangGanNhat() + 1);
 				String tenKhachHang = txt_ten.getText();
 				String soDienThoai = txt_sdt.getText();
 				String email = txt_email.getText();

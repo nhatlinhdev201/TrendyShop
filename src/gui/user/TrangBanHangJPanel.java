@@ -283,16 +283,16 @@ public class TrangBanHangJPanel extends JPanel
 
 //		2 nút thêm và refresh lại các jtextfield ở trên
 //		Tìm hiểu phần button icon để tạo các nút
-		btn_LamMoi = createButtonWithIcon("img\\repeat.png", 40, 40);
+		btn_LamMoi = createButtonWithIcon("img\\repeat.png", 40, 40, "(F5)");
 		btn_LamMoi.setBorderPainted(false); // Bỏ viền
-		btn_LamMoi.setBounds(330, 150, 40, 40);
+		btn_LamMoi.setBounds(270, 150, 120, 40);
 		btn_LamMoi.setBackground(new Color(255, 255, 255));
 		panel_NhapThongTinMatHang.add(btn_LamMoi);
 
 		btn_Them = new JButton();
-		btn_Them = createButtonWithIcon("img\\plus.png", 40, 40);
+		btn_Them = createButtonWithIcon("img\\plus.png", 40, 40,"(F4)");
 		btn_Them.setBorderPainted(false); // Bỏ viền
-		btn_Them.setBounds(400, 150, 40, 40);
+		btn_Them.setBounds(370, 150, 120, 40);
 		btn_Them.setBackground(new Color(255, 255, 255));
 		panel_NhapThongTinMatHang.add(btn_Them);
 
@@ -537,9 +537,6 @@ public class TrangBanHangJPanel extends JPanel
 		if (listChiTietHD.size() > 0) {
 			loadToanBoDuLieuTrongHoaDonCho();
 		}
-
-//		trangTimKiemHoaDon = new TrangTimKiemHoaDon(nv);
-//
 		btn_TimHoaDon.addActionListener(this);
 		btn_HangCho.addActionListener(this);
 		btn_LamMoi.addActionListener(this);
@@ -634,13 +631,6 @@ public class TrangBanHangJPanel extends JPanel
 		} else if (o.equals(btn_HangCho)) {
 			taoHangCho();
 
-//		} else if (o.equals(txt_SDTKhachHang)) {
-//			String sdt = txt_SDTKhachHang.getText();
-//			timThongTinKhachHang(sdt);
-
-//		} else if (o.equals(txt_MaHangHoa)) {
-//			loadKichCoSanPham(txt_MaHangHoa.getText().trim());
-
 		} else if (o.equals(btn_LamMoi)) {
 			txt_MaHangHoa.setText("");
 			comboBox_KichThuoc.removeAllItems();
@@ -660,8 +650,6 @@ public class TrangBanHangJPanel extends JPanel
 		} else if (o.equals(txt_TienNhan)) {
 			tinhTongCacThanhTien();
 
-//		} else if (o.equals(txt_VoucherGiamGia)) {
-//			timThongTinVoucherGiamGia();
 		}
 	}
 
@@ -734,13 +722,13 @@ public class TrangBanHangJPanel extends JPanel
 	}
 
 //	Hàm thêm icon vào trong button
-	public static JButton createButtonWithIcon(String iconPath, int width, int height) {
+	public static JButton createButtonWithIcon(String iconPath, int width, int height, String ten) {
 		ImageIcon originalIcon = new ImageIcon(iconPath);
 		Image scaledImage = originalIcon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
 		ImageIcon scaledIcon = new ImageIcon(scaledImage);
 
-		JButton button = new JButton(scaledIcon);
-
+		JButton button = new JButton(ten,scaledIcon);
+		button.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		return button;
 	}
 
@@ -1031,6 +1019,7 @@ public class TrangBanHangJPanel extends JPanel
 		tinhTongCacThanhTien();
 		comboBox_KichThuoc.removeAllItems();
 		spinner_SoLuong.setValue(1);
+		txt_MaHangHoa.requestFocus();
 	}
 
 	public void thanhToanHoaDon() {
@@ -1172,12 +1161,6 @@ public class TrangBanHangJPanel extends JPanel
 		VoucherGiamGia voucher = dao_VoucherGiamGia.getTheoMaVouCher(maGiamGia);
 		if (maGiamGia.trim().equals(""))
 			return false;
-//		if (voucher == null) {
-//			JOptionPane.showMessageDialog(this, "Mã giảm giá không hợp lệ");
-//			txt_VoucherGiamGia.requestFocus();
-//			txt_VoucherGiamGia.selectAll();
-//			return false;
-//		}
 		if (voucher.getNgayBatDau().after(new Date())) {
 			JOptionPane.showMessageDialog(this, "Voucher này chỉ được sử dụng từ ngày: " + voucher.getNgayBatDau());
 			txt_VoucherGiamGia.requestFocus();

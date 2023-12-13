@@ -281,6 +281,29 @@ public class Dao_KhachHang {
 		}
 		return maKH;
 	}
+	
+	/**
+	 * Quyền Cơ: lấy số thứ tự mã khách hàng lớn nhất
+	 * 
+	 * @param ngay
+	 * @return
+	 */
+	public int getKhachHangGanNhat() {
+		int maKH = 0;
+		try {
+			PreparedStatement statement = connection.prepareStatement(
+					"select top 1*from KhachHang where maKhachHang like 'KH%' order by maKhachHang desc");
+			ResultSet resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				maKH = Integer.parseInt(resultSet.getString("maKhachHang").trim().substring(2));
+
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return maKH;
+	}
 
 	/**
 	 * Quyền Cơ:
