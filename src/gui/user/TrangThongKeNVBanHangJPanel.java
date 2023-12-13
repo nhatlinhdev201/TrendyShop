@@ -42,7 +42,7 @@ public class TrangThongKeNVBanHangJPanel extends JPanel implements ActionListene
 	private JButton btnLamMoi;
 	private String[] cols = { "Mã HĐ", "Thời gian", "Tổng tiền (vnđ)", "Voucher", "Khách hàng", "Trạng thái TT" };
 	private DefaultTableModel modelTable;
-	private NhanVien nv = new NhanVien("NV0002");
+	private NhanVien nv = TrangChinhNVBanHang.nv;
 	private JTextPane txtpNhanXet2;
 	private JTextPane txtpNhanXet1;
 	/**
@@ -243,6 +243,9 @@ public class TrangThongKeNVBanHangJPanel extends JPanel implements ActionListene
 			} else {
 				txtpNhanXet2.setText("Doanh thu hôm nay của bạn là "+ChuyenThanhTien(homNay.getTongDoanhThuBanHang())+"vnđ, bạn cần thêm "+ChuyenThanhTien(caoNhat.getTongDoanhThuBanHang()-homNay.getTongDoanhThuBanHang())+"vnđ để đạt mốc doanh thu cao nhất mới của tháng "+LocalDate.now().getMonthValue()+" năm "+LocalDate.now().getYear());
 			}
+		} else {
+			txtpNhanXet1.setText("Tháng này chưa có doanh thu");
+			txtpNhanXet2.setText("");
 		}
 	}
 
