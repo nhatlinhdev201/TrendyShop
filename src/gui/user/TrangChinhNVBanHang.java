@@ -2,11 +2,14 @@ package gui.user;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Desktop;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 
 import javax.swing.AbstractButton;
 import javax.swing.ImageIcon;
@@ -191,7 +194,13 @@ public class TrangChinhNVBanHang extends JFrame implements ActionListener {
 		} else if (o.equals(btnMenuCnQlyKhachHang)) {
 			switchContent(trangQLKhachHangPanel);
 		} else if (o.equals(btnMenuCnQlyTroGiup)) {
-			switchContent(trangHuongDanJPanel);
+			File file = new File("HuongDanSuDung\\HuogDanSuDung.pdf");
+			try {
+	            Desktop desktop = Desktop.getDesktop();
+	            desktop.open(file);
+	        } catch (IOException ex) {
+	            ex.printStackTrace();
+	        }
 		} else if (o.equals(btnMenuCnBanHang)) {
 			switchContent(trangBanHangJPanel);
 		} else if (o.equals(btnMenuCnQlyThongKe)) {
