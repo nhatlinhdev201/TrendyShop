@@ -78,7 +78,7 @@ public class TrangQLNhanVienJPanel extends JPanel implements ActionListener, Mou
 		Font headerFont = new Font("Tahoma", Font.BOLD, 15);
 
 		tableModel = new DefaultTableModel(new Object[][] {}, new String[] { "Mã NV", "Tên NV", "Ngày sinh", "Số CCCD",
-				"SDT", "Email", "Địa chỉ", "Trạng thái", "Images" }) {
+				"SDT", "Email", "Địa chỉ", "Trạng thái","Images"}) {
 			// Override phương thức để set font cho dữ liệu trong bảng
 			@Override
 			public Class<?> getColumnClass(int columnIndex) {
@@ -216,7 +216,11 @@ public class TrangQLNhanVienJPanel extends JPanel implements ActionListener, Mou
 		lbl_sdt.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		lbl_sdt.setBounds(464, 178, 123, 21);
 		add(lbl_sdt);
-
+		
+		table.getColumnModel().getColumn(8).setMinWidth(0);
+		table.getColumnModel().getColumn(8).setMaxWidth(0);
+		table.getColumnModel().getColumn(8).setWidth(0);
+		
 		textField_sdt = new JTextField();
 		textField_sdt.setColumns(10);
 		textField_sdt.setBounds(589, 176, 196, 27);
@@ -295,7 +299,7 @@ public class TrangQLNhanVienJPanel extends JPanel implements ActionListener, Mou
 		btn_nghi.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btn_nghi.setBounds(1044, 219, 83, 23);
 		add(btn_nghi);
-
+		table.getColumnModel().getColumn(8).setPreferredWidth(0);
 		ButtonGroup buttonGroup = new ButtonGroup();
 
 		// Thêm nút vào nhóm
@@ -403,7 +407,7 @@ public class TrangQLNhanVienJPanel extends JPanel implements ActionListener, Mou
 						Object[] rowData = { nhanVien.getMaNhanVien(), nhanVien.getHoTen(), ngaySinhString,
 								nhanVien.getSoCCCD(), nhanVien.getSoDienThoai(), nhanVien.getEmail(),
 								nhanVien.getDiaChi(), nhanVien.isTrangThai() ? "Nghỉ" : "Hoạt động",
-								nhanVien.getAnhDaiDien() };
+								nhanVien.getAnhDaiDien(), nhanVien.getMatKhau() };
 //		                    int rowIndex = tableModel.getRowCount() - 1;  // Lấy chỉ số của dòng vừa thêm vào bảng
 //		                    table.setRowSelectionInterval(rowIndex, rowIndex);
 						// Thêm dữ liệu vào model của bảng
@@ -428,7 +432,7 @@ public class TrangQLNhanVienJPanel extends JPanel implements ActionListener, Mou
 		}
 	}
 
-	private void clearTable() {
+	public void clearTable() {
 		int rowCount = tableModel.getRowCount();
 		for (int i = rowCount - 1; i >= 0; i--) {
 			tableModel.removeRow(i);
@@ -439,14 +443,12 @@ public class TrangQLNhanVienJPanel extends JPanel implements ActionListener, Mou
 		return rowCount = tableModel.getRowCount();
 	}
 
-	private void loadDataIntoTable() {
+	public void loadDataIntoTable() {
 		try {
 			// Clear existing data in the table
 			clearTable();
-
 			// Load data from the database into the table
 			docDuLieu();
-
 			// Additional logic if needed after loading data
 		} catch (Exception ex) {
 			ex.printStackTrace();

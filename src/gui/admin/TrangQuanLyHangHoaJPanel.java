@@ -498,7 +498,7 @@ public class TrangQuanLyHangHoaJPanel extends JPanel implements ActionListener, 
 		    } else {
 		        int row = tbl_HangHoa.getSelectedRow();
 		        String maHangHoa = tbl_HangHoa.getValueAt(row, 0).toString();
-		        String trangThai = tbl_HangHoa.getValueAt(row, 10).toString();
+		        String trangThai = tbl_HangHoa.getValueAt(row, 9).toString();
 
 		        // Kiểm tra trạng thái thay đổi của sản phẩm
 		        if (trangThai == "Đã ngưng bán") {
