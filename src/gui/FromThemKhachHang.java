@@ -2,6 +2,8 @@ package gui;
 
 import javax.swing.border.EmptyBorder;
 
+import org.apache.poi.ss.formula.functions.Value;
+
 import connection.ConnectDataBase;
 import daos.Dao_KhachHang;
 import daos.KhachHangDAO;
@@ -35,6 +37,7 @@ public class FromThemKhachHang extends JFrame implements WindowListener{
 	private JLabel lblPhiLS_1;
 	private JLabel lbl_image;
 	private JButton btn_troLai;
+	private int ma = 20;
 	/**
 	 * Launch the application.
 	 */
@@ -207,8 +210,9 @@ public class FromThemKhachHang extends JFrame implements WindowListener{
 		btn_save.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// Lấy thông tin từ các trường dữ liệu trên giao diện
-				
-				String randomNumber = "00" +TrangQLKhachHangPanel.getRowCount();
+				ma++;
+				String m=String.valueOf(ma);
+				String randomNumber = "00" +m;
 				String makh = "KH" + randomNumber;
 				String tenKhachHang = txt_ten.getText();
 				String soDienThoai = txt_sdt.getText();
