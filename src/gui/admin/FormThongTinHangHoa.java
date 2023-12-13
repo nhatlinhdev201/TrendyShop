@@ -179,12 +179,13 @@ public class FormThongTinHangHoa extends JPanel implements ActionListener {
 		pnl_InfoProduct.add(lbl_GiaNhap);
 
 		spn_SoLuongBan = new JSpinner();
+		spn_SoLuongBan.setEnabled(false);
 		spn_SoLuongBan.setModel(new SpinnerNumberModel(0, 0, null, 1));
 		spn_SoLuongBan.setBounds(467, 41, 200, 25);
 		pnl_InfoProduct.add(spn_SoLuongBan);
 
 		spn_GiaNhap = new JSpinner();
-		spn_GiaNhap.setModel(new SpinnerNumberModel(0d, 0d, null, 1.0));
+		spn_GiaNhap.setModel(new SpinnerNumberModel(Double.valueOf(1), Double.valueOf(1), null, Double.valueOf(1)));
 		spn_GiaNhap.setBounds(467, 77, 200, 25);
 		pnl_InfoProduct.add(spn_GiaNhap);
 
@@ -500,8 +501,9 @@ public class FormThongTinHangHoa extends JPanel implements ActionListener {
 			
 			String moTa = txtMoTa.getText().trim();
 			String nhaCungCap = ((NhaCungCap) cmb_NhaCungCap.getSelectedItem()).getMaNhaCungCap();
-			Object giaNhapObject = spn_GiaNhap.getValue();
-			double giaNhap = giaNhapObject instanceof Number ? ((Number) giaNhapObject).doubleValue() : 0.0;
+			double giaNhap = Double.parseDouble(spn_GiaNhap.getValue().toString());
+			System.out.println(spn_GiaNhap.getValue().toString());
+			System.out.println(giaNhap);
 			int soLuongBan = (int) spn_SoLuongBan.getValue();
 			int soSize = listSize.size();
 			// Kiểm tra các trường dữ liệu
@@ -581,6 +583,7 @@ public class FormThongTinHangHoa extends JPanel implements ActionListener {
 								a = new File("img\\" + hh.getMaHangHoa() + tienToFile);
 								hh.setHinhAnh("img\\" + hh.getMaHangHoa() + tienToFile);
 								hh.setKichCo(i.getKey());
+								hh.setSoLuongTon(i.getValue());
 								if (dao_HangHoa.insertHangHoa(hh)) {
 									listMaThanhCong += hh.getMaHangHoa() + "\n";
 									// Thực hiện copy hình ảnh vào thư mục img

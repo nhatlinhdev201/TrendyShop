@@ -218,36 +218,26 @@ public class Dao_Voucher {
 
 	}
 	
-	/**
-	 * Tìm voucher có mã lớn nhất
-	 * @return
-	 */
-	public int getMaHangHoaNew() {
-		int maHangHoa=0;
-		try {
-			PreparedStatement statement = connection
-					.prepareStatement("select top(1) maHangHoa from HangHoa order by maHangHoa desc");
-			ResultSet resultSet = statement.executeQuery();
-			if (resultSet.next()) {
-	            String maHangHoaString = resultSet.getString("maHangHoa");
-	            if (maHangHoaString != null && maHangHoaString.length() >= 9) {
-	                // Lấy phần số từ vị trí 2 đến 5 và chuyển đổi thành số nguyên
-	                maHangHoa = Integer.parseInt(maHangHoaString.substring(2, 6));
-	            }
-	        }
-			
-	
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return maHangHoa;
-	
-	}
 
 	/**
 	 * Tìm voucher có mã lớn nhất
 	 * @return
-	 * */
+	 */
+	public String getMaHangHoaNew() {
+		try {
+			PreparedStatement statement = connection
+					.prepareStatement("select top(1) maVoucher from VoucherGiamGia order by maVoucher desc");
+			ResultSet resultSet = statement.executeQuery();
+			if (resultSet.next()) {
+				return resultSet.getString("maVoucher").toString().trim();
+	        }
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "";
+
+	}
 	
 	
 	/**
@@ -277,26 +267,29 @@ public class Dao_Voucher {
 	 */
 	public boolean insertVoucher(VoucherGiamGia voucher) {
 	    try {
-	        String insertQuery = "INSERT INTO VoucherGiamGia (maVoucher, tenVoucher,  moTaChuongTrinh, phanTramGiamTheoHoaDon"
-	                + " ngayBatDau, ngayKetThuc, trangThai,soLuotDung) "
-	                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-
+	    	Date dateStart = new Date(voucher.getNgayBatDau().getTime());
+	        Date dateEnd = new Date(voucher.getNgayKetThuc().getTime());
+	        String insertQuery = "INSERT INTO [dbo].[VoucherGiamGia] " +
+                    "([maVoucher], [tenVoucher], [moTaChuongTrinh], [phanTramGiamTheoHoaDon], " +
+                    "[ngayBatDau], [ngayKetThuc], [trangThai], [soLuotDung]) " +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+	        
+	        System.out.println(insertQuery);
 	        PreparedStatement preparedStatement = connection.prepareStatement(insertQuery);
 	        preparedStatement.setString(1, voucher.getMaVoucher());
-	        preparedStatement.setString(2, voucher.getTenVoucher());
-	        preparedStatement.setFloat(3, voucher.getPhanTramGiamTheoHoaDon());
-	        preparedStatement.setString(4, voucher.getMoTaChuongTrinh());
-	        preparedStatement.setInt(5, voucher.getSoLuotDung());
-	        preparedStatement.setBoolean(6, voucher.isTrangThai());
-	        preparedStatement.setDate(7, convertUtilDateToSqlDate(voucher.getNgayBatDau()));
-	        preparedStatement.setDate(8, convertUtilDateToSqlDate(voucher.getNgayKetThuc()));
-
+            preparedStatement.setString(2, voucher.getTenVoucher());
+            preparedStatement.setString(3, voucher.getMoTaChuongTrinh());
+            preparedStatement.setFloat(4, voucher.getPhanTramGiamTheoHoaDon());
+            preparedStatement.setDate(5, dateStart);
+            preparedStatement.setDate(6, dateEnd);
+            preparedStatement.setBoolean(7, voucher.isTrangThai());
+            preparedStatement.setInt(8, voucher.getSoLuotDung());
+	        
 	        int n = preparedStatement.executeUpdate();
 	        if (n > 0) {
 	            return true;
 	        }
 	        preparedStatement.close();
-	        connection.close();
 	    } catch (SQLException e) {
 	        e.printStackTrace();
 	    }
@@ -308,6 +301,7 @@ public class Dao_Voucher {
 	    }
 	    return null;
 	}
+	
 
 
 	/**
