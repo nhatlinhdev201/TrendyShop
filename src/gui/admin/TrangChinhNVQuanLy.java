@@ -220,7 +220,7 @@ public class TrangChinhNVQuanLy extends JFrame implements ActionListener{
 			switchContent(trangQuanLyVoucher);
 		}
 		else if(o.equals(btnMenuCnQlyTroGiup)) {
-			File file = new File("HuongDanSuDung\\HuogDanSuDung.pdf");
+			File file = new File("src\\HuongDanSuDung\\HuogDanSuDung.pdf");
 			try {
 	            Desktop desktop = Desktop.getDesktop();
 	            desktop.open(file);
