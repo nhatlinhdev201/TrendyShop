@@ -88,7 +88,7 @@ public class TrangChuPanel extends JPanel implements ActionListener {
 		panel_logo.setBounds(66, 0, 130, 130);
 		add(panel_logo);
 
-		ImageIcon originalIcon = new ImageIcon("images\\logoShop.png");
+		ImageIcon originalIcon = new ImageIcon(TrangChuPanel.class.getResource("/images/logoShop.png"));
 
 		// Lấy kích thước ban đầu của ảnh
 		int originalWidth = originalIcon.getIconWidth();
@@ -112,7 +112,7 @@ public class TrangChuPanel extends JPanel implements ActionListener {
 		panel.setBackground(new Color(255, 255, 255));
 		panel.setBounds(20, 206, 706, 436);
 		add(panel);
-		ImageIcon originalIcon1 = new ImageIcon("img\\anhTrangChu.jpg");
+		ImageIcon originalIcon1 = new ImageIcon(TrangChuPanel.class.getResource("/images/anhTrangChu.jpg"));
 		JLabel lbl2 = new JLabel(originalIcon1);
 		panel.add(lbl2, BorderLayout.CENTER);
 

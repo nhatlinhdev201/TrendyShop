@@ -50,7 +50,7 @@ public class SplashScreen extends javax.swing.JFrame {
 		panel_logo.setBounds(0, 0, 635, 241);
 		getContentPane().add(panel_logo);
 
-		ImageIcon originalIcon = new ImageIcon("img\\AnhSplashscreen.jpg");
+		ImageIcon originalIcon = new ImageIcon(SplashScreen.class.getResource("/images/AnhSplashscreen.jpg"));
 
 		// Lấy kích thước ban đầu của ảnh
 		int originalWidth = originalIcon.getIconWidth();

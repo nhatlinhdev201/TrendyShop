@@ -258,7 +258,7 @@ public class Dao_HoaDon {
 	public List<HoaDon> getTop5() {
 		List<HoaDon> dsHoaDon = null;
 		try {
-			PreparedStatement statement = connection.prepareStatement("select top 5 *from HoaDon where trangThaiThanhToan= 'True' order by thoiGianTao desc");
+			PreparedStatement statement = connection.prepareStatement("select top 5 *from HoaDon where trangThaiThanhToan= 'True' order by maHoaDon desc");
 			ResultSet resultSet = statement.executeQuery();
 			dsHoaDon = new ArrayList<HoaDon>();
 			while (resultSet.next()) {

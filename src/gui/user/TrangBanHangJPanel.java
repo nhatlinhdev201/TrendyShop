@@ -283,14 +283,14 @@ public class TrangBanHangJPanel extends JPanel
 
 //		2 nút thêm và refresh lại các jtextfield ở trên
 //		Tìm hiểu phần button icon để tạo các nút
-		btn_LamMoi = createButtonWithIcon("img\\repeat.png", 40, 40, "(F5)");
+		btn_LamMoi = createButtonWithIcon("/images/repeat.png", 40, 40, "(F5)");
 		btn_LamMoi.setBorderPainted(false); // Bỏ viền
 		btn_LamMoi.setBounds(270, 150, 120, 40);
 		btn_LamMoi.setBackground(new Color(255, 255, 255));
 		panel_NhapThongTinMatHang.add(btn_LamMoi);
 
 		btn_Them = new JButton();
-		btn_Them = createButtonWithIcon("img\\plus.png", 40, 40,"(F4)");
+		btn_Them = createButtonWithIcon("/images/plusCo.png", 40, 40,"(F4)");
 		btn_Them.setBorderPainted(false); // Bỏ viền
 		btn_Them.setBounds(370, 150, 120, 40);
 		btn_Them.setBackground(new Color(255, 255, 255));
@@ -723,7 +723,7 @@ public class TrangBanHangJPanel extends JPanel
 
 //	Hàm thêm icon vào trong button
 	public static JButton createButtonWithIcon(String iconPath, int width, int height, String ten) {
-		ImageIcon originalIcon = new ImageIcon(iconPath);
+		ImageIcon originalIcon = new ImageIcon(TrangBanHangJPanel.class.getResource(iconPath));
 		Image scaledImage = originalIcon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
 		ImageIcon scaledIcon = new ImageIcon(scaledImage);
 

@@ -143,7 +143,7 @@ public class TrangTimKiemHoaDon extends JPanel implements ActionListener{
 		panel_1.setLayout(null);
 
 		txt_MaHoaDon = new JTextField();
-		txt_MaHoaDon = createRestrictedTextField(txt_MaHoaDon, "(^[Hh]{0,1}$)|(^[Hh]{1}[Dd]{1})|(^[Hh]{1}[Dd]{1}\\d{0,4}$)");
+		txt_MaHoaDon = createRestrictedTextField(txt_MaHoaDon, "(^[Hh]{0,1}$)|(^[Hh]{1}[Dd]{1})|(^[Hh]{1}[Dd]{1}\\d{0,12}$)");
 		txt_MaHoaDon.setForeground(new Color(0, 0, 0));
 		txt_MaHoaDon.setBounds(10, 14, 200, 25);
 		panel_1.add(txt_MaHoaDon);
