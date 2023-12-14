@@ -430,7 +430,7 @@ public class TrangQLKhachHangPanel extends JPanel implements ActionListener, Mou
 						// Hiển thị thông tin khách hàng trong bảng
 						Object[] rowData = { khachHang.getMaKhachHang(), khachHang.getTenKhachHang(),
 								khachHang.getSoDienThoai(), khachHang.getEmail(), khachHang.getDiaChi(),
-								khachHang.isTrangThai() ? "Nghỉ" : "Hoạt động", // Chuyển boolean thành chuỗi
+								khachHang.isTrangThai() ? "Không còn thành viên" : "Còn thành viên", // Chuyển boolean thành chuỗi
 								khachHang.getDiemTichLuy() };
 //		                    int rowIndex = tableModel.getRowCount() - 1;  // Lấy chỉ số của dòng vừa thêm vào bảng
 //		                    table.setRowSelectionInterval(rowIndex, rowIndex);

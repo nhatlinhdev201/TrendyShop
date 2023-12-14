@@ -6,6 +6,7 @@ import constance.SetBountJPanel;
 import gui.admin.TrangChinhNVQuanLy;
 import gui.admin.TrangQLNhanVienJPanel;
 import gui.admin.TrangQuanLyHangHoaJPanel;
+import gui.admin.TrangQuanLyVoucher;
 import gui.admin.TrangThongKeNVQuanLy;
 import gui.user.TrangBanHangJPanel;
 import gui.user.TrangChinhNVBanHang;
@@ -128,6 +129,7 @@ public class TrangChuPanel extends JPanel implements ActionListener {
 		btn_QuanLyKhachHang.addActionListener(this);
 		btn_QuanLyNhanVien.addActionListener(this);
 		btn_ThongKe.addActionListener(this);
+		btn_QuanLyVoucher.addActionListener(this);
 		
 	}
 
@@ -162,6 +164,8 @@ public class TrangChuPanel extends JPanel implements ActionListener {
 				switchContent(new TrangThongKeNVBanHangJPanel());
 			} else
 				switchContent(new TrangThongKeNVQuanLy());
+		}else if(o.equals(btn_QuanLyVoucher)) {
+			switchContent(new TrangQuanLyVoucher());
 		}
 	}
 }

@@ -2,11 +2,14 @@ package gui.user;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Desktop;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 
 import javax.swing.AbstractButton;
 import javax.swing.ImageIcon;
@@ -22,7 +25,6 @@ import daos.Dao_NhanVien;
 import entities.NhanVien;
 import gui.TrangChuPanel;
 import gui.TrangDangNhap;
-import gui.TrangHuongDanJPanel;
 import gui.TrangQLKhachHangPanel;
 import gui.TrangThongTinDangNhap;
 
@@ -37,10 +39,8 @@ public class TrangChinhNVBanHang extends JFrame implements ActionListener {
 	private AbstractButton btnMenuCnXemThongTinTK;
 	private JButton btnMenuCnDangXuatTK;
 	private TrangChuPanel trangChuPanel;
-	private TrangHuongDanJPanel trangHuongDanJPanel;
 	private TrangQLKhachHangPanel trangQLKhachHangPanel;
 	private TrangBanHangJPanel trangBanHangJPanel;
-	private TrangThongKeNVBanHangJPanel trangThongKeNVBanHangJPanel;
 	private JPanel currentContent;
 
 	private Dao_NhanVien dao_nhanVien;
@@ -56,7 +56,7 @@ public class TrangChinhNVBanHang extends JFrame implements ActionListener {
 				try {
 					TrangChinhNVBanHang frame = new TrangChinhNVBanHang();
 					frame.setVisible(true);
-					frame.setIconImage(new ImageIcon(getClass().getResource("/images/logoShop.png")).getImage());
+					frame.setIconImage(new ImageIcon("img\\logoShop.png").getImage());
 					frame.setLocationRelativeTo(null);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -152,10 +152,9 @@ public class TrangChinhNVBanHang extends JFrame implements ActionListener {
 		// <========================================================================================>
 
 		trangChuPanel = new TrangChuPanel();
-		trangHuongDanJPanel = new TrangHuongDanJPanel();
 		trangQLKhachHangPanel = new TrangQLKhachHangPanel();
 		trangBanHangJPanel = new TrangBanHangJPanel(null, null);
-		trangThongKeNVBanHangJPanel = new TrangThongKeNVBanHangJPanel();
+		
 
 		switchContent(trangChuPanel);
 		// <<=====================Add action listener============================>>
@@ -191,11 +190,17 @@ public class TrangChinhNVBanHang extends JFrame implements ActionListener {
 		} else if (o.equals(btnMenuCnQlyKhachHang)) {
 			switchContent(trangQLKhachHangPanel);
 		} else if (o.equals(btnMenuCnQlyTroGiup)) {
-			switchContent(trangHuongDanJPanel);
+			File file = new File("HuongDanSuDung\\HuogDanSuDung.pdf");
+			try {
+	            Desktop desktop = Desktop.getDesktop();
+	            desktop.open(file);
+	        } catch (IOException ex) {
+	            ex.printStackTrace();
+	        }
 		} else if (o.equals(btnMenuCnBanHang)) {
 			switchContent(trangBanHangJPanel);
 		} else if (o.equals(btnMenuCnQlyThongKe)) {
-			switchContent(trangThongKeNVBanHangJPanel);
+			switchContent( new TrangThongKeNVBanHangJPanel());
 		} else if (o.equals(btnMenuCnXemThongTinTK)) {
 			new TrangThongTinDangNhap(nv).setVisible(true);
 		} else if (o.equals(btnMenuCnDangXuatTK)) {

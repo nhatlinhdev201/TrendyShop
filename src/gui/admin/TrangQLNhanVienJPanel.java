@@ -221,7 +221,9 @@ public class TrangQLNhanVienJPanel extends JPanel implements ActionListener, Mou
 		table.getColumnModel().getColumn(8).setMinWidth(0);
 		table.getColumnModel().getColumn(8).setMaxWidth(0);
 		table.getColumnModel().getColumn(8).setWidth(0);
-		
+		table.getColumnModel().getColumn(0).setPreferredWidth(20);
+		table.getColumnModel().getColumn(0).setMinWidth(80);
+		table.getColumnModel().getColumn(0).setMaxWidth(80);
 		textField_sdt = new JTextField();
 		textField_sdt.setColumns(10);
 		textField_sdt.setBounds(589, 176, 196, 27);

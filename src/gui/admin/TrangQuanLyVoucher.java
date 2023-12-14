@@ -261,7 +261,6 @@ public class TrangQuanLyVoucher extends JPanel implements ActionListener, MouseL
 		scr_voucher.setBorder(null);
 		scr_voucher.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		scr_voucher.setForeground(new Color(192, 192, 192));
-		scr_voucher.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 		scr_voucher.setBackground(new Color(107, 182, 182));
 		scr_voucher.setEnabled(false);
 
@@ -398,8 +397,11 @@ public class TrangQuanLyVoucher extends JPanel implements ActionListener, MouseL
 	private void loadData(List<VoucherGiamGia> dsVoucher) {
 		dataDefault.setRowCount(0);
 		for (VoucherGiamGia voucher : dsVoucher) {
-			Object[] row = { voucher.getMaVoucher(), voucher.getTenVoucher(), voucher.getPhanTramGiamTheoHoaDon(), voucher.getNgayBatDau(), voucher.getNgayKetThuc(), voucher.getSoLuotDung(), voucher.isTrangThai()?"Đang hoạt động":"Đã ngưng"};
-			dataDefault.addRow(row);
+			if(!voucher.getMaVoucher().trim().equals("VC0000")) {
+				int giamGia = (int) (voucher.getPhanTramGiamTheoHoaDon()*100);
+				Object[] row = { voucher.getMaVoucher(), voucher.getTenVoucher(), giamGia, voucher.getNgayBatDau(), voucher.getNgayKetThuc(), voucher.getSoLuotDung(), voucher.isTrangThai()?"Đang hoạt động":"Đã ngưng"};
+				dataDefault.addRow(row);
+			}
 			
 		}
 	}
