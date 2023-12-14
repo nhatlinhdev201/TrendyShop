@@ -40,7 +40,7 @@ public class FromThemNhanVien extends JFrame implements WindowListener {
 	private String chucVu;
 	private String ngaySinhtxt;
 	private JRadioButton rdbtnNgh;
-
+	private TrangQLNhanVienJPanel jPanel;
 	/**
 	 * Launch the application.
 	 */
@@ -345,8 +345,7 @@ public class FromThemNhanVien extends JFrame implements WindowListener {
 					// Kiểm tra kết quả và thông báo cho người dùng
 					if (result) {
 						JOptionPane.showMessageDialog(null, "Thêm nhân viên thành công!");
-						// Có thể thêm logic để làm mới giao diện hoặc thực hiện các tác vụ khác sau khi
-						// thêm
+						// Có thể thêm logic để làm mới giao diện hoặc thực hiện các tác vụ khác sau khi thêm
 						Window window = SwingUtilities.getWindowAncestor(contentPane);
 						if (window != null) {
 							window.dispose();

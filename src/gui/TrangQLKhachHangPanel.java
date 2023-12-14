@@ -31,6 +31,7 @@ import java.awt.Font;
 
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -85,7 +86,7 @@ public class TrangQLKhachHangPanel extends JPanel implements ActionListener, Mou
 		Font headerFont = new Font("Tahoma", Font.BOLD, 15);
 
 		// Set model cho JTable
-		tableModel = new DefaultTableModel(new Object[][] {}, new String[] { "Mã khách hàng", "Tên khách hàng",
+		tableModel = new DefaultTableModel(new Object[][] {}, new String[] { "Mã KH", "Tên khách hàng",
 				"Số điện thoại", "Email", "Địa chỉ", "Trạng thái", "Điểm tích lũy" }) {
 			// Override phương thức để set font cho dữ liệu trong bảng
 			@Override
@@ -99,6 +100,10 @@ public class TrangQLKhachHangPanel extends JPanel implements ActionListener, Mou
 				return false; // Không cho phép chỉnh sửa dữ liệu trong bảng
 			}
 		};
+		JTableHeader header = table.getTableHeader();
+        Font headerFont1 = new Font("Arial", Font.BOLD, 14); // Change the font properties as needed
+        header.setFont(headerFont1);
+        header.setBackground(Color.GREEN);
 		// Add ListSelectionListener to the table
 		table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 			@Override
@@ -265,6 +270,7 @@ public class TrangQLKhachHangPanel extends JPanel implements ActionListener, Mou
 		lblNewLabel_1.setIcon(resizedIcon1);
 
 		btn_timKiem = new JButton("Tìm kiếm");
+		btn_timKiem.setBackground(new Color(135, 206, 250));
 		btn_timKiem.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btn_timKiem.setBounds(595, 21, 123, 44);
 
@@ -364,8 +370,6 @@ public class TrangQLKhachHangPanel extends JPanel implements ActionListener, Mou
 			}
 			int rowIndexToHide = 0;
 			tableModel.removeRow(rowIndexToHide);
-			int rowIndexKH000 = 0;
-			tableModel.removeRow(rowIndexKH000);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

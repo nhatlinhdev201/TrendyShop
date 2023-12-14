@@ -22,6 +22,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 
 import constance.SetBountJPanel;
 import daos.Dao_KhachHang;
@@ -220,7 +221,9 @@ public class TrangQLNhanVienJPanel extends JPanel implements ActionListener, Mou
 		table.getColumnModel().getColumn(8).setMinWidth(0);
 		table.getColumnModel().getColumn(8).setMaxWidth(0);
 		table.getColumnModel().getColumn(8).setWidth(0);
-		
+		table.getColumnModel().getColumn(0).setPreferredWidth(20);
+		table.getColumnModel().getColumn(0).setMinWidth(80);
+		table.getColumnModel().getColumn(0).setMaxWidth(80);
 		textField_sdt = new JTextField();
 		textField_sdt.setColumns(10);
 		textField_sdt.setBounds(589, 176, 196, 27);
@@ -237,6 +240,7 @@ public class TrangQLNhanVienJPanel extends JPanel implements ActionListener, Mou
 		add(textField_email);
 
 		btn_timKiem = new JButton("Tìm kiếm theo mã");
+		btn_timKiem.setBackground(new Color(135, 206, 235));
 		btn_timKiem.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		btn_timKiem.setBounds(448, 275, 173, 33);
 
@@ -324,7 +328,10 @@ public class TrangQLNhanVienJPanel extends JPanel implements ActionListener, Mou
 		ImageIcon resizedIconLoad = new ImageIcon(scaledIconLoad);
 		btn_load.setIcon(resizedIconLoad);
 		add(btn_load);
-
+		JTableHeader header = table.getTableHeader();
+        Font headerFont1 = new Font("Arial", Font.BOLD, 14); // Change the font properties as needed
+        header.setFont(headerFont1);
+        header.setBackground(Color.GREEN);
 		btn_timKiem.addActionListener(this);
 		btn_capNhat.addActionListener(this);
 		btn_load.addActionListener(this);
