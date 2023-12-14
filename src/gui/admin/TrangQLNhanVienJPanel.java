@@ -22,6 +22,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 
 import constance.SetBountJPanel;
 import daos.Dao_KhachHang;
@@ -152,7 +153,10 @@ public class TrangQLNhanVienJPanel extends JPanel implements ActionListener, Mou
 		JScrollPane scrollPane = new JScrollPane(table);
 		scrollPane.setBounds(10, 319, 1330, 371);
 		add(scrollPane);
-
+		JTableHeader header = table.getTableHeader();
+        Font headerFont1 = new Font("Arial", Font.BOLD, 14); // Change the font properties as needed
+        header.setFont(headerFont1);
+        header.setBackground(Color.GREEN);
 		JLabel lbl_manv = new JLabel("Mã nhân viên :");
 		lbl_manv.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		lbl_manv.setBounds(464, 99, 123, 21);

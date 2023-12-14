@@ -31,6 +31,7 @@ import java.awt.Font;
 
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -99,6 +100,7 @@ public class TrangQLKhachHangPanel extends JPanel implements ActionListener, Mou
 				return false; // Không cho phép chỉnh sửa dữ liệu trong bảng
 			}
 		};
+
 		// Add ListSelectionListener to the table
 		table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 			@Override
@@ -129,7 +131,7 @@ public class TrangQLKhachHangPanel extends JPanel implements ActionListener, Mou
 						if (trangThai.trim().equalsIgnoreCase("Hoạt động")) {
 							btn_hoatDong.setSelected(true);
 							btn_nghi.setSelected(false);
-						} else if (trangThai.trim().equalsIgnoreCase("Nghỉ")) {
+						} else if (trangThai.trim().equalsIgnoreCase("Đã hủy")) {
 							btn_hoatDong.setSelected(false);
 							btn_nghi.setSelected(true);
 						}
@@ -147,7 +149,10 @@ public class TrangQLKhachHangPanel extends JPanel implements ActionListener, Mou
 		table.getColumnModel().getColumn(5).setPreferredWidth(10);
 		table.getColumnModel().getColumn(6).setPreferredWidth(10);
 		table.getColumnModel().getColumn(6).setMinWidth(10);
-
+		JTableHeader header = table.getTableHeader();
+		Font headerFont1 = new Font("Arial", Font.BOLD, 14); // Change the font properties as needed
+		header.setFont(headerFont1);
+		header.setBackground(Color.GREEN);
 		JScrollPane scrollPane = new JScrollPane(table);
 		scrollPane.setBounds(473, 76, 867, 614);
 		add(scrollPane);
@@ -364,8 +369,6 @@ public class TrangQLKhachHangPanel extends JPanel implements ActionListener, Mou
 			}
 			int rowIndexToHide = 0;
 			tableModel.removeRow(rowIndexToHide);
-			int rowIndexKH000 = 0;
-			tableModel.removeRow(rowIndexKH000);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -426,7 +429,8 @@ public class TrangQLKhachHangPanel extends JPanel implements ActionListener, Mou
 						// Hiển thị thông tin khách hàng trong bảng
 						Object[] rowData = { khachHang.getMaKhachHang(), khachHang.getTenKhachHang(),
 								khachHang.getSoDienThoai(), khachHang.getEmail(), khachHang.getDiaChi(),
-								khachHang.isTrangThai() ? "Không còn thành viên" : "Còn thành viên", // Chuyển boolean thành chuỗi
+								khachHang.isTrangThai() ? "Không còn thành viên" : "Còn thành viên", // Chuyển boolean
+																										// thành chuỗi
 								khachHang.getDiemTichLuy() };
 //		                    int rowIndex = tableModel.getRowCount() - 1;  // Lấy chỉ số của dòng vừa thêm vào bảng
 //		                    table.setRowSelectionInterval(rowIndex, rowIndex);
