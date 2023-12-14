@@ -37,7 +37,7 @@ public class FromThemKhachHang extends JFrame implements WindowListener{
 	private JLabel lblPhiLS_1;
 	private JLabel lbl_image;
 	private JButton btn_troLai;
-	private int ma = 20;
+	private int ma = 13;
 	/**
 	 * Launch the application.
 	 */

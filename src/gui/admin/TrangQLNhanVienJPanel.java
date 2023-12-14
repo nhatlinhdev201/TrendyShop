@@ -22,6 +22,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 
 import constance.SetBountJPanel;
 import daos.Dao_KhachHang;
@@ -237,6 +238,7 @@ public class TrangQLNhanVienJPanel extends JPanel implements ActionListener, Mou
 		add(textField_email);
 
 		btn_timKiem = new JButton("Tìm kiếm theo mã");
+		btn_timKiem.setBackground(new Color(135, 206, 235));
 		btn_timKiem.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		btn_timKiem.setBounds(448, 275, 173, 33);
 
@@ -324,7 +326,10 @@ public class TrangQLNhanVienJPanel extends JPanel implements ActionListener, Mou
 		ImageIcon resizedIconLoad = new ImageIcon(scaledIconLoad);
 		btn_load.setIcon(resizedIconLoad);
 		add(btn_load);
-
+		JTableHeader header = table.getTableHeader();
+        Font headerFont1 = new Font("Arial", Font.BOLD, 14); // Change the font properties as needed
+        header.setFont(headerFont1);
+        header.setBackground(Color.GREEN);
 		btn_timKiem.addActionListener(this);
 		btn_capNhat.addActionListener(this);
 		btn_load.addActionListener(this);
